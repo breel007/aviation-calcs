@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>FAA Pilot Currency Checker — 61.57 Landings &amp; IFR, 61.56 Flight Review, 61.23 Medical</title>
+  <meta name="description" content="Free FAA pilot currency checker. See whether you meet 14 CFR 61.57 day and night passenger landing currency, instrument experience and the IFR grace period, 61.56 flight review, and 61.23 medical-certificate durations — plus optional BasicMed dates.">
+  <meta name="keywords" content="pilot currency calculator, 61.57 landing currency, instrument currency 6 approaches, flight review 24 calendar months, FAA medical expiration, 61.23 medical duration, IFR grace period, BasicMed">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/pilot-currency/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/pilot-currency/">
+  <meta property="og:title" content="FAA Pilot Currency Checker — 61.57, 61.56, and 61.23">
+  <meta property="og:description" content="Enter the dates of your landings, instrument work, flight review, and medical exam. See what is current, when it expires, and which regulation applies.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="FAA Pilot Currency Checker">
+  <meta name="twitter:description" content="Day and night landings, IFR 6-HITS, flight review, and medical durations — with FAR citations.">
+  <meta name="application-name" content="FAA Pilot Currency Checker">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "WebApplication",
+        "SoftwareApplication"
+      ],
+      "name": "FAA Pilot Currency Checker",
+      "url": "https://aviatorcalcs.com/pilot-currency/",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Free FAA pilot currency checker for 14 CFR 61.57 day and night passenger landings, instrument experience and grace period, 61.56 flight review, 61.23 medical-certificate duration, and optional BasicMed dates."
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How long is passenger landing currency good for?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Under 14 CFR 61.57(a) and (b), you may not carry passengers unless you have made 3 takeoffs and 3 landings in the preceding 90 days in an aircraft of the same category, class, and type (if a type rating is required). Night landings must be to a full stop in the period beginning 1 hour after sunset and ending 1 hour before sunrise. Tailwheel landings must be to a full stop. Currency runs through the calendar day that is 90 days after the qualifying landing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When do I need an instrument proficiency check?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "61.57(c) requires 6 instrument approaches, holding, and intercepting and tracking courses within the 6 calendar months preceding the month of the flight. If that lapses, you have 6 more calendar months (the grace period under 61.57(d)) to complete those tasks and become current again \u2014 you may not act as PIC under IFR in the meantime. After the grace period, an instrument proficiency check is required."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When does a flight review expire?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "61.56(c) requires a flight review in the preceding 24 calendar months. A review on 15 January 2024 is valid through 31 January 2026. A practical test for a new certificate or rating also counts under 61.56(d)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long is my medical certificate valid?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Under 61.23(d), duration is measured to the last day of a calendar month and depends on the class of privileges and whether you had reached your 40th birthday on the date of the examination. First-class privileges last 12 months if you were under 40, 6 months if you were 40 or older; second-class privileges last 12 months; third-class privileges last 60 months under 40 or 24 months at 40 or older. A first-class certificate then \u201csteps down\u201d to second- and third-class privileges for the remaining time."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Pilot Currency</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../density-altitude/">Density altitude</a>
+        <a href="../crosswind/">Crosswind</a>
+        <a href="../weight-balance/">Weight &amp; balance</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">FAA Pilot Currency Checker</h1>
+        <p class="lede">Enter the dates of your qualifying landings, instrument experience, flight review, and medical exam. The checker applies 14 CFR 61.57 (passenger and instrument currency, including the IFR grace period), 61.56 (flight review), and 61.23 (medical durations by class and age), and optionally Part 68 BasicMed. Nothing leaves your browser.</p>
+      </header>
+
+            <form id="calc-form" action="#" method="get" novalidate>
+        <div class="field-block">
+          <label for="as-of">As of this date</label>
+          <input id="as-of" class="input" type="date" required>
+          <p class="hint">Defaults to today on your computer. Change it to check a future trip.</p>
+        </div>
+
+        <fieldset class="field-block">
+          <legend>61.57 passenger currency (90 days)</legend>
+          <div class="pair">
+            <div>
+              <label for="day-ldg" class="sublabel">Date of the 3rd most recent day takeoff and landing</label>
+              <input id="day-ldg" class="input" type="date">
+            </div>
+            <div>
+              <label for="night-ldg" class="sublabel">Date of the 3rd most recent night full-stop landing</label>
+              <input id="night-ldg" class="input" type="date">
+            </div>
+          </div>
+          <p class="hint">Same category, class, and type (if required). Tailwheel landings must be to a full stop. Night is the period beginning 1 hour after sunset and ending 1 hour before sunrise.</p>
+        </fieldset>
+
+        <fieldset class="field-block">
+          <legend>61.57 instrument experience</legend>
+          <label for="ifr-date">Date you last completed 6 approaches, holding, and intercepting/tracking</label>
+          <input id="ifr-date" class="input" type="date">
+          <p class="hint">Those tasks must fall within the 6 calendar months preceding the month of the IFR flight. After that, a 6-calendar-month grace period applies before an IPC is required.</p>
+        </fieldset>
+
+        <div class="field-block">
+          <label for="review">Date of last flight review (or qualifying practical test) — 61.56</label>
+          <input id="review" class="input" type="date">
+        </div>
+
+        <fieldset class="field-block">
+          <legend>61.23 medical certificate</legend>
+          <div class="pair">
+            <div>
+              <label for="exam" class="sublabel">Date of examination</label>
+              <input id="exam" class="input" type="date">
+            </div>
+            <div>
+              <label for="dob" class="sublabel">Date of birth</label>
+              <input id="dob" class="input" type="date">
+            </div>
+          </div>
+          <div class="pair" style="margin-top:0.7rem">
+            <div>
+              <span class="sublabel">Certificate class</span>
+              <div class="seg" role="group" aria-label="Medical class">
+                <button type="button" class="seg-btn" data-unit-group="medclass" data-unit="first" aria-pressed="false">First</button>
+                <button type="button" class="seg-btn" data-unit-group="medclass" data-unit="second" aria-pressed="false">Second</button>
+                <button type="button" class="seg-btn is-active" data-unit-group="medclass" data-unit="third" aria-pressed="true">Third</button>
+              </div>
+            </div>
+            <div>
+              <span class="sublabel">Privileges to check</span>
+              <div class="seg" role="group" aria-label="Privileges">
+                <button type="button" class="seg-btn" data-unit-group="priv" data-unit="first" aria-pressed="false">1st class</button>
+                <button type="button" class="seg-btn" data-unit-group="priv" data-unit="second" aria-pressed="false">2nd class</button>
+                <button type="button" class="seg-btn is-active" data-unit-group="priv" data-unit="third" aria-pressed="true">3rd class</button>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="field-block">
+          <legend>BasicMed (Part 68) <span class="optional">optional</span></legend>
+          <div class="pair">
+            <div>
+              <label for="cme" class="sublabel">Comprehensive medical examination</label>
+              <input id="cme" class="input" type="date">
+            </div>
+            <div>
+              <label for="course" class="sublabel">Medical education course</label>
+              <input id="course" class="input" type="date">
+            </div>
+          </div>
+          <p class="hint">A CME is good for 48 calendar months; the course is good for 24 calendar months (61.23(c)(3) and Part 68). Other BasicMed conditions (aircraft, passengers, altitude) are not checked here.</p>
+        </fieldset>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" id="btn-example">Load a worked example</button>
+          <button type="reset" class="btn btn-ghost" id="btn-reset">Clear dates</button>
+        </div>
+      </form>
+
+      <div id="warnings" class="warnings" hidden role="status"></div>
+
+            <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Currency status</h2>
+        <div id="cards" class="status-list"></div>
+      </section>
+
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This checker is a planning aid, <strong>not legal advice</strong>, and not a substitute for the current text of 14 CFR parts 61 and 68, your logbook, a flight instructor, or an aviation medical examiner. It applies the usual calendar-month and 90-day readings of 61.56, 61.57, and 61.23 to the dates you enter. It does not verify category, class, type, full-stop or night conditions, safety-pilot rules, SIC currency, sport-pilot or BasicMed operating limitations, or any special authorization. When it matters, read the regulation.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+            <h2>Which FAA currency rules this checker applies</h2>
+      <p>This page is a date calculator for the currency rules most private and commercial airplane pilots use. It cites the regulation on each result. It does not know your ratings, the aircraft you flew, or whether a landing was at night or to a full stop — you have to enter qualifying dates honestly.</p>
+      <h3>Passenger currency — 14 CFR 61.57(a) and (b)</h3>
+      <p>To carry passengers you need 3 takeoffs and 3 landings in the preceding 90 days, in the same category and class (and type, if a type rating is required). Night passenger currency requires those landings to a full stop in the period beginning 1 hour after sunset and ending 1 hour before sunrise. Tailwheel airplanes require full-stop landings in daytime as well. If the qualifying (third) landing was on 12 August, you are current through 10 November (the 90th day) and expired on 11 November.</p>
+      <h3>Instrument experience — 14 CFR 61.57(c) and (d)</h3>
+      <p>To act as PIC under IFR or in IMC you need 6 instrument approaches, holding procedures, and intercepting and tracking courses within the <strong>6 calendar months preceding the month of the flight</strong>. Tasks completed on 15 January keep you current through 31 July. From 1 August you are in the <strong>grace period</strong>: you may complete the 61.57(c) tasks to regain currency (typically with a safety pilot in VMC), but you may not act as PIC under IFR until you do. After 6 more calendar months (31 January in this example), an <strong>instrument proficiency check</strong> is required.</p>
+      <h3>Flight review — 14 CFR 61.56</h3>
+      <p>A flight review is required in the preceding 24 calendar months. An event on 15 January 2024 is good through 31 January 2026. A practical test for a new certificate or rating also satisfies the requirement.</p>
+      <h3>Medical certificates — 14 CFR 61.23(d)</h3>
+      <p>Duration is counted from the date of examination to the last day of a later calendar month, and the length depends on the privileges you want to exercise and whether you had reached your 40th birthday on the exam date:</p>
+      <ul>
+        <li>First-class privileges: 12 calendar months (under 40) or 6 calendar months (40 and over).</li>
+        <li>Second-class privileges: 12 calendar months.</li>
+        <li>Third-class privileges: 60 calendar months (under 40) or 24 calendar months (40 and over).</li>
+      </ul>
+      <p>So a first-class exam on 10 March 2025 at age 40 is good for first-class privileges through 30 September 2025, second-class through 31 March 2026, and third-class through 31 March 2027. BasicMed is a separate path under 61.23(c)(3) and Part 68 (CME every 48 calendar months, medical education course every 24).</p>
+
+      <h2>How to use it</h2>
+      <ol>
+        <li>Leave “as of” at today, or set it to the date of a planned flight.</li>
+        <li>Enter the date of your third most recent qualifying day (and night) landing, the date you last completed the instrument tasks, the flight-review date, and the medical exam date and date of birth.</li>
+        <li>Read each card: current, expired, in the IFR grace period, or IPC required, with the expiry date and the FAR citation.</li>
+        <li>Confirm anything that matters against the current text of the regulation and your logbook. This page does not replace a CFI, AME, or the FAR/AIM.</li>
+      </ol>
+
+      <h2>Frequently asked questions</h2>
+      <h3>How long is passenger landing currency good for?</h3>
+      <p>Under 14 CFR 61.57(a) and (b), you may not carry passengers unless you have made 3 takeoffs and 3 landings in the preceding 90 days in an aircraft of the same category, class, and type (if a type rating is required). Night landings must be to a full stop in the period beginning 1 hour after sunset and ending 1 hour before sunrise. Tailwheel landings must be to a full stop. Currency runs through the calendar day that is 90 days after the qualifying landing.</p>
+      <h3>When do I need an instrument proficiency check?</h3>
+      <p>61.57(c) requires 6 instrument approaches, holding, and intercepting and tracking courses within the 6 calendar months preceding the month of the flight. If that lapses, you have 6 more calendar months (the grace period under 61.57(d)) to complete those tasks and become current again — you may not act as PIC under IFR in the meantime. After the grace period, an instrument proficiency check is required.</p>
+      <h3>When does a flight review expire?</h3>
+      <p>61.56(c) requires a flight review in the preceding 24 calendar months. A review on 15 January 2024 is valid through 31 January 2026. A practical test for a new certificate or rating also counts under 61.56(d).</p>
+      <h3>How long is my medical certificate valid?</h3>
+      <p>Under 61.23(d), duration is measured to the last day of a calendar month and depends on the class of privileges and whether you had reached your 40th birthday on the date of the examination. First-class privileges last 12 months if you were under 40, 6 months if you were 40 or older; second-class privileges last 12 months; third-class privileges last 60 months under 40 or 24 months at 40 or older. A first-class certificate then “steps down” to second- and third-class privileges for the remaining time.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — FAA pilot currency checker. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation tool. Always defer to the POH/AFM, official weather, and the current regulations.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This checker needs JavaScript. Enable it, or apply the calendar-month and 90-day rules from 14 CFR 61.56, 61.57, and 61.23 by hand to the dates in your logbook.</p></noscript>
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

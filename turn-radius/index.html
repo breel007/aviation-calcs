@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Turn Radius Calculator — Standard-Rate Bank, Load Factor &amp; Stall Speed in a Bank</title>
+  <meta name="description" content="Free turn radius calculator for pilots. Get the exact standard-rate bank angle and the TAS/10+7 rule of thumb, plus turn radius, rate of turn, load factor, and how much stall speed increases in a coordinated bank.">
+  <meta name="keywords" content="turn radius calculator, standard rate turn bank angle, TAS/10+7, rate of turn, load factor in a turn, stall speed in a bank, steep turn load factor, 60 degree bank">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/turn-radius/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/turn-radius/">
+  <meta property="og:title" content="Turn Radius Calculator — Standard-Rate Bank and Load Factor">
+  <meta property="og:description" content="True airspeed and a bank or a standard-rate turn in. Exact and rule-of-thumb bank, radius, rate of turn, load factor, and stall-speed increase out.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Turn Radius and Standard-Rate Bank Calculator">
+  <meta name="twitter:description" content="Exact standard-rate bank, TAS/10+7, turn radius, load factor, and stall speed in a bank.">
+  <meta name="application-name" content="Turn Radius Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "WebApplication",
+        "SoftwareApplication"
+      ],
+      "name": "Turn Radius Calculator",
+      "url": "https://aviatorcalcs.com/turn-radius/",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Free turn radius and standard-rate bank calculator. Computes exact and rule-of-thumb (TAS/10+7) bank for a 3\u00b0/s turn, plus radius, rate of turn, load factor, and stall speed in a coordinated bank."
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What bank angle is a standard-rate turn?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A standard-rate (Rate 1) turn is 3\u00b0 per second, or a 360\u00b0 turn in 2 minutes. The exact bank is arctan(TAS \u00d7 \u03c9 / g), about 18.2\u00b0 at 120 kt. The common rule of thumb is TAS in knots divided by 10, plus 7 (120 kt \u2192 19\u00b0). This page shows both."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I calculate turn radius?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In a coordinated level turn, radius = V\u00b2 / (g tan \u03c6), using true airspeed. At a standard rate the radius is also V / \u03c9, and a two-minute turn has a circumference of groundspeed (or TAS, in still air) times two minutes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does stall speed increase in a bank?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Load factor in a level turn is 1 / cos(bank). Stall speed increases by the square root of that load factor. In a 60\u00b0 bank the load factor is 2, so stall speed rises by a factor of \u221a2, or about 41%. A 45\u00b0 bank is about a 19% increase; a 30\u00b0 bank is about 7%."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I use indicated or true airspeed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use true airspeed for radius and rate of turn \u2014 the geometry is about speed through the air (or over the ground, in a no-wind mental picture). Convert IAS or CAS first with the true airspeed calculator. Stall speed may be entered as the indicated or calibrated stall speed from the POH; the factor \u221an still applies."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Turn Radius</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../density-altitude/">Density altitude</a>
+        <a href="../crosswind/">Crosswind</a>
+        <a href="../weight-balance/">Weight &amp; balance</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Turn Radius Calculator</h1>
+        <p class="lede">Enter a true airspeed and either a bank angle or a standard-rate turn. You get the exact bank for 3° per second, the familiar TAS/10 + 7 rule of thumb, turn radius, rate of turn, load factor, and the stall-speed increase in a coordinated level turn. Results update as you type.</p>
+      </header>
+
+            <form id="calc-form" action="#" method="get" novalidate>
+        <div class="field-block">
+          <div class="field-label-row">
+            <label for="tas">True airspeed</label>
+            <div class="seg" role="group" aria-label="Speed unit">
+              <button type="button" class="seg-btn is-active" data-unit-group="spd" data-unit="kt" aria-pressed="true">kt</button>
+              <button type="button" class="seg-btn" data-unit-group="spd" data-unit="mph" aria-pressed="false">mph</button>
+            </div>
+          </div>
+          <input id="tas" class="input" type="number" inputmode="decimal" step="any" min="0" value="120" autocomplete="off" required>
+          <p class="hint">Turn geometry uses TAS, not IAS. Convert first with the <a href="../true-airspeed/">true airspeed calculator</a> if you need to.</p>
+        </div>
+
+        <div class="field-block">
+          <div class="field-label-row">
+            <span class="sublabel" style="margin:0">Turn</span>
+            <div class="seg" role="group" aria-label="Turn mode">
+              <button type="button" class="seg-btn is-active" data-unit-group="mode" data-unit="standard" aria-pressed="true">Standard rate</button>
+              <button type="button" class="seg-btn" data-unit-group="mode" data-unit="bank" aria-pressed="false">Set bank</button>
+              <button type="button" class="seg-btn" data-unit-group="mode" data-unit="rate" aria-pressed="false">Set rate</button>
+            </div>
+          </div>
+          <div class="pair">
+            <div id="bank-wrap" hidden>
+              <label for="bank" class="sublabel">Bank angle (degrees)</label>
+              <input id="bank" class="input" type="number" inputmode="decimal" step="any" min="0" max="89" value="30" autocomplete="off">
+            </div>
+            <div id="rate-wrap" hidden>
+              <label for="rate" class="sublabel">Rate of turn (°/s)</label>
+              <input id="rate" class="input" type="number" inputmode="decimal" step="any" min="0" value="3" autocomplete="off">
+            </div>
+            <div>
+              <label for="vs" class="sublabel">Level-flight stall speed <span class="optional">optional</span></label>
+              <input id="vs" class="input" type="number" inputmode="decimal" step="any" min="0" placeholder="kt or mph" autocomplete="off">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" id="btn-example">Load 120 kt standard-rate example</button>
+          <button type="reset" class="btn btn-ghost" id="btn-reset">Reset</button>
+        </div>
+      </form>
+
+      <div id="warnings" class="warnings" hidden role="status"></div>
+
+            <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Turn performance</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Turn radius</p>
+          <p class="hero-value" id="hero-value"><span class="num">—</span> <span class="unit">ft</span></p>
+          <p class="hero-sub" id="hero-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+      </section>
+
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This calculator is a planning and training aid only. It is <strong>not</strong> a substitute for the POH or AFM, a stall-speed chart, or any procedure design criteria. It models a coordinated, level turn in still air using true airspeed and a standard value of g. Wind, pitch attitude, uncoordinated flight, and compressibility will change the path over the ground and can change the stall speed you actually see.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+            <h2>Standard-rate bank, turn radius, and load factor</h2>
+      <p>In a coordinated, level turn the airplane’s lift is tilted, so the horizontal component provides the centripetal acceleration and the wings must make more lift than the weight. The standard relationships, using true airspeed <em>V</em> and bank angle φ, are:</p>
+      <p><code>rate of turn ω = g tan φ / V</code><br>
+         <code>turn radius r = V² / (g tan φ)</code><br>
+         <code>load factor n = 1 / cos φ</code><br>
+         <code>stall speed in the turn = Vs × √n</code></p>
+      <p>A <strong>standard-rate</strong> turn is 3° per second (360° in two minutes). Solving the first equation for bank gives the exact standard-rate bank, about 15.4° at 100 kt and 18.2° at 120 kt. The rule of thumb taught in many courses is <code>bank ≈ TAS/10 + 7</code> with TAS in knots (100 kt → 17°, 120 kt → 19°). The rule is a little conservative at typical light-airplane speeds and a little low at high TAS; this page always shows the exact angle next to it.</p>
+      <p>A compact published approximation for rate of turn is <code>°/s ≈ 1,091 × tan φ / TAS(kt)</code>, which matches the exact formula to a few hundredths of a degree per second.</p>
+
+      <h2>Worked examples</h2>
+      <ul>
+        <li>120 kt, standard rate: exact bank ≈ <strong>18.2°</strong> (rule of thumb 19°), a 360° turn in <strong>2 minutes</strong>, radius ≈ 0.64 nm (the circumference is 120 kt × 2 minutes).</li>
+        <li>60° bank: load factor = <strong>2.0</strong>, stall speed increases by a factor of √2, or <strong>+41%</strong>.</li>
+        <li>45° bank: load factor ≈ 1.41, stall speed <strong>+19%</strong>. 30° bank: load factor ≈ 1.15, stall speed <strong>+7%</strong>.</li>
+      </ul>
+
+      <h2>How to use it</h2>
+      <ol>
+        <li>Enter true airspeed. If you only have an indicated value, convert it with the <a href="../true-airspeed/">true airspeed calculator</a>.</li>
+        <li>Choose a standard-rate turn, or type a bank angle or a desired rate.</li>
+        <li>Optionally enter a level-flight stall speed to see the stall speed in that bank.</li>
+        <li>Use the radius when you brief a hold, a procedure turn, or obstacle clearance, and remember that wind will blow the ground path away from the still-air circle. The <a href="../e6b-wind/">wind triangle</a> does not replace a wind-corrected hold entry, but it will give you the TAS and wind you started from.</li>
+      </ol>
+
+      <h2>Frequently asked questions</h2>
+      <h3>What bank angle is a standard-rate turn?</h3>
+      <p>A standard-rate (Rate 1) turn is 3° per second, or a 360° turn in 2 minutes. The exact bank is arctan(TAS × ω / g), about 18.2° at 120 kt. The common rule of thumb is TAS in knots divided by 10, plus 7 (120 kt → 19°). This page shows both.</p>
+      <h3>How do I calculate turn radius?</h3>
+      <p>In a coordinated level turn, radius = V² / (g tan φ), using true airspeed. At a standard rate the radius is also V / ω, and a two-minute turn has a circumference of groundspeed (or TAS, in still air) times two minutes.</p>
+      <h3>How much does stall speed increase in a bank?</h3>
+      <p>Load factor in a level turn is 1 / cos(bank). Stall speed increases by the square root of that load factor. In a 60° bank the load factor is 2, so stall speed rises by a factor of √2, or about 41%. A 45° bank is about a 19% increase; a 30° bank is about 7%.</p>
+      <h3>Do I use indicated or true airspeed?</h3>
+      <p>Use true airspeed for radius and rate of turn — the geometry is about speed through the air (or over the ground, in a no-wind mental picture). Convert IAS or CAS first with the true airspeed calculator. Stall speed may be entered as the indicated or calibrated stall speed from the POH; the factor √n still applies.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — turn radius and standard-rate bank calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation tool. Always defer to the POH/AFM, official weather, and the current regulations.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer: ω = g tanφ / V, r = V² / (g tanφ), n = 1/cosφ, and the TAS/10+7 rule of thumb.</p></noscript>
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

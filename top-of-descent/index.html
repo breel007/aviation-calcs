@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Top of Descent Calculator — 3° Path, TOD Distance &amp; Descent Rate (GS × 5)</title>
+  <meta name="description" content="Free top of descent calculator for pilots. Find TOD distance and descent rate for a 3° path or a custom angle, including the 3-to-1 rule and the groundspeed × 5 rule of thumb, plus time to descend.">
+  <meta name="keywords" content="top of descent calculator, TOD calculator, 3 degree descent, descent rate calculator, GS times 5, 3 to 1 rule, when to start descent, descent planning">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/top-of-descent/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/top-of-descent/">
+  <meta property="og:title" content="Top of Descent Calculator — 3° Path and GS × 5">
+  <meta property="og:description" content="Altitude to lose and groundspeed in. TOD distance, exact and rule-of-thumb descent rates, and time to descend out.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Top of Descent Calculator">
+  <meta name="twitter:description" content="3° path, 3-to-1 rule, and GS × 5 descent rate — plus custom angles and a rate-planning mode.">
+  <meta name="application-name" content="Top of Descent Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "WebApplication",
+        "SoftwareApplication"
+      ],
+      "name": "Top of Descent Calculator",
+      "url": "https://aviatorcalcs.com/top-of-descent/",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Free top-of-descent calculator. Computes TOD distance and descent rate for a 3\u00b0 or custom path, compares them with the 3-to-1 and GS \u00d7 5 rules of thumb, and can plan a descent from a chosen vertical speed."
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I calculate top of descent?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Divide the altitude you need to lose by the descent gradient. On a 3\u00b0 path the exact gradient is about 318 feet per nautical mile, so TOD in nautical miles is altitude to lose \u00f7 318. The mental 3-to-1 rule \u2014 3 nautical miles per 1,000 feet \u2014 is a close, slightly short approximation (30 nm to lose 10,000 ft, versus about 31.4 nm exactly)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the groundspeed \u00d7 5 descent-rate rule?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For a 3\u00b0 path, descent rate in feet per minute is about 5.3 times the groundspeed in knots. The \u201cGS \u00d7 5\u201d rule (120 kt \u2192 600 fpm) is a convenient underestimate of the exact 637 fpm or so. This page shows both."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When should I start down?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Start down at the TOD distance before the point at which you want to be at the target altitude \u2014 the airport, a pattern altitude, or a crossing restriction. You can add a buffer so you arrive a little early and have room to shallow the path. Always follow ATC, published procedures, and terrain."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I plan from a chosen descent rate instead of an angle?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Switch to \u201cSet rate,\u201d enter a feet-per-minute value, and the calculator returns the distance, time, and the implied path angle at your groundspeed."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Top of Descent</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../density-altitude/">Density altitude</a>
+        <a href="../crosswind/">Crosswind</a>
+        <a href="../weight-balance/">Weight &amp; balance</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Top of Descent Calculator</h1>
+        <p class="lede">Enter cruise altitude, the altitude you want to arrive at, and groundspeed. You get the top-of-descent distance for a 3° path or a custom angle, the matching descent rate, and the familiar 3-to-1 and groundspeed × 5 rules of thumb for a check. Results update as you type.</p>
+      </header>
+
+            <form id="calc-form" action="#" method="get" novalidate>
+        <fieldset class="field-block">
+          <legend>Altitudes</legend>
+          <div class="pair">
+            <div>
+              <div class="field-label-row">
+                <label for="cruise">Cruise altitude</label>
+                <div class="seg" role="group" aria-label="Altitude unit">
+                  <button type="button" class="seg-btn is-active" data-unit-group="alt" data-unit="ft" aria-pressed="true">ft</button>
+                  <button type="button" class="seg-btn" data-unit-group="alt" data-unit="m" aria-pressed="false">m</button>
+                </div>
+              </div>
+              <input id="cruise" class="input" type="number" inputmode="decimal" step="any" value="7000" autocomplete="off">
+            </div>
+            <div>
+              <label for="target">Target altitude</label>
+              <input id="target" class="input" type="number" inputmode="decimal" step="any" value="1000" autocomplete="off">
+              <p class="hint">Pattern, crossing restriction, or field elevation plus a buffer.</p>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="field-block">
+          <div class="field-label-row">
+            <label for="gs">Groundspeed in the descent</label>
+            <div class="seg" role="group" aria-label="Speed unit">
+              <button type="button" class="seg-btn is-active" data-unit-group="spd" data-unit="kt" aria-pressed="true">kt</button>
+              <button type="button" class="seg-btn" data-unit-group="spd" data-unit="mph" aria-pressed="false">mph</button>
+            </div>
+          </div>
+          <input id="gs" class="input" type="number" inputmode="decimal" step="any" min="0" value="120" autocomplete="off">
+        </div>
+
+        <div class="field-block">
+          <div class="field-label-row">
+            <span class="sublabel" style="margin:0">Plan by</span>
+            <div class="seg" role="group" aria-label="Planning method">
+              <button type="button" class="seg-btn is-active" data-unit-group="method" data-unit="angle" aria-pressed="true">Path angle</button>
+              <button type="button" class="seg-btn" data-unit-group="method" data-unit="rate" aria-pressed="false">Set rate</button>
+            </div>
+          </div>
+          <div class="pair">
+            <div id="angle-wrap">
+              <label for="angle" class="sublabel">Descent angle (degrees)</label>
+              <input id="angle" class="input" type="number" inputmode="decimal" step="any" min="0.1" max="20" value="3" autocomplete="off">
+            </div>
+            <div id="rate-wrap" hidden>
+              <label for="rate" class="sublabel">Descent rate (fpm)</label>
+              <input id="rate" class="input" type="number" inputmode="decimal" step="any" min="0" value="500" autocomplete="off">
+            </div>
+            <div>
+              <label for="buffer" class="sublabel">Distance buffer <span class="optional">optional</span></label>
+              <input id="buffer" class="input" type="number" inputmode="decimal" step="any" min="0" placeholder="nm" autocomplete="off">
+            </div>
+          </div>
+          <p class="hint">A 3° path is the usual instrument-approach glide path and a comfortable cruise descent. The buffer is added to the TOD so you start down a little earlier.</p>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" id="btn-example">Load 7,000 to 1,000 ft / 120 kt / 3° example</button>
+          <button type="reset" class="btn btn-ghost" id="btn-reset">Reset</button>
+        </div>
+      </form>
+
+      <div id="warnings" class="warnings" hidden role="status"></div>
+
+            <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Top of descent</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Start down this far out</p>
+          <p class="hero-value" id="hero-value"><span class="num">—</span> <span class="unit">nm</span></p>
+          <p class="hero-sub" id="hero-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+      </section>
+
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This calculator is a planning and training aid only. It is <strong>not</strong> a substitute for published procedures, ATC instructions, terrain clearance, or the descent and approach charts in the POH or AFM. A 3° path and the 3-to-1 or GS × 5 rules are geometry and rules of thumb — they do not guarantee a stable path in wind, icing, or a crossing restriction.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+            <h2>How to calculate a top of descent</h2>
+      <p>For a constant flight-path angle, the distance to lose a given altitude is a matter of geometry:</p>
+      <p><code>distance (nm) = altitude to lose (ft) / (tan(angle) × 6,076.12 ft/nm)</code><br>
+         <code>descent rate (fpm) = groundspeed (kt) × tan(angle) × 6,076.12 / 60</code></p>
+      <p>A 3° path is about <strong>318 feet per nautical mile</strong>. Two well-known rules of thumb sit close to that geometry:</p>
+      <ul>
+        <li><strong>3-to-1 rule:</strong> start down 3 nm before the fix for every 1,000 feet you have to lose. That is the same as 333 ft/nm, a slightly steeper stand-in for 3° (10,000 ft → 30 nm by the rule, about 31.4 nm exactly).</li>
+        <li><strong>Groundspeed × 5:</strong> a 3° path is actually closer to GS × 5.3 (120 kt → about 637 fpm). “Times five” (600 fpm) is an easy, slightly shallow target.</li>
+      </ul>
+      <p>This page shows the exact path and the rules of thumb side by side so you can brief both. Use groundspeed in the descent, not indicated airspeed — convert with the <a href="../true-airspeed/">true airspeed calculator</a> and the <a href="../e6b-wind/">wind triangle</a> if you need to, and check the time with the <a href="../time-speed-distance/">time–speed–distance</a> tool.</p>
+
+      <h2>Worked example</h2>
+      <p>Cruise 7,000 ft, target 1,000 ft (6,000 ft to lose), 120 kt, 3° path:</p>
+      <ul>
+        <li>Exact TOD ≈ <strong>18.8 nm</strong>; 3-to-1 rule = 18 nm.</li>
+        <li>Exact rate ≈ <strong>637 fpm</strong>; GS × 5 = 600 fpm.</li>
+        <li>Time to descend ≈ <strong>9.4 minutes</strong>.</li>
+      </ul>
+
+      <h2>How to use it</h2>
+      <ol>
+        <li>Enter cruise and target altitudes and the groundspeed you will use in the descent.</li>
+        <li>Leave the angle at 3° or set a shallower or steeper path. Or switch to “Set rate” and type a target feet-per-minute.</li>
+        <li>Optionally add a distance buffer if you want to start down early.</li>
+        <li>Start the descent at the displayed distance from the point at which you want to be at the target altitude, and follow ATC and published restrictions.</li>
+      </ol>
+
+      <h2>Frequently asked questions</h2>
+      <h3>How do I calculate top of descent?</h3>
+      <p>Divide the altitude you need to lose by the descent gradient. On a 3° path the exact gradient is about 318 feet per nautical mile, so TOD in nautical miles is altitude to lose ÷ 318. The mental 3-to-1 rule — 3 nautical miles per 1,000 feet — is a close, slightly short approximation (30 nm to lose 10,000 ft, versus about 31.4 nm exactly).</p>
+      <h3>What is the groundspeed × 5 descent-rate rule?</h3>
+      <p>For a 3° path, descent rate in feet per minute is about 5.3 times the groundspeed in knots. The “GS × 5” rule (120 kt → 600 fpm) is a convenient underestimate of the exact 637 fpm or so. This page shows both.</p>
+      <h3>When should I start down?</h3>
+      <p>Start down at the TOD distance before the point at which you want to be at the target altitude — the airport, a pattern altitude, or a crossing restriction. You can add a buffer so you arrive a little early and have room to shallow the path. Always follow ATC, published procedures, and terrain.</p>
+      <h3>Can I plan from a chosen descent rate instead of an angle?</h3>
+      <p>Yes. Switch to “Set rate,” enter a feet-per-minute value, and the calculator returns the distance, time, and the implied path angle at your groundspeed.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — top of descent calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation tool. Always defer to the POH/AFM, official weather, and the current regulations.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the 3-to-1 rule (3 nm per 1,000 ft) and GS × 5 as a mental check, then the exact tan(angle) formulas in the explainer.</p></noscript>
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
