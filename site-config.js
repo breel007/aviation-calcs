@@ -13,7 +13,7 @@
 
   var SITE = {
     name: "Aviation Calcs",
-    baseUrl: "https://breel007.github.io/aviation-calcs",
+    baseUrl: "https://aviatorcalcs.com",
     pages: [
       { path: "/", title: "Home", changefreq: "weekly", priority: "1.0" },
       { path: "/density-altitude/", title: "Density altitude calculator", changefreq: "monthly", priority: "0.9" },

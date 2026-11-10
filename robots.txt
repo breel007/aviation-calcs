@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://breel007.github.io/aviation-calcs/sitemap.xml
+Sitemap: https://aviatorcalcs.com/sitemap.xml

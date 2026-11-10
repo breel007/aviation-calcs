@@ -2,7 +2,7 @@
 
 Free, static aviation calculators for pilots. No build step and no backend — just HTML, CSS, and JavaScript.
 
-Live site: [https://breel007.github.io/aviation-calcs/](https://breel007.github.io/aviation-calcs/)
+Live site: [https://aviatorcalcs.com/](https://aviatorcalcs.com/) (also still reachable at [https://breel007.github.io/aviation-calcs/](https://breel007.github.io/aviation-calcs/) while that host is configured).
 
 ## Calculators
 

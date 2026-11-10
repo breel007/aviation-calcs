@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://breel007.github.io/aviation-calcs/</loc>
+    <loc>https://aviatorcalcs.com/</loc>
     <lastmod>2026-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://breel007.github.io/aviation-calcs/density-altitude/</loc>
+    <loc>https://aviatorcalcs.com/density-altitude/</loc>
     <lastmod>2026-11-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://breel007.github.io/aviation-calcs/crosswind/</loc>
+    <loc>https://aviatorcalcs.com/crosswind/</loc>
     <lastmod>2026-11-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://breel007.github.io/aviation-calcs/weight-balance/</loc>
+    <loc>https://aviatorcalcs.com/weight-balance/</loc>
     <lastmod>2026-11-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://breel007.github.io/aviation-calcs/about.html</loc>
+    <loc>https://aviatorcalcs.com/about.html</loc>
     <lastmod>2026-11-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://breel007.github.io/aviation-calcs/privacy.html</loc>
+    <loc>https://aviatorcalcs.com/privacy.html</loc>
     <lastmod>2026-11-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
