@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Aircraft Ownership Cost Calculator — Hourly &amp; Annual Cost to Own</title>
+  <meta name="description" content="Free aircraft ownership cost calculator for pilots. Estimate the annual and per-hour cost of owning a plane: loan or cash, insurance, hangar, annual inspection, engine and propeller reserves, fuel, maintenance, and the breakeven hours versus renting or a partnership.">
+  <meta name="keywords" content="aircraft ownership cost, cost to own a plane, airplane operating cost, aircraft fixed costs, engine reserve TBO, breakeven vs renting, aircraft partnership cost, hangar insurance annual">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/aircraft-ownership-cost/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/aircraft-ownership-cost/">
+  <meta property="og:title" content="Aircraft Ownership Cost Calculator — Annual and Per-Hour Cost">
+  <meta property="og:description" content="Estimate the real cost of owning an airplane: fixed vs variable, engine and prop reserves, breakeven versus renting, and a partnership split. Edit every example value.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Aircraft Ownership Cost Calculator">
+  <meta name="twitter:description" content="Annual and per-hour cost of owning a plane, with a rental breakeven and partnership split.">
+  <meta name="application-name" content="Aircraft Ownership Cost Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Aircraft Ownership Cost Calculator",
+            "url": "https://aviatorcalcs.com/aircraft-ownership-cost/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free calculator for the annual and per-hour cost of owning an airplane, including financing, insurance, hangar, reserves, fuel, breakeven versus renting, and a partnership split."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "How much does it cost to own an airplane per hour?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Add up the fixed annual costs (insurance, hangar or tie-down, the annual inspection, database subscriptions, and loan payments or the opportunity cost of the money you have in the airplane) and divide by the hours you actually fly, then add the variable costs that only happen when you fly: fuel, oil, an engine and propeller reserve for overhaul, and a maintenance reserve. A typical light-airplane owner who flies 100 hours a year often sees an all-in cost in the mid-hundreds of dollars per hour, but the number moves a lot with hangar rent, fuel price, and hours flown."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What is the difference between fixed and variable aircraft ownership costs?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Fixed costs are the ones you pay even if the airplane stays in the hangar: insurance, hangar or tie-down, the annual inspection, subscriptions, and financing or opportunity cost. Variable costs scale with hours: fuel, oil, engine and propeller reserves, and unscheduled maintenance. Flying more hours spreads the fixed costs over more flights and lowers the all-in cost per hour."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How many hours do I need to fly to make owning cheaper than renting?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The breakeven is fixed annual cost divided by (the wet rental rate minus your variable cost per hour). If your variable cost is already higher than the rental rate, owning will not beat renting on hourly cost no matter how much you fly. This calculator uses the figures you type in; it is a planning estimate, not a tax or financing opinion."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How are costs split in an aircraft partnership?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "A common arrangement is that the partners share the fixed costs equally and each person pays the variable (fuel, reserves, hourly maintenance) for the hours they fly. This page splits a year’s hours equally among the partners as a starting point; real agreements also cover scheduling, a reserve account, and what happens when someone leaves."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Ownership cost</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../density-altitude/">Density altitude</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Aircraft Ownership Cost Calculator</h1>
+        <p class="lede">Estimate the annual and per-hour cost of owning a plane. Fixed costs (insurance, hangar, the annual, financing) are separated from variable costs (fuel, oil, engine and propeller reserves, maintenance). You also get a breakeven against a wet rental rate and a simple partnership split. Results update as you type.</p>
+      </header>
+
+      <p class="example-note">The numbers already filled in are <strong>example values</strong> for a typical U.S. Cessna 172-class airplane in 2026, bought for cash with a 5% opportunity cost on the equity. They are a starting point only. Change every field to match the airplane, shop, fuel price, and airport you are actually looking at.</p>
+
+      <form id="calc-form" action="#" method="get" novalidate>
+        <fieldset class="field-block">
+          <legend>Purchase and financing</legend>
+          <div class="pair">
+            <div>
+              <label for="price" class="sublabel">Purchase price</label>
+              <input id="price" class="input" type="number" inputmode="decimal" min="0" step="1000" value="200000" autocomplete="off">
+            </div>
+            <div>
+              <label for="down-pct" class="sublabel">Down payment (%)</label>
+              <input id="down-pct" class="input" type="number" inputmode="decimal" min="0" max="100" step="1" value="100" autocomplete="off">
+            </div>
+          </div>
+          <div class="triple">
+            <div>
+              <label for="loan-rate" class="sublabel">Loan APR (%)</label>
+              <input id="loan-rate" class="input" type="number" inputmode="decimal" min="0" max="40" step="0.05" value="0" autocomplete="off">
+            </div>
+            <div>
+              <label for="loan-term" class="sublabel">Loan term (years)</label>
+              <input id="loan-term" class="input" type="number" inputmode="decimal" min="0" max="30" step="1" value="0" autocomplete="off">
+            </div>
+            <div>
+              <label for="opp-rate" class="sublabel">Opportunity cost (%)</label>
+              <input id="opp-rate" class="input" type="number" inputmode="decimal" min="0" max="20" step="0.1" value="5" autocomplete="off">
+            </div>
+          </div>
+          <p class="hint">A 100% down payment is a cash purchase — the loan boxes go to zero and an opportunity cost can stand in for the return that money might have earned elsewhere. For a financed airplane, set the down payment and APR; loan payments are included in the fixed costs. See the <a href="../aircraft-loan/">aircraft loan calculator</a> for a full amortization table.</p>
+        </fieldset>
+
+        <fieldset class="field-block">
+          <legend>Fixed annual costs</legend>
+          <div class="triple">
+            <div>
+              <label for="insurance" class="sublabel">Insurance ($/year)</label>
+              <input id="insurance" class="input" type="number" inputmode="decimal" min="0" step="50" value="2400" autocomplete="off">
+            </div>
+            <div>
+              <label for="hangar" class="sublabel">Hangar or tie-down ($/month)</label>
+              <input id="hangar" class="input" type="number" inputmode="decimal" min="0" step="25" value="450" autocomplete="off">
+            </div>
+            <div>
+              <label for="annual" class="sublabel">Annual inspection ($/year)</label>
+              <input id="annual" class="input" type="number" inputmode="decimal" min="0" step="50" value="2800" autocomplete="off">
+            </div>
+          </div>
+          <div class="pair">
+            <div>
+              <label for="subs" class="sublabel">Databases and subscriptions ($/year)</label>
+              <input id="subs" class="input" type="number" inputmode="decimal" min="0" step="25" value="1200" autocomplete="off">
+            </div>
+            <div>
+              <label for="other-fixed" class="sublabel">Other fixed ($/year)</label>
+              <input id="other-fixed" class="input" type="number" inputmode="decimal" min="0" step="25" value="0" autocomplete="off" placeholder="taxes, club dues…">
+            </div>
+          </div>
+          <p class="hint">Subscriptions are things like ForeFlight or Garmin Pilot plus GPS navigator databases. “Other fixed” is a catch-all for property tax, club dues, or a hangar association fee.</p>
+        </fieldset>
+
+        <fieldset class="field-block">
+          <legend>Variable (per-hour) costs</legend>
+          <div class="triple">
+            <div>
+              <label for="burn" class="sublabel">Fuel burn (gph)</label>
+              <input id="burn" class="input" type="number" inputmode="decimal" min="0" step="0.1" value="8.5" autocomplete="off">
+            </div>
+            <div>
+              <label for="fuel-price" class="sublabel">Fuel price ($/gal)</label>
+              <input id="fuel-price" class="input" type="number" inputmode="decimal" min="0" step="0.05" value="6.50" autocomplete="off">
+            </div>
+            <div>
+              <label for="oil" class="sublabel">Oil ($/hour)</label>
+              <input id="oil" class="input" type="number" inputmode="decimal" min="0" step="0.1" value="1.00" autocomplete="off">
+            </div>
+          </div>
+          <div class="triple">
+            <div>
+              <label for="eng-oh" class="sublabel">Engine overhaul cost</label>
+              <input id="eng-oh" class="input" type="number" inputmode="decimal" min="0" step="500" value="30000" autocomplete="off">
+            </div>
+            <div>
+              <label for="eng-tbo" class="sublabel">Engine TBO (hours)</label>
+              <input id="eng-tbo" class="input" type="number" inputmode="decimal" min="0" step="50" value="2000" autocomplete="off">
+            </div>
+            <div>
+              <label for="mx" class="sublabel">Maintenance reserve ($/hr)</label>
+              <input id="mx" class="input" type="number" inputmode="decimal" min="0" step="1" value="20" autocomplete="off">
+            </div>
+          </div>
+          <div class="pair">
+            <div>
+              <label for="prop-oh" class="sublabel">Propeller overhaul cost</label>
+              <input id="prop-oh" class="input" type="number" inputmode="decimal" min="0" step="100" value="8000" autocomplete="off">
+            </div>
+            <div>
+              <label for="prop-tbo" class="sublabel">Propeller TBO (hours)</label>
+              <input id="prop-tbo" class="input" type="number" inputmode="decimal" min="0" step="50" value="2000" autocomplete="off">
+            </div>
+          </div>
+          <p class="hint">The engine and propeller reserves are overhaul cost divided by TBO, so you are setting aside money for the next overhaul as you fly. Leave TBO at 0 to omit a reserve. The maintenance reserve is for unscheduled work between annuals.</p>
+        </fieldset>
+
+        <fieldset class="field-block">
+          <legend>Use, rental comparison, and partners</legend>
+          <div class="triple">
+            <div>
+              <label for="hours" class="sublabel">Hours flown per year</label>
+              <input id="hours" class="input" type="number" inputmode="decimal" min="1" step="1" value="100" autocomplete="off">
+            </div>
+            <div>
+              <label for="rental" class="sublabel">Comparable wet rental ($/hr)</label>
+              <input id="rental" class="input" type="number" inputmode="decimal" min="0" step="5" value="180" autocomplete="off">
+            </div>
+            <div>
+              <label for="partners" class="sublabel">Partners (1 = sole owner)</label>
+              <input id="partners" class="input" type="number" inputmode="numeric" min="1" max="20" step="1" value="1" autocomplete="off">
+            </div>
+          </div>
+          <p class="hint">The rental rate is a wet (fuel-included) hourly rate for a similar airplane, used only for the breakeven comparison. Partners share the fixed costs equally and each pays variable costs for an equal share of the hours. See also the <a href="../rental-cost/">rental cost calculator</a>.</p>
+        </fieldset>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" id="btn-example">Reload 172 example</button>
+          <button type="button" class="btn btn-ghost" id="btn-financed">Load financed example</button>
+        </div>
+      </form>
+
+      <div id="warnings" class="warnings" hidden role="status"></div>
+
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Ownership cost results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">All-in cost per hour <span class="hero-tag" id="hero-tag">example values</span></p>
+          <p class="hero-value" id="out-per-hour"><span class="num">—</span> <span class="unit">/hr</span></p>
+          <p class="hero-sub" id="out-annual">—</p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="breakdown"></div>
+        <div id="compare"></div>
+        <div id="partnership"></div>
+      </section>
+
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This calculator is a planning aid only. It is <strong>not</strong> a tax, accounting, financing, or insurance opinion, and it is not a substitute for a quote from a lender, underwriter, or mechanic. Overhaul costs, TBO, fuel burn, and shop rates vary widely. Opportunity cost is an economic idea, not a cash payment. Always run the numbers for the specific airplane and airport, and talk to a mechanic, insurance broker, and (if you need one) a tax professional before you buy.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>How to estimate the cost of owning a plane</h2>
+      <p>The useful way to think about aircraft ownership cost is to split it into <strong>fixed costs</strong> you pay whether you fly or not, and <strong>variable costs</strong> that only happen when the Hobbs meter runs. Add them up for a year, then divide by the hours you actually fly. That all-in cost per hour is what you compare with a wet rental rate, a club, or a partnership.</p>
+      <p>Fixed costs usually include hull and liability insurance, hangar or tie-down rent, the annual inspection, database and subscription fees (a GPS navigator database, ForeFlight or Garmin Pilot, chart subscriptions), and the cost of money — either the loan payment on a financed airplane or an opportunity cost on a cash purchase. Variable costs include fuel, oil, a reserve for the next engine overhaul (overhaul cost divided by TBO hours), a similar reserve for the propeller, and a maintenance reserve for the unscheduled work that shows up between annuals.</p>
+
+      <h2>Engine and propeller reserves</h2>
+      <p>A Lycoming or Continental overhaul on a four-cylinder trainer often lands in the mid-five figures; a propeller overhaul is less but still real money. Dividing that bill by the manufacturer’s TBO (often 1,800 or 2,000 hours for the engine) gives a dollars-per-hour reserve. Many owners keep that money in a separate account so the overhaul is not a surprise. TBO is a recommended interval, not always a hard limit, and a mid-time engine should use a remaining-hours figure rather than a full TBO.</p>
+
+      <h2>Breakeven versus renting</h2>
+      <p>Owning becomes cheaper than renting, on an hourly basis, when</p>
+      <p><code>hours = fixed annual cost / (rental rate − variable cost per hour)</code></p>
+      <p>If your variable cost is already higher than the rental rate, no number of hours will close the gap — you would be better off renting for the flying, or you need cheaper fuel, a cheaper hangar, or a partner. Hours flown are the biggest lever on the all-in rate, because they spread the hangar and insurance over more flights.</p>
+
+      <h2>Partnerships and clubs</h2>
+      <p>A two- or four-person partnership typically splits the fixed costs equally and has each partner pay fuel, reserves, and hourly maintenance for the hours they fly. Flying clubs add a membership fee and a dry or wet hourly rate. This page models the equal-share partnership; it does not replace a written operating agreement.</p>
+
+      <h2>Worked example</h2>
+      <p>A $200,000 Cessna 172 bought for cash, 5% opportunity cost, $2,400 insurance, $450 a month hangar, a $2,800 annual, $1,200 in subscriptions, 8.5 gph at $6.50 a gallon, $1/hr oil, a $30,000 engine overhaul at 2,000 hours, an $8,000 propeller at 2,000 hours, a $20/hr maintenance reserve, and 100 hours a year:</p>
+      <ul>
+        <li>Fixed costs are $21,800 a year, including $10,000 of opportunity cost.</li>
+        <li>Variable costs are $95.25 an hour, or $9,525 a year.</li>
+        <li>The all-in cost is $31,325 a year, or about <strong>$313 per hour</strong>.</li>
+        <li>Against a $180/hr wet rental, the breakeven is about 257 hours a year — more than this owner flies, so renting is cheaper on hourly cost at 100 hours. Drop the opportunity cost, or add three partners, and that conclusion can change.</li>
+      </ul>
+
+      <h2>Frequently asked questions</h2>
+      <h3>How much does it cost to own an airplane per hour?</h3>
+      <p>Divide a year’s fixed costs by the hours you fly, then add fuel, oil, engine and propeller reserves, and a maintenance reserve. A typical 172-class owner at 100 hours a year often lands in the mid-hundreds of dollars an hour, but hangar rent and hours flown move that number a lot.</p>
+      <h3>What is the difference between fixed and variable aircraft ownership costs?</h3>
+      <p>Fixed costs are paid even if the airplane does not fly: insurance, hangar, the annual, subscriptions, and financing or opportunity cost. Variable costs scale with hours: fuel, oil, reserves, and unscheduled maintenance.</p>
+      <h3>How many hours do I need to fly to make owning cheaper than renting?</h3>
+      <p>Divide the fixed annual cost by the difference between the wet rental rate and your variable cost per hour. If the variable cost is already higher than the rental rate, owning will not win on hourly cost.</p>
+      <h3>How are costs split in an aircraft partnership?</h3>
+      <p>A common arrangement is equal shares of the fixed costs, with each partner paying variable costs for the hours they fly. Real agreements also cover scheduling and a reserve account.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — aircraft ownership cost calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or add the fixed and variable costs described in the explainer with a hand calculator.</p></noscript>
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

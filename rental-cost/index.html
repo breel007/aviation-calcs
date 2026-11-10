@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Aircraft Rental Cost Calculator — Hobbs vs Tach, Wet vs Dry</title>
+  <meta name="description" content="Free aircraft rental cost calculator. Figure a trip on Hobbs or tach time, at a wet or dry rate, add fuel, instructor time, and landing fees, and split the operating cost with passengers under the 14 CFR 61.113 pro-rata rule.">
+  <meta name="keywords" content="aircraft rental cost, Hobbs vs tach, wet vs dry rental, fuel cost airplane, split flight cost, 61.113 pro rata, passenger cost share">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/rental-cost/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/rental-cost/">
+  <meta property="og:title" content="Aircraft Rental Cost Calculator — Hobbs, Wet or Dry, Cost Split">
+  <meta property="og:description" content="Trip cost on Hobbs or tach, wet or dry with fuel, plus a 61.113 pro-rata split among passengers.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Aircraft Rental Cost Calculator">
+  <meta name="twitter:description" content="Hobbs vs tach, wet vs dry, and a legal equal-share passenger split.">
+  <meta name="application-name" content="Aircraft Rental Cost Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Aircraft Rental Cost Calculator",
+            "url": "https://aviatorcalcs.com/rental-cost/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free calculator for aircraft rental cost: Hobbs or tach, wet or dry with fuel, and a 61.113 pro-rata passenger split."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "What is the difference between Hobbs time and tach time?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "A Hobbs meter usually runs whenever the engine or master is on, so it counts taxi, run-up, and idle. A tach meter runs in proportion to engine RPM, so a typical flight often shows about 10–20% less tach time than Hobbs time. Some FBOs bill on Hobbs, some on tach; the hourly rate is set accordingly."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What is a wet rental rate versus a dry rate?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "A wet rate includes fuel in the hourly price. A dry rate does not — you buy the fuel, or you are billed for what you burned. To compare them, add fuel (gallons × price, or gph × hours × price) to the dry rate. If you bought fuel away from a wet-rate FBO, many clubs credit the receipt against the wet charge."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Can a private pilot split the cost of a rental with passengers?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes, within limits. Under 14 CFR 61.113(c), a private pilot may share the operating expenses of a flight — fuel, oil, airport expenditures, and rental fees — provided the pilot pays a pro rata share. Equal shares (total operating cost divided by the number of people on board, including the pilot) meet that rule. The pilot cannot make a profit, and this is not a commercial operation."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Does the pro-rata share include the instructor?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The 61.113 sharing rule is about passengers paying a share of operating expenses on a flight the private pilot is conducting. Instructor time is usually the student’s training expense, not something you split with friends as a passenger-carrying cost share. This calculator reports an equal share of the operating cost (aircraft, fuel, and fees) and lists instruction separately."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Rental cost</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../density-altitude/">Density altitude</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Aircraft Rental Cost Calculator</h1>
+        <p class="lede">Figure the cost of a rental flight on Hobbs or tach time, at a wet or dry rate, with fuel, instructor time, and airport fees. Then split the operating cost equally among the people on board — the 14 CFR 61.113 pro-rata share a private pilot must at least pay. Results update as you type.</p>
+      </header>
+      <p class="example-note">The starting figures are an <strong>example</strong> 1.6-hour wet rental at $180/hr with a $15 landing fee and two passengers. Change the rate and time to match your FBO’s Hobbs or tach policy.</p>
+      <form id="calc-form" action="#" method="get" novalidate>
+        <fieldset class="field-block">
+          <legend>Time</legend>
+          <div class="seg" role="group" aria-label="Time entry">
+            <button type="button" class="seg-btn is-active" data-unit-group="time" data-unit="hours" aria-pressed="true">Hours</button>
+            <button type="button" class="seg-btn" data-unit-group="time" data-unit="meter" aria-pressed="false">Meter start / end</button>
+          </div>
+          <div id="hours-row" style="margin-top:0.7rem">
+            <label for="hours" class="sublabel">Billed hours (Hobbs or tach)</label>
+            <input id="hours" class="input" type="number" inputmode="decimal" min="0" step="0.1" value="1.6" autocomplete="off">
+          </div>
+          <div id="meter-row" class="pair" style="margin-top:0.7rem" hidden>
+            <div>
+              <label for="meter-start" class="sublabel">Meter start</label>
+              <input id="meter-start" class="input" type="number" inputmode="decimal" min="0" step="0.1" value="1234.2" autocomplete="off">
+            </div>
+            <div>
+              <label for="meter-end" class="sublabel">Meter end</label>
+              <input id="meter-end" class="input" type="number" inputmode="decimal" min="0" step="0.1" value="1235.8" autocomplete="off">
+            </div>
+          </div>
+          <p class="hint">Enter the hours the FBO will bill — Hobbs or tach, whichever the club uses. A tach hour is usually a bit shorter than a Hobbs hour; the rate should be the one that goes with that meter.</p>
+        </fieldset>
+        <fieldset class="field-block">
+          <legend>Rate and fuel</legend>
+          <div class="pair">
+            <div>
+              <label for="rate" class="sublabel">Hourly rate</label>
+              <input id="rate" class="input" type="number" inputmode="decimal" min="0" step="1" value="180" autocomplete="off">
+            </div>
+            <div>
+              <span class="sublabel">Rate type</span>
+              <div class="seg" role="group" aria-label="Wet or dry">
+                <button type="button" class="seg-btn is-active" data-unit-group="rate" data-unit="wet" aria-pressed="true">Wet (fuel in)</button>
+                <button type="button" class="seg-btn" data-unit-group="rate" data-unit="dry" aria-pressed="false">Dry (fuel extra)</button>
+              </div>
+            </div>
+          </div>
+          <div class="triple" style="margin-top:0.7rem">
+            <div>
+              <label for="fuel-gal" class="sublabel">Fuel gallons</label>
+              <input id="fuel-gal" class="input" type="number" inputmode="decimal" min="0" step="0.1" value="0" autocomplete="off">
+            </div>
+            <div>
+              <label for="fuel-price" class="sublabel">Fuel price ($/gal)</label>
+              <input id="fuel-price" class="input" type="number" inputmode="decimal" min="0" step="0.05" value="6.50" autocomplete="off">
+            </div>
+            <div>
+              <label for="gph" class="sublabel">Fuel burn (gph) <span class="optional">optional</span></label>
+              <input id="gph" class="input" type="number" inputmode="decimal" min="0" step="0.1" value="" placeholder="for wet↔dry" autocomplete="off">
+            </div>
+          </div>
+          <label class="check-row" for="fuel-credit">
+            <input id="fuel-credit" type="checkbox">
+            <span>Wet rate: credit fuel bought away from base</span>
+          </label>
+          <p class="hint">On a dry rate, gallons × price are added to the bill. On a wet rate they are ignored unless you tick the fuel-credit box, which subtracts a receipt for fuel you bought somewhere else.</p>
+        </fieldset>
+        <fieldset class="field-block">
+          <legend>Instructor, fees, and passengers</legend>
+          <div class="triple">
+            <div>
+              <label for="inst-rate" class="sublabel">Instructor rate ($/hr)</label>
+              <input id="inst-rate" class="input" type="number" inputmode="decimal" min="0" step="5" value="0" autocomplete="off">
+            </div>
+            <div>
+              <label for="inst-hrs" class="sublabel">Instructor hours <span class="optional">optional</span></label>
+              <input id="inst-hrs" class="input" type="number" inputmode="decimal" min="0" step="0.1" value="" placeholder="same as billed" autocomplete="off">
+            </div>
+            <div>
+              <label for="landing" class="sublabel">Landing / ramp fees</label>
+              <input id="landing" class="input" type="number" inputmode="decimal" min="0" step="1" value="15" autocomplete="off">
+            </div>
+          </div>
+          <div class="pair">
+            <div>
+              <label for="other-fees" class="sublabel">Other airport fees</label>
+              <input id="other-fees" class="input" type="number" inputmode="decimal" min="0" step="1" value="0" autocomplete="off">
+            </div>
+            <div>
+              <label for="pax" class="sublabel">Passengers (not counting you)</label>
+              <input id="pax" class="input" type="number" inputmode="numeric" min="0" max="20" step="1" value="2" autocomplete="off">
+            </div>
+          </div>
+          <p class="hint">Leave instructor hours blank to use the same time as the airplane. The equal-share split applies to operating expenses only (aircraft, fuel, and fees), not instruction, which is listed separately.</p>
+        </fieldset>
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" id="btn-example">Reload example</button>
+          <button type="button" class="btn btn-ghost" id="btn-dry">Load dry-rate example</button>
+        </div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Rental cost results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Trip total</p>
+          <p class="hero-value" id="out-total"><span class="num">—</span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="share-card"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This calculator is a planning aid only. Confirm the billed meter, the wet or dry policy, and any fuel-credit rule with the FBO or club. The equal-share figure is a way to apply 14 CFR 61.113(c); it is <strong>not</strong> legal advice, and it does not make a flight a commercial operation or a permitted cost share if other rules (for example, holding out) are not met. The pilot still makes the go/no-go decision.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+
+    <article class="panel explainer" id="about-calc">
+      <h2>Hobbs time versus tach time</h2>
+      <p>A <strong>Hobbs</strong> meter is usually an oil-pressure or electrical hour meter: it runs whenever the engine (or sometimes the master switch) is on, so taxi, run-up, and idle all count. A <strong>tach</strong> meter counts engine revolutions and is marked in hours at a typical cruise RPM, so a flight that includes a long taxi often shows fewer tach hours than Hobbs hours — commonly around 10–20% less, sometimes written as a 1.10 or 1.15 Hobbs-to-tach ratio. Clubs pick one meter and set the hourly rate to match. Comparing a $160 tach rate with a $160 Hobbs rate is not an even comparison.</p>
+      <h2>Wet versus dry rentals</h2>
+      <p>A <strong>wet</strong> rate includes fuel. A <strong>dry</strong> rate does not; you buy fuel or you are billed for the burn. To compare, add gallons × price (or gph × hours × price) to the dry rate. If you are on a wet rate and bought fuel at another airport, many clubs credit that receipt against the wet charge — tick the fuel-credit box to model that.</p>
+      <h2>Sharing the cost with passengers (14 CFR 61.113)</h2>
+      <p>A private pilot may not fly for compensation or hire, but 61.113(c) allows the pilot and passengers to share “the operating expenses of a flight,” limited to fuel, oil, airport expenditures, and rental fees, provided the pilot pays a <strong>pro rata share</strong>. Splitting those expenses equally among everyone on board — including the pilot — is the usual way to stay inside that rule. The pilot cannot pay less than that share (that would be flying for a profit). Instruction is generally a training expense, not part of this passenger split, so this page keeps it on its own line.</p>
+      <h2>Worked example</h2>
+      <p>A 1.6-hour wet rental at $180/hr, a $15 landing fee, no instructor, and two passengers (three people including the pilot):</p>
+      <ul>
+        <li>Airplane $288 + fee $15 = <strong>$303</strong> total, or about $189/hr.</li>
+        <li>Equal share = $303 / 3 = <strong>$101</strong>. That is the minimum the private pilot should pay; the two passengers can share the remaining $202.</li>
+      </ul>
+      <h2>Frequently asked questions</h2>
+      <h3>What is the difference between Hobbs time and tach time?</h3>
+      <p>Hobbs usually runs whenever the engine or master is on. Tach runs with RPM and typically records less time on the same flight. The hourly rate should match the meter the FBO uses.</p>
+      <h3>What is a wet rental rate versus a dry rate?</h3>
+      <p>Wet includes fuel. Dry does not; add gallons × price to compare. A wet-rate fuel credit subtracts fuel you bought away from base.</p>
+      <h3>Can a private pilot split the cost of a rental with passengers?</h3>
+      <p>Yes, under 61.113(c), for fuel, oil, airport expenses, and rental fees, if the pilot pays at least a pro rata (equal) share and does not make a profit.</p>
+      <h3>Does the pro-rata share include the instructor?</h3>
+      <p>Usually not. This page splits operating expenses only and lists instruction separately.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — aircraft rental cost calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or multiply hours by the rate and split the operating expenses equally.</p></noscript>
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

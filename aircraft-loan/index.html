@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Aircraft Loan Calculator — Payment, Amortization &amp; Affordability</title>
+  <meta name="description" content="Free aircraft loan calculator. Estimate the monthly payment, total interest, and amortization schedule for an airplane loan, including an optional balloon payment, or work backward from a monthly budget to an affordable price.">
+  <meta name="keywords" content="aircraft loan calculator, airplane loan payment, aircraft amortization, balloon payment airplane, aircraft loan affordability, aviation financing">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/aircraft-loan/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/aircraft-loan/">
+  <meta property="og:title" content="Aircraft Loan Calculator — Payment and Amortization">
+  <meta property="og:description" content="Monthly payment, total interest, optional balloon, a full amortization table, and an affordability mode that works backward from a monthly budget.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Aircraft Loan Calculator">
+  <meta name="twitter:description" content="Airplane loan payment, balloon, amortization, and affordability.">
+  <meta name="application-name" content="Aircraft Loan Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Aircraft Loan Calculator",
+            "url": "https://aviatorcalcs.com/aircraft-loan/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free aircraft loan payment, amortization, balloon, and affordability calculator."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "How is an aircraft loan payment calculated?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "A fixed-rate aircraft loan uses the same amortization formula as a home or car loan. The monthly payment is set so that the loan reaches the balloon (or zero, if there is no balloon) after the chosen term. Total interest is what you pay in payments plus any balloon, minus the amount you borrowed."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What is a balloon payment on an airplane loan?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "A balloon is a lump of principal still owed at the end of the term. It lowers the monthly payment because you are not amortizing the full loan. You then refinance, sell, or pay the balloon in cash. This calculator treats the balloon as remaining principal at the last month."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How much airplane can I afford?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Start from the monthly payment you are willing to make, then work backward given the down payment, interest rate, term, and any balloon. The result is the maximum purchase price those payments will support, not a lender’s actual approval."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Are aircraft loan rates different from mortgage rates?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Often, yes. Aircraft are specialized collateral, terms are commonly 10–20 years, and down payments of 15–20% are typical. Rates and fees change; use a current quote from an aviation lender in this form rather than a home-loan rate."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Aircraft loan</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../density-altitude/">Density altitude</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Aircraft Loan Calculator</h1>
+        <p class="lede">Estimate the monthly payment, total interest, and amortization for an airplane loan — with an optional balloon — or switch to affordability mode and work backward from a monthly budget to a maximum purchase price. Results update as you type.</p>
+      </header>
+      <p class="example-note">The starting figures are <strong>example values</strong> for a $250,000 airplane with 20% down, 7.25% APR, and a 20-year term. They are not a quote. Replace them with the price, down payment, and rate an aviation lender has actually given you.</p>
+      <form id="calc-form" action="#" method="get" novalidate>
+        <div class="field-block">
+          <div class="field-label-row">
+            <span class="sublabel">Mode</span>
+            <div class="seg" role="group" aria-label="Calculator mode">
+              <button type="button" class="seg-btn is-active" data-unit-group="mode" data-unit="payment" aria-pressed="true">Payment</button>
+              <button type="button" class="seg-btn" data-unit-group="mode" data-unit="afford" aria-pressed="false">Affordability</button>
+            </div>
+          </div>
+        </div>
+        <div id="payment-fields">
+          <fieldset class="field-block">
+            <legend>Price and down payment</legend>
+            <div class="pair">
+              <div>
+                <label for="price" class="sublabel">Purchase price</label>
+                <input id="price" class="input" type="number" inputmode="decimal" min="0" step="1000" value="250000" autocomplete="off">
+              </div>
+              <div>
+                <div class="field-label-row">
+                  <label for="down" class="sublabel">Down payment</label>
+                  <div class="seg" role="group" aria-label="Down payment type">
+                    <button type="button" class="seg-btn is-active" data-unit-group="down" data-unit="percent" aria-pressed="true">%</button>
+                    <button type="button" class="seg-btn" data-unit-group="down" data-unit="dollars" aria-pressed="false">$</button>
+                  </div>
+                </div>
+                <input id="down" class="input" type="number" inputmode="decimal" min="0" step="any" value="20" autocomplete="off">
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div id="afford-fields" hidden>
+          <fieldset class="field-block">
+            <legend>Monthly budget and down payment</legend>
+            <div class="pair">
+              <div>
+                <label for="budget" class="sublabel">Maximum monthly payment</label>
+                <input id="budget" class="input" type="number" inputmode="decimal" min="0" step="25" value="1500" autocomplete="off">
+              </div>
+              <div>
+                <div class="field-label-row">
+                  <label for="down-aff" class="sublabel">Down payment</label>
+                  <div class="seg" role="group" aria-label="Affordability down payment type">
+                    <button type="button" class="seg-btn is-active" data-unit-group="downaff" data-unit="percent" aria-pressed="true">%</button>
+                    <button type="button" class="seg-btn" data-unit-group="downaff" data-unit="dollars" aria-pressed="false">$</button>
+                  </div>
+                </div>
+                <input id="down-aff" class="input" type="number" inputmode="decimal" min="0" step="any" value="20" autocomplete="off">
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <fieldset class="field-block">
+          <legend>Rate, term, and balloon</legend>
+          <div class="triple">
+            <div>
+              <label for="apr" class="sublabel">Interest rate (APR %)</label>
+              <input id="apr" class="input" type="number" inputmode="decimal" min="0" max="40" step="0.05" value="7.25" autocomplete="off">
+            </div>
+            <div>
+              <label for="term" class="sublabel">Term (years)</label>
+              <input id="term" class="input" type="number" inputmode="decimal" min="0.25" max="40" step="0.25" value="20" autocomplete="off">
+            </div>
+            <div>
+              <label for="balloon" class="sublabel">Balloon <span class="optional">optional</span></label>
+              <input id="balloon" class="input" type="number" inputmode="decimal" min="0" step="1000" value="" placeholder="none" autocomplete="off">
+            </div>
+          </div>
+          <p class="hint">Leave the balloon blank for a fully amortizing loan. A balloon is remaining principal due at the end of the term, which lowers the monthly payment.</p>
+        </fieldset>
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" id="btn-example">Reload example</button>
+          <button type="button" class="btn btn-ghost" id="btn-balloon">Load balloon example</button>
+        </div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Loan results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label" id="hero-label">Monthly payment</p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span></p>
+          <p class="hero-sub" id="out-hero-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="tables"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This calculator is a planning aid only. It is <strong>not</strong> a loan offer, a lender underwriting decision, or tax or legal advice. Actual aircraft loans include fees, insurance requirements, prepayment terms, and credit-based pricing that this page does not model. Confirm every figure with the lender before you sign.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+
+    <article class="panel explainer" id="about-calc">
+      <h2>How an aircraft loan payment is calculated</h2>
+      <p>A fixed-rate airplane loan is amortized just like a car or home loan. If you borrow a principal <code>PV</code> at a monthly rate <code>r</code> (the APR divided by 12) for <code>n</code> months, and a balloon <code>B</code> is due at the end (use 0 if there is none), the monthly payment is</p>
+      <p><code>M = (PV − B × (1+r)<sup>−n</sup>) × r / (1 − (1+r)<sup>−n</sup>)</code></p>
+      <p>Each month, interest is charged on the remaining balance and the rest of the payment reduces principal. Total interest is everything you pay — the payments plus the balloon — minus the amount you originally borrowed.</p>
+      <h2>Balloon payments</h2>
+      <p>Aviation lenders sometimes offer a shorter term with a balloon: you make lower payments for 5, 7, or 10 years, then refinance, sell, or write a check for what is left. The balloon is not free money; it is principal you still owe. This page shows that remaining balance on the last row of the schedule.</p>
+      <h2>Affordability</h2>
+      <p>The affordability mode inverts the same formula. You type a monthly payment you can live with, a down payment, a rate, and a term, and the calculator reports the maximum purchase price those payments will support. A lender will also look at credit, the airplane’s age and engine times, and insurance, so treat the result as a ceiling, not an approval.</p>
+      <h2>Worked example</h2>
+      <p>A $250,000 airplane, 20% down ($50,000), $200,000 financed at 7.25% for 20 years, no balloon:</p>
+      <ul>
+        <li>The monthly payment is about <strong>$1,579</strong>.</li>
+        <li>Over 20 years you pay about <strong>$179,000</strong> of interest, and $379,000 in total payments, plus the $50,000 you put down.</li>
+        <li>A $50,000 balloon on the same loan lowers the monthly payment (because you are not amortizing that $50,000) and leaves $50,000 due at month 240.</li>
+      </ul>
+      <p>To see how loan payments sit inside the overall cost of owning, open the <a href="../aircraft-ownership-cost/">aircraft ownership cost calculator</a>.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>How is an aircraft loan payment calculated?</h3>
+      <p>It uses standard fixed-rate amortization. The payment is set so the balance reaches the balloon — or zero — at the end of the term. Total interest is payments plus any balloon, minus the amount borrowed.</p>
+      <h3>What is a balloon payment on an airplane loan?</h3>
+      <p>A lump of principal still owed at the end of the term. It lowers the monthly payment. You then refinance, sell, or pay it in cash.</p>
+      <h3>How much airplane can I afford?</h3>
+      <p>Work backward from a monthly payment, down payment, rate, term, and any balloon. The result is a maximum price, not a lender’s approval.</p>
+      <h3>Are aircraft loan rates different from mortgage rates?</h3>
+      <p>Often, yes. Airplanes are specialized collateral and terms are commonly 10–20 years. Use a quote from an aviation lender in this form.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — aircraft loan calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the amortization formula in the explainer.</p></noscript>
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Holding Pattern Entry Calculator — Direct, Teardrop or Parallel</title>
+  <meta name="description" content="Free holding pattern entry calculator for instrument pilots. Enter the inbound course, turn direction, and your heading to see whether the AIM-recommended entry is direct, teardrop, or parallel, with a diagram, teardrop heading, holding speeds, and leg timing.">
+  <meta name="keywords" content="holding pattern entry, direct teardrop parallel, holding entry calculator, AIM holding, holding speeds 200 230 265, teardrop heading, inbound course hold">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/holding-pattern-entry/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/holding-pattern-entry/">
+  <meta property="og:title" content="Holding Pattern Entry Calculator — Direct, Teardrop, Parallel">
+  <meta property="og:description" content="AIM 5-3-8 holding entry from inbound course, turn direction, and heading, with a diagram, speeds, and leg timing.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Holding Pattern Entry Calculator">
+  <meta name="twitter:description" content="Inbound course and heading in; direct, teardrop, or parallel out.">
+  <meta name="application-name" content="Holding Pattern Entry Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Holding Pattern Entry Calculator",
+            "url": "https://aviatorcalcs.com/holding-pattern-entry/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free AIM holding-entry calculator: direct, teardrop, or parallel, with speeds and timing."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "How do I know if a holding entry is direct, teardrop, or parallel?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Compare your heading at the fix to the inbound holding course. AIM 5-3-8 draws a 70° line on the holding side and splits the rest of the circle into a 180° direct sector, a 70° teardrop sector on the holding side next to the outbound, and a 110° parallel sector on the non-holding side. If you are already nearly inbound, it is almost always a direct entry. A heading within 5° of a sector boundary may use either adjacent entry."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What heading do I fly for a teardrop entry?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "After crossing the fix, fly a heading 30° from the outbound course toward the holding side for one minute (or 1½ minutes above 14,000 ft MSL), then turn in the direction of the hold to intercept the inbound course. For a standard right-hand hold, that teardrop heading is outbound minus 30°."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What are the maximum holding speeds?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "For civil aircraft, AIM Table 5-3-1 is 200 KIAS from the minimum holding altitude to 6,000 ft, 230 KIAS from 6,001 to 14,000 ft (some patterns are restricted to 210), and 265 KIAS above 14,000 ft. A published speed in parentheses on the chart, when present, takes precedence. Slow to at or below the maximum at least three minutes before the fix when you have notice."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How long is a holding leg?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Time the inbound leg: 1 minute at or below 14,000 ft MSL, 1½ minutes above 14,000. The first outbound leg is flown for the same time, then adjusted so the inbound comes out right. DME or RNAV legs use a published distance instead of a time."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Holding entry</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../density-altitude/">Density altitude</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Holding Pattern Entry Calculator</h1>
+        <p class="lede">Enter the inbound holding course, whether the turns are standard (right) or nonstandard (left), and your heading as you arrive at the fix. The recommended AIM entry — direct, teardrop, or parallel — is shown with a diagram, the teardrop heading, and, if you add an altitude, the maximum holding speed and inbound-leg time. Results update as you type.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+        <fieldset class="field-block">
+          <legend>The hold and your heading</legend>
+          <div class="triple">
+            <div>
+              <label for="inbound" class="sublabel">Inbound course (°)</label>
+              <input id="inbound" class="input" type="number" inputmode="decimal" min="0" max="360" step="1" value="360" autocomplete="off">
+            </div>
+            <div>
+              <label for="heading" class="sublabel">Your heading to the fix (°)</label>
+              <input id="heading" class="input" type="number" inputmode="decimal" min="0" max="360" step="1" value="90" autocomplete="off">
+            </div>
+            <div>
+              <span class="sublabel">Turns</span>
+              <div class="seg" role="group" aria-label="Turn direction">
+                <button type="button" class="seg-btn is-active" data-unit-group="turn" data-unit="right" aria-pressed="true">Right (standard)</button>
+                <button type="button" class="seg-btn" data-unit-group="turn" data-unit="left" aria-pressed="false">Left</button>
+              </div>
+            </div>
+          </div>
+          <p class="hint">The inbound course is the heading you will fly <em>to</em> the fix once you are established in the hold (the reciprocal of the outbound radial, for a VOR hold). Determine the entry from your heading at the fix; AIM allows ±5° of heading as good operating practice.</p>
+        </fieldset>
+        <fieldset class="field-block">
+          <legend>Altitude and speed <span class="optional">optional</span></legend>
+          <div class="pair">
+            <div>
+              <label for="altitude" class="sublabel">Holding altitude (ft MSL)</label>
+              <input id="altitude" class="input" type="number" inputmode="decimal" min="0" step="100" value="4000" autocomplete="off">
+            </div>
+            <div>
+              <label for="tas" class="sublabel">True airspeed (kt)</label>
+              <input id="tas" class="input" type="number" inputmode="decimal" min="0" step="1" value="100" autocomplete="off">
+            </div>
+          </div>
+          <p class="hint">Altitude sets the maximum civil holding speed (200 / 230 / 265 KIAS) and whether the inbound leg is 1 minute or 1½ minutes. TAS is only used to estimate the length of a timed leg in nautical miles.</p>
+        </fieldset>
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" id="btn-example">Load 360° inbound example</button>
+        </div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Holding entry results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Recommended entry</p>
+          <p class="hero-value" id="out-entry"><span class="num">—</span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="diagram-wrap">
+          <p class="stat-label">Holding pattern and entry sectors</p>
+          <div id="diagram"></div>
+          <div class="legend-row">
+            <span><i class="legend-swatch" style="background:#6fe3d0"></i>Direct (180°)</span>
+            <span><i class="legend-swatch" style="background:#e8b84a"></i>Teardrop (70°)</span>
+            <span><i class="legend-swatch" style="background:#f0a35a"></i>Parallel (110°)</span>
+            <span><i class="legend-swatch" style="background:#e7eef8"></i>Your heading</span>
+          </div>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <p class="procedure" id="procedure"></p>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This calculator applies the AIM 5-3-8 recommended entries to the heading and inbound course you type in. It is a training aid, <strong>not</strong> a substitute for the AIM, the instrument-procedure chart, or ATC. Other entries may keep you in protected airspace; RNAV systems may choose an entry by track rather than heading. Confirm the published inbound, turn direction, speed, and altitude before you enter the hold.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+
+    <article class="panel explainer" id="about-calc">
+      <h2>Direct, teardrop, and parallel entries</h2>
+      <p>AIM 5-3-8 and Figure 5-3-4 divide the area around a holding fix into three sectors with a <strong>70° line on the holding side</strong>. Measured by the aircraft’s heading as it arrives at the fix, the sectors are:</p>
+      <ul>
+        <li><strong>Direct</strong> — a 180° sector. Cross the fix and turn in the direction of the hold.</li>
+        <li><strong>Teardrop</strong> — 70° on the holding side, next to the outbound. Cross the fix, fly a heading 30° off the outbound toward the holding side for one minute (or 1½ minutes above 14,000 ft), then turn to intercept the inbound.</li>
+        <li><strong>Parallel</strong> — 110° on the non-holding side, next to the outbound. Cross the fix, parallel the holding course outbound on the non-holding side for one minute, then turn toward the pattern through more than 180° and intercept the inbound or return to the fix.</li>
+      </ul>
+      <p>On a sector boundary, or within 5° of one, either adjacent entry may be used (AIM 5-3-8 j.8.(d)). Nonstandard (left-turn) holds use the same 70° line on their holding side; the sectors are mirrored about the inbound course.</p>
+      <h2>Holding speeds and timing</h2>
+      <p>Civil maximum holding speeds are 200 KIAS up to 6,000 ft, 230 KIAS from 6,001 to 14,000 ft (some patterns are posted at 210), and 265 KIAS above 14,000 ft. A charted speed in parentheses overrides the table. Time the inbound leg 1 minute at or below 14,000 ft MSL and 1½ minutes above; start outbound timing abeam the fix or when the outbound turn is complete. Triple the inbound wind-correction angle on the outbound leg.</p>
+      <h2>Worked example</h2>
+      <p>Hold with an inbound course of 360°, right turns, heading 090 at the fix, 4,000 ft, 100 kt TAS:</p>
+      <ul>
+        <li>Relative heading = 90°. That sits in the parallel sector (70° to 180°).</li>
+        <li>Recommended entry: <strong>parallel</strong>. Fly 180° outbound on the non-holding side for one minute, then turn left through more than 180° to intercept the 360° inbound.</li>
+        <li>Maximum speed at 4,000 ft is 200 KIAS; inbound leg 1 minute, about 1.7 NM at 100 kt.</li>
+      </ul>
+      <h2>Frequently asked questions</h2>
+      <h3>How do I know if a holding entry is direct, teardrop, or parallel?</h3>
+      <p>Compare your heading at the fix to the inbound course. Direct is the large 180° sector; teardrop is 70° on the holding side next to the outbound; parallel is 110° on the non-holding side. Within 5° of a boundary, either adjacent entry may be used.</p>
+      <h3>What heading do I fly for a teardrop entry?</h3>
+      <p>Outbound plus or minus 30°, toward the holding side. For a standard right-hand hold that is outbound minus 30°. Fly it for one minute (or 1½ above 14,000 ft), then turn to intercept inbound.</p>
+      <h3>What are the maximum holding speeds?</h3>
+      <p>200 KIAS to 6,000 ft, 230 KIAS from 6,001 to 14,000, 265 KIAS above, unless a slower speed is published.</p>
+      <h3>How long is a holding leg?</h3>
+      <p>1 minute inbound at or below 14,000 ft MSL, 1½ minutes above. DME or RNAV legs use a published distance instead.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — holding pattern entry calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or apply the AIM 5-3-8 sector method described in the explainer.</p></noscript>
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

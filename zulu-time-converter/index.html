@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Zulu Time Converter — Local ↔ UTC, Current Zulu Clock &amp; Flight Plan ETA</title>
+  <meta name="description" content="Free Zulu time converter for pilots. Convert local time to UTC and back with daylight-saving time, see a live Zulu clock, and add an ETE to a departure to get a flight-plan ETA in Zulu and destination local time.">
+  <meta name="keywords" content="Zulu time converter, UTC converter pilots, local to Zulu, current Zulu time, flight plan ETA Zulu, aviation time zone DST">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/zulu-time-converter/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/zulu-time-converter/">
+  <meta property="og:title" content="Zulu Time Converter — Local ↔ UTC and Flight Plan ETA">
+  <meta property="og:description" content="Convert local time to Zulu and back, with DST, a live Zulu clock, and a flight-plan ETA helper.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Zulu Time Converter">
+  <meta name="twitter:description" content="Local ↔ UTC, a live Zulu clock, and a flight-plan ETA in Z.">
+  <meta name="application-name" content="Zulu Time Converter">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Zulu Time Converter",
+            "url": "https://aviatorcalcs.com/zulu-time-converter/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free local-to-Zulu time converter with DST, a live UTC clock, and flight-plan ETA."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "How do I convert local time to Zulu (UTC)?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Zulu time is Coordinated Universal Time. Add the offset of your time zone (and subtract a leftover if the result passes midnight). In daylight time, New York is UTC−4, so 12:00 EDT is 16:00Z; in standard time it is UTC−5, so 12:00 EST is 17:00Z. This page uses the IANA time-zone database via the browser, so daylight-saving changes are applied for the date you enter."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Does the converter handle daylight saving time?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes. Each IANA zone (America/New_York, America/Los_Angeles, Europe/London, and so on) has its own DST rules. Arizona (America/Phoenix) and Hawaii do not observe DST; most of the rest of the U.S. does. Always include a date, because the offset on a July afternoon is not the offset on a January afternoon."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How do I write a flight-plan time in Zulu?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "FAA flight plans use four-digit UTC, often with a Z: 1430Z is 14:30 UTC. If you know a departure in local time, convert it to Zulu, add the estimated time en route, and report the arrival (or time over a fix) in Zulu as well. This page’s ETA box does that and also shows the destination local clock."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What is the current Zulu time?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The clock at the top of this page is the current UTC time, updated every second from your device clock. It is as accurate as the clock on the computer or phone you are using. For a legal or operational time source, use an official time signal or the time in your avionics, not a web page."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Zulu time</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../density-altitude/">Density altitude</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Zulu Time Converter</h1>
+        <p class="lede">Convert a local civil time to UTC (Zulu) or the other way around, with daylight-saving time applied for the date and time zone you choose. A live Zulu clock runs at the top, and the flight-plan box adds an ETE to a departure to give an arrival in Zulu and in the destination’s local time. Results update as you type.</p>
+      </header>
+
+      <div class="hero clock-hero" id="clock-hero">
+        <p class="hero-label">Current Zulu time</p>
+        <p class="hero-value" id="live-zulu"><span class="num">—</span> <span class="unit">Z</span></p>
+        <p class="hero-sub" id="live-zulu-sub">From this device’s clock</p>
+      </div>
+
+      <form id="calc-form" action="#" method="get" novalidate>
+        <fieldset class="field-block">
+          <legend>Convert a date and time</legend>
+          <div class="pair">
+            <div>
+              <label for="date" class="sublabel">Date</label>
+              <input id="date" class="input" type="date" autocomplete="off">
+            </div>
+            <div>
+              <label for="time" class="sublabel">Time (1430, 14:30, or 2:30 PM)</label>
+              <input id="time" class="input" type="text" value="14:30" autocomplete="off">
+            </div>
+          </div>
+          <div class="pair">
+            <div>
+              <label for="from-zone" class="sublabel">From time zone</label>
+              <select id="from-zone" class="input select"></select>
+            </div>
+            <div>
+              <label for="to-zone" class="sublabel">To time zone</label>
+              <select id="to-zone" class="input select"></select>
+            </div>
+          </div>
+          <p class="hint">Aviation uses UTC, written as Zulu. Pick a U.S. or world zone, or UTC itself. The offset and the abbreviation (EDT, PST, and so on) follow the date, including daylight-saving rules for that zone.</p>
+        </fieldset>
+        <fieldset class="field-block">
+          <legend>Flight-plan ETA</legend>
+          <div class="triple">
+            <div>
+              <label for="eta-time" class="sublabel">Departure time</label>
+              <input id="eta-time" class="input" type="text" value="1430" autocomplete="off">
+            </div>
+            <div>
+              <span class="sublabel">Departure is in</span>
+              <div class="seg" role="group" aria-label="Departure time reference">
+                <button type="button" class="seg-btn is-active" data-unit-group="dep" data-unit="zulu" aria-pressed="true">Zulu</button>
+                <button type="button" class="seg-btn" data-unit-group="dep" data-unit="local" aria-pressed="false">Local (from zone)</button>
+              </div>
+            </div>
+            <div>
+              <label for="ete" class="sublabel">ETE (5:15, 5+15, or 5.25)</label>
+              <input id="ete" class="input" type="text" value="2:45" autocomplete="off">
+            </div>
+          </div>
+          <div class="pair">
+            <div>
+              <label for="dep-zone" class="sublabel">Departure time zone</label>
+              <select id="dep-zone" class="input select"></select>
+            </div>
+            <div>
+              <label for="arr-zone" class="sublabel">Destination time zone</label>
+              <select id="arr-zone" class="input select"></select>
+            </div>
+          </div>
+          <p class="hint">The departure date is the same date as the converter above. ETE can be hours:minutes, the flight-plan “5+15” form, a decimal number of hours, or a number of minutes with an “m”.</p>
+        </fieldset>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Conversion results</h2>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="eta-card"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>Conversions use this device’s clock and time-zone data. They are a planning aid, <strong>not</strong> an official time source and not a substitute for the times in your avionics, a briefing, or an ATC clearance. Ambiguous civil times at a daylight-saving fall-back are resolved to one of the two possible instants; a spring-forward gap is flagged. Confirm anything used for a flight plan before you file.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+
+    <article class="panel explainer" id="about-calc">
+      <h2>Local time and Zulu</h2>
+      <p>Zulu time is Coordinated Universal Time (UTC). Aviation uses it so that a flight plan, a TAF, and a clearance do not depend on whose local clock you are looking at. The usual written form is a four-digit clock with a Z: <code>1430Z</code> is 14:30 UTC, which is 10:30 in New York in July (EDT, UTC−4) and 06:30 in Los Angeles (PDT, UTC−7).</p>
+      <p>The offset is not fixed. Most of the United States springs forward on the second Sunday in March and falls back on the first Sunday in November; Arizona (outside the Navajo Nation) and Hawaii do not. Europe, Australia, and others have their own rules. This page reads the IANA zone (America/New_York, America/Phoenix, and so on) through the browser, so the offset is the one that actually applies on the date you type.</p>
+      <h2>Flight-plan ETAs</h2>
+      <p>A flight-plan departure or a time over a fix is filed in Zulu. Convert the local departure, add the estimated time en route, and you have the arrival (or time at a fix) in Zulu. This page also shows that arrival on the destination’s local clock, including a date change when the flight crosses midnight UTC or a time-zone boundary. For sunrise, sunset, and FAA night definitions at an airport, see the <a href="../sunrise-sunset-twilight/">sunrise, sunset, and FAA night calculator</a>.</p>
+      <h2>Worked example</h2>
+      <p>Depart at 14:30Z on 1 July 2024, ETE 5 hours 15 minutes, destination on Pacific time:</p>
+      <ul>
+        <li>Arrival is <strong>1945Z</strong>.</li>
+        <li>In Los Angeles that is <strong>12:45 PDT</strong> on the same civil date.</li>
+      </ul>
+      <h2>Frequently asked questions</h2>
+      <h3>How do I convert local time to Zulu (UTC)?</h3>
+      <p>Apply the time-zone offset for that date, including daylight-saving time. 12:00 EDT is 16:00Z; 12:00 EST is 17:00Z. This page does that from the zone and date you enter.</p>
+      <h3>Does the converter handle daylight saving time?</h3>
+      <p>Yes, through IANA time zones. Always include a date. Arizona and Hawaii do not observe DST.</p>
+      <h3>How do I write a flight-plan time in Zulu?</h3>
+      <p>Four digits and a Z: 1430Z. Convert a local departure, add the ETE, and report the result in Zulu.</p>
+      <h3>What is the current Zulu time?</h3>
+      <p>The clock on this page is current UTC from your device. For operations, use an official time source or your avionics.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Zulu time converter. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This converter needs JavaScript, including the browser’s time-zone data.</p></noscript>
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

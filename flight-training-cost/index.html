@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Flight Training Cost Calculator — Private, Instrument, Commercial, CFI</title>
+  <meta name="description" content="Free flight training cost calculator for private pilot, instrument rating, commercial, and CFI. Compare FAA minimum hours with a national average, then edit the wet rate, instructor rate, written test, DPE fee, medical, and materials.">
+  <meta name="keywords" content="flight training cost, private pilot license cost, instrument rating cost, commercial pilot cost, CFI training cost, Part 61 vs 141, DPE checkride fee">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/flight-training-cost/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/flight-training-cost/">
+  <meta property="og:title" content="Flight Training Cost Calculator — PPL, Instrument, Commercial, CFI">
+  <meta property="og:description" content="Estimate the cost of a private, instrument, commercial, or CFI course. FAA minimums and national-average hours, with editable airplane and instructor rates.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Flight Training Cost Calculator">
+  <meta name="twitter:description" content="Private, instrument, commercial, and CFI cost estimator with FAA minimum and average hours.">
+  <meta name="application-name" content="Flight Training Cost Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Flight Training Cost Calculator",
+            "url": "https://aviatorcalcs.com/flight-training-cost/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free estimator for private, instrument, commercial, and CFI training costs, including FAA minimum and typical hours."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "How much does it cost to get a private pilot license?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "It depends on the airplane rate, the instructor rate, and how many hours you need. The FAA Part 61 minimum is 40 flight hours; Part 141 can be 35. Most students take closer to 60–75 hours. With typical 2026 wet rates in the mid-$100s and instructor rates around $60 an hour, a private certificate often lands in the mid-to-high teens of thousands of dollars, plus the written, the checkride, a medical, and a headset."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What is the difference between Part 61 and Part 141 training costs?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Part 141 schools use an FAA-approved syllabus and can train a private pilot in a 35-hour course. Part 61 is more flexible and has a 40-hour minimum. In practice, both groups of students often fly well past the minimum, so the syllabus matters less than how often you fly and how well the airplane and instructor are used. This calculator lets you switch the starting hours and then edit them."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How much does an instrument rating or commercial certificate cost?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "An instrument rating is often 40–50 hours of instrument training plus the written and a checkride. A commercial certificate requires 250 hours total time, so a large part of the bill can be time building rather than dual instruction. A CFI course is typically a few weeks of ground and flight with two knowledge tests (FOI and FIA) and a practical test. Use the certificate buttons on this page and replace the example rates with your school’s."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What extra fees should I budget for besides the airplane and instructor?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Plan for a knowledge test, a designated-pilot-examiner fee (which has risen sharply in many areas), a couple of hours of airplane time for the checkride, a medical exam, a headset, books or an online ground school, and a contingency — many people add about 10% because weather, a second written, or extra hours happen."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Flight training</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../density-altitude/">Density altitude</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Flight Training Cost Calculator</h1>
+        <p class="lede">Estimate the cost of a private pilot certificate, an instrument rating, a commercial certificate, or a CFI course. Start from FAA Part 61 or Part 141 minimums or a commonly cited national average, then edit the hours, the wet airplane rate, the instructor rate, and the written, checkride, medical, and materials fees. Results update as you type.</p>
+      </header>
+      <p class="example-note">The rates already filled in are <strong>example values</strong> for a typical U.S. Part 61 172 or PA-28 school in 2026 ($175/hr wet, $60/hr instructor). They are not a quote. Replace them with your school’s published rates, and treat the “average” hours as a planning estimate — not an FAA figure.</p>
+      <form id="calc-form" action="#" method="get" novalidate>
+        <div class="field-block">
+          <span class="sublabel">Certificate or rating</span>
+          <div class="seg wrap-seg" role="group" aria-label="Certificate">
+            <button type="button" class="seg-btn is-active" data-unit-group="cert" data-unit="private" aria-pressed="true">Private</button>
+            <button type="button" class="seg-btn" data-unit-group="cert" data-unit="instrument" aria-pressed="false">Instrument</button>
+            <button type="button" class="seg-btn" data-unit-group="cert" data-unit="commercial" aria-pressed="false">Commercial</button>
+            <button type="button" class="seg-btn" data-unit-group="cert" data-unit="cfi" aria-pressed="false">CFI</button>
+          </div>
+        </div>
+        <div class="field-block">
+          <span class="sublabel">Starting hours</span>
+          <div class="seg wrap-seg" role="group" aria-label="Hour basis">
+            <button type="button" class="seg-btn" data-unit-group="basis" data-unit="part61" aria-pressed="false">FAA Part 61 min</button>
+            <button type="button" class="seg-btn" data-unit-group="basis" data-unit="part141" aria-pressed="false">FAA Part 141 min</button>
+            <button type="button" class="seg-btn is-active" data-unit-group="basis" data-unit="average" aria-pressed="true">National average</button>
+          </div>
+          <p class="hint" id="cert-note"></p>
+        </div>
+        <fieldset class="field-block">
+          <legend>Hours and rates</legend>
+          <div class="triple">
+            <div>
+              <label for="dual" class="sublabel">Dual hours (with instructor)</label>
+              <input id="dual" class="input" type="number" inputmode="decimal" min="0" step="0.5" value="45" autocomplete="off">
+            </div>
+            <div>
+              <label for="solo" class="sublabel">Aircraft-only hours</label>
+              <input id="solo" class="input" type="number" inputmode="decimal" min="0" step="0.5" value="25" autocomplete="off">
+            </div>
+            <div>
+              <label for="ground" class="sublabel">Ground instruction hours</label>
+              <input id="ground" class="input" type="number" inputmode="decimal" min="0" step="0.5" value="25" autocomplete="off">
+            </div>
+          </div>
+          <div class="pair">
+            <div>
+              <label for="wet" class="sublabel">Aircraft wet rate ($/hr)</label>
+              <input id="wet" class="input" type="number" inputmode="decimal" min="0" step="5" value="175" autocomplete="off">
+            </div>
+            <div>
+              <label for="cfi" class="sublabel">Instructor rate ($/hr)</label>
+              <input id="cfi" class="input" type="number" inputmode="decimal" min="0" step="5" value="60" autocomplete="off">
+            </div>
+          </div>
+          <p class="hint">“Aircraft-only” hours are solo, PIC time building, or instrument time with a safety-pilot friend — you pay the airplane but not a CFI. For a dry rate plus fuel, convert it first with the <a href="../rental-cost/">rental cost calculator</a>.</p>
+        </fieldset>
+        <fieldset class="field-block">
+          <legend>Tests, medical, and materials</legend>
+          <div class="triple">
+            <div>
+              <label for="gs" class="sublabel">Ground school / course</label>
+              <input id="gs" class="input" type="number" inputmode="decimal" min="0" step="25" value="300" autocomplete="off">
+            </div>
+            <div>
+              <label for="written" class="sublabel">Knowledge test fee(s)</label>
+              <input id="written" class="input" type="number" inputmode="decimal" min="0" step="25" value="175" autocomplete="off">
+            </div>
+            <div>
+              <label for="dpe" class="sublabel">Checkride / DPE fee</label>
+              <input id="dpe" class="input" type="number" inputmode="decimal" min="0" step="25" value="900" autocomplete="off">
+            </div>
+          </div>
+          <div class="triple">
+            <div>
+              <label for="chk-hrs" class="sublabel">Checkride aircraft hours</label>
+              <input id="chk-hrs" class="input" type="number" inputmode="decimal" min="0" step="0.5" value="2" autocomplete="off">
+            </div>
+            <div>
+              <label for="medical" class="sublabel">Medical exam</label>
+              <input id="medical" class="input" type="number" inputmode="decimal" min="0" step="25" value="175" autocomplete="off">
+            </div>
+            <div>
+              <label for="materials" class="sublabel">Headset and materials</label>
+              <input id="materials" class="input" type="number" inputmode="decimal" min="0" step="25" value="450" autocomplete="off">
+            </div>
+          </div>
+          <div class="triple">
+            <div>
+              <label for="other" class="sublabel">Other</label>
+              <input id="other" class="input" type="number" inputmode="decimal" min="0" step="25" value="0" autocomplete="off">
+            </div>
+            <div>
+              <label for="contingency" class="sublabel">Contingency (%)</label>
+              <input id="contingency" class="input" type="number" inputmode="decimal" min="0" max="50" step="1" value="10" autocomplete="off">
+            </div>
+            <div>
+              <label for="lessons" class="sublabel">Lessons per week <span class="optional">optional</span></label>
+              <input id="lessons" class="input" type="number" inputmode="decimal" min="0" step="1" value="2" autocomplete="off">
+            </div>
+          </div>
+          <p class="hint">Lessons per week, at about 1.3 hours each, is only used to estimate how many weeks the course will take and what a monthly budget looks like.</p>
+        </fieldset>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Training cost results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Estimated total <span class="hero-tag">includes contingency</span></p>
+          <p class="hero-value" id="out-total"><span class="num">—</span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="breakdown"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This calculator is a planning aid only. Hour minimums come from 14 CFR Part 61 and Part 141, but most students fly more than the minimum, and examiner fees, fuel prices, and school rates change. The “national average” hours are planning estimates, not FAA data. This is <strong>not</strong> a quote from a flight school and is not advice about which course you should enroll in.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+
+    <article class="panel explainer" id="about-calc">
+      <h2>What goes into the cost of flight training</h2>
+      <p>The bill is almost always dominated by the airplane and the instructor. Dual hours are billed at the wet (fuel-included) aircraft rate plus the instructor’s hourly rate. Solo or time-building hours are the aircraft only. On top of that are ground instruction, an online or in-person ground school, the FAA knowledge test, the designated pilot examiner’s fee, a couple of hours of airplane time for the checkride itself, a medical exam, a headset, and books or an iPad app.</p>
+      <h2>FAA minimums versus what people actually fly</h2>
+      <p>Under <strong>Part 61</strong>, a private pilot applicant needs 40 hours, including 20 with an instructor and 10 solo. Under <strong>Part 141</strong>, an approved private course can be 35 hours, with a structured ground-school requirement. The Instrument rating (61.65) calls for 40 hours of instrument time including 15 with a CFII, plus 50 hours of cross-country PIC — some of which a private pilot may already have. The commercial certificate (61.129) requires 250 hours total time; a lot of the commercial bill can be time building. The CFI (61.183) has no Part 61 flight-hour minimum, but Part 141 Appendix F is a 25-hour course, and most programs also include two knowledge tests (Fundamentals of Instructing and Flight Instructor Airplane).</p>
+      <p>AOPA and many schools have long cited something like 60–75 hours for the average private pilot, not 40. The “national average” buttons on this page use planning figures in that spirit. They are starting points. Edit them.</p>
+      <h2>Worked example</h2>
+      <p>A private-pilot student at a national-average 45 hours dual and 25 solo, $175/hr wet, $60/hr instructor, 25 hours of ground, a $300 ground school, a $175 written, a $900 DPE fee, 2.0 hours of checkride airplane time, a $175 medical, and $450 of headset and materials, plus a 10% contingency:</p>
+      <ul>
+        <li>Dual airplane $7,875, dual instruction $2,700, solo airplane $4,375, ground $1,500, plus the fixed fees.</li>
+        <li>Subtotal $18,425, contingency $1,842.50, <strong>total about $20,268</strong>.</li>
+      </ul>
+      <h2>Frequently asked questions</h2>
+      <h3>How much does it cost to get a private pilot license?</h3>
+      <p>At typical 2026 trainer rates, often the mid-to-high teens of thousands of dollars once you include more than the 40-hour minimum, the written, the checkride, a medical, and a headset. Your school’s rates will move that number.</p>
+      <h3>What is the difference between Part 61 and Part 141 training costs?</h3>
+      <p>Part 141 can use a 35-hour private course; Part 61 has a 40-hour minimum. In practice both groups often fly past the minimum, so consistency and how often you fly usually matter more than the part number.</p>
+      <h3>How much does an instrument rating or commercial certificate cost?</h3>
+      <p>An instrument rating is often 40–50 hours of instrument training plus tests. A commercial certificate includes the 250-hour total-time requirement, so time building can dominate. Use the buttons above and edit the rates.</p>
+      <h3>What extra fees should I budget for besides the airplane and instructor?</h3>
+      <p>Knowledge tests, the DPE fee, checkride airplane time, a medical, a headset, ground school, and a contingency of about 10%.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — flight training cost calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or add the hours and fees described in the explainer.</p></noscript>
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

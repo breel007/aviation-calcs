@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Cloud Base Calculator — Temperature-Dewpoint Spread, RH &amp; Freezing Level</title>
+  <meta name="description" content="Free cloud base calculator for pilots. Estimate convective cloud base AGL and MSL from the temperature–dewpoint spread (the 2.5 °C / 4.4 °F rule), plus relative humidity and a freezing-level estimate.">
+  <meta name="keywords" content="cloud base calculator, temperature dewpoint spread, spread 2.5, cloud height AGL, relative humidity dewpoint, freezing level lapse rate">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/cloud-base/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/cloud-base/">
+  <meta property="og:title" content="Cloud Base Calculator — Spread, RH, and Freezing Level">
+  <meta property="og:description" content="Estimate cloud base from the temp–dewpoint spread in °C or °F, with relative humidity and a freezing-level estimate.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Cloud Base Calculator">
+  <meta name="twitter:description" content="Temp and dewpoint in; estimated cloud base AGL/MSL, RH, and freezing level out.">
+  <meta name="application-name" content="Cloud Base Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Cloud Base Calculator",
+            "url": "https://aviatorcalcs.com/cloud-base/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free convective cloud base calculator from temperature and dewpoint, with RH and freezing level."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "How do you estimate cloud base from temperature and dewpoint?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Take the spread between temperature and dewpoint and divide by the rate at which the spread closes with height — about 2.5 °C, or 4.4 °F, per 1,000 feet. In °C that is also “spread × 400 feet.” A 5 °C spread gives a cloud base of about 2,000 ft AGL. The result is an estimate for convective (cumulus) bases, not a ceiling forecast."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Should I use the Celsius or the Fahrenheit formula?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Use the formula that matches the units you measured in. The 2.5 °C/1,000 ft and 4.4 °F/1,000 ft conventions are the ones commonly taught; they differ slightly because 2.5 × 1.8 is 4.5, not 4.4. This page computes both and uses the one for the unit you last edited."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How is relative humidity related to the spread?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Relative humidity is the ratio of the vapor pressure at the dewpoint to the saturation vapor pressure at the actual temperature (this page uses the Bolton / Magnus formula). When the spread is zero, RH is 100% and the estimated cloud base is at the surface."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How do you estimate freezing level from the surface temperature?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Divide the surface temperature in °C by the lapse rate and multiply by 1,000 ft. A standard-atmosphere lapse of 2 °C/1,000 ft puts the freezing level at 5,000 ft AGL when the surface is 10 °C. A dry adiabatic lapse (about 3 °C/1,000 ft) puts it lower. This is only an estimate; use a sounding or an area forecast for icing decisions."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Cloud base</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../density-altitude/">Density altitude</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Cloud Base Calculator</h1>
+        <p class="lede">Enter temperature and dewpoint — in °C or °F, they stay in sync — to estimate convective cloud base AGL and MSL from the spread. You also get relative humidity and a freezing-level estimate from a selectable lapse rate. Results update as you type.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+        <fieldset class="field-block">
+          <legend>Temperature (OAT)</legend>
+          <div class="pair">
+            <div>
+              <label for="temp-c" class="sublabel">°C</label>
+              <input id="temp-c" class="input" type="number" inputmode="decimal" step="0.1" value="20" min="-70" max="55" autocomplete="off">
+            </div>
+            <div>
+              <label for="temp-f" class="sublabel">°F</label>
+              <input id="temp-f" class="input" type="number" inputmode="decimal" step="0.1" value="68" min="-94" max="131" autocomplete="off">
+            </div>
+          </div>
+        </fieldset>
+        <fieldset class="field-block">
+          <legend>Dewpoint</legend>
+          <div class="pair">
+            <div>
+              <label for="td-c" class="sublabel">°C</label>
+              <input id="td-c" class="input" type="number" inputmode="decimal" step="0.1" value="12" min="-80" max="40" autocomplete="off">
+            </div>
+            <div>
+              <label for="td-f" class="sublabel">°F</label>
+              <input id="td-f" class="input" type="number" inputmode="decimal" step="0.1" value="53.6" min="-112" max="104" autocomplete="off">
+            </div>
+          </div>
+          <p class="hint">Dewpoint cannot exceed the temperature. The spread is what sets the estimated cloud base.</p>
+        </fieldset>
+        <fieldset class="field-block">
+          <legend>Field elevation and lapse rate</legend>
+          <div class="pair">
+            <div>
+              <div class="field-label-row">
+                <label for="elev" class="sublabel">Field elevation</label>
+                <div class="seg" role="group" aria-label="Elevation unit">
+                  <button type="button" class="seg-btn is-active" data-unit-group="elev" data-unit="ft" aria-pressed="true">ft</button>
+                  <button type="button" class="seg-btn" data-unit-group="elev" data-unit="m" aria-pressed="false">m</button>
+                </div>
+              </div>
+              <input id="elev" class="input" type="number" inputmode="decimal" step="1" value="0" autocomplete="off">
+            </div>
+            <div>
+              <label for="lapse" class="sublabel">Lapse rate (°C / 1,000 ft)</label>
+              <select id="lapse" class="input select">
+                <option value="2" selected>Standard 2 °C (ISA)</option>
+                <option value="3">Dry adiabatic 3 °C</option>
+                <option value="1.5">Moist ≈ 1.5 °C</option>
+                <option value="custom">Custom…</option>
+              </select>
+              <input id="lapse-custom" class="input" type="number" inputmode="decimal" min="0.1" step="0.1" value="2" hidden style="margin-top:0.5rem">
+            </div>
+          </div>
+          <p class="hint">Elevation is only used to report cloud base and freezing level as MSL. The lapse rate is for the freezing-level estimate, not the cloud-base spread formula.</p>
+        </fieldset>
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" id="btn-example">Load 20 °C / 12 °C example</button>
+        </div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Cloud base results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Estimated cloud base <span class="hero-tag" id="hero-tag">spread / 2.5 × 1,000 ft</span></p>
+          <p class="hero-value" id="out-agl"><span class="num">—</span> <span class="unit">ft AGL</span></p>
+          <p class="hero-sub" id="out-msl"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This is a rule-of-thumb estimate for convective cloud bases, not a ceiling forecast and not a METAR or TAF. It can be badly wrong with a temperature inversion, a sloping front, or stratiform cloud. The freezing-level estimate is a straight lapse from the surface and is <strong>not</strong> a substitute for a sounding, an AIRMET, or a freezing-level forecast. Do not use this page as the sole source for a scud-running or icing decision.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+
+    <article class="panel explainer" id="about-calc">
+      <h2>The temperature–dewpoint spread and cloud base</h2>
+      <p>As a parcel of air is lifted, it cools at about the dry adiabatic lapse rate (roughly 3 °C or 5.4 °F per 1,000 ft) while the dewpoint falls more slowly (about 0.5 °C or 1 °F per 1,000 ft). The spread therefore closes at about <strong>2.5 °C</strong>, or <strong>4.4 °F</strong>, per 1,000 ft. When the spread reaches zero, the air is saturated and a convective cloud base can form:</p>
+      <p><code>cloud base AGL (ft) ≈ (T − Td) in °C / 2.5 × 1,000</code><br>
+         <code>cloud base AGL (ft) ≈ (T − Td) in °F / 4.4 × 1,000</code></p>
+      <p>The 2.5 °C form is the same as the familiar “spread in °C × 400 feet.” The two unit conventions differ slightly (2.5 × 1.8 = 4.5, not 4.4); this page uses each in its own unit and also shows the 400 ft/°C rule of thumb. Field elevation is added to report an MSL height.</p>
+      <h2>Relative humidity and freezing level</h2>
+      <p>Relative humidity is computed from the Bolton (1980) / Magnus-Tetens vapor-pressure formula, <code>es(t) = 6.112 exp(17.67 t / (t+243.5))</code> with t in °C, and <code>RH = 100 × es(Td) / es(T)</code>. The freezing-level estimate is a straight-line lapse from the surface temperature: <code>AGL = T°C / lapse × 1,000 ft</code>. You can use the standard 2 °C/1,000 ft, the dry adiabatic 3 °C/1,000 ft, or a moist rate of about 1.5 °C/1,000 ft. If the estimated cloud base sits at or above the freezing level, the base is in sub-freezing air and icing in cloud is more likely — still only a flag, not a forecast.</p>
+      <h2>Worked example</h2>
+      <p>OAT 20 °C, dewpoint 12 °C, sea-level field, standard lapse:</p>
+      <ul>
+        <li>Spread = 8 °C. Cloud base ≈ 8 / 2.5 × 1,000 = <strong>3,200 ft AGL</strong> (the 400 ft/°C rule gives the same 3,200 ft).</li>
+        <li>Relative humidity is about 60%.</li>
+        <li>Freezing level ≈ 20 / 2 × 1,000 = <strong>10,000 ft AGL</strong>, well above this particular cloud base.</li>
+      </ul>
+      <h2>Frequently asked questions</h2>
+      <h3>How do you estimate cloud base from temperature and dewpoint?</h3>
+      <p>Divide the spread by 2.5 °C (or 4.4 °F) per 1,000 ft. A 5 °C spread is about 2,000 ft AGL. It is an estimate for convective bases, not a ceiling forecast.</p>
+      <h3>Should I use the Celsius or the Fahrenheit formula?</h3>
+      <p>Use the one that matches your units. The two conventions differ slightly; this page computes both.</p>
+      <h3>How is relative humidity related to the spread?</h3>
+      <p>RH is the ratio of vapor pressure at the dewpoint to saturation vapor pressure at the temperature. A zero spread is 100% RH.</p>
+      <h3>How do you estimate freezing level from the surface temperature?</h3>
+      <p>Divide the surface °C by the lapse rate and multiply by 1,000 ft. Use a sounding or forecast for icing decisions.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — cloud base calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or apply the spread / 2.5 × 1,000 ft rule from the explainer.</p></noscript>
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Sunrise, Sunset &amp; FAA Night Calculator — Civil Twilight, Currency, Lights</title>
+  <meta name="description" content="Free sunrise, sunset, and civil twilight calculator for pilots, with FAA night definitions for logging (end of evening civil twilight), 61.57(b) passenger currency (1 hour after sunset), and 91.209 position lights (sunset to sunrise). Enter a U.S. airport, a lat/lon, or use your location.">
+  <meta name="keywords" content="sunrise sunset calculator pilots, civil twilight aviation, FAA night definition, night currency 61.57, position lights 91.209, end of evening civil twilight, Zulu sunrise">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/sunrise-sunset-twilight/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/sunrise-sunset-twilight/">
+  <meta property="og:title" content="Sunrise, Sunset &amp; FAA Night Calculator">
+  <meta property="og:description" content="Sunrise, sunset, civil twilight, and the three different FAA night clocks — logging, 61.57(b) currency, and position lights — for an airport or a lat/lon.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Sunrise, Sunset & FAA Night Calculator">
+  <meta name="twitter:description" content="Civil twilight, 61.57(b) currency, and 91.209 lights, in local time and Zulu.">
+  <meta name="application-name" content="Sunrise, Sunset & FAA Night Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Sunrise, Sunset and FAA Night Calculator",
+            "url": "https://aviatorcalcs.com/sunrise-sunset-twilight/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free sunrise, sunset, civil twilight, and FAA night-definition calculator for a U.S. airport or a latitude and longitude."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "When does night begin for logging flight time?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "For the 14 CFR 1.1 definition of night — the one that applies to logging night time — night is the period between the end of evening civil twilight and the beginning of morning civil twilight, as published in the Air Almanac. Civil twilight ends when the sun is 6° below the horizon. That is not the same clock time as sunset, and it is not the same rule as night passenger currency."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "When can I log night takeoffs and landings for passenger currency?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "14 CFR 61.57(b) night passenger-carrying currency is satisfied by takeoffs and landings during the period beginning 1 hour after sunset and ending 1 hour before sunrise. That window is shorter than 1.1 night, and it is not civil twilight. This page reports both so you can see them side by side."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "When do I need position lights on?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "14 CFR 91.209 requires aircraft position lights from sunset to sunrise. That is yet a third clock: sunset to sunrise, not civil twilight and not the plus-or-minus one hour of 61.57(b)."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How accurate is a sunrise time calculated from latitude and longitude?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "This page uses the NOAA Solar Calculator algorithm (zenith 90.833° for sunrise and sunset, 96° for civil twilight), which usually agrees with the Air Almanac to about a minute. Local terrain, actual refraction, and the official Air Almanac publication still govern legal and operational use. Always cross-check a time you will rely on."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Sunrise &amp; FAA night</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../density-altitude/">Density altitude</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Sunrise, Sunset &amp; FAA Night Calculator</h1>
+        <p class="lede">Pick a U.S. airport or enter a latitude and longitude and a date. You get sunrise, sunset, solar noon, and civil twilight in local time and Zulu, plus the three different FAA night clocks: logging (end of evening civil twilight), 61.57(b) passenger currency (1 hour after sunset to 1 hour before sunrise), and 91.209 position lights (sunset to sunrise). Results update as you type.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+        <fieldset class="field-block">
+          <legend>Airport or coordinates</legend>
+          <div class="pair">
+            <div>
+              <label for="airport" class="sublabel">Airport (ICAO, IATA, or name)</label>
+              <input id="airport" class="input" type="text" list="airport-list" placeholder="KLAX, JFK, Austin…" autocomplete="off">
+              <datalist id="airport-list"></datalist>
+            </div>
+            <div class="form-actions" style="margin:0;align-self:end">
+              <button type="button" class="btn btn-ghost" id="btn-geo">Use my location</button>
+            </div>
+          </div>
+          <div class="pair" style="margin-top:0.7rem">
+            <div>
+              <label for="lat" class="sublabel">Latitude (° , +N)</label>
+              <input id="lat" class="input" type="number" inputmode="decimal" step="0.0001" min="-90" max="90" value="34.0522" autocomplete="off">
+            </div>
+            <div>
+              <label for="lon" class="sublabel">Longitude (° , +E; U.S. is negative)</label>
+              <input id="lon" class="input" type="number" inputmode="decimal" step="0.0001" min="-180" max="180" value="-118.2437" autocomplete="off">
+            </div>
+          </div>
+          <p class="hint" id="airport-hint">The list has about 280 major U.S. airports and a few territories, with coordinates and a time zone. You can also type any lat/lon. West longitude is negative (Los Angeles is about −118).</p>
+        </fieldset>
+        <fieldset class="field-block">
+          <legend>Date and time zone</legend>
+          <div class="pair">
+            <div>
+              <label for="date" class="sublabel">Date</label>
+              <input id="date" class="input" type="date" autocomplete="off">
+            </div>
+            <div>
+              <label for="tz" class="sublabel">Time zone</label>
+              <select id="tz" class="input select"></select>
+            </div>
+          </div>
+          <p class="hint">Choosing an airport fills the time zone for you (including Arizona, Alaska, and Hawaii). The offset, including daylight saving, is taken from that zone on the date you enter. Times are also shown in Zulu. For a general local-to-Zulu converter, see the <a href="../zulu-time-converter/">Zulu time converter</a>.</p>
+        </fieldset>
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" id="btn-today">Today</button>
+          <button type="button" class="btn btn-ghost" id="btn-lax">Load KLAX example</button>
+        </div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Sunrise and FAA night results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Sunset <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-sunset"><span class="num">—</span></p>
+          <p class="hero-sub" id="out-sunset-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="night-cards"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>Times are computed from the NOAA solar algorithm for the coordinates and time zone you enter, and usually agree with the Air Almanac to about a minute. They are a planning aid, <strong>not</strong> the Air Almanac itself, and they do not account for terrain, unusual refraction, or a parking spot in a valley. For anything you will log, file, or use as a legal night definition, confirm the official publication and the time source in the airplane.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+
+    <article class="panel explainer" id="about-calc">
+      <h2>Three different FAA “night” clocks</h2>
+      <p>Pilots often treat “night” as one thing. The FARs use at least three different clocks, and they do not start and end at the same minute:</p>
+      <ul>
+        <li><strong>14 CFR 1.1 “Night”</strong> — the end of evening civil twilight to the beginning of morning civil twilight, as published in the Air Almanac. This is the definition used when you log night flight time.</li>
+        <li><strong>14 CFR 61.57(b) night passenger currency</strong> — takeoffs and landings to a full stop, as the sole manipulator, during the period beginning <em>1 hour after sunset</em> and ending <em>1 hour before sunrise</em>, to carry passengers at night. Civil twilight is not the test.</li>
+        <li><strong>14 CFR 91.209 position lights</strong> — from <em>sunset to sunrise</em>.</li>
+      </ul>
+      <p>Civil twilight is the period when the sun is between the horizon and 6° below it. Evening civil twilight starts at sunset and ends when the sun reaches that minus-6° depression; morning civil twilight is the mirror image before sunrise. Logging night therefore starts later than sunset (after twilight has ended) and ends earlier than sunrise. Currency starts even later — a full hour after sunset — and ends a full hour before sunrise. Position lights, meanwhile, go on at sunset.</p>
+      <h2>How the times are computed</h2>
+      <p>This page uses the NOAA Solar Calculator algorithm (Jean Meeus, <em>Astronomical Algorithms</em>). Sunrise and sunset are computed for a solar zenith of 90.833° (the sun’s semi-diameter plus an average refraction). Civil twilight uses a zenith of 96°. The result is converted to the IANA time zone of the airport, or the zone you select, including daylight saving. The same events are also listed in Zulu.</p>
+      <h2>Worked example</h2>
+      <p>Los Angeles (approximately 34.05°N, 118.24°W) on a mid-summer day, Pacific Daylight Time:</p>
+      <ul>
+        <li>Sunrise is in the mid-5 o’clock hour PDT, sunset around 8 o’clock.</li>
+        <li>Evening civil twilight ends roughly half an hour after sunset — that is when 1.1 night logging begins.</li>
+        <li>61.57(b) currency begins one hour after sunset, so later still, and ends one hour before sunrise the next morning.</li>
+        <li>Position lights are due at sunset, earlier than either of the other two.</li>
+      </ul>
+      <h2>Frequently asked questions</h2>
+      <h3>When does night begin for logging flight time?</h3>
+      <p>At the end of evening civil twilight, and it runs until the beginning of morning civil twilight (14 CFR 1.1). That is not sunset, and it is not the 61.57(b) window.</p>
+      <h3>When can I log night takeoffs and landings for passenger currency?</h3>
+      <p>During the period beginning 1 hour after sunset and ending 1 hour before sunrise (14 CFR 61.57(b)).</p>
+      <h3>When do I need position lights on?</h3>
+      <p>From sunset to sunrise (14 CFR 91.209).</p>
+      <h3>How accurate is a sunrise time calculated from latitude and longitude?</h3>
+      <p>The NOAA algorithm usually agrees with the Air Almanac to about a minute. Terrain and official publications still govern legal use.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — sunrise, sunset, and FAA night calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript, including the browser’s time-zone data.</p></noscript>
+  <script src="airports.js"></script>
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
