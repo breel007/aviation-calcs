@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Aircraft Oxygen Requirements Calculator — 14 CFR 91.211, 135.89, 121.329, and TUC</title>
+  <meta name="description" content="Free aviation oxygen requirements calculator. See what 14 CFR 91.211, 135.89, and 121.329 require at a cabin pressure altitude and duration, plus FAA / CAMI time of useful consciousness (TUC) from the published table.">
+  <meta name="keywords" content="supplemental oxygen requirements, 14 CFR 91.211, 135.89, 121.329, time of useful consciousness, TUC hypoxia, cabin altitude oxygen, FAA oxygen rules">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/oxygen-requirements/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/oxygen-requirements/">
+  <meta property="og:title" content="Aircraft Oxygen Requirements — 91.211, 135.89, TUC">
+  <meta property="og:description" content="Part 91, 135, and 121 supplemental-oxygen rules at a cabin altitude, plus the FAA time-of-useful-consciousness table.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Oxygen Requirements Calculator">
+  <meta name="twitter:description" content="91.211, 135.89, 121.329, and FAA TUC at the cabin altitude you enter.">
+  <meta name="application-name" content="Aircraft Oxygen Requirements Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Aircraft Oxygen Requirements Calculator",
+            "url": "https://aviatorcalcs.com/oxygen-requirements/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free aviation oxygen requirements calculator. See what 14 CFR 91.211, 135.89, and 121.329 require at a cabin pressure altitude and duration, plus FAA / CAMI time of useful consciousness (TUC) from the published table."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Does Part 91 require oxygen at 12,500 ft?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Not at 12,500 ft exactly. 91.211(a)(1) applies above 12,500 through 14,000 ft, and only after more than 30 minutes. Many instructors still recommend using oxygen earlier, especially at night."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Why is TUC so short at 25,000 ft?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The partial pressure of oxygen is already low, and a sudden exposure (for example after a decompression) leaves little reserve. The published FAA range at 25,000 ft is 3–5 minutes, and it is shorter if you are physically active. That is why pressurized-cabin rules emphasize immediate descent and masks."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Are the Part 135 and 121 numbers the same as Part 91?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. Crew oxygen under 135.89 starts at a lower cabin altitude (10,000 / 12,000 ft). Part 121 occupant-equipment rules also start at 10,000 ft. This page lists each part separately so you can see the difference."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Oxygen requirements</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../pilot-currency/">Pilot currency</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Aircraft Oxygen Requirements Calculator</h1>
+        <p class="lede">Enter a cabin pressure altitude and how long you will be there. The page lists the supplemental-oxygen requirements of 14 CFR 91.211 (general aviation), 135.89 (commuter / on-demand flight crew), and 121.329 (air carrier), and shows the published FAA / Civil Aerospace Medical Institute time of useful consciousness (TUC) for a sudden exposure at that cabin altitude.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div class="field-block"><div class="field-label-row"><label for="cabin">Cabin pressure altitude</label>
+<div class="seg wrap-seg" role="group" aria-label="cau"><button type="button" class="seg-btn is-active" data-unit-group="cau" data-unit="ft" aria-pressed="true">ft</button><button type="button" class="seg-btn" data-unit-group="cau" data-unit="fl" aria-pressed="false">FL</button></div>
+</div><input id="cabin" class="input" type="number" inputmode="decimal" min="0" step="any" value="13000" autocomplete="off"></div>
+<div class="field-block"><label for="duration">Time at that cabin altitude (minutes)</label>
+<input id="duration" class="input" type="number" inputmode="decimal" min="0" step="any" value="45" autocomplete="off">
+<p class="hint">Used for the “more than 30 minutes” tests in 91.211(a)(1), 135.89, and 121.329(c)(1).</p></div>
+<div class="field-block"><label class="check-row"><input type="checkbox" id="pressurized"> Pressurized cabin — also show 91.211(b) notes</label>
+<div id="flight-row" hidden><div class="field-label-row"><label for="flight">Flight altitude (for pressurized-cabin notes)</label>
+<div class="seg wrap-seg" role="group" aria-label="fau"><button type="button" class="seg-btn" data-unit-group="fau" data-unit="ft" aria-pressed="false">ft</button><button type="button" class="seg-btn is-active" data-unit-group="fau" data-unit="fl" aria-pressed="true">FL</button></div>
+</div><input id="flight" class="input" type="number" inputmode="decimal" min="0" step="any" value="280" autocomplete="off"></div></div>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-ex">Load 13,000 ft for 45 min</button>
+<button type="button" class="btn btn-ghost" id="btn-25">Load 25,000 ft TUC example</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Time of useful consciousness <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This is a reading aid for the public text of the Federal Aviation Regulations and for the published FAA TUC table. It is not legal advice, not a medical opinion, and not a substitute for the current Code of Federal Regulations, your operations specifications, or the airplane’s oxygen-system AFM procedures. TUC figures are typical published ranges for a sudden exposure; they vary widely with activity, health, smoking, and the rate of decompression. When in doubt, use oxygen earlier than the regulation requires.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>14 CFR 91.211 (general aviation)</h2>
+      <p>For an unpressurized (or cabin-altitude) flight under Part 91:</p>
+      <ul><li>Cabin pressure altitude <strong>above 12,500 through 14,000 ft MSL</strong>: the required minimum flight crew must use supplemental oxygen for that part of the flight at those altitudes that is of more than 30 minutes duration.</li>
+      <li><strong>Above 14,000 ft</strong>: the required minimum flight crew must use oxygen for the entire time at those altitudes.</li>
+      <li><strong>Above 15,000 ft</strong>: each occupant must be provided with supplemental oxygen.</li></ul>
+      <p>91.211(b) adds pressurized-cabin rules above FL250 (a 10-minute supply, quick-donning masks) and tighter mask discipline at higher flight levels. Read the current text of the rule for the exact conditions, including the FL350 / FL410 provisions.</p>
+      <h2>Parts 135 and 121 are stricter</h2>
+      <p>135.89 requires the pilot at the controls to use oxygen above 12,000 ft cabin altitude, and after 30 minutes above 10,000 through 12,000 ft. 121.329 requires occupant oxygen to be <em>provided</em> for more than 30 minutes between 10,000 and 14,000 ft, provided above 14,000, and provided and used above 15,000. 121.333 adds pressurized-cabin descent and mask-deployment requirements above FL250.</p>
+      <h2>Time of useful consciousness</h2>
+      <p>The FAA / Civil Aerospace Medical Institute table of typical TUC after a sudden exposure is the source for the ranges this page reports. It is a physiology briefing aid, not a countdown clock. Published values include 20–30 minutes at 18,000 ft, 3–5 minutes at 25,000 ft, 1–2 minutes at 30,000 ft, and 15–20 seconds at 40,000 ft. This calculator names the nearest published row and, when you are between rows, the neighboring brackets. It does not interpolate a false-precision curve.</p>
+      <h2>Sources</h2>
+      <p>14 CFR 91.211, 135.89, 121.327–121.333 (public eCFR text); FAA Pilot’s Handbook of Aeronautical Knowledge, Chapter 17 (aeromedical factors, hypoxia); FAA Civil Aerospace Medical Institute hypoxia guidance (TUC table). Always check the current CFR, not a memory item, before you rely on a threshold.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>Does Part 91 require oxygen at 12,500 ft?</h3>
+      <p>Not at 12,500 ft exactly. 91.211(a)(1) applies above 12,500 through 14,000 ft, and only after more than 30 minutes. Many instructors still recommend using oxygen earlier, especially at night.</p>
+      <h3>Why is TUC so short at 25,000 ft?</h3>
+      <p>The partial pressure of oxygen is already low, and a sudden exposure (for example after a decompression) leaves little reserve. The published FAA range at 25,000 ft is 3–5 minutes, and it is shorter if you are physically active. That is why pressurized-cabin rules emphasize immediate descent and masks.</p>
+      <h3>Are the Part 135 and 121 numbers the same as Part 91?</h3>
+      <p>No. Crew oxygen under 135.89 starts at a lower cabin altitude (10,000 / 12,000 ft). Part 121 occupant-equipment rules also start at 10,000 ft. This page lists each part separately so you can see the difference.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Oxygen requirements calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

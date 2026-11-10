@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Aviation Fuel Weight Calculator — Gallons, Litres, Pounds, and Kilograms</title>
+  <meta name="description" content="Free aviation fuel weight calculator. Convert US gallons, imperial gallons, or litres to pounds and kilograms for 100LL, Jet-A, Jet-B, JP-5, and JP-8, using FAA planning densities or a temperature-corrected specific gravity.">
+  <meta name="keywords" content="fuel weight calculator, 100LL pounds per gallon, Jet-A density, avgas weight, litres to pounds, fuel mass temperature correction">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/fuel-weight/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/fuel-weight/">
+  <meta property="og:title" content="Aviation Fuel Weight Calculator — gal, L, lb, kg">
+  <meta property="og:description" content="Convert fuel volume and mass for 100LL, Jet-A, Jet-B, JP-5, and JP-8, with optional temperature correction.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Aviation Fuel Weight Calculator">
+  <meta name="twitter:description" content="100LL at 6.0 lb/gal, Jet-A at 6.7, plus litres, kilograms, and a temperature option.">
+  <meta name="application-name" content="Aviation Fuel Weight Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Aviation Fuel Weight Calculator",
+            "url": "https://aviatorcalcs.com/fuel-weight/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free aviation fuel weight calculator. Convert US gallons, imperial gallons, or litres to pounds and kilograms for 100LL, Jet-A, Jet-B, JP-5, and JP-8, using FAA planning densities or a temperature-corrected specific gravity."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Why is 100LL planned at 6.0 lb/gal when the specific gravity is about 0.72?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "0.72 times the density of water is about 6.0 lb/US gal, which is why the planning figure and the typical SG agree at 15 °C. The book figure is rounded and is used year-round unless you apply a temperature correction or a measured density."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How many kilograms is a litre of Jet-A?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "At the 6.7 lb/US gal planning density, about 0.80 kg/L. Temperature and the actual batch will move that number."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Are US gallons and imperial gallons the same?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. One imperial gallon is 4.54609 L, about 1.201 US gallons. This page converts both."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Fuel weight</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../fuel-planning/">Fuel planner</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Aviation Fuel Weight Calculator</h1>
+        <p class="lede">Convert aviation fuel between volume and mass: US gallons, imperial gallons, or litres, and pounds or kilograms. Planning densities follow the usual FAA figures — 6.0 lb/US gal for 100LL and 6.7 lb/US gal for Jet-A / Jet-A-1 — with Jet-B, JP-5, and JP-8 included. Optionally correct density from a 15 °C specific gravity for the temperature of the fuel.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div class="field-block"><label for="fuel">Fuel type</label>
+<select id="fuel" class="input">
+<option value="100LL" selected>100LL avgas (6.0 lb/US gal planning)</option>
+<option value="100-130">100/130 avgas (6.0)</option>
+<option value="mogas">Mogas / UL94 (6.0 planning)</option>
+<option value="JET-A">Jet-A / Jet-A-1 (6.7)</option>
+<option value="JET-B">Jet-B / JP-4 (6.4)</option>
+<option value="JP-5">JP-5 (6.8)</option>
+<option value="JP-8">JP-8 (6.7)</option>
+<option value="custom">Custom lb/US gal</option>
+</select>
+<label for="custom" class="sublabel">Custom density (lb/US gal) <span class="optional">if custom</span></label>
+<input id="custom" class="input" type="number" inputmode="decimal" min="0" step="any" placeholder="e.g. 6.3" autocomplete="off"></div>
+<div class="field-block"><div class="field-label-row"><span class="sublabel">Convert</span>
+<div class="seg wrap-seg" role="group" aria-label="dir"><button type="button" class="seg-btn is-active" data-unit-group="dir" data-unit="volume-to-mass" aria-pressed="true">Volume → mass</button><button type="button" class="seg-btn" data-unit-group="dir" data-unit="mass-to-volume" aria-pressed="false">Mass → volume</button></div>
+</div></div>
+<div class="field-block" id="block-vol"><div class="field-label-row"><label for="volume">Volume</label>
+<div class="seg wrap-seg" role="group" aria-label="vu"><button type="button" class="seg-btn is-active" data-unit-group="vu" data-unit="us-gal" aria-pressed="true">US gal</button><button type="button" class="seg-btn" data-unit-group="vu" data-unit="imp-gal" aria-pressed="false">Imp. gal</button><button type="button" class="seg-btn" data-unit-group="vu" data-unit="L" aria-pressed="false">litres</button></div>
+</div><input id="volume" class="input" type="number" inputmode="decimal" min="0" step="any" value="50" autocomplete="off"></div>
+<div class="field-block" id="block-mass" hidden><div class="field-label-row"><label for="mass">Mass</label>
+<div class="seg wrap-seg" role="group" aria-label="mu"><button type="button" class="seg-btn is-active" data-unit-group="mu" data-unit="lb" aria-pressed="true">lb</button><button type="button" class="seg-btn" data-unit-group="mu" data-unit="kg" aria-pressed="false">kg</button></div>
+</div><input id="mass" class="input" type="number" inputmode="decimal" min="0" step="any" value="300" autocomplete="off"></div>
+<div class="field-block"><label class="check-row"><input type="checkbox" id="use-temp"> Apply a temperature correction</label>
+<div id="temp-row" hidden><label for="temp">Fuel temperature (°C)</label>
+<input id="temp" class="input" type="number" inputmode="decimal" step="any" value="15" autocomplete="off">
+<p class="hint">Density is adjusted from a 15 °C reference specific gravity with a typical expansion coefficient (about 0.00095 /°C for avgas, 0.00079 /°C for kerosene jet fuels). Planning figures are used when this box is unchecked.</p></div></div>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-ex">Load 50 gal of 100LL</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Fuel weight <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>Planning densities (6.0 and 6.7 lb/gal, and the other book figures) are standard flight-planning values, not a laboratory ticket. Temperature-corrected mass is an estimate from a typical specific gravity and expansion coefficient. For weight and balance or a fueler's receipt, use the density actually measured or the figure in the AFM.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>Planning densities</h2>
+      <p>U.S. flight-planning practice, reflected in the Pilot’s Handbook and in most POH weight-and-balance examples, uses</p>
+      <ul><li>100LL / avgas: <strong>6.0 lb per US gallon</strong></li>
+      <li>Jet-A / Jet-A-1 / JP-8: <strong>6.7 lb per US gallon</strong></li>
+      <li>Jet-B / JP-4: <strong>6.4 lb per US gallon</strong></li>
+      <li>JP-5: <strong>6.8 lb per US gallon</strong></li></ul>
+      <p>So 50 US gal of 100LL is 300 lb, and 50 US gal of Jet-A is 335 lb. Those figures are for planning, not a fueler's measured density.</p>
+      <h2>Temperature</h2>
+      <p>When you opt in, the page starts from a typical 15 °C specific gravity (about 0.72 for avgas, 0.80 for Jet-A) and applies a linear expansion correction ρ(T) = ρ<sub>15</sub> (1 − α (T − 15 °C)). Warm fuel is lighter for the same volume; cold fuel is heavier. Use a measured density when the weight matters to the kilogram.</p>
+      <h2>Sources</h2>
+      <p>FAA Pilot’s Handbook of Aeronautical Knowledge (fuel-weight planning figures); ASTM D910 / D1655 typical specific gravities. For trip fuel, reserves, and endurance, use the <a href="../fuel-planning/">fuel planner</a>, which uses the same 6.0 / 6.7 planning densities.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>Why is 100LL planned at 6.0 lb/gal when the specific gravity is about 0.72?</h3>
+      <p>0.72 times the density of water is about 6.0 lb/US gal, which is why the planning figure and the typical SG agree at 15 °C. The book figure is rounded and is used year-round unless you apply a temperature correction or a measured density.</p>
+      <h3>How many kilograms is a litre of Jet-A?</h3>
+      <p>At the 6.7 lb/US gal planning density, about 0.80 kg/L. Temperature and the actual batch will move that number.</p>
+      <h3>Are US gallons and imperial gallons the same?</h3>
+      <p>No. One imperial gallon is 4.54609 L, about 1.201 US gallons. This page converts both.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Fuel weight calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

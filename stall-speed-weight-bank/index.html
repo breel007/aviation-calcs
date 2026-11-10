@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Stall Speed vs Weight and Bank Calculator — Vs × √(W/Wref) × √n</title>
+  <meta name="description" content="Free stall speed calculator for weight and bank. Compute Vs = Vs_ref × √(W/Wref) × √n with n = 1/cos φ in a level coordinated turn, plus a bank table at 0°, 15°, 30°, 45°, and 60°.">
+  <meta name="keywords" content="stall speed calculator, stall speed vs weight, stall speed in a turn, load factor bank, accelerated stall, Vs square root n">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/stall-speed-weight-bank/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/stall-speed-weight-bank/">
+  <meta property="og:title" content="Stall Speed vs Weight and Bank Calculator">
+  <meta property="og:description" content="Vs scales with the square root of weight and with √n, where n = 1/cos φ in a level coordinated turn.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Stall Speed vs Weight and Bank">
+  <meta name="twitter:description" content="Vs × √(W/Wref) × √n, with a load-factor table for common banks.">
+  <meta name="application-name" content="Stall Speed vs Weight and Bank Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Stall Speed vs Weight and Bank Calculator",
+            "url": "https://aviatorcalcs.com/stall-speed-weight-bank/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free stall speed calculator for weight and bank. Compute Vs = Vs_ref × √(W/Wref) × √n with n = 1/cos φ in a level coordinated turn, plus a bank table at 0°, 15°, 30°, 45°, and 60°."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Does flap setting change the formula?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The identity is the same; the reference stall speed changes. Enter the Vs that belongs to the configuration (Vs0 with landing flaps, Vs1 clean, or a POH figure for takeoff flaps)."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What if I am not in a level turn?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Then n is not 1/cos φ. A pulling-up pull-up or a descending turn has a different load factor. Enter n directly if you know it."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Is this indicated or true airspeed?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "POH stall speeds are indicated (or calibrated) airspeeds. Scale them in that same unit. Do not convert to TAS first."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Stall speed</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../turn-radius/">Turn radius</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Stall Speed vs Weight and Bank Calculator</h1>
+        <p class="lede">Stall speed rises when the airplane is heavier and when you bank. In a level, coordinated turn the load factor is n = 1 / cos φ, and stall speed is Vs_ref × √(W / W_ref) × √n. Enter a book stall speed (Vs1 or Vs0 — match the configuration), the weight it belongs to, the weight you will fly, and a bank or a load factor. A table of 0°, 15°, 30°, 45°, and 60° is included.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div class="field-block"><div class="pair"><div><label for="vsRef">Book stall speed Vs</label><input id="vsRef" class="input" type="number" inputmode="decimal" min="0" step="any" value="48" autocomplete="off"></div>
+<div><label for="wRef">At weight Wref</label><input id="wRef" class="input" type="number" inputmode="decimal" min="0" step="any" value="2550" autocomplete="off"></div></div>
+<p class="hint">Use the POH speed for the configuration you care about (Vs1, Vs0, or a flaps-set figure), in the unit the book uses (usually KIAS).</p></div>
+<div class="field-block"><label for="weight">Weight you will fly</label>
+<input id="weight" class="input" type="number" inputmode="decimal" min="0" step="any" value="2200" autocomplete="off"></div>
+<div class="field-block"><div class="pair"><div><label for="bank">Bank (degrees)</label><input id="bank" class="input" type="number" inputmode="decimal" min="0" step="any" value="45" autocomplete="off"></div>
+<div><label for="n">Or load factor n <span class="optional">overrides bank</span></label><input id="n" class="input" type="number" inputmode="decimal" min="0" step="any" placeholder="e.g. 2" autocomplete="off"></div></div>
+<p class="hint">Leave load factor blank to use n = 1/cos(bank) for a level coordinated turn. Entering n directly is the accelerated-stall form (and the implied bank for that n in a level turn is shown).</p></div>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-ex">Load 48 kt at 2,550 lb, 2,200 lb, 45° bank</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Stall speed <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This is the standard √weight and √n identity for an accelerated stall in a coordinated, level turn (or at a load factor you type). It is not a substitute for the POH stall speeds, which include configuration, CG, power, and wing-level vs turning flight as tested. An uncoordinated or rapidly pitching airplane can stall in ways this model does not describe.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>Weight and bank</h2>
+      <p>Lift has to equal n times weight. The stall angle of attack is (to a first approximation) a property of the wing and the configuration, so stall speed scales as</p>
+      <p><code>V<sub>s</sub>(W, φ) = V<sub>s,ref</sub> × √(W / W<sub>ref</sub>) × √n</code>, &nbsp; with &nbsp; <code>n = 1 / cos φ</code></p>
+      <p>in a level, coordinated turn. At 0° bank, n = 1. At 45°, n = √2 ≈ 1.41 and stall speed is about 19% higher. At 60°, n = 2 and stall speed rises by a factor of √2 ≈ 1.41. A worked example: 48 kt at 2,550 lb, flown at 2,200 lb in a 45° bank, is about 53 kt.</p>
+      <h2>Related tools</h2>
+      <p>The <a href="../turn-radius/">turn radius calculator</a> uses the same load-factor and stall-in-bank identities, and adds rate of turn and turn radius. The <a href="../maneuvering-speed-weight/">maneuvering speed calculator</a> scales Va with weight and relates it to Vs × √n<sub>lim</sub>. Use the POH figures first in every case.</p>
+      <h2>Sources</h2>
+      <p>FAA Pilot’s Handbook of Aeronautical Knowledge, Chapter 5 (load factor, stall speed in a turn); FAA Airplane Flying Handbook; NASA Glenn Beginner’s Guide (lift, load factor).</p>
+      <h2>Frequently asked questions</h2>
+      <h3>Does flap setting change the formula?</h3>
+      <p>The identity is the same; the reference stall speed changes. Enter the Vs that belongs to the configuration (Vs0 with landing flaps, Vs1 clean, or a POH figure for takeoff flaps).</p>
+      <h3>What if I am not in a level turn?</h3>
+      <p>Then n is not 1/cos φ. A pulling-up pull-up or a descending turn has a different load factor. Enter n directly if you know it.</p>
+      <h3>Is this indicated or true airspeed?</h3>
+      <p>POH stall speeds are indicated (or calibrated) airspeeds. Scale them in that same unit. Do not convert to TAS first.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Stall speed calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
