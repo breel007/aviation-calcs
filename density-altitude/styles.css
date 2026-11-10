@@ -639,6 +639,7 @@ a.brand:hover .brand-name {
 }
 
 .ad-slot {
+  display: none; /* Hide empty placeholder boxes until Auto ads are enabled. */
   margin: 1.5rem 0;
   text-align: center;
 }
