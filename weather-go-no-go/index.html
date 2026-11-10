@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Route Weather Go / No-Go Calculator — Historical Ceiling, Visibility &amp; Convective Climatology</title>
+  <meta name="description" content="Free route weather climatology for pilots. Enter departure, destination, and personal minimums to see how often that week and time of day historically met your ceiling, visibility, wind, and weather limits at airports along the route. Built from archived METARs.">
+  <meta name="keywords" content="route weather climatology, go no-go calculator, historical METAR probability, ceiling visibility climatology, VFR personal minimums, ASOS archive, flight planning weather odds">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/weather-go-no-go/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/weather-go-no-go/">
+  <meta property="og:title" content="Route Weather Go / No-Go — Historical Climatology">
+  <meta property="og:description" content="See how often a week and time of day historically met your ceiling, visibility, and weather minimums along a route, from archived METARs.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Route Weather Go / No-Go Calculator">
+  <meta name="twitter:description" content="Historical go / no-go odds from archived METARs at airports along your route.">
+  <meta name="application-name" content="Route Weather Go / No-Go Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": ["WebApplication", "SoftwareApplication"],
+            "name": "Route Weather Go / No-Go Calculator",
+            "url": "https://aviatorcalcs.com/weather-go-no-go/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+            "description": "Free route weather climatology calculator. Estimates how often a chosen week and time of day historically met ceiling, visibility, wind, and weather minimums at airports along a route, using archived METARs from the Iowa Environmental Mesonet."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "What does this route weather go / no-go calculator tell me?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "It looks at archived hourly METARs for the same week of the year and time of day, at the departure, destination, and automatically chosen ASOS/AWOS stations along the route, and reports how often those observations met your personal ceiling, visibility, wind, and weather limits. A route go means every selected station met the limits in the same hour."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Is this a weather forecast?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. It is climatology: a historical frequency, not a prediction for the day you will fly. A high historical go rate does not mean the actual day will be a go, and a low rate does not mean it will be a no-go. Obtain an official weather briefing and use current METARs, TAFs, and any AIRMET, SIGMET, or convective outlook."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How is a route go decided?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "For each local hour in your time window, the calculator checks whether every selected station has an evaluable routine METAR that meets all of your minimums. The route is a go for that hour only if they all do. The headline day percentage is the share of historical mornings (or other sessions) with at least one such simultaneous-go hour. Per-station percentages are also shown so the worst segment is obvious."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Where does the historical weather come from?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Routine (hourly) METARs are fetched in your browser from the Iowa Environmental Mesonet ASOS/AWOS archive at Iowa State University. Only the needed fields and the week window in each past year are requested, and responses are cached in the session. Special observations (SPECIs) are omitted so bad weather is not over-sampled."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How is ceiling defined, and how do the VFR presets relate to 14 CFR 91.155?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Ceiling is the lowest broken, overcast, or vertical-visibility layer, as in the Aeronautical Information Manual. Few and scattered layers are not a ceiling. The VFR, MVFR, and IFR presets use AIM-style flight-category starting points (3,000 feet and 5 SM; 1,000 and 3; 500 and 1) as personal-minimum defaults. They are not a substitute for the airspace-specific legal VFR minima in 14 CFR 91.155, which can be more or less restrictive."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Route weather go / no-go</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../metar-decoder/">METAR decoder</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Route Weather Go / No-Go</h1>
+        <p class="lede">See how often a week of the year and time of day historically met your personal minimums along a route. The tool pulls archived hourly METARs for the departure, destination, and ASOS/AWOS stations in a corridor along the great-circle, then reports go / no-go likelihoods — climatology, not a forecast.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+        <fieldset class="field-block">
+          <legend>Route</legend>
+          <div class="pair">
+            <div>
+              <label for="dep" class="sublabel">Departure (ICAO)</label>
+              <input id="dep" class="input" type="text" spellcheck="false" autocomplete="off" placeholder="KSBA" value="KSBA" maxlength="8">
+            </div>
+            <div>
+              <label for="dest" class="sublabel">Destination (ICAO)</label>
+              <input id="dest" class="input" type="text" spellcheck="false" autocomplete="off" placeholder="KSJC" value="KSJC" maxlength="8">
+            </div>
+          </div>
+          <p class="hint">U.S. ASOS/AWOS identifiers work as ICAO or 3-letter ids (KSBA or SBA; PHNL or HNL). You can add or remove en-route and alternate stations below after the corridor is built.</p>
+        </fieldset>
+
+        <fieldset class="field-block">
+          <legend>Week, time of day, and history</legend>
+          <div class="pair">
+            <div>
+              <label for="date" class="sublabel">Date (week of year)</label>
+              <input id="date" class="input" type="date" value="2026-06-15">
+            </div>
+            <div>
+              <label for="years" class="sublabel">Past years</label>
+              <select id="years" class="input select">
+                <option value="3">3 years</option>
+                <option value="5" selected>5 years (default)</option>
+                <option value="10">10 years</option>
+                <option value="15">15 years</option>
+              </select>
+            </div>
+          </div>
+          <div class="pair">
+            <div>
+              <label for="hour-start" class="sublabel">Local window start</label>
+              <select id="hour-start" class="input select"></select>
+            </div>
+            <div>
+              <label for="hour-end" class="sublabel">Local window end</label>
+              <select id="hour-end" class="input select"></select>
+            </div>
+          </div>
+          <div class="pair">
+            <div>
+              <label for="tz" class="sublabel">Time zone</label>
+              <select id="tz" class="input select">
+                <option value="America/Los_Angeles">America/Los_Angeles</option>
+                <option value="America/Denver">America/Denver</option>
+                <option value="America/Phoenix">America/Phoenix</option>
+                <option value="America/Chicago">America/Chicago</option>
+                <option value="America/New_York">America/New_York</option>
+                <option value="America/Anchorage">America/Anchorage</option>
+                <option value="Pacific/Honolulu">Pacific/Honolulu</option>
+                <option value="America/Puerto_Rico">America/Puerto_Rico</option>
+                <option value="UTC">UTC (Zulu)</option>
+              </select>
+            </div>
+            <div>
+              <label for="radius" class="sublabel">Days around the date</label>
+              <select id="radius" class="input select">
+                <option value="0">Just that calendar day</option>
+                <option value="3" selected>± 3 days (a 7-day week)</option>
+                <option value="7">± 7 days</option>
+              </select>
+            </div>
+          </div>
+          <p class="hint">The end hour is exclusive: 07 to 10 means 07:00–09:59 local. Start and end equal means all day. An overnight window such as 22 to 06 is allowed. Times are applied in the zone you pick (defaulted from the departure airport), not each station’s own local clock, so a route that crosses a time zone stays on one timeline.</p>
+        </fieldset>
+
+        <fieldset class="field-block">
+          <legend>Corridor</legend>
+          <div class="pair">
+            <div>
+              <label for="corridor" class="sublabel">Corridor half-width</label>
+              <select id="corridor" class="input select">
+                <option value="10">10 NM</option>
+                <option value="25" selected>25 NM (default)</option>
+                <option value="50">50 NM</option>
+              </select>
+            </div>
+            <div>
+              <label for="max-stations" class="sublabel">Max auto-picked stations</label>
+              <select id="max-stations" class="input select">
+                <option value="6">6</option>
+                <option value="8">8</option>
+                <option value="10" selected>10 (default)</option>
+                <option value="12">12</option>
+              </select>
+            </div>
+          </div>
+          <p class="hint">Stations are chosen from a bundled U.S. ASOS/AWOS list, kept inside the corridor of the great-circle, and spaced along the route. Departure and destination are always included unless you remove them. The cap applies to automatic picks; stations you add yourself are kept even if the list grows past the cap.</p>
+        </fieldset>
+
+        <div id="station-panel" class="station-panel" hidden>
+          <h3>Stations along the route</h3>
+          <p class="hint" id="station-summary"></p>
+          <div class="table-wrap">
+            <table class="data-table compact" id="station-table">
+              <thead>
+                <tr>
+                  <th>Station</th>
+                  <th>Along track</th>
+                  <th>Off track</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="station-body"></tbody>
+            </table>
+          </div>
+          <div class="station-toolbar">
+            <div class="grow add-wrap">
+              <label for="add-station" class="sublabel">Add a station</label>
+              <input id="add-station" class="input" type="text" spellcheck="false" autocomplete="off" placeholder="ICAO, id, or name">
+              <ul class="search-hits" id="search-hits" hidden></ul>
+            </div>
+            <button type="button" class="btn btn-ghost" id="btn-add">Add</button>
+            <button type="button" class="btn btn-ghost" id="btn-reset-stations">Reset to auto</button>
+          </div>
+        </div>
+
+        <fieldset class="field-block">
+          <legend>Personal minimums</legend>
+          <div class="preset-row" role="group" aria-label="Minimums presets">
+            <button type="button" class="seg-btn is-active" data-preset="VFR" aria-pressed="true">VFR (3,000 / 5)</button>
+            <button type="button" class="seg-btn" data-preset="MVFR" aria-pressed="false">MVFR or better (1,000 / 3)</button>
+            <button type="button" class="seg-btn" data-preset="IFR" aria-pressed="false">IFR personal (500 / 1)</button>
+          </div>
+          <div class="pair">
+            <div>
+              <label for="min-ceil" class="sublabel">Min ceiling (ft AGL)</label>
+              <input id="min-ceil" class="input" type="number" inputmode="numeric" min="0" step="100" value="3000">
+            </div>
+            <div>
+              <label for="min-vis" class="sublabel">Min visibility (SM)</label>
+              <input id="min-vis" class="input" type="number" inputmode="decimal" min="0" step="0.25" value="5">
+            </div>
+          </div>
+          <div class="pair">
+            <div>
+              <label for="max-wind" class="sublabel">Max sustained wind (kt, optional)</label>
+              <input id="max-wind" class="input" type="number" inputmode="numeric" min="0" step="1" placeholder="leave blank">
+            </div>
+            <div>
+              <label for="max-gust" class="sublabel">Max gust (kt, optional)</label>
+              <input id="max-gust" class="input" type="number" inputmode="numeric" min="0" step="1" placeholder="leave blank">
+            </div>
+          </div>
+          <div class="check-grid">
+            <label class="check-row"><input type="checkbox" id="ex-rain"> <span>Exclude rain or drizzle (RA, DZ)</span></label>
+            <label class="check-row"><input type="checkbox" id="ex-snow"> <span>Exclude snow (SN, SG)</span></label>
+            <label class="check-row"><input type="checkbox" id="ex-fz"> <span>Exclude freezing precip (FZRA, FZDZ, PL)</span></label>
+            <label class="check-row"><input type="checkbox" id="ex-sev"> <span>Exclude thunderstorms / severe (TS, +RA, GR, FC, squalls)</span></label>
+          </div>
+          <p class="hint">Ceiling is the lowest broken, overcast, or vertical-visibility layer. Few and scattered do not make a ceiling. Thresholds are inclusive (a 3,000 ft ceiling meets a 3,000 ft minimum). The VFR / MVFR / IFR buttons are AIM flight-category starting points for personal minimums, not the legal VFR minima in 14 CFR 91.155.</p>
+        </fieldset>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-run" id="btn-run">Check historical go / no-go</button>
+          <button type="button" class="btn btn-ghost" id="btn-example">Load KSBA → KSJC mid-June morning</button>
+        </div>
+        <p class="progress" id="progress" role="status"></p>
+      </form>
+
+      <div id="warnings" class="warnings" hidden role="status"></div>
+
+      <div id="results-wrap" hidden>
+        <section class="results" aria-live="polite" aria-labelledby="results-heading">
+          <h2 id="results-heading" class="visually-hidden">Go / no-go climatology results</h2>
+          <div class="hero" id="hero">
+            <p class="hero-label">Historical route-go days <span class="hero-tag" id="hero-tag">any simultaneous-go hour in the window</span></p>
+            <p class="hero-value" id="out-day"><span class="num">—</span> <span class="unit">%</span></p>
+            <p class="hero-sub" id="out-sub"></p>
+          </div>
+          <div class="stat-grid" id="stat-grid"></div>
+          <div class="table-wrap">
+            <table class="data-table compact" id="result-table">
+              <thead>
+                <tr>
+                  <th>Station</th>
+                  <th>Hour go</th>
+                  <th>Day go (any hour)</th>
+                  <th>Solid days</th>
+                  <th>Hours used</th>
+                  <th>Most common fail</th>
+                </tr>
+              </thead>
+              <tbody id="result-body"></tbody>
+            </table>
+          </div>
+          <div class="chart-block">
+            <h3>Which limit failed most (route hours)</h3>
+            <div class="chart" id="fail-chart"></div>
+          </div>
+          <div class="chart-block">
+            <h3>Go rate by year (route hours)</h3>
+            <div class="chart" id="year-chart"></div>
+          </div>
+          <div class="chart-block">
+            <h3>Go rate by local hour of day</h3>
+            <p class="hint">Built from every hour on the sampled days, averaged across selected stations. Your window is highlighted.</p>
+            <div class="chart" id="hour-chart"></div>
+          </div>
+          <p class="credit">Historical METARs from the <a href="https://mesonet.agron.iastate.edu/request/download.phtml" rel="noopener noreferrer">Iowa Environmental Mesonet</a> of Iowa State University. Requests run in your browser; only the week window in each year and the needed fields are downloaded, and responses are cached for this session. Routine hourly METARs only (no SPECIs).</p>
+        </section>
+      </div>
+
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This page reports historical frequencies, not a forecast and not a briefing. It says nothing reliable about the actual day you will fly. It does not replace an official weather briefing, the POH/AFM, 14 CFR 91.155, or your own personal minimums and judgment. Archived observations can be missing, automated, or unrepresentative of weather between stations, over high terrain, or at your destination if the official observation is from a different site. Do not use this tool as the sole source for a go / no-go decision.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>Climatology is not a forecast</h2>
+      <p>This calculator answers a planning question: <em>in this week of the year, at this time of day, how often have the airports along this route been at or above my personal minimums?</em> It does that by counting archived routine METARs. A 70% historical go rate for mid-June mornings is a useful prior — coastal marine layers, afternoon thunderstorms, and winter icing seasons are real patterns — but it is not a prediction for next Tuesday. Obtain an official briefing and read the METARs, TAFs, AIRMETs, SIGMETs, and convective outlooks that actually apply to the flight.</p>
+
+      <h2>How stations along the route are chosen</h2>
+      <p>Given a departure and destination, the page looks up each site in a compact U.S. ASOS/AWOS list (identifiers, coordinates, and time zones from the Iowa Environmental Mesonet state networks). It then finds other stations whose cross-track distance to the great-circle is at most the corridor width (25 NM by default) and whose along-track position sits between the endpoints. Those candidates are thinned to a capped, evenly spaced set — departure and destination first, then the largest remaining gaps along the route — so a 200 NM hop does not fire a request for every AWOS on the coast. You can remove any of them, add an alternate or a site the auto-picker skipped, and widen or narrow the corridor. A route go requires <strong>every selected station</strong> to meet the minimums in the same hour, so the table also shows each station alone — the lowest one is the historically weakest segment. Auto-picked sites with a short or patchy archive (for example a station that only came online in the last year or two) are still listed, but they are left out of that combined route score so they do not erase earlier years of data.</p>
+
+      <h2>How a go hour and a go day are counted</h2>
+      <p>For the chosen month and day, the tool takes a window of ±3 days (a seven-day week; you can shorten or lengthen it) in each of the past five years by default, or 3, 10, or 15 years if you ask. Times are converted from the archive’s UTC stamps into one time zone — the departure zone unless you change it — and only observations in your local hour window are scored. The end hour is exclusive (07–10 is 07:00–09:59). A single observation is a go when:</p>
+      <ul>
+        <li>The ceiling is at least your minimum, or there is no ceiling (clear, few, or scattered only). Ceiling is the lowest <strong>BKN, OVC, or VV</strong> layer, as in AIM Chapter 7. Heights come from the archive in feet AGL.</li>
+        <li>Visibility is at least your minimum, in statute miles.</li>
+        <li>If you excluded rain, snow, freezing precipitation, or thunderstorms/severe weather, none of those present-weather codes appear. Severe here follows the list on the form: thunderstorms (including vicinity), heavy rain (<code>+RA</code>), hail, funnel clouds, and squalls — from AIM 7-1 contractions.</li>
+        <li>Optional wind and gust caps, if you set them, are not exceeded. A missing gust is not treated as a gust-limit failure.</li>
+      </ul>
+      <p>Observations that are missing a field you are actually checking (no sky condition, or no visibility) are dropped from the denominator rather than scored as a no-go. A <strong>route-go hour</strong> is one in which every selected station has an evaluable observation and all of them are go. The headline figure is the share of historical days in the window that had <em>at least one</em> route-go hour — “a go window existed that morning.” The page also reports the stricter share of hours that were simultaneously go, and the share of days on which every hour in the window was a go (“a solid morning”).</p>
+
+      <h2>The archive, sampling, and request limits</h2>
+      <p>Data are fetched in your browser from the Iowa Environmental Mesonet ASOS/AWOS download service (<code>mesonet.agron.iastate.edu</code>), which allows cross-origin requests. The URL asks only for sky cover and height, visibility, weather codes, and wind, for the week window in each year (padded by one UTC day so local midnights are not clipped), and only for routine METARs (<code>report_type=3</code>). Special observations cluster in deteriorating weather and would bias the climatology toward no-go if they were included. Several stations are combined in one request per year; responses are cached in <code>sessionStorage</code> so a rerun with the same stations and dates does not hit the archive again. Please do not script heavy downloads against IEM from this idea — the page is intentionally light. IEM station identifiers for the lower 48 are usually the three-letter id (KSBA is <code>SBA</code> in the archive); Alaska, Hawaii, and many non-CONUS sites use the four-letter ICAO.</p>
+
+      <h2>VFR minimums and flight category</h2>
+      <p>The VFR preset (3,000 ft and 5 SM), MVFR-or-better preset (1,000 and 3), and IFR personal preset (500 and 1, plus freezing precipitation and severe weather excluded) follow the familiar AIM flight-category breakpoints as a starting point for personal minimums. Comparisons are inclusive. They are <strong>not</strong> a restatement of 14 CFR 91.155, whose basic VFR visibility and cloud-clearance values depend on airspace class and altitude and are sometimes lower than “flight category VFR,” sometimes not. Use the legal rule that applies to the airspace, then apply your own tighter minimums here if you wish.</p>
+
+      <h2>Sources</h2>
+      <ul>
+        <li>Iowa Environmental Mesonet, Iowa State University — ASOS/AWOS/METAR archive and station metadata.</li>
+        <li>FAA Aeronautical Information Manual (AIM) Chapter 7, Meteorology — METAR present-weather contractions, sky-condition and ceiling definitions, and flight-category guidance.</li>
+        <li>14 CFR 91.155 — Basic VFR weather minimums (legal minima by airspace, not this page’s presets).</li>
+        <li>FAA Advisory Circular AC 00-45, Aviation Weather Services — how METARs, TAFs, and briefings are produced and should be used.</li>
+      </ul>
+
+      <h2>Frequently asked questions</h2>
+      <h3>What does this route weather go / no-go calculator tell me?</h3>
+      <p>How often, in the same week of the year and time of day, archived hourly METARs at the selected airports along your route met the personal minimums you entered. A route go means every selected station was a go in the same hour.</p>
+      <h3>Is this a weather forecast?</h3>
+      <p>No. It is climatology and says nothing reliable about the actual day. Get an official briefing.</p>
+      <h3>How is a route go decided?</h3>
+      <p>All selected stations must have an evaluable routine METAR that meets every limit in that local hour. The headline day percentage is the share of historical sessions with at least one such hour. Per-station columns show which airport is the usual weak point.</p>
+      <h3>Where does the historical weather come from?</h3>
+      <p>The Iowa Environmental Mesonet ASOS/AWOS archive, requested from your browser, routine hourly METARs only, with light, cached year-window downloads.</p>
+      <h3>How is ceiling defined, and how do the VFR presets relate to 14 CFR 91.155?</h3>
+      <p>Ceiling is the lowest BKN, OVC, or VV layer (AIM). The presets are AIM-style flight-category starting points for personal minimums, not a substitute for 91.155.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — route weather go / no-go climatology. Historical METARs are requested in your browser from the Iowa Environmental Mesonet; the minimums math runs locally.</p>
+      <p class="footer-fine">Not a certified aviation tool. Always defer to an official briefing, the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript, both to apply your minimums and to request archived METARs from the Iowa Environmental Mesonet.</p></noscript>
+  <script src="stations.js"></script>
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
