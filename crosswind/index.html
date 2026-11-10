@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Crosswind Calculator — Crosswind &amp; Headwind Component for Any Runway</title>
+  <meta name="description" content="Free crosswind component calculator for pilots. Enter a runway number or heading and the wind to get the crosswind, headwind, and tailwind for both runway ends — the same components you would find on an E6B or a runway crosswind chart.">
+  <meta name="keywords" content="crosswind calculator, crosswind component, headwind component, wind component calculator, E6B wind, runway crosswind chart">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://breel007.github.io/aviation-calcs/crosswind/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://breel007.github.io/aviation-calcs/crosswind/">
+  <meta property="og:title" content="Crosswind Calculator — Crosswind &amp; Headwind Component">
+  <meta property="og:description" content="Free crosswind and headwind component calculator. Both runway ends, gust components, and a simple wind diagram. The same math as an E6B flight computer.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Crosswind Component Calculator">
+  <meta name="twitter:description" content="Runway or heading and the wind in. Crosswind, headwind, and tailwind for both ends out.">
+  <meta name="application-name" content="Crosswind Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["WebApplication", "SoftwareApplication"],
+        "name": "Crosswind Component Calculator",
+        "url": "https://breel007.github.io/aviation-calcs/crosswind/",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "description": "Free crosswind, headwind, and tailwind component calculator for pilots. Computes both runway ends, optional gust components, and compares against a max demonstrated crosswind."
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I calculate the crosswind component?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Find the angle between the wind direction and the runway heading, then compute crosswind = wind speed × sin(angle) and headwind = wind speed × cos(angle). That is the same convention an E6B or electronic flight computer uses. This calculator does it for both ends of the runway."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between a crosswind and a headwind component?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The crosswind component is the part of the wind that blows across the runway (from the left or the right). The headwind component is the part that blows along the runway. A negative headwind is a tailwind."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I use magnetic or true wind?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Runway numbers are magnetic. ATIS and tower winds are usually magnetic too, so you can enter them as-is. METAR wind is true; if you use a METAR, apply local magnetic variation (east is subtracted from true) or enter the variation here so the wind is converted to magnetic."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is the maximum demonstrated crosswind a limit?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Usually not. In most light-airplane Pilot’s Operating Handbooks the maximum demonstrated crosswind is a tested figure, not a limitation. It is still a useful personal and insurance benchmark. This tool only compares your components to the number you type in; it does not decide whether a landing is safe."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Crosswind</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../density-altitude/">Density altitude</a>
+        <a href="../crosswind/" aria-current="page">Crosswind</a>
+        <a href="../weight-balance/">Weight &amp; balance</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Crosswind Component Calculator</h1>
+        <p class="lede">Enter a runway number or a heading, plus the wind. You get the crosswind and headwind (or tailwind) for both runway ends, including gust components, and a simple wind diagram. Results update as you type.</p>
+      </header>
+
+      <form id="calc-form" action="#" method="get" novalidate>
+        <div class="field-block">
+          <div class="field-label-row">
+            <label for="runway">Runway or heading</label>
+            <div class="seg" role="group" aria-label="Runway input type">
+              <button type="button" class="seg-btn is-active" data-unit-group="rwy-mode" data-unit="runway" aria-pressed="true">Runway</button>
+              <button type="button" class="seg-btn" data-unit-group="rwy-mode" data-unit="heading" aria-pressed="false">Heading</button>
+            </div>
+          </div>
+          <input id="runway" name="runway" class="input" type="text" inputmode="decimal" value="27" autocomplete="off" required>
+          <p class="hint" id="runway-hint">Runway 27 means heading 270°. Left, right, or center suffixes (27L) are kept on the label. The opposite end is calculated automatically.</p>
+        </div>
+
+        <fieldset class="field-block">
+          <legend>Wind</legend>
+          <div class="pair">
+            <div>
+              <label for="wind-dir" class="sublabel">Direction (from)</label>
+              <input id="wind-dir" class="input" type="number" inputmode="decimal" step="1" min="0" max="360" value="300" autocomplete="off" required>
+            </div>
+            <div>
+              <label for="wind-spd" class="sublabel">Speed</label>
+              <input id="wind-spd" class="input" type="number" inputmode="decimal" step="0.1" min="0" max="200" value="20" autocomplete="off" required>
+            </div>
+          </div>
+          <div class="pair" style="margin-top:0.7rem">
+            <div>
+              <label for="wind-gust" class="sublabel">Gust <span class="optional">optional</span></label>
+              <input id="wind-gust" class="input" type="number" inputmode="decimal" step="0.1" min="0" max="200" placeholder="—" autocomplete="off">
+            </div>
+            <div>
+              <div class="field-label-row">
+                <span class="sublabel">Units</span>
+              </div>
+              <div class="seg" role="group" aria-label="Wind speed unit">
+                <button type="button" class="seg-btn is-active" data-unit-group="spd" data-unit="kt" aria-pressed="true">kt</button>
+                <button type="button" class="seg-btn" data-unit-group="spd" data-unit="mph" aria-pressed="false">mph</button>
+              </div>
+            </div>
+          </div>
+          <p class="hint">Direction is the direction the wind is coming from, the same way a METAR or ATIS reports it.</p>
+        </fieldset>
+
+        <fieldset class="field-block">
+          <legend>Wind reference</legend>
+          <div class="seg" role="group" aria-label="Wind reference">
+            <button type="button" class="seg-btn is-active" data-unit-group="ref" data-unit="magnetic" aria-pressed="true">Magnetic (ATIS / tower)</button>
+            <button type="button" class="seg-btn" data-unit-group="ref" data-unit="true" aria-pressed="false">True (METAR)</button>
+          </div>
+          <div class="variation-row" id="var-row" hidden>
+            <label for="variation">Magnetic variation</label>
+            <div class="pair">
+              <input id="variation" class="input" type="number" inputmode="decimal" step="0.1" min="0" max="40" placeholder="e.g. 12" autocomplete="off">
+              <div class="seg" role="group" aria-label="Variation east or west" style="align-self:end">
+                <button type="button" class="seg-btn is-active" data-unit-group="varew" data-unit="E" aria-pressed="true">East</button>
+                <button type="button" class="seg-btn" data-unit-group="varew" data-unit="W" aria-pressed="false">West</button>
+              </div>
+            </div>
+            <p class="hint">East variation is subtracted from true to get magnetic. If you leave this blank, the true wind is used as entered and a reminder is shown.</p>
+          </div>
+          <p class="hint">Runway numbers are magnetic. ATIS and tower winds are usually magnetic, so you can enter them directly. METAR winds are true — apply variation, or use the True option above.</p>
+        </fieldset>
+
+        <div class="field-block">
+          <label for="max-xw">Maximum demonstrated crosswind <span class="optional">optional</span></label>
+          <input id="max-xw" class="input" type="number" inputmode="decimal" step="0.1" min="0" max="80" placeholder="e.g. 15" autocomplete="off">
+          <p class="hint">Compared with both the sustained and gust crosswind. In most light-airplane POHs this is a demonstrated figure, not a limitation.</p>
+        </div>
+      </form>
+
+      <div id="warnings" class="warnings" hidden role="status"></div>
+
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Wind components</h2>
+        <div class="ends-grid" id="ends-grid"></div>
+        <div class="diagram-wrap">
+          <p class="stat-label">Wind diagram</p>
+          <div id="diagram"></div>
+          <p class="hint" id="diagram-caption"></p>
+          <div class="legend-row">
+            <span><i class="legend-swatch" style="background:#e8b84a"></i>Runway</span>
+            <span><i class="legend-swatch" style="background:#6fe3d0"></i>Wind (from)</span>
+            <span><i class="legend-swatch" style="background:#f0a35a"></i>Crosswind</span>
+            <span><i class="legend-swatch" style="background:#7dcf7d"></i>Headwind / tailwind</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This calculator is a planning and training aid only. It is <strong>not</strong> a substitute for an E6B, a certified flight computer, official weather, or your own judgment. Check the runway, wind, and variation you entered. A demonstrated-crosswind comparison is not a go/no-go decision. When the gust component is near or past your personal or demonstrated figure, give yourself more margin or choose another runway.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>How to calculate a crosswind component</h2>
+      <p>The wind almost never blows straight down the runway. The part that blows across it is the <strong>crosswind component</strong>; the part that blows along it is the <strong>headwind</strong> or <strong>tailwind component</strong>. The standard formula — the same one on an E6B flight computer and on a runway crosswind chart — is:</p>
+      <p><code>angle = wind direction − runway heading</code><br>
+         <code>crosswind = wind speed × sin(angle)</code><br>
+         <code>headwind = wind speed × cos(angle)</code></p>
+      <p>A positive crosswind is from the right as you look along the runway heading. A negative headwind is a tailwind. A 20 kt wind 30° off the nose is a 10 kt crosswind and about a 17 kt headwind — the familiar “half the wind at 30 degrees” rule of thumb.</p>
+
+      <h2>Both runway ends</h2>
+      <p>The opposite end of the runway is 180° away, so the headwind and crosswind simply change sign. If runway 27 has a 17 kt headwind and a 10 kt right crosswind, runway 09 has a 17 kt tailwind and a 10 kt left crosswind. This tool always shows both ends so you can pick the one with the headwind — or see clearly when you would be landing with a tailwind.</p>
+
+      <h2>Magnetic versus true wind</h2>
+      <p>Runway numbers are magnetic headings (except in a few places that use true). Winds on the ATIS and from the tower are usually magnetic as well, so they line up with the runway number. Winds in a METAR are <strong>true</strong>. If you take a METAR wind and a runway number, convert the wind to magnetic first: magnetic = true − east variation (or true + west variation). You can type the variation into the calculator and it will do that conversion for you.</p>
+
+      <h2>Gusts and the maximum demonstrated crosswind</h2>
+      <p>If a gust is entered, the same formulas are run at the gust speed so you can see the peak crosswind, not just the sustained one. Many pilots treat the gust crosswind as the number to compare with a personal minimum or with the airplane’s maximum demonstrated crosswind. That demonstrated figure, in most light-airplane handbooks, is not a limitation — it is the strongest crosswind the manufacturer happened to test. It is still a useful benchmark. This page will say whether the sustained or gust component exceeds the number you entered; it will not tell you that a landing is legal or safe.</p>
+
+      <h2>Worked example</h2>
+      <p>Runway 27, wind 300° at 20 kt, gusting 28 kt, magnetic:</p>
+      <ul>
+        <li>The wind is 30° to the right of the nose.</li>
+        <li>Sustained components on 27: <strong>10 kt right crosswind</strong> and about <strong>17 kt headwind</strong>.</li>
+        <li>Gust components on 27: <strong>14 kt right crosswind</strong> and about <strong>24 kt headwind</strong>.</li>
+        <li>Runway 09 is the opposite: a 10 kt left crosswind and a 17 kt tailwind (14 / 24 kt in the gust).</li>
+      </ul>
+
+      <h2>Frequently asked questions</h2>
+      <h3>How do I calculate the crosswind component?</h3>
+      <p>Subtract the runway heading from the wind direction, then multiply the wind speed by the sine of that angle. Multiply by the cosine for the headwind. This calculator does both, for both runway ends, including an optional gust.</p>
+      <h3>What is the difference between a crosswind and a headwind component?</h3>
+      <p>The crosswind is the part of the wind blowing across the runway; the headwind (or tailwind) is the part blowing along it. Together they add up, in a vector sense, to the full wind.</p>
+      <h3>Should I use magnetic or true wind?</h3>
+      <p>Match the runway. Runway numbers are magnetic, and so are most ATIS and tower winds. METAR winds are true and need magnetic variation applied before you compare them with a runway number.</p>
+      <h3>Is the maximum demonstrated crosswind a limit?</h3>
+      <p>In most light-airplane POHs, no — it is a tested figure, not a limitation. Compare your components with it if you like, then apply your own margins, the book, and the conditions.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — crosswind component calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation tool. Always defer to official weather, the POH/AFM, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the sine/cosine formulas in the explainer with a hand E6B or calculator.</p></noscript>
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,10 +1,14 @@
 # Aviation Calcs
 
-Free, static aviation calculators. No build step and no backend — just HTML, CSS, and JavaScript.
+Free, static aviation calculators for pilots. No build step and no backend — just HTML, CSS, and JavaScript.
+
+Live site: [https://breel007.github.io/aviation-calcs/](https://breel007.github.io/aviation-calcs/)
 
 ## Calculators
 
 - [Density altitude](density-altitude/) — pressure altitude, ICAO density altitude, humidity correction, two-way ISA deviation (ISA +/−), and a rough takeoff/climb estimate.
+- [Crosswind](crosswind/) — crosswind, headwind, and tailwind components for both runway ends, including gusts and a wind diagram.
+- [Weight and balance](weight-balance/) — generic W&B / CG calculator with an editable envelope and example Cessna 172S, Piper Archer, and Cessna 152 arms.
 
 ## Run locally
 
@@ -14,25 +18,21 @@ python3 -m http.server 8765
 
 Open [http://127.0.0.1:8765/](http://127.0.0.1:8765/).
 
-To verify the density-altitude math:
+## Tests
 
 ```bash
 node density-altitude/test.js
+node crosswind/test.js
+node weight-balance/test.js
 ```
 
-## Publish on GitHub Pages
+## Site URL (custom domain later)
 
-This repository is already set up for Pages (a root landing page and a `.nojekyll` file). Nothing has been pushed yet.
+The public base URL lives in one place: [`site-config.js`](site-config.js).
 
-1. Create an empty GitHub repository (for example `aviation-calcs`).
-2. Set your git name and email if they are not already configured, then add the remote and push `main`:
+When you move the site to a custom domain (for example `https://aviatorcalcs.com`):
 
-   ```bash
-   git remote add origin https://github.com/<your-username>/aviation-calcs.git
-   git push -u origin main
-   ```
+1. Change `baseUrl` in `site-config.js` (no trailing slash).
+2. Run `node scripts/write-site-files.js`.
 
-3. In the repo on GitHub: **Settings → Pages → Build and deployment**. Set **Source** to “Deploy from a branch”, branch `main`, folder `/ (root)`.
-4. After a minute or two the site will be at `https://<your-username>.github.io/aviation-calcs/`.
-
-A custom domain can be added later in the same Pages settings.
+That regenerates `sitemap.xml` and `robots.txt` and updates canonical / Open Graph URLs in the HTML pages.

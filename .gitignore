@@ -2,3 +2,6 @@
 *.log
 .idea/
 .vscode/
+
+# local preview screenshots
+da-preview*.png

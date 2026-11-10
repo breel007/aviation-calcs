@@ -5,14 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#080c16">
   <meta name="color-scheme" content="dark">
-  <title>Density Altitude Calculator — Pressure Altitude, ISA Deviation &amp; Performance</title>
-  <meta name="description" content="Free density altitude calculator for pilots. Enter field elevation, altimeter setting (inHg or hPa), and OAT to get pressure altitude, ICAO density altitude, a humidity-corrected value, ISA deviation, and a rough takeoff and climb performance estimate.">
+  <title>Density Altitude Calculator — Pressure Altitude, ISA Temperature &amp; DA Calc</title>
+  <meta name="description" content="Free density altitude calculator (DA calc) for pilots. Find pressure altitude, ISA temperature, and density altitude, and see how high density altitude affects takeoff. Works in your browser — no account.">
   <meta name="keywords" content="density altitude calculator, pressure altitude, ISA deviation, density altitude formula, takeoff performance, dewpoint, inHg, hPa, flight planning">
   <meta name="author" content="Aviation Calcs">
   <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://breel007.github.io/aviation-calcs/density-altitude/">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://breel007.github.io/aviation-calcs/density-altitude/">
   <meta property="og:title" content="Density Altitude Calculator — Pressure Altitude &amp; Performance">
-  <meta property="og:description" content="Free, mobile-friendly density altitude calculator. ICAO standard formula, optional humidity correction, ISA deviation, and a clearly labeled takeoff/climb rule of thumb.">
+  <meta property="og:description" content="Free density altitude and pressure altitude calculator. ICAO DA formula, ISA temperature, optional humidity, and a takeoff rule of thumb for high density altitude days.">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Density Altitude Calculator">
@@ -28,12 +30,54 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Density Altitude Calculator",
-    "applicationCategory": "UtilitiesApplication",
-    "operatingSystem": "Any",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    "description": "Free density altitude calculator using the ICAO Standard Atmosphere. Computes pressure altitude, dry and humidity-corrected density altitude, ISA deviation, and a rough takeoff and climb performance estimate."
+    "@graph": [
+      {
+        "@type": ["WebApplication", "SoftwareApplication"],
+        "name": "Density Altitude Calculator",
+        "url": "https://breel007.github.io/aviation-calcs/density-altitude/",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "description": "Free density altitude calculator for pilots. Computes pressure altitude, ICAO density altitude, ISA temperature and ISA deviation, optional humidity correction, and a rough takeoff and climb estimate."
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I calculate density altitude?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "First find pressure altitude from field elevation and the altimeter setting. Then compute the air density from that pressure and the outside air temperature (using virtual temperature if you have a dewpoint). Density altitude is the height in the standard atmosphere that has the same density. This calculator uses the ICAO Standard Atmosphere formula; the common rule of thumb is DA ≈ pressure altitude + 120 × (OAT − ISA temperature)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between pressure altitude and density altitude?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Pressure altitude is the height in the standard atmosphere that has the same pressure as the air you are in. Density altitude is the height that has the same density. Temperature and humidity change density, so density altitude is usually higher than pressure altitude on a hot day and is the number that describes airplane performance."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is ISA temperature and ISA deviation?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ISA temperature is the standard-atmosphere temperature at your pressure altitude, starting at 15°C at sea level and falling about 2°C per 1,000 feet. ISA deviation is the difference between the actual outside air temperature and that standard value (ISA + or −)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does high density altitude affect takeoff?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "High density altitude means thinner air, so the takeoff roll is longer and the climb is weaker. A common rule of thumb is about 10% more takeoff roll and about 8% less climb rate per 1,000 feet of density altitude versus sea-level standard conditions. Always use the performance charts in your POH or AFM."
+            }
+          }
+        ]
+      }
+    ]
   }
   </script>
 </head>
@@ -54,7 +98,12 @@
           <p class="brand-name">Density Altitude</p>
         </div>
       </a>
-      <p class="header-note">Free · No account · Runs in your browser</p>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../density-altitude/" aria-current="page">Density altitude</a>
+        <a href="../crosswind/">Crosswind</a>
+        <a href="../weight-balance/">Weight &amp; balance</a>
+        <a href="../about.html">About</a>
+      </nav>
     </div>
   </header>
 
@@ -280,6 +329,19 @@
 
       <h2>The performance rule of thumb</h2>
       <p>The bars on this page assume a 10% increase in takeoff roll and an 8% decrease in climb rate for each 1,000 ft of density altitude, relative to sea-level standard conditions. Those percentages are in the same ballpark as many light-GA POH charts, but they are <strong>not</strong> aircraft-specific, they do not include weight, wind, slope, or surface, and they become less trustworthy at very high density altitude. If the estimate looks ugly, believe the warning — then go to the book.</p>
+
+      <h2>How to calculate density altitude</h2>
+      <p>Start with field elevation and the altimeter setting to get <strong>pressure altitude</strong>. Then use the outside air temperature — and dewpoint, if you have it — to find the actual air density. <strong>Density altitude</strong> is the altitude in the standard atmosphere with that same density. This page uses the ICAO formula; a quick E6B-style check is <code>DA ≈ PA + 120 × (OAT − ISA)</code>, which usually reads a little higher on a hot day.</p>
+
+      <h2>Frequently asked questions</h2>
+      <h3>How do I calculate density altitude?</h3>
+      <p>Convert elevation and altimeter setting to pressure altitude, then correct for temperature (and humidity, if known) to get density altitude. The calculator above does that with the ICAO Standard Atmosphere; the 120 ft/°C rule of thumb is a useful mental check.</p>
+      <h3>What is the difference between pressure altitude and density altitude?</h3>
+      <p>Pressure altitude matches the standard atmosphere at the same pressure. Density altitude matches it at the same density. Heat and humidity raise density altitude above pressure altitude, which is why a 5,000 ft airport on a 30°C day can perform like roughly 8,000 ft.</p>
+      <h3>What is ISA temperature and ISA deviation?</h3>
+      <p>ISA temperature is 15°C at sea level, decreasing about 2°C per 1,000 ft of pressure altitude. ISA deviation (ISA +/−) is how far the actual OAT sits from that standard value.</p>
+      <h3>How does high density altitude affect takeoff?</h3>
+      <p>Thinner air means a longer takeoff roll and a weaker climb. Treat the percentages on this page as a gut check only, then go to the POH performance charts for your airplane, weight, and runway.</p>
     </article>
   </main>
 
@@ -287,6 +349,11 @@
     <div class="wrap">
       <p>Aviation Calcs — density altitude calculator. All math runs locally in your browser; nothing is uploaded.</p>
       <p class="footer-fine">Not a certified aviation tool. Always defer to the POH/AFM and current official weather.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
     </div>
   </footer>
 

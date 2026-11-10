@@ -5,119 +5,100 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#080c16">
   <meta name="color-scheme" content="dark">
-  <title>Aviation Calcs — Free Aviation Calculators for Pilots</title>
-  <meta name="description" content="Free, mobile-friendly aviation calculators that run in your browser. Start with a density altitude calculator: pressure altitude, ICAO density altitude, ISA deviation, and a rough takeoff and climb estimate.">
+  <title>Aviation Calcs — Free Density Altitude, Crosswind &amp; Weight and Balance Calculators</title>
+  <meta name="description" content="Free aviation calculators for pilots: density altitude, crosswind component, and weight and balance. The same problems you would work with an E6B or electronic flight computer, in your browser. No account.">
+  <meta name="author" content="Aviation Calcs">
   <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://breel007.github.io/aviation-calcs/">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Aviation Calcs — Free Aviation Calculators">
-  <meta property="og:description" content="Free density altitude and other aviation calculators. No account. Runs in your browser.">
+  <meta property="og:url" content="https://breel007.github.io/aviation-calcs/">
+  <meta property="og:title" content="Aviation Calcs — Free Aviation Calculators for Pilots">
+  <meta property="og:description" content="Density altitude, crosswind component, and weight and balance calculators. Same work as an E6B or flight computer, in your browser.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Aviation Calcs — Free Aviation Calculators">
+  <meta name="twitter:description" content="Density altitude, crosswind, and weight and balance calculators for pilots. No account. Runs in your browser.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #080c16;
-      --gold: #e8b84a;
-      --cyan: #6fe3d0;
-      --text: #e7eef8;
-      --muted: #8b97ad;
-      --faint: #667289;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      color: var(--text);
-      font-family: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
-      line-height: 1.55;
-      background:
-        radial-gradient(1000px 520px at 50% -8%, rgba(232, 184, 74, 0.09), transparent 55%),
-        radial-gradient(700px 380px at 100% 0%, rgba(111, 227, 208, 0.06), transparent 45%),
-        var(--bg);
-    }
-    .wrap { width: min(44rem, calc(100% - 2rem)); margin: 0 auto; }
-    header { padding: 2.4rem 0 0.5rem; }
-    .kicker {
-      margin: 0 0 0.35rem;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    h1 {
-      margin: 0 0 0.5rem;
-      font-size: clamp(1.8rem, 5vw, 2.4rem);
-      letter-spacing: -0.03em;
-      line-height: 1.15;
-    }
-    .lede { margin: 0; color: var(--muted); }
-    h2 {
-      margin: 2rem 0 0.85rem;
-      font-size: 0.75rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .card {
-      display: block;
-      padding: 1.15rem 1.2rem 1.25rem;
-      text-decoration: none;
-      color: inherit;
-      background: linear-gradient(180deg, rgba(24, 34, 54, 0.92), rgba(18, 26, 44, 0.96));
-      border: 1px solid rgba(231, 238, 248, 0.12);
-      border-top: 2px solid var(--gold);
-      border-radius: 16px;
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
-    }
-    .card:hover { border-color: rgba(232, 184, 74, 0.45); }
-    .card:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
-    .card h3 { margin: 0 0 0.35rem; font-size: 1.2rem; }
-    .card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
-    .go {
-      display: inline-block;
-      margin-top: 0.85rem;
-      color: var(--cyan);
-      font-weight: 600;
-      font-size: 0.9rem;
-    }
-    .soon {
-      margin-top: 0.85rem;
-      padding: 0.9rem 1rem;
-      border: 1px dashed #3a465c;
-      border-radius: 12px;
-      color: var(--faint);
-      font-size: 0.9rem;
-    }
-    footer {
-      margin: 2.5rem 0 2rem;
-      padding-top: 1.2rem;
-      border-top: 1px solid rgba(232, 184, 74, 0.14);
-      color: var(--faint);
-      font-size: 0.82rem;
-    }
-  </style>
+  <link rel="stylesheet" href="shared/site.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Aviation Calcs",
+    "url": "https://breel007.github.io/aviation-calcs/",
+    "description": "Free density altitude, crosswind, and weight and balance calculators for pilots."
+  }
+  </script>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <p class="kicker">Aviation Calcs</p>
-      <h1>Free aviation calculators</h1>
-      <p class="lede">Fast, mobile-friendly tools that run entirely in your browser. No account, no upload. Built for pilots, instructors, and flight-test work.</p>
-    </header>
-    <main>
-      <h2>Calculators</h2>
-      <a class="card" href="density-altitude/">
-        <h3>Density altitude</h3>
-        <p>Pressure altitude, ICAO density altitude, optional humidity correction, two-way ISA deviation (ISA +/−), and a clearly labeled takeoff and climb rule of thumb.</p>
-        <span class="go">Open calculator →</span>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="./">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Calculators</p>
+        </div>
       </a>
-      <p class="soon">More calculators will land here — weight and balance, density-altitude test-point planners, and similar tools.</p>
-    </main>
-    <footer>
-      <p>Not a certified aviation tool. Always defer to the POH or AFM and current official weather.</p>
-    </footer>
-  </div>
+      <nav class="site-nav" aria-label="Site">
+        <a href="density-altitude/">Density altitude</a>
+        <a href="crosswind/">Crosswind</a>
+        <a href="weight-balance/">Weight &amp; balance</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <header class="landing-hero">
+      <h1>Free aviation calculators for pilots</h1>
+      <p class="lede">Density altitude, crosswind component, and weight and balance — the same problems you would work with an E6B or an electronic flight computer, without leaving the browser. No account, no upload. Built for pilots, instructors, and flight-test work.</p>
+    </header>
+
+    <h2 class="stat-label" style="margin:1.4rem 0 0.7rem">Calculators</h2>
+    <div class="card-grid">
+      <a class="tool-card" href="density-altitude/">
+        <h2>Density altitude calculator</h2>
+        <p>Pressure altitude, ICAO density altitude (a DA calc with optional humidity), ISA temperature and ISA deviation, and a clearly labeled takeoff and climb rule of thumb for high density altitude days.</p>
+        <span class="go">Open density altitude →</span>
+      </a>
+      <a class="tool-card" href="crosswind/">
+        <h2>Crosswind calculator</h2>
+        <p>Crosswind, headwind, and tailwind components for both runway ends, including gusts — a wind-component calculator in the same spirit as an E6B wind side or a runway crosswind chart.</p>
+        <span class="go">Open crosswind →</span>
+      </a>
+      <a class="tool-card" href="weight-balance/">
+        <h2>Weight and balance calculator</h2>
+        <p>A generic W&amp;B and CG calculator: editable stations, takeoff and landing center of gravity, and an envelope plot. Example Cessna 172 and Piper Archer arms included — always verify against your aircraft.</p>
+        <span class="go">Open weight &amp; balance →</span>
+      </a>
+    </div>
+
+    <article class="panel explainer" style="margin-top:1.6rem">
+      <h2>Why these tools</h2>
+      <p>Most preflight questions come down to a handful of numbers: how much performance you will have at this density altitude, how much crosswind is on this runway, and whether the loaded airplane’s center of gravity is in the envelope. These calculators do that math in one place, with the formulas shown, so you can check an E6B, a flight-planning app, or a paper worksheet.</p>
+      <p>They are planning aids, not certified avionics. Always defer to the POH or AFM, official weather, and the weight and balance report for the airplane you actually fly.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — free aviation calculators. All math runs locally in your browser.</p>
+      <p class="footer-fine">Not a certified aviation tool. Always defer to the POH/AFM and current official weather.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="about.html">About</a>
+        <a href="privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
 </body>
 </html>
