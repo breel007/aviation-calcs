@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>E6B Wind Triangle Calculator — WCA, True Heading &amp; Groundspeed</title>
+  <meta name="description" content="Free E6B wind triangle calculator for pilots. Enter true course, TAS, and the wind to get wind correction angle, true heading, and groundspeed — or run it in reverse to find the winds aloft from heading and GS.">
+  <meta name="keywords" content="E6B wind calculator, wind triangle, wind correction angle, WCA calculator, true heading, groundspeed calculator, winds aloft, flight computer">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/e6b-wind/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/e6b-wind/">
+  <meta property="og:title" content="E6B Wind Triangle Calculator — WCA, Heading &amp; Groundspeed">
+  <meta property="og:description" content="Solve the E6B wind triangle in either direction: course, TAS, and wind to heading and groundspeed, or heading and GS back to the wind.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="E6B Wind Triangle Calculator">
+  <meta name="twitter:description" content="True course, TAS, and wind in. Wind correction angle, true heading, and groundspeed out — or find the wind from heading and GS.">
+  <meta name="application-name" content="E6B Wind Triangle Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "WebApplication",
+        "SoftwareApplication"
+      ],
+      "name": "E6B Wind Triangle Calculator",
+      "url": "https://aviatorcalcs.com/e6b-wind/",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Free E6B wind triangle calculator. Computes wind correction angle, true heading, and groundspeed from true course, TAS, and wind, and can recover winds aloft from heading and groundspeed."
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I calculate wind correction angle and groundspeed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Find the crosswind and headwind components of the wind relative to your true course. The wind correction angle is the inverse sine of crosswind divided by true airspeed. Groundspeed is the remaining along-track airspeed minus the headwind (or plus the tailwind). This calculator uses that standard flight-computer convention."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I enter true or magnetic directions?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use one reference consistently. If the course is a true course, enter a true wind and read a true heading. If you are working from a magnetic course and a magnetic wind (for example an ATIS wind), the heading will be magnetic as well. Do not mix true and magnetic in the same triangle."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is my groundspeed negative or the course impossible?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If the crosswind is stronger than true airspeed, or the headwind is stronger than the along-track component of TAS, you cannot make the course good. Slow down, accept a different track, or wait for a lighter wind."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use this to find winds aloft from my GPS groundspeed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Switch to \u201cFind the wind,\u201d enter true heading, TAS, true course (or track), and groundspeed, and the calculator returns the wind direction the wind is coming from and the wind speed."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">E6B Wind</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../density-altitude/">Density altitude</a>
+        <a href="../crosswind/">Crosswind</a>
+        <a href="../weight-balance/">Weight &amp; balance</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">E6B Wind Triangle Calculator</h1>
+        <p class="lede">Solve the wind triangle the same way a mechanical E6B or electronic flight computer does. Find wind correction angle, true heading, and groundspeed from the course and the wind, or work backwards to find the wind from heading and groundspeed. Results update as you type.</p>
+      </header>
+
+            <form id="calc-form" action="#" method="get" novalidate>
+        <div class="field-block">
+          <div class="field-label-row">
+            <span class="sublabel" style="margin:0">Solve for</span>
+            <div class="seg" role="group" aria-label="Calculator mode">
+              <button type="button" class="seg-btn is-active" data-unit-group="mode" data-unit="heading" aria-pressed="true">Heading &amp; GS</button>
+              <button type="button" class="seg-btn" data-unit-group="mode" data-unit="wind" aria-pressed="false">Find the wind</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pair">
+          <div class="field-block">
+            <label for="course">True course</label>
+            <input id="course" class="input" type="number" inputmode="decimal" step="any" min="0" max="360" value="90" autocomplete="off" required>
+            <p class="hint">Intended track, 001–360°.</p>
+          </div>
+          <div class="field-block">
+            <div class="field-label-row">
+              <label for="tas">True airspeed</label>
+              <div class="seg" role="group" aria-label="Speed unit">
+                <button type="button" class="seg-btn is-active" data-unit-group="spd" data-unit="kt" aria-pressed="true">kt</button>
+                <button type="button" class="seg-btn" data-unit-group="spd" data-unit="mph" aria-pressed="false">mph</button>
+              </div>
+            </div>
+            <input id="tas" class="input" type="number" inputmode="decimal" step="any" min="0" value="120" autocomplete="off" required>
+          </div>
+        </div>
+
+        <div id="fwd-fields">
+          <fieldset class="field-block">
+            <legend>Wind (direction from)</legend>
+            <div class="pair">
+              <div>
+                <label for="wind-dir" class="sublabel">Direction</label>
+                <input id="wind-dir" class="input" type="number" inputmode="decimal" step="any" min="0" max="360" value="225" autocomplete="off">
+              </div>
+              <div>
+                <label for="wind-spd" class="sublabel">Speed</label>
+                <input id="wind-spd" class="input" type="number" inputmode="decimal" step="any" min="0" value="20" autocomplete="off">
+              </div>
+            </div>
+            <p class="hint">The direction the wind is coming from, the same way winds aloft and METARs report it.</p>
+          </fieldset>
+        </div>
+
+        <div id="rev-fields" hidden>
+          <fieldset class="field-block">
+            <legend>Observed heading and groundspeed</legend>
+            <div class="pair">
+              <div>
+                <label for="heading" class="sublabel">True heading</label>
+                <input id="heading" class="input" type="number" inputmode="decimal" step="any" min="0" max="360" value="97" autocomplete="off">
+              </div>
+              <div>
+                <label for="gs-in" class="sublabel">Groundspeed</label>
+                <input id="gs-in" class="input" type="number" inputmode="decimal" step="any" min="0" value="133" autocomplete="off">
+              </div>
+            </div>
+            <p class="hint">Use the heading you flew and the GPS groundspeed and track (true course) to recover the wind.</p>
+          </fieldset>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" id="btn-example">Load 090° / 120 kt / wind 225 at 20 example</button>
+          <button type="reset" class="btn btn-ghost" id="btn-reset">Reset</button>
+        </div>
+      </form>
+
+      <div id="warnings" class="warnings" hidden role="status"></div>
+
+            <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Wind triangle results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label" id="hero-label">Groundspeed</p>
+          <p class="hero-value" id="hero-value"><span class="num">—</span> <span class="unit">kt</span></p>
+          <p class="hero-sub" id="hero-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+      </section>
+
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This calculator is a planning and training aid only. It is <strong>not</strong> a substitute for a certified flight computer, an official winds-aloft forecast, or your own navigation. Use a single north reference (all true, or all magnetic) and a true airspeed, not an indicated airspeed. If the wind makes the course impossible, do not treat a displayed heading as flyable.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+            <h2>How the E6B wind triangle works</h2>
+      <p>The wind triangle is the vector relationship between true airspeed (the airplane’s speed through the air), the wind, and groundspeed (the speed over the ground). To stay on a chosen <strong>true course</strong>, you point the nose into the wind by a <strong>wind correction angle</strong> (WCA). The heading you fly is the course plus that WCA, and your groundspeed is whatever is left after the wind is added to the airspeed vector.</p>
+      <p>With wind reported as the direction it is coming <em>from</em>:</p>
+      <p><code>crosswind = wind speed × sin(wind direction − course)</code><br>
+         <code>headwind = wind speed × cos(wind direction − course)</code><br>
+         <code>WCA = arcsin(crosswind / TAS)</code><br>
+         <code>true heading = course + WCA</code><br>
+         <code>groundspeed = √(TAS² − crosswind²) − headwind</code></p>
+      <p>A positive crosswind is from the right and needs a right correction (heading greater than course). A negative headwind is a tailwind and increases groundspeed. The same convention is used on a mechanical E6B, an electronic flight computer, and the <a href="../crosswind/">crosswind component calculator</a>.</p>
+
+      <h2>Worked example</h2>
+      <p>True course 090°, TAS 120 kt, wind 225° at 20 kt:</p>
+      <ul>
+        <li>The wind is 135° from the right of the nose, so the crosswind is 20 × sin 135° ≈ 14.1 kt from the right, and there is a 14.1 kt tailwind.</li>
+        <li>WCA = arcsin(14.1 / 120) ≈ <strong>6.8° right</strong>, so the true heading is <strong>097°</strong>.</li>
+        <li>Groundspeed ≈ <strong>133 kt</strong>.</li>
+      </ul>
+      <p>Running the same numbers in reverse — heading 097°, TAS 120, course 090, GS 133 — recovers a wind of 225° at 20 kt.</p>
+
+      <h2>True airspeed and units</h2>
+      <p>The triangle uses <strong>true</strong> airspeed, not indicated or calibrated airspeed. If you only have an indicated number, convert it first with the <a href="../true-airspeed/">true airspeed calculator</a>. All speeds in one calculation must use the same unit; switch freely between knots and miles per hour and the values will convert.</p>
+
+      <h2>How to use it</h2>
+      <ol>
+        <li>Choose “Heading &amp; GS” to plan a leg, or “Find the wind” to solve for winds aloft.</li>
+        <li>Enter the true course, true airspeed, and (in the forward mode) the wind direction and speed.</li>
+        <li>Read WCA, true heading, groundspeed, and the crosswind and headwind components.</li>
+        <li>Use the groundspeed in the <a href="../time-speed-distance/">time, speed, and distance calculator</a> or the <a href="../fuel-planning/">fuel planner</a> to finish the leg.</li>
+      </ol>
+
+      <h2>Frequently asked questions</h2>
+      <h3>How do I calculate wind correction angle and groundspeed?</h3>
+      <p>Find the crosswind and headwind components of the wind relative to your true course. The wind correction angle is the inverse sine of crosswind divided by true airspeed. Groundspeed is the remaining along-track airspeed minus the headwind (or plus the tailwind). This calculator uses that standard flight-computer convention.</p>
+      <h3>Should I enter true or magnetic directions?</h3>
+      <p>Use one reference consistently. If the course is a true course, enter a true wind and read a true heading. If you are working from a magnetic course and a magnetic wind (for example an ATIS wind), the heading will be magnetic as well. Do not mix true and magnetic in the same triangle.</p>
+      <h3>Why is my groundspeed negative or the course impossible?</h3>
+      <p>If the crosswind is stronger than true airspeed, or the headwind is stronger than the along-track component of TAS, you cannot make the course good. Slow down, accept a different track, or wait for a lighter wind.</p>
+      <h3>Can I use this to find winds aloft from my GPS groundspeed?</h3>
+      <p>Yes. Switch to “Find the wind,” enter true heading, TAS, true course (or track), and groundspeed, and the calculator returns the wind direction the wind is coming from and the wind speed.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — E6B wind triangle calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation tool. Always defer to the POH/AFM, official weather, and the current regulations.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or solve the wind triangle with the sine and cosine formulas in the explainer on an E6B or hand calculator.</p></noscript>
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+/* Local additions on top of shared/site.css */
+.input-area {
+  width: 100%;
+  min-height: 7rem;
+  resize: vertical;
+  font-family: var(--mono);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+.check-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+.check-row input { margin-top: 0.25rem; }
+.unit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+}
+@media (min-width: 640px) {
+  .unit-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+}
+.plain {
+  margin: 0.9rem 0 0;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+.group-list, .status-list { display: grid; gap: 0.7rem; margin-top: 0.9rem; }
+.group-card, .status-card {
+  padding: 0.85rem 0.95rem 1rem;
+  background: #0c121f;
+  border: 1px solid var(--line-strong);
+  border-radius: 14px;
+}
+.group-card h3, .status-card h3 {
+  margin: 0 0 0.2rem;
+  font-size: 1.02rem;
+}
+.group-kicker, .status-kicker {
+  margin: 0 0 0.45rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--muted);
+}
+.cat-pill, .status-pill {
+  display: inline-block;
+  margin-left: 0.35rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+.cat-VFR, .status-current { background: var(--ok); color: #0b1218; }
+.cat-MVFR { background: var(--cyan); color: #0b1218; }
+.cat-IFR, .status-grace { background: var(--warn); color: #1a1408; }
+.cat-LIFR, .status-expired, .status-ipc-required { background: var(--danger); color: #1a0a08; }
+.status-unknown { background: #2c3a52; color: var(--text); }
+.hero[data-cat="VFR"] { border-color: rgba(125, 207, 125, 0.4); }
+.hero[data-cat="MVFR"] { border-color: rgba(111, 227, 208, 0.4); }
+.hero[data-cat="IFR"] { border-color: rgba(240, 163, 90, 0.45); }
+.hero[data-cat="LIFR"] { border-color: rgba(240, 113, 103, 0.5); }
+.status-card[data-status="current"] { border-color: rgba(125, 207, 125, 0.4); }
+.status-card[data-status="grace"] { border-color: rgba(240, 163, 90, 0.45); }
+.status-card[data-status="expired"],
+.status-card[data-status="ipc-required"] { border-color: rgba(240, 113, 103, 0.45); }
+.cite { color: var(--faint); font-size: 0.8rem; margin: 0.35rem 0 0; }
+
+.input[readonly] {
+  background: #101826;
+  color: var(--muted);
+  cursor: default;
+}
+.seg { flex-wrap: wrap; }

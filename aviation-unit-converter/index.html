@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Aviation Unit Converter — Knots, Nautical Miles, Feet, inHg, Gallons, °C &amp; fpm</title>
+  <meta name="description" content="Free aviation unit converter for pilots. Convert knots, mph, and km/h; nautical miles, statute miles, and kilometres; feet and metres; inHg, hPa, and millibars; pounds and kilograms; gallons and litres; Celsius and Fahrenheit; and feet per minute.">
+  <meta name="keywords" content="aviation unit converter, knots to mph, nautical miles to statute miles, inHg to hPa, gallons to litres, pounds to kilograms, Celsius to Fahrenheit, fpm to m/s, flight planning conversions">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/aviation-unit-converter/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/aviation-unit-converter/">
+  <meta property="og:title" content="Aviation Unit Converter — Knots, Miles, inHg, Fuel &amp; More">
+  <meta property="og:description" content="Type a value in any unit. Knots, nautical miles, feet, inches of mercury, gallons, pounds, Celsius, and feet per minute convert instantly.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Aviation Unit Converter">
+  <meta name="twitter:description" content="Knots, nautical miles, inHg, gallons, pounds, Celsius, and fpm — type any box and the others follow.">
+  <meta name="application-name" content="Aviation Unit Converter">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "WebApplication",
+        "SoftwareApplication"
+      ],
+      "name": "Aviation Unit Converter",
+      "url": "https://aviatorcalcs.com/aviation-unit-converter/",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Free aviation unit converter. Converts knots, mph, and km/h; nautical and statute miles; feet and metres; inHg, hPa, and millibars; pounds and kilograms; US gallons and litres; Celsius and Fahrenheit; and feet per minute."
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How many miles per hour is one knot?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "One knot is one nautical mile per hour. Because an international nautical mile is 1,852 metres and a statute mile is 1,609.344 metres, 1 kt equals 1.852 km/h and about 1.15078 mph."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I convert inches of mercury to hectopascals?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "This page uses 1 inHg = 33.863886666666667 hPa, the same constant as the density-altitude calculator, so 1013.25 hPa is 29.92126 inHg. Hectopascals and millibars are numerically equal."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many pounds are in a kilogram, and how many litres are in a US gallon?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "1 pound (avoirdupois) is 0.45359237 kg exactly. 1 US gallon is 3.785411784 litres exactly. Fuel planning often also needs 6.0 lb/gal for 100LL or 6.7 lb/gal for Jet-A \u2014 use the fuel planner for those."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a flight level just feet divided by 100?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, as a unit conversion: FL350 is 35,000 feet. The actual altitude the airplane flies on a flight level also depends on the altimeter being set to 29.92 inHg / 1013.25 hPa, which this converter does not model."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Unit Converter</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../density-altitude/">Density altitude</a>
+        <a href="../crosswind/">Crosswind</a>
+        <a href="../weight-balance/">Weight &amp; balance</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Aviation Unit Converter</h1>
+        <p class="lede">Type a value in any box. The other units in that group update immediately, using the international definitions (1 nautical mile = 1,852 m, 1 foot = 0.3048 m, 1 knot = 1.852 km/h). Pressure uses the same inches-of-mercury constant as the density-altitude calculator.</p>
+      </header>
+
+            <form id="calc-form" action="#" method="get" novalidate>
+        <fieldset class="field-block">
+          <legend>Speed</legend>
+          <div class="unit-grid cols-3" data-category="speed">
+            <div><label for="spd-kt" class="sublabel">Knots (kt)</label><input id="spd-kt" class="input" data-unit="kt" type="number" inputmode="decimal" step="any" value="100" autocomplete="off"></div>
+            <div><label for="spd-mph" class="sublabel">Miles per hour</label><input id="spd-mph" class="input" data-unit="mph" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+            <div><label for="spd-kmh" class="sublabel">Kilometres per hour</label><input id="spd-kmh" class="input" data-unit="kmh" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+            <div><label for="spd-mps" class="sublabel">Metres per second</label><input id="spd-mps" class="input" data-unit="mps" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+            <div><label for="spd-fps" class="sublabel">Feet per second</label><input id="spd-fps" class="input" data-unit="fps" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+          </div>
+        </fieldset>
+
+        <fieldset class="field-block">
+          <legend>Distance</legend>
+          <div class="unit-grid cols-3" data-category="distance">
+            <div><label for="dis-nm" class="sublabel">Nautical miles</label><input id="dis-nm" class="input" data-unit="nm" type="number" inputmode="decimal" step="any" value="1" autocomplete="off"></div>
+            <div><label for="dis-sm" class="sublabel">Statute miles</label><input id="dis-sm" class="input" data-unit="sm" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+            <div><label for="dis-km" class="sublabel">Kilometres</label><input id="dis-km" class="input" data-unit="km" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+            <div><label for="dis-m" class="sublabel">Metres</label><input id="dis-m" class="input" data-unit="m" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+            <div><label for="dis-ft" class="sublabel">Feet</label><input id="dis-ft" class="input" data-unit="ft" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+          </div>
+        </fieldset>
+
+        <fieldset class="field-block">
+          <legend>Altitude</legend>
+          <div class="unit-grid" data-category="altitude">
+            <div><label for="alt-ft" class="sublabel">Feet</label><input id="alt-ft" class="input" data-unit="ft" type="number" inputmode="decimal" step="any" value="5000" autocomplete="off"></div>
+            <div><label for="alt-m" class="sublabel">Metres</label><input id="alt-m" class="input" data-unit="m" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+            <div><label for="alt-km" class="sublabel">Kilometres</label><input id="alt-km" class="input" data-unit="km" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+            <div><label for="alt-fl" class="sublabel">Flight level (FL)</label><input id="alt-fl" class="input" data-unit="fl" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+          </div>
+        </fieldset>
+
+        <fieldset class="field-block">
+          <legend>Pressure</legend>
+          <div class="unit-grid" data-category="pressure">
+            <div><label for="p-inhg" class="sublabel">Inches of mercury</label><input id="p-inhg" class="input" data-unit="inhg" type="number" inputmode="decimal" step="any" value="29.92" autocomplete="off"></div>
+            <div><label for="p-hpa" class="sublabel">Hectopascals (hPa)</label><input id="p-hpa" class="input" data-unit="hpa" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+            <div><label for="p-mb" class="sublabel">Millibars (mb)</label><input id="p-mb" class="input" data-unit="mb" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+            <div><label for="p-psi" class="sublabel">Pounds per square inch</label><input id="p-psi" class="input" data-unit="psi" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+          </div>
+        </fieldset>
+
+        <fieldset class="field-block">
+          <legend>Mass</legend>
+          <div class="unit-grid cols-3" data-category="mass">
+            <div><label for="m-lb" class="sublabel">Pounds (lb)</label><input id="m-lb" class="input" data-unit="lb" type="number" inputmode="decimal" step="any" value="1" autocomplete="off"></div>
+            <div><label for="m-kg" class="sublabel">Kilograms</label><input id="m-kg" class="input" data-unit="kg" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+            <div><label for="m-oz" class="sublabel">Ounces</label><input id="m-oz" class="input" data-unit="oz" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+          </div>
+        </fieldset>
+
+        <fieldset class="field-block">
+          <legend>Volume</legend>
+          <div class="unit-grid" data-category="volume">
+            <div><label for="v-gal" class="sublabel">US gallons</label><input id="v-gal" class="input" data-unit="gal" type="number" inputmode="decimal" step="any" value="1" autocomplete="off"></div>
+            <div><label for="v-l" class="sublabel">Litres</label><input id="v-l" class="input" data-unit="l" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+            <div><label for="v-imp" class="sublabel">Imperial gallons</label><input id="v-imp" class="input" data-unit="impgal" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+            <div><label for="v-qt" class="sublabel">US quarts</label><input id="v-qt" class="input" data-unit="qt" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+          </div>
+        </fieldset>
+
+        <fieldset class="field-block">
+          <legend>Temperature</legend>
+          <div class="unit-grid" data-category="temperature">
+            <div><label for="t-c" class="sublabel">Celsius (°C)</label><input id="t-c" class="input" data-unit="c" type="number" inputmode="decimal" step="any" value="15" autocomplete="off"></div>
+            <div><label for="t-f" class="sublabel">Fahrenheit (°F)</label><input id="t-f" class="input" data-unit="f" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+            <div><label for="t-k" class="sublabel">Kelvin</label><input id="t-k" class="input" data-unit="k" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+            <div><label for="t-r" class="sublabel">Rankine (°R)</label><input id="t-r" class="input" data-unit="r" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+          </div>
+        </fieldset>
+
+        <fieldset class="field-block">
+          <legend>Vertical speed</legend>
+          <div class="unit-grid" data-category="verticalSpeed">
+            <div><label for="vs-fpm" class="sublabel">Feet per minute</label><input id="vs-fpm" class="input" data-unit="fpm" type="number" inputmode="decimal" step="any" value="500" autocomplete="off"></div>
+            <div><label for="vs-mps" class="sublabel">Metres per second</label><input id="vs-mps" class="input" data-unit="mps" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+            <div><label for="vs-mpm" class="sublabel">Metres per minute</label><input id="vs-mpm" class="input" data-unit="mpm" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+            <div><label for="vs-kt" class="sublabel">Knots (vertical)</label><input id="vs-kt" class="input" data-unit="kt" type="number" inputmode="decimal" step="any" autocomplete="off"></div>
+          </div>
+        </fieldset>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" id="btn-example">Load standard-atmosphere starting values</button>
+        </div>
+      </form>
+
+      <div id="warnings" class="warnings" hidden role="status"></div>
+
+            <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Notes</h2>
+        <p class="hint" id="conv-note">Each group converts independently. Edit any field; the others in that group follow.</p>
+      </section>
+
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This converter is a planning and training aid. It uses international standard unit definitions, not a particular aircraft handbook. Flight levels, altimeter settings, and fuel densities in the real airplane can depend on procedures and temperature that a unit conversion does not capture.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+            <h2>Which aviation units this converter uses</h2>
+      <p>Pilots bounce between knots and miles per hour, nautical and statute miles, inches of mercury and hectopascals, and pounds and kilograms. This page uses the international legal definitions so a number you convert here matches a number you would get from a careful E6B or from the <a href="../fuel-planning/">fuel planner</a> and <a href="../density-altitude/">density altitude calculator</a>.</p>
+      <ul>
+        <li><strong>Speed and distance.</strong> 1 international nautical mile = 1,852 m exactly, so 1 knot = 1.852 km/h exactly. 1 statute mile = 1,609.344 m.</li>
+        <li><strong>Altitude.</strong> 1 foot = 0.3048 m exactly. Flight level is feet divided by 100 (FL350 = 35,000 ft) as a unit only.</li>
+        <li><strong>Pressure.</strong> 1 inHg = 33.863886666666667 hPa; 1 hPa = 1 millibar. ICAO standard sea-level pressure is 1013.25 hPa, or 29.92126 inHg.</li>
+        <li><strong>Mass and volume.</strong> 1 lb = 0.45359237 kg; 1 US gallon = 3.785411784 L; 1 imperial gallon = 4.54609 L.</li>
+        <li><strong>Temperature.</strong> °F = °C × 9/5 + 32; kelvin = °C + 273.15.</li>
+        <li><strong>Vertical speed.</strong> 1 ft/min = 0.00508 m/s exactly. 1 knot of vertical speed is about 101.3 ft/min.</li>
+      </ul>
+
+      <h2>Worked examples</h2>
+      <ul>
+        <li>100 kt = 185.2 km/h = 115.08 mph.</li>
+        <li>1 nm = 1.15078 statute miles = 1.852 km = 6,076.12 ft.</li>
+        <li>29.92 inHg, as a two-decimal altimeter setting, is 1,013.2 hPa on this page’s constant (the exact ICAO standard 1013.25 hPa is 29.92126 inHg — the same convention the density-altitude calculator uses).</li>
+        <li>15°C = 59°F = 288.15 K (ISA sea-level temperature).</li>
+        <li>500 fpm = 2.54 m/s.</li>
+      </ul>
+
+      <h2>How to use it</h2>
+      <p>Type in any field. Only that group updates, so you can convert a cruise speed in one place and a fuel quantity in another without them interfering. For fuel <em>weight</em> from gallons (6.0 or 6.7 lb/gal), use the <a href="../fuel-planning/">fuel planner</a>.</p>
+
+      <h2>Frequently asked questions</h2>
+      <h3>How many miles per hour is one knot?</h3>
+      <p>One knot is one nautical mile per hour. Because an international nautical mile is 1,852 metres and a statute mile is 1,609.344 metres, 1 kt equals 1.852 km/h and about 1.15078 mph.</p>
+      <h3>How do I convert inches of mercury to hectopascals?</h3>
+      <p>This page uses 1 inHg = 33.863886666666667 hPa, the same constant as the density-altitude calculator, so 1013.25 hPa is 29.92126 inHg. Hectopascals and millibars are numerically equal.</p>
+      <h3>How many pounds are in a kilogram, and how many litres are in a US gallon?</h3>
+      <p>1 pound (avoirdupois) is 0.45359237 kg exactly. 1 US gallon is 3.785411784 litres exactly. Fuel planning often also needs 6.0 lb/gal for 100LL or 6.7 lb/gal for Jet-A — use the fuel planner for those.</p>
+      <h3>Is a flight level just feet divided by 100?</h3>
+      <p>Yes, as a unit conversion: FL350 is 35,000 feet. The actual altitude the airplane flies on a flight level also depends on the altimeter being set to 29.92 inHg / 1013.25 hPa, which this converter does not model.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — aviation unit converter. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation tool. Always defer to the POH/AFM, official weather, and the current regulations.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This converter needs JavaScript. Enable it, or use the exact factors listed in the explainer with a hand calculator.</p></noscript>
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

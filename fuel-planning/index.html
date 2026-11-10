@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Aviation Fuel Planner — Trip Fuel, VFR/IFR Reserves, Endurance &amp; 100LL / Jet-A Weight</title>
+  <meta name="description" content="Free aviation fuel planning calculator. Compute trip fuel, VFR day and night or IFR reserves, alternate fuel, endurance, and gallons-to-pounds for 100LL and Jet-A. Browser-based — no account.">
+  <meta name="keywords" content="fuel planning calculator, aviation fuel endurance, VFR reserve fuel, IFR 45 minute reserve, 100LL pounds per gallon, Jet-A fuel weight, fuel required calculator, gallons to pounds avgas">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/fuel-planning/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/fuel-planning/">
+  <meta property="og:title" content="Aviation Fuel Planner — Reserves, Endurance &amp; Fuel Weight">
+  <meta property="og:description" content="Trip fuel, 14 CFR 91.151 / 91.167 reserves, alternate and taxi fuel, endurance, and 100LL or Jet-A weight conversions.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Aviation Fuel Planning Calculator">
+  <meta name="twitter:description" content="Distance, groundspeed, and burn in. Trip fuel, legal-style reserves, endurance, and fuel weight out.">
+  <meta name="application-name" content="Aviation Fuel Planner">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "WebApplication",
+        "SoftwareApplication"
+      ],
+      "name": "Aviation Fuel Planner",
+      "url": "https://aviatorcalcs.com/fuel-planning/",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Free aviation fuel planning calculator. Computes trip fuel, VFR day/night and IFR reserves under 14 CFR 91.151 and 91.167, alternate and taxi fuel, endurance, and 100LL or Jet-A weight conversions."
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much reserve fuel do I need for VFR and IFR?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For airplanes, 14 CFR 91.151 requires enough fuel to fly to the first point of intended landing and then for 30 minutes by day, or 45 minutes at night, at normal cruising speed. Under 91.167, IFR fuel must take you to the destination, then to an alternate if one is required, and then for 45 minutes at normal cruise. This page applies those times to the burn rate you enter; it does not decide whether an alternate is required."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many pounds are in a gallon of 100LL or Jet-A?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The usual US flight-planning figures are 6.0 pounds per US gallon for 100LL (avgas) and 6.7 pounds per US gallon for Jet-A or Jet-A-1. Actual density changes with temperature, so use the figure in your POH or a measured density when the weight has to be exact."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I calculate endurance and range?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Endurance in hours is usable fuel divided by fuel flow. Range is endurance times groundspeed. This planner also subtracts taxi and the reserve you selected so you can see fuel remaining above a legal-style reserve."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does this include an IFR alternate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If you check \u201cinclude an alternate\u201d and enter an alternate distance, the planner adds fuel to fly that distance (at the same or a different groundspeed) on top of the 45-minute IFR reserve. Whether 91.169 actually requires an alternate for your flight is a separate legal question."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Fuel Planner</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../density-altitude/">Density altitude</a>
+        <a href="../crosswind/">Crosswind</a>
+        <a href="../weight-balance/">Weight &amp; balance</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Aviation Fuel Planner</h1>
+        <p class="lede">Enter the leg distance, groundspeed, and fuel burn to get trip fuel, a VFR or IFR reserve, optional alternate and taxi fuel, and endurance if you enter fuel on board. Gallons and pounds stay in sync for 100LL (6.0 lb/gal) and Jet-A (6.7 lb/gal). Results update as you type.</p>
+      </header>
+
+            <form id="calc-form" action="#" method="get" novalidate>
+        <fieldset class="field-block">
+          <legend>Leg</legend>
+          <div class="pair">
+            <div>
+              <div class="field-label-row">
+                <label for="distance">Distance</label>
+                <div class="seg" role="group" aria-label="Distance unit">
+                  <button type="button" class="seg-btn is-active" data-unit-group="dist" data-unit="nm" aria-pressed="true">nm</button>
+                  <button type="button" class="seg-btn" data-unit-group="dist" data-unit="sm" aria-pressed="false">sm</button>
+                </div>
+              </div>
+              <input id="distance" class="input" type="number" inputmode="decimal" step="any" min="0" value="180" autocomplete="off">
+            </div>
+            <div>
+              <div class="field-label-row">
+                <label for="gs">Groundspeed</label>
+                <div class="seg" role="group" aria-label="Speed unit">
+                  <button type="button" class="seg-btn is-active" data-unit-group="spd" data-unit="kt" aria-pressed="true">kt</button>
+                  <button type="button" class="seg-btn" data-unit-group="spd" data-unit="mph" aria-pressed="false">mph</button>
+                </div>
+              </div>
+              <input id="gs" class="input" type="number" inputmode="decimal" step="any" min="0" value="120" autocomplete="off">
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="field-block">
+          <legend>Fuel burn and type</legend>
+          <div class="pair">
+            <div>
+              <label for="burn" class="sublabel">Burn rate</label>
+              <input id="burn" class="input" type="number" inputmode="decimal" step="any" min="0" value="10" autocomplete="off">
+            </div>
+            <div>
+              <span class="sublabel">Burn unit</span>
+              <div class="seg" role="group" aria-label="Burn unit">
+                <button type="button" class="seg-btn is-active" data-unit-group="burn" data-unit="gph" aria-pressed="true">gph</button>
+                <button type="button" class="seg-btn" data-unit-group="burn" data-unit="pph" aria-pressed="false">pph</button>
+                <button type="button" class="seg-btn" data-unit-group="burn" data-unit="lph" aria-pressed="false">L/h</button>
+              </div>
+            </div>
+          </div>
+          <div class="pair" style="margin-top:0.7rem">
+            <div>
+              <span class="sublabel">Fuel</span>
+              <div class="seg" role="group" aria-label="Fuel type">
+                <button type="button" class="seg-btn is-active" data-unit-group="fuel" data-unit="100LL" aria-pressed="true">100LL</button>
+                <button type="button" class="seg-btn" data-unit-group="fuel" data-unit="JET-A" aria-pressed="false">Jet-A</button>
+                <button type="button" class="seg-btn" data-unit-group="fuel" data-unit="custom" aria-pressed="false">Custom</button>
+              </div>
+            </div>
+            <div id="custom-den-wrap" hidden>
+              <label for="custom-den" class="sublabel">lb/US gal</label>
+              <input id="custom-den" class="input" type="number" inputmode="decimal" step="any" min="0" placeholder="e.g. 6.3" autocomplete="off">
+            </div>
+          </div>
+          <p class="hint">Planning densities are 6.0 lb/US gal for 100LL and 6.7 lb/US gal for Jet-A. Actual density varies with temperature.</p>
+        </fieldset>
+
+        <fieldset class="field-block">
+          <legend>Reserve</legend>
+          <div class="seg" role="group" aria-label="Reserve type">
+            <button type="button" class="seg-btn is-active" data-unit-group="reserve" data-unit="vfr-day" aria-pressed="true">VFR day 30 min</button>
+            <button type="button" class="seg-btn" data-unit-group="reserve" data-unit="vfr-night" aria-pressed="false">VFR night 45 min</button>
+            <button type="button" class="seg-btn" data-unit-group="reserve" data-unit="ifr" aria-pressed="false">IFR 45 min</button>
+            <button type="button" class="seg-btn" data-unit-group="reserve" data-unit="custom" aria-pressed="false">Custom</button>
+          </div>
+          <div class="pair" style="margin-top:0.7rem">
+            <div id="custom-res-wrap" hidden>
+              <label for="reserve-min" class="sublabel">Reserve minutes</label>
+              <input id="reserve-min" class="input" type="number" inputmode="decimal" step="any" min="0" value="45" autocomplete="off">
+            </div>
+            <div>
+              <label for="taxi" class="sublabel">Taxi / run-up fuel <span class="optional">optional</span></label>
+              <input id="taxi" class="input" type="number" inputmode="decimal" step="any" min="0" placeholder="gal" autocomplete="off">
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="field-block">
+          <legend>Alternate <span class="optional">optional</span></legend>
+          <label class="check-row"><input type="checkbox" id="use-alt"> Include an alternate (typical for IFR when 91.169 requires one)</label>
+          <div class="pair" id="alt-fields" hidden>
+            <div>
+              <label for="alt-dist" class="sublabel">Alternate distance</label>
+              <input id="alt-dist" class="input" type="number" inputmode="decimal" step="any" min="0" placeholder="nm or sm" autocomplete="off">
+            </div>
+            <div>
+              <label for="alt-gs" class="sublabel">Alternate GS <span class="optional">if different</span></label>
+              <input id="alt-gs" class="input" type="number" inputmode="decimal" step="any" min="0" placeholder="same as leg" autocomplete="off">
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="field-block">
+          <div class="field-label-row">
+            <label for="onboard">Usable fuel on board <span class="optional">optional</span></label>
+            <div class="seg" role="group" aria-label="Onboard unit">
+              <button type="button" class="seg-btn is-active" data-unit-group="onb" data-unit="gal" aria-pressed="true">gal</button>
+              <button type="button" class="seg-btn" data-unit-group="onb" data-unit="lb" aria-pressed="false">lb</button>
+            </div>
+          </div>
+          <input id="onboard" class="input" type="number" inputmode="decimal" step="any" min="0" placeholder="—" autocomplete="off">
+          <p class="hint">Used to compute endurance, range, and surplus or deficit versus the fuel required.</p>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" id="btn-example">Load 180 nm / 120 kt / 10 gph example</button>
+          <button type="reset" class="btn btn-ghost" id="btn-reset">Reset</button>
+        </div>
+      </form>
+
+      <div id="warnings" class="warnings" hidden role="status"></div>
+
+            <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Fuel required</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Total fuel required</p>
+          <p class="hero-value" id="hero-value"><span class="num">—</span> <span class="unit">gal</span></p>
+          <p class="hero-sub" id="hero-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+      </section>
+
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This planner is a training and planning aid only. It is <strong>not</strong> a substitute for the fuel requirements in 14 CFR 91.151 or 91.167, your POH or AFM fuel-flow charts, or a legal determination of whether an alternate is required. Reserve times here are applied to the burn rate you type in; actual fuel flow, winds, holds, and deviations will differ. Always depart with a margin you are willing to fly, and verify weights with the aircraft handbook.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+            <h2>How to plan fuel for a VFR or IFR flight</h2>
+      <p>Trip fuel is time multiplied by fuel flow. Time is distance divided by <strong>groundspeed</strong> (not true airspeed — use the <a href="../e6b-wind/">E6B wind triangle</a> or a GPS groundspeed). Then add taxi or run-up fuel, fuel to an alternate if you need one, and a reserve.</p>
+      <p>For airplanes in the United States, the reserve times in this planner follow the FARs:</p>
+      <ul>
+        <li><strong>14 CFR 91.151 (VFR)</strong> — enough to fly to the first point of intended landing, and thereafter for at least <strong>30 minutes by day</strong> or <strong>45 minutes at night</strong>, at normal cruising speed.</li>
+        <li><strong>14 CFR 91.167 (IFR)</strong> — enough to fly to the intended destination, then to an alternate airport when one is required under 91.169, and thereafter for <strong>45 minutes</strong> at normal cruising speed.</li>
+      </ul>
+      <p>Those rules are the legal floor, not a complete dispatch standard. Many operators and personal minimums add more. Helicopter reserves are shorter; this page is built around airplane numbers.</p>
+
+      <h2>Gallons and pounds (100LL and Jet-A)</h2>
+      <p>US flight-planning practice is <strong>6.0 lb per US gallon</strong> for 100LL and <strong>6.7 lb per US gallon</strong> for Jet-A. The <a href="../aviation-unit-converter/">aviation unit converter</a> also handles litres and kilograms if you are working from a metric fuel slip. When weight-and-balance has to be exact, use the density in the POH or a measured specific gravity, not the planning round number.</p>
+
+      <h2>Worked example</h2>
+      <p>180 nm at 120 kt, 10 gph, 100LL, VFR day, no taxi, no alternate:</p>
+      <ul>
+        <li>Time = 180 / 120 = <strong>1.5 hours</strong>.</li>
+        <li>Trip fuel = 1.5 × 10 = <strong>15 gal</strong> (90 lb).</li>
+        <li>VFR day reserve = 0.5 × 10 = <strong>5 gal</strong>.</li>
+        <li>Total required = <strong>20 gal / 120 lb</strong>.</li>
+      </ul>
+      <p>The same leg under IFR with a 60 nm alternate and 1.5 gal for taxi is 15 + 5 + 7.5 + 1.5 = <strong>29 gal</strong>.</p>
+
+      <h2>How to use it</h2>
+      <ol>
+        <li>Enter distance and groundspeed, then the burn in gallons per hour, pounds per hour, or litres per hour.</li>
+        <li>Choose 100LL, Jet-A, or a custom density, and a VFR day, VFR night, IFR, or custom reserve.</li>
+        <li>Optionally add taxi fuel, an alternate, and usable fuel on board to see endurance and whether you have a surplus.</li>
+        <li>Compare the total with the usable fuel in the tanks and with the <a href="../weight-balance/">weight and balance</a> of the airplane.</li>
+      </ol>
+
+      <h2>Frequently asked questions</h2>
+      <h3>How much reserve fuel do I need for VFR and IFR?</h3>
+      <p>For airplanes, 14 CFR 91.151 requires enough fuel to fly to the first point of intended landing and then for 30 minutes by day, or 45 minutes at night, at normal cruising speed. Under 91.167, IFR fuel must take you to the destination, then to an alternate if one is required, and then for 45 minutes at normal cruise. This page applies those times to the burn rate you enter; it does not decide whether an alternate is required.</p>
+      <h3>How many pounds are in a gallon of 100LL or Jet-A?</h3>
+      <p>The usual US flight-planning figures are 6.0 pounds per US gallon for 100LL (avgas) and 6.7 pounds per US gallon for Jet-A or Jet-A-1. Actual density changes with temperature, so use the figure in your POH or a measured density when the weight has to be exact.</p>
+      <h3>How do I calculate endurance and range?</h3>
+      <p>Endurance in hours is usable fuel divided by fuel flow. Range is endurance times groundspeed. This planner also subtracts taxi and the reserve you selected so you can see fuel remaining above a legal-style reserve.</p>
+      <h3>Does this include an IFR alternate?</h3>
+      <p>If you check “include an alternate” and enter an alternate distance, the planner adds fuel to fly that distance (at the same or a different groundspeed) on top of the 45-minute IFR reserve. Whether 91.169 actually requires an alternate for your flight is a separate legal question.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — aviation fuel planner. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation tool. Always defer to the POH/AFM, official weather, and the current regulations.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This planner needs JavaScript. Enable it, or multiply time by fuel flow and add the reserve times from 14 CFR 91.151 or 91.167 by hand.</p></noscript>
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
