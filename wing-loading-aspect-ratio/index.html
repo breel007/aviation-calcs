@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Wing Loading and Aspect Ratio Calculator — W/S, AR, MAC, Stall Speed</title>
+  <meta name="description" content="Free wing loading and aspect ratio calculator. Compute W/S, AR = b²/S, tapered-wing chords and mean aerodynamic chord, and a stall-speed estimate from CLmax and air density.">
+  <meta name="keywords" content="wing loading calculator, aspect ratio calculator, mean aerodynamic chord, taper ratio, stall speed from wing loading, W/S, AR = b²/S">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/wing-loading-aspect-ratio/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/wing-loading-aspect-ratio/">
+  <meta property="og:title" content="Wing Loading and Aspect Ratio Calculator">
+  <meta property="og:description" content="W/S, aspect ratio, tapered-wing MAC, and a stall-speed estimate from CLmax.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Wing Loading and Aspect Ratio Calculator">
+  <meta name="twitter:description" content="Compute W/S, AR = b²/S, MAC, and stall speed from CLmax.">
+  <meta name="application-name" content="Wing Loading and Aspect Ratio Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Wing Loading and Aspect Ratio Calculator",
+            "url": "https://aviatorcalcs.com/wing-loading-aspect-ratio/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free wing loading and aspect ratio calculator. Compute W/S, AR = b²/S, tapered-wing chords and mean aerodynamic chord, and a stall-speed estimate from CLmax and air density."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "What is a typical light-airplane wing loading?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "A Cessna 172S-class airplane at 2,550 lb with about 174 ft² of wing has W/S ≈ 14.7 psf. Trainers are often in the mid-teens of psf; high-performance singles and twins are higher."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How is aspect ratio defined for a non-rectangular wing?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Still AR = b²/S, using the wingspan and the reference wing area. The induced-drag formula then includes an efficiency factor e that absorbs planform and twist departures from an ideal elliptic lift distribution."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What is mean aerodynamic chord used for?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "MAC is the reference chord for aerodynamic coefficients and is the usual station for center-of-gravity limits (CG is often quoted in percent of MAC)."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Wing loading &amp; AR</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../stall-speed-weight-bank/">Stall speed</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Wing Loading and Aspect Ratio Calculator</h1>
+        <p class="lede">Compute wing loading W/S and aspect ratio AR = b²/S from any consistent pair of span, area, and AR. For a linearly tapered wing, also get root and tip chords and the mean aerodynamic chord. With a CLmax, estimate stall speed at a density you choose (sea-level ISA is the default).</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div class="field-block"><div class="field-label-row"><label for="weight">Weight</label>
+<div class="seg wrap-seg" role="group" aria-label="wu"><button type="button" class="seg-btn is-active" data-unit-group="wu" data-unit="lb" aria-pressed="true">lbf</button><button type="button" class="seg-btn" data-unit-group="wu" data-unit="kg" aria-pressed="false">kg (mass)</button><button type="button" class="seg-btn" data-unit-group="wu" data-unit="N" aria-pressed="false">N</button></div>
+</div><input id="weight" class="input" type="number" inputmode="decimal" min="0" step="any" value="2550" autocomplete="off"></div>
+<div class="field-block"><div class="field-label-row"><label for="area">Wing area S</label>
+<div class="seg wrap-seg" role="group" aria-label="au"><button type="button" class="seg-btn is-active" data-unit-group="au" data-unit="ft2" aria-pressed="true">ft²</button><button type="button" class="seg-btn" data-unit-group="au" data-unit="m2" aria-pressed="false">m²</button></div>
+</div><input id="area" class="input" type="number" inputmode="decimal" min="0" step="any" value="174" autocomplete="off"></div>
+<div class="field-block"><div class="field-label-row"><label for="span">Span b</label>
+<div class="seg wrap-seg" role="group" aria-label="su"><button type="button" class="seg-btn is-active" data-unit-group="su" data-unit="ft" aria-pressed="true">ft</button><button type="button" class="seg-btn" data-unit-group="su" data-unit="m" aria-pressed="false">m</button></div>
+</div><input id="span" class="input" type="number" inputmode="decimal" min="0" step="any" value="36.1" autocomplete="off">
+<p class="hint">You may leave one of S, b, or AR blank and it will be computed from the other two.</p>
+<label for="ar" class="sublabel">Aspect ratio AR <span class="optional">optional</span></label>
+<input id="ar" class="input" type="number" inputmode="decimal" min="0" step="any" placeholder="b²/S" autocomplete="off"></div>
+<div class="field-block"><label for="taper">Taper ratio ct/cr <span class="optional">optional, 0–1</span></label>
+<input id="taper" class="input" type="number" inputmode="decimal" min="0" max="1" step="any" placeholder="e.g. 0.7" autocomplete="off"></div>
+<div class="field-block"><div class="pair"><div><label for="clmax">CLmax <span class="optional">for stall speed</span></label><input id="clmax" class="input" type="number" inputmode="decimal" min="0" step="any" value="1.6" autocomplete="off"></div>
+<div><label for="rho">Density ρ (kg/m³)</label><input id="rho" class="input" type="number" inputmode="decimal" min="0" step="any" value="1.225" autocomplete="off"></div></div></div>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-ex">Load 172-class example</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Wing loading <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>Wing loading and aspect ratio are geometry and weight identities. The stall-speed estimate uses a single CLmax and a uniform density; it is not a substitute for the POH stall speeds, which include configuration, CG, and power effects.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>Wing loading and aspect ratio</h2>
+      <p>Wing loading is weight per unit of reference area, W/S. A light-airplane figure around 14–17 psf is typical of a Cessna 172-class wing; jet transports are much higher. Stall speed in level flight is</p>
+      <p><code>V<sub>s</sub> = √( 2 (W/S) / (ρ C<sub>Lmax</sub>) )</code></p>
+      <p>so, at a given C<sub>Lmax</sub> and density, stall speed rises with the square root of wing loading. Aspect ratio AR = b²/S measures how slender the wing is. Higher AR generally means lower induced drag at a given lift (the induced-drag factor is proportional to C<sub>L</sub>² / (π AR e)).</p>
+      <h2>Taper and mean aerodynamic chord</h2>
+      <p>For a linearly tapered wing with taper ratio τ = c<sub>t</sub>/c<sub>r</sub>,</p>
+      <p><code>c<sub>r</sub> = 2S / (b (1+τ))</code>, &nbsp; <code>MAC = (2/3) c<sub>r</sub> (1+τ+τ²)/(1+τ)</code>.</p>
+      <p>A rectangular wing is the special case τ = 1, where MAC equals the geometric chord S/b.</p>
+      <h2>Sources</h2>
+      <p>NASA Glenn Beginner’s Guide (wing geometry, wing loading); Anderson, <em>Introduction to Flight</em>; FAA Pilot’s Handbook of Aeronautical Knowledge, Chapters 5 and 11. For stall speed versus weight and bank, see the <a href="../stall-speed-weight-bank/">stall speed calculator</a>.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>What is a typical light-airplane wing loading?</h3>
+      <p>A Cessna 172S-class airplane at 2,550 lb with about 174 ft² of wing has W/S ≈ 14.7 psf. Trainers are often in the mid-teens of psf; high-performance singles and twins are higher.</p>
+      <h3>How is aspect ratio defined for a non-rectangular wing?</h3>
+      <p>Still AR = b²/S, using the wingspan and the reference wing area. The induced-drag formula then includes an efficiency factor e that absorbs planform and twist departures from an ideal elliptic lift distribution.</p>
+      <h3>What is mean aerodynamic chord used for?</h3>
+      <p>MAC is the reference chord for aerodynamic coefficients and is the usual station for center-of-gravity limits (CG is often quoted in percent of MAC).</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Wing loading &amp; AR calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

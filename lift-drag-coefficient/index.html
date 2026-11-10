@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Lift and Drag Coefficient Calculator — CL, CD, and L/D</title>
+  <meta name="description" content="Free lift and drag coefficient calculator. Compute CL = L/(qS) and CD = D/(qS) from force, speed, density, and reference area, or the required lift coefficient in level flight. Includes L/D.">
+  <meta name="keywords" content="lift coefficient calculator, drag coefficient calculator, CL CD, L/D ratio, dynamic pressure, wing area, NASA lift equation">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/lift-drag-coefficient/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/lift-drag-coefficient/">
+  <meta property="og:title" content="Lift and Drag Coefficient Calculator — CL, CD, L/D">
+  <meta property="og:description" content="CL = L/(qS), CD = D/(qS), and L/D from force, speed, and reference area, or the CL required in level flight.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Lift and Drag Coefficient Calculator">
+  <meta name="twitter:description" content="Compute CL, CD, and L/D from lift, drag, speed, and area.">
+  <meta name="application-name" content="Lift and Drag Coefficient Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Lift and Drag Coefficient Calculator",
+            "url": "https://aviatorcalcs.com/lift-drag-coefficient/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free lift and drag coefficient calculator. Compute CL = L/(qS) and CD = D/(qS) from force, speed, density, and reference area, or the required lift coefficient in level flight. Includes L/D."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "What is q in the lift equation?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "q is dynamic pressure, ½ρV². It has the units of pressure. CL and CD are dimensionless."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "When is lift equal to weight?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "In steady, level, unaccelerated flight, lift equals weight (n = 1). In a level coordinated turn, n = 1/cos φ and the required CL rises by that factor. Climbing, descending, or maneuvering changes the balance of forces."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Can I enter coefficients instead of forces?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes. Enter CL and/or CD and the page will compute the corresponding lift and drag at your q and S, and the L/D ratio."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Lift &amp; drag coefficients</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../wing-loading-aspect-ratio/">Wing loading</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Lift and Drag Coefficient Calculator</h1>
+        <p class="lede">Compute lift and drag coefficients from force, dynamic pressure, and reference area: CL = L / (q S), CD = D / (q S). In steady level flight the required lift is n W (n = 1 when wings are level), so you can enter a weight instead of a lift. Results include L/D.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div class="field-block"><div class="field-label-row"><label for="area">Reference area S</label>
+<div class="seg wrap-seg" role="group" aria-label="au"><button type="button" class="seg-btn is-active" data-unit-group="au" data-unit="m2" aria-pressed="true">m²</button><button type="button" class="seg-btn" data-unit-group="au" data-unit="ft2" aria-pressed="false">ft²</button></div>
+</div><input id="area" class="input" type="number" inputmode="decimal" min="0" step="any" value="10" autocomplete="off"></div>
+<div class="field-block"><div class="field-label-row"><label for="velocity">True airspeed</label>
+<div class="seg wrap-seg" role="group" aria-label="vu"><button type="button" class="seg-btn is-active" data-unit-group="vu" data-unit="m/s" aria-pressed="true">m/s</button><button type="button" class="seg-btn" data-unit-group="vu" data-unit="kt" aria-pressed="false">kt</button><button type="button" class="seg-btn" data-unit-group="vu" data-unit="mph" aria-pressed="false">mph</button><button type="button" class="seg-btn" data-unit-group="vu" data-unit="fps" aria-pressed="false">ft/s</button></div>
+</div><input id="velocity" class="input" type="number" inputmode="decimal" min="0" step="any" value="50" autocomplete="off">
+<div class="pair" style="margin-top:0.7rem"><div><label for="rho">Density ρ (kg/m³)</label><input id="rho" class="input" type="number" inputmode="decimal" min="0" step="any" value="1.225" autocomplete="off"></div>
+<div><label for="qpa">Or q directly (Pa) <span class="optional">optional</span></label><input id="qpa" class="input" type="number" inputmode="decimal" min="0" step="any" placeholder="overrides V and ρ" autocomplete="off"></div></div></div>
+<div class="field-block"><div class="field-label-row"><label for="weight">Weight (level flight uses L = nW)</label>
+<div class="seg wrap-seg" role="group" aria-label="wu"><button type="button" class="seg-btn is-active" data-unit-group="wu" data-unit="kg" aria-pressed="true">kg (mass)</button><button type="button" class="seg-btn" data-unit-group="wu" data-unit="N" aria-pressed="false">N</button><button type="button" class="seg-btn" data-unit-group="wu" data-unit="lb" aria-pressed="false">lbf</button></div>
+</div><input id="weight" class="input" type="number" inputmode="decimal" min="0" step="any" value="1000" autocomplete="off">
+<label for="n" class="sublabel">Load factor n</label>
+<input id="n" class="input" type="number" inputmode="decimal" min="0" step="any" value="1" autocomplete="off"></div>
+<div class="field-block"><div class="pair"><div><label for="lift">Lift L <span class="optional">optional</span></label><input id="lift" class="input" type="number" inputmode="decimal" min="0" step="any" placeholder="defaults to nW" autocomplete="off"><p class="hint">Newtons if filled. Overrides nW.</p></div>
+<div><label for="drag">Drag D <span class="optional">optional</span></label><input id="drag" class="input" type="number" inputmode="decimal" min="0" step="any" placeholder="newtons" autocomplete="off"></div></div>
+<div class="pair" style="margin-top:0.7rem"><div><label for="CL">Or enter CL</label><input id="CL" class="input" type="number" inputmode="decimal" step="any" placeholder="coefficient" autocomplete="off"></div>
+<div><label for="CD">Or enter CD</label><input id="CD" class="input" type="number" inputmode="decimal" step="any" placeholder="coefficient" autocomplete="off"></div></div></div>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-ex">Load 1,000 kg, 50 m/s, 10 m² example</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Lift coefficient CL <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>These are the standard non-dimensional force coefficients. They are not a substitute for wind-tunnel or flight-test polars, or for the POH or AFM. Load factor here is a simple n you type; it is not a complete maneuver analysis.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>The lift and drag equations</h2>
+      <p>NASA’s familiar dimensional lift and drag equations are</p>
+      <p><code>L = q S C<sub>L</sub></code> &nbsp; and &nbsp; <code>D = q S C<sub>D</sub></code>, &nbsp; with &nbsp; <code>q = ½ ρ V²</code>.</p>
+      <p>Solving for the coefficients, <code>C<sub>L</sub> = L / (q S)</code> and <code>C<sub>D</sub> = D / (q S)</code>. The ratio L/D = C<sub>L</sub>/C<sub>D</sub> is the aerodynamic efficiency of the condition you entered. In steady level flight L = W, or more generally L = n W, so the required coefficient is C<sub>L</sub> = n W / (q S).</p>
+      <h2>Worked example</h2>
+      <p>A 1,000 kg vehicle at 50 m/s, S = 10 m², sea-level density 1.225 kg/m³: q = 1,531.25 Pa, W = 9,806.65 N, and the level-flight C<sub>L</sub> is 0.640. If the measured drag is W/12, then C<sub>D</sub> = 0.0534 and L/D = 12.</p>
+      <h2>Sources</h2>
+      <p>NASA Glenn Beginner’s Guide to Aeronautics (lift and drag equations); Anderson, <em>Introduction to Flight</em>; FAA Pilot’s Handbook of Aeronautical Knowledge, Chapter 5.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>What is q in the lift equation?</h3>
+      <p>q is dynamic pressure, ½ρV². It has the units of pressure. CL and CD are dimensionless.</p>
+      <h3>When is lift equal to weight?</h3>
+      <p>In steady, level, unaccelerated flight, lift equals weight (n = 1). In a level coordinated turn, n = 1/cos φ and the required CL rises by that factor. Climbing, descending, or maneuvering changes the balance of forces.</p>
+      <h3>Can I enter coefficients instead of forces?</h3>
+      <p>Yes. Enter CL and/or CD and the page will compute the corresponding lift and drag at your q and S, and the L/D ratio.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Lift &amp; drag coefficients calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

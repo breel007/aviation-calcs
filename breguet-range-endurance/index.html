@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Breguet Range and Endurance Calculator — Jet and Propeller</title>
+  <meta name="description" content="Free Breguet range and endurance calculator for jet and propeller airplanes. Compute range and endurance from L/D, speed, fuel fraction, and TSFC or propeller SFC and efficiency, in nautical miles and hours.">
+  <meta name="keywords" content="Breguet range calculator, Breguet endurance, TSFC, specific fuel consumption, lift to drag, jet range, propeller range, fuel fraction">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/breguet-range-endurance/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/breguet-range-endurance/">
+  <meta property="og:title" content="Breguet Range and Endurance Calculator">
+  <meta property="og:description" content="Jet and propeller Breguet range and endurance from L/D, speed, fuel fraction, and specific fuel consumption.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Breguet Range and Endurance Calculator">
+  <meta name="twitter:description" content="R = (V/ct)(L/D)ln(Wi/Wf) for jets; the propeller form uses η/c.">
+  <meta name="application-name" content="Breguet Range and Endurance Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Breguet Range and Endurance Calculator",
+            "url": "https://aviatorcalcs.com/breguet-range-endurance/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free Breguet range and endurance calculator for jet and propeller airplanes. Compute range and endurance from L/D, speed, fuel fraction, and TSFC or propeller SFC and efficiency, in nautical miles and hours."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "What weights should I use for Wi and Wf?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Wi is the weight at the start of the cruise segment you are analysing, Wf the weight at the end of that segment. Taxi, climb, descent, and legally required reserves are usually kept out of this ratio and added separately."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Does wind appear in the Breguet equation?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Not in the still-air form used here. A headwind reduces the ground range relative to the air-range this page reports; a tailwind increases it. Endurance (time) is unchanged by a steady wind."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Why is jet endurance independent of speed in the formula?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Because, at constant TSFC and constant L/D, fuel flow is proportional to thrust, and thrust equals drag, which equals weight / (L/D). Speed cancels in the endurance integral. Range then brings speed back in as R = V E. In reality TSFC and L/D both vary with speed, so there is still a best-range Mach."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Breguet range</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../fuel-planning/">Fuel planner</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Breguet Range and Endurance Calculator</h1>
+        <p class="lede">The classical Breguet equations for cruise range and endurance at constant lift-to-drag ratio. For a jet, range is (V / ct) (L/D) ln(Wi/Wf) and endurance is (1 / ct) (L/D) ln(Wi/Wf). For a propeller airplane, range is (η / c) (L/D) ln(Wi/Wf) with a unit identity that yields nautical miles from an SFC in lb/(hp·h).</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div class="field-block"><div class="field-label-row"><span class="sublabel">Airplane type</span>
+<div class="seg wrap-seg" role="group" aria-label="kind"><button type="button" class="seg-btn is-active" data-unit-group="kind" data-unit="jet" aria-pressed="true">Jet (TSFC)</button><button type="button" class="seg-btn" data-unit-group="kind" data-unit="prop" aria-pressed="false">Propeller (SFC)</button></div>
+</div></div>
+<div class="field-block"><div class="pair"><div><label for="Wi">Initial weight Wi</label><input id="Wi" class="input" type="number" inputmode="decimal" min="0" step="any" value="120000" autocomplete="off"></div>
+<div><label for="Wf">Final weight Wf</label><input id="Wf" class="input" type="number" inputmode="decimal" min="0" step="any" value="100000" autocomplete="off"></div></div>
+<p class="hint">Any consistent weight unit is fine — only the ratio Wi/Wf matters.</p></div>
+<div class="field-block"><label for="LD">Lift-to-drag ratio L/D</label>
+<input id="LD" class="input" type="number" inputmode="decimal" min="0" step="any" value="16" autocomplete="off"></div>
+<div class="field-block"><div class="field-label-row"><label for="velocity">True airspeed</label>
+<div class="seg wrap-seg" role="group" aria-label="vu"><button type="button" class="seg-btn is-active" data-unit-group="vu" data-unit="kt" aria-pressed="true">kt</button><button type="button" class="seg-btn" data-unit-group="vu" data-unit="m/s" aria-pressed="false">m/s</button><button type="button" class="seg-btn" data-unit-group="vu" data-unit="mph" aria-pressed="false">mph</button><button type="button" class="seg-btn" data-unit-group="vu" data-unit="kmh" aria-pressed="false">km/h</button></div>
+</div><input id="velocity" class="input" type="number" inputmode="decimal" min="0" step="any" value="450" autocomplete="off"></div>
+<div class="field-block" id="block-jet"><div class="field-label-row"><label for="tsfc">Thrust-specific fuel consumption</label>
+<div class="seg wrap-seg" role="group" aria-label="tsu"><button type="button" class="seg-btn is-active" data-unit-group="tsu" data-unit="per-h" aria-pressed="true">1/h (lb/lbf·h)</button><button type="button" class="seg-btn" data-unit-group="tsu" data-unit="mg/N-s" aria-pressed="false">mg/(N·s)</button></div>
+</div><input id="tsfc" class="input" type="number" inputmode="decimal" min="0" step="any" value="0.5" autocomplete="off">
+<p class="hint">A TSFC of 0.5 lb/(lbf·h) is 0.5 per hour. Typical cruise values are often in the 0.5–0.7 /h band for older turbojets and lower for high-bypass turbofans — use the engine’s book.</p></div>
+<div class="field-block" id="block-prop" hidden><div class="pair"><div><label for="eta">Propulsive efficiency η</label><input id="eta" class="input" type="number" inputmode="decimal" min="0" max="1" step="any" value="0.80" autocomplete="off"></div>
+<div><label for="sfc">Power SFC</label><input id="sfc" class="input" type="number" inputmode="decimal" min="0" step="any" value="0.45" autocomplete="off"></div></div>
+<div class="field-label-row"><span class="sublabel">SFC unit</span>
+<div class="seg wrap-seg" role="group" aria-label="sfcu"><button type="button" class="seg-btn is-active" data-unit-group="sfcu" data-unit="lb/hp-h" aria-pressed="true">lb/(hp·h)</button><button type="button" class="seg-btn" data-unit-group="sfcu" data-unit="g/kW-h" aria-pressed="false">g/(kW·h)</button></div>
+</div></div>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-ex">Load jet example (450 kt, L/D 16, Wi/Wf 1.2)</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Range <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>The Breguet equations assume constant L/D, and, in the jet form used here, constant true airspeed and TSFC. Real cruise climbs, winds, reserves, and off-design engines change the answer. This is a first-cut performance estimate, not a substitute for the AFM, a flight-planning system, or fuel reserves required by regulation.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>Jet Breguet equations</h2>
+      <p>For a jet (or turbofan) cruising at constant true airspeed and constant thrust-specific fuel consumption ct,</p>
+      <p><code>R = (V / c<sub>t</sub>) (L/D) ln(W<sub>i</sub> / W<sub>f</sub>)</code><br>
+         <code>E = (1 / c<sub>t</sub>) (L/D) ln(W<sub>i</sub> / W<sub>f</sub>)</code></p>
+      <p>With V in knots and ct in 1/h (lb of fuel per lbf of thrust per hour), R is in nautical miles and E is in hours. A worked check: 450 kt, ct = 0.5 /h, L/D = 16, Wi/Wf = 1.2, gives R ≈ 2,625 nm and E ≈ 5.83 h.</p>
+      <h2>Propeller form</h2>
+      <p>For a propeller airplane the fuel flow is referred to power, not thrust. With propulsive efficiency η and a power-specific fuel consumption c in lb/(hp·h),</p>
+      <p><code>R<sub>nmi</sub> = 325.87 (η / c) (L/D) ln(W<sub>i</sub> / W<sub>f</sub>)</code></p>
+      <p>The factor 325.87 is 1 hp·h expressed as nautical-mile-pounds (550 × 3,600 ft·lbf / 6,076.12 ft). Endurance at a stated constant speed is then range divided by that speed. The best-endurance condition for a propeller airplane is not, in general, the same speed as best range; this page reports the constant-speed identity you entered.</p>
+      <h2>Sources</h2>
+      <p>Breguet; Anderson, <em>Introduction to Flight</em> (Breguet range and endurance); NASA Glenn Beginner’s Guide; FAA Pilot’s Handbook of Aeronautical Knowledge (range and endurance, qualitative). For trip fuel with VFR/IFR reserves, use the <a href="../fuel-planning/">fuel planner</a>.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>What weights should I use for Wi and Wf?</h3>
+      <p>Wi is the weight at the start of the cruise segment you are analysing, Wf the weight at the end of that segment. Taxi, climb, descent, and legally required reserves are usually kept out of this ratio and added separately.</p>
+      <h3>Does wind appear in the Breguet equation?</h3>
+      <p>Not in the still-air form used here. A headwind reduces the ground range relative to the air-range this page reports; a tailwind increases it. Endurance (time) is unchanged by a steady wind.</p>
+      <h3>Why is jet endurance independent of speed in the formula?</h3>
+      <p>Because, at constant TSFC and constant L/D, fuel flow is proportional to thrust, and thrust equals drag, which equals weight / (L/D). Speed cancels in the endurance integral. Range then brings speed back in as R = V E. In reality TSFC and L/D both vary with speed, so there is still a best-range Mach.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Breguet range calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

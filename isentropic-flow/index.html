@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Isentropic Flow Calculator — Mach, T/T0, P/P0, A/A* (NACA 1135)</title>
+  <meta name="description" content="Free isentropic flow calculator for a perfect gas (default γ = 1.4). Convert between Mach number, stagnation ratios T/T0, P/P0, ρ/ρ0, and area ratio A/A*, including both subsonic and supersonic roots. NACA Report 1135 relations, with stagnation temperature and pressure.">
+  <meta name="keywords" content="isentropic flow calculator, NACA 1135, stagnation temperature, total pressure, A/A star, nozzle area ratio, Mach number isentropic, T/T0 P/P0">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/isentropic-flow/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/isentropic-flow/">
+  <meta property="og:title" content="Isentropic Flow Calculator — NACA 1135 ratios">
+  <meta property="og:description" content="Mach, T/T0, P/P0, ρ/ρ0, and A/A* for a perfect gas, including stagnation (total) conditions and both A/A* roots.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Isentropic Flow Calculator">
+  <meta name="twitter:description" content="NACA 1135 isentropic relations: Mach, stagnation ratios, and A/A*.">
+  <meta name="application-name" content="Isentropic Flow Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Isentropic Flow Calculator",
+            "url": "https://aviatorcalcs.com/isentropic-flow/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free isentropic flow calculator for a perfect gas (default γ = 1.4). Convert between Mach number, stagnation ratios T/T0, P/P0, ρ/ρ0, and area ratio A/A*, including both subsonic and supersonic roots. NACA Report 1135 relations, with stagnation temperature and pressure."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "What is stagnation temperature?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "It is the total temperature T0 = T (1 + ((γ−1)/2) M²). For air at M = 2 and a static temperature of 216.65 K, T0 = 389.97 K. Recovery on a real probe is slightly less than ideal."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Why are there two Mach numbers for one A/A*?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "A converging–diverging nozzle can pass the same area ratio on the subsonic side of the throat or on the supersonic side. You have to choose the branch. At A/A* = 1 the flow is sonic and there is only one Mach number, M = 1."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Are the NACA 1135 numbers exact?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "For γ = 1.4 they come from closed-form identities, so the usual table entries (M = 1, 2, 3, …) can be reproduced to the printed number of digits. This page uses those same identities."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Isentropic flow</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../normal-shock/">Normal shock</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Isentropic Flow Calculator</h1>
+        <p class="lede">One-dimensional isentropic flow of a perfect gas. Enter a Mach number, a stagnation ratio, or an area ratio A/A* (subsonic or supersonic branch) and get the full NACA Report 1135 set: T/T0, P/P0, ρ/ρ0, A/A*, and M*. Optionally attach a static temperature or pressure to see the dimensional stagnation state. Default γ = 1.4.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div class="field-block"><div class="field-label-row"><span class="sublabel">I want to enter</span>
+<div class="seg wrap-seg" role="group" aria-label="mode"><button type="button" class="seg-btn is-active" data-unit-group="mode" data-unit="mach" aria-pressed="true">Mach</button><button type="button" class="seg-btn" data-unit-group="mode" data-unit="T_T0" aria-pressed="false">T/T0</button><button type="button" class="seg-btn" data-unit-group="mode" data-unit="P_P0" aria-pressed="false">P/P0</button><button type="button" class="seg-btn" data-unit-group="mode" data-unit="rho_rho0" aria-pressed="false">ρ/ρ0</button><button type="button" class="seg-btn" data-unit-group="mode" data-unit="A_Astar" aria-pressed="false">A/A*</button></div>
+</div></div>
+<div class="field-block"><label for="value" id="value-label">Mach number</label>
+<input id="value" class="input" type="number" inputmode="decimal" min="0" step="any" value="2" autocomplete="off">
+<div id="branch-row" hidden><div class="field-label-row" style="margin-top:0.7rem"><span class="sublabel">A/A* branch</span>
+<div class="seg wrap-seg" role="group" aria-label="branch"><button type="button" class="seg-btn" data-unit-group="branch" data-unit="subsonic" aria-pressed="false">Subsonic</button><button type="button" class="seg-btn is-active" data-unit-group="branch" data-unit="supersonic" aria-pressed="true">Supersonic</button></div>
+</div></div></div>
+<div class="field-block"><label for="gamma">Ratio of specific heats γ</label>
+<input id="gamma" class="input" type="number" inputmode="decimal" min="1.01" max="2.5" step="any" value="1.4" autocomplete="off">
+<p class="hint">Air at ordinary temperatures is 1.4. Hot combustion products are often taken near 1.33. The NACA 1135 tables are for γ = 1.4.</p></div>
+<div class="field-block"><div class="pair"><div><label for="Ts">Static temperature (K) <span class="optional">optional</span></label><input id="Ts" class="input" type="number" inputmode="decimal" min="0" step="any" placeholder="to get T0" autocomplete="off"></div>
+<div><label for="Ps">Static pressure (Pa) <span class="optional">optional</span></label><input id="Ps" class="input" type="number" inputmode="decimal" min="0" step="any" placeholder="to get P0" autocomplete="off"></div></div></div>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-m1">Load M = 1</button>
+<button type="button" class="btn btn-ghost" id="btn-m2">Load M = 2 (NACA 1135)</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Mach number <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>These are the ideal, one-dimensional, calorically perfect-gas isentropic relations. Real nozzles and inlets have boundary layers, heat transfer, and, when started, shocks. Use this page to check a textbook or a first estimate, not as a substitute for a tested propulsion or air-data system.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>Isentropic relations (perfect gas)</h2>
+      <p>Along an isentropic streamtube,</p>
+      <p><code>T<sub>0</sub>/T = 1 + ((γ−1)/2) M²</code><br>
+         <code>P<sub>0</sub>/P = (T<sub>0</sub>/T)<sup>γ/(γ−1)</sup></code><br>
+         <code>ρ<sub>0</sub>/ρ = (T<sub>0</sub>/T)<sup>1/(γ−1)</sup></code></p>
+      <p>T<sub>0</sub>, P<sub>0</sub>, and ρ<sub>0</sub> are the stagnation (total) temperature, pressure, and density — the state the gas would reach if it were brought to rest isentropically. For γ = 1.4, T<sub>0</sub>/T = 1 + 0.2 M².</p>
+      <h2>Area ratio and the two roots</h2>
+      <p>The isentropic area–Mach relation is</p>
+      <p><code>A/A* = (1/M) [ (2/(γ+1)) (1 + ((γ−1)/2) M²) ]<sup>(γ+1)/(2(γ−1))</sup></code></p>
+      <p>A* is the throat area at which M = 1. For any A/A* &gt; 1 there are two Mach numbers, one subsonic and one supersonic. At M = 2, γ = 1.4, A/A* = 1.6875 exactly, P/P0 = 0.12780, T/T0 = 0.55556, and ρ/ρ0 = 0.23005 — the NACA 1135 table values this page is tested against.</p>
+      <h2>Sources</h2>
+      <p>NACA Report 1135, isentropic-flow tables (γ = 1.4); NASA Glenn Beginner’s Guide; Anderson, <em>Modern Compressible Flow</em>. For a normal shock, which is not isentropic, see the <a href="../normal-shock/">normal-shock calculator</a>.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>What is stagnation temperature?</h3>
+      <p>It is the total temperature T0 = T (1 + ((γ−1)/2) M²). For air at M = 2 and a static temperature of 216.65 K, T0 = 389.97 K. Recovery on a real probe is slightly less than ideal.</p>
+      <h3>Why are there two Mach numbers for one A/A*?</h3>
+      <p>A converging–diverging nozzle can pass the same area ratio on the subsonic side of the throat or on the supersonic side. You have to choose the branch. At A/A* = 1 the flow is sonic and there is only one Mach number, M = 1.</p>
+      <h3>Are the NACA 1135 numbers exact?</h3>
+      <p>For γ = 1.4 they come from closed-form identities, so the usual table entries (M = 1, 2, 3, …) can be reproduced to the printed number of digits. This page uses those same identities.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Isentropic flow calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
