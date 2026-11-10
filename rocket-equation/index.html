@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Rocket Equation Calculator — Tsiolkovsky Δv, Isp, and Mass Ratio</title>
+  <meta name="description" content="Free Tsiolkovsky rocket-equation calculator. Compute ideal delta-v from specific impulse or exhaust velocity and the mass ratio m0/mf, invert for the required mass ratio, and add multi-stage burns.">
+  <meta name="keywords" content="rocket equation calculator, Tsiolkovsky, delta-v, specific impulse, mass ratio, exhaust velocity, multi-stage rocket">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/rocket-equation/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/rocket-equation/">
+  <meta property="og:title" content="Rocket Equation Calculator — Δv, Isp, mass ratio">
+  <meta property="og:description" content="Ideal Tsiolkovsky delta-v from Isp or exhaust velocity and mass ratio, including a simple multi-stage sum.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Rocket Equation Calculator">
+  <meta name="twitter:description" content="Δv = Isp g0 ln(m0/mf). Invert for mass ratio, or add stages.">
+  <meta name="application-name" content="Rocket Equation Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Rocket Equation Calculator",
+            "url": "https://aviatorcalcs.com/rocket-equation/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free Tsiolkovsky rocket-equation calculator. Compute ideal delta-v from specific impulse or exhaust velocity and the mass ratio m0/mf, invert for the required mass ratio, and add multi-stage burns."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Why is g0 used in space?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Isp is defined by ve = Isp × 9.80665 m/s² regardless of the local gravity. The product Isp g0 is simply a convenient way to quote exhaust velocity in seconds. The equation itself does not assume the vehicle is sitting on Earth."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What masses go into m0 and mf?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "m0 is the mass at the start of the burn (vehicle plus remaining propellant plus payload). mf is the mass at cutoff — everything that is not expended in that burn, including residual propellant if you want a conservative figure."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Does this include gravity and drag losses?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. Those depend on the trajectory. A launch to orbit can lose on the order of 1.5 km/s or more to gravity and drag relative to the ideal burn; a high-thrust vacuum burn loses much less. Add losses separately."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Rocket equation</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../hohmann-transfer/">Hohmann transfer</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Rocket Equation Calculator</h1>
+        <p class="lede">The ideal Tsiolkovsky rocket equation: Δv = ve ln(m0/mf) = Isp g0 ln(m0/mf). Compute delta-v from a mass ratio, or invert for the mass ratio a burn requires. Add a second or third stage and the ideal delta-v sums. g0 = 9.80665 m/s² is the standard gravity used to define specific impulse, even for a vacuum burn.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div class="field-block"><div class="field-label-row"><span class="sublabel">Solve for</span>
+<div class="seg wrap-seg" role="group" aria-label="mode"><button type="button" class="seg-btn is-active" data-unit-group="mode" data-unit="delta-v" aria-pressed="true">Δv from masses</button><button type="button" class="seg-btn" data-unit-group="mode" data-unit="mass-ratio" aria-pressed="false">Mass ratio from Δv</button><button type="button" class="seg-btn" data-unit-group="mode" data-unit="stages" aria-pressed="false">Multi-stage</button></div>
+</div></div>
+<div class="field-block" id="block-single"><div class="field-label-row"><label for="Isp">Specific impulse, or enter ve below</label>
+<div class="seg wrap-seg" role="group" aria-label="isp-hint"><button type="button" class="seg-btn is-active" data-unit-group="isp-hint" data-unit="s" aria-pressed="true">Isp, s</button></div>
+</div><input id="Isp" class="input" type="number" inputmode="decimal" min="0" step="any" value="300" autocomplete="off">
+<div class="field-label-row" style="margin-top:0.7rem"><label for="ve">Exhaust velocity ve <span class="optional">optional if Isp is set</span></label>
+<div class="seg wrap-seg" role="group" aria-label="veu"><button type="button" class="seg-btn is-active" data-unit-group="veu" data-unit="m/s" aria-pressed="true">m/s</button><button type="button" class="seg-btn" data-unit-group="veu" data-unit="km/s" aria-pressed="false">km/s</button></div>
+</div><input id="ve" class="input" type="number" inputmode="decimal" min="0" step="any" placeholder="Isp × 9.80665" autocomplete="off">
+<div class="pair" style="margin-top:0.7rem" id="mass-row"><div><label for="m0">Initial mass m0</label><input id="m0" class="input" type="number" inputmode="decimal" min="0" step="any" value="5000" autocomplete="off"></div>
+<div><label for="mf">Final mass mf</label><input id="mf" class="input" type="number" inputmode="decimal" min="0" step="any" value="1000" autocomplete="off"></div></div>
+<p class="hint">Any consistent mass unit is fine — only the ratio m0/mf matters.</p>
+<div id="dv-row" hidden><div class="field-label-row"><label for="deltaV">Required Δv</label>
+<div class="seg wrap-seg" role="group" aria-label="dvu"><button type="button" class="seg-btn is-active" data-unit-group="dvu" data-unit="m/s" aria-pressed="true">m/s</button><button type="button" class="seg-btn" data-unit-group="dvu" data-unit="km/s" aria-pressed="false">km/s</button></div>
+</div><input id="deltaV" class="input" type="number" inputmode="decimal" min="0" step="any" value="4735" autocomplete="off"></div></div>
+<div class="field-block" id="block-stages" hidden>
+<p class="hint">Each stage has its own Isp, ignition mass m0, and burnout mass mf (which includes the stacked stages above it plus the payload).</p>
+<div id="stage-fields"></div>
+<button type="button" class="btn btn-ghost" id="btn-add-stage">Add a stage</button></div>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-ex">Load Isp 300 s, MR = 5</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Ideal Δv <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This is the ideal, loss-free rocket equation. Gravity loss, drag, steering, and residual propellant are not subtracted. Real delivered delta-v is lower. Treat the result as a first estimate or a textbook check, not a trajectory design.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>The Tsiolkovsky equation</h2>
+      <p>In the absence of gravity and drag, a rocket’s change in velocity depends only on its effective exhaust velocity ve and the ratio of the mass at ignition to the mass at burnout:</p>
+      <p><code>Δv = v<sub>e</sub> ln(m<sub>0</sub> / m<sub>f</sub>) = I<sub>sp</sub> g<sub>0</sub> ln(m<sub>0</sub> / m<sub>f</sub>)</code></p>
+      <p>Specific impulse Isp is defined so that ve = Isp g0, with the standard gravity g0 = 9.80665 m/s² — even when the engine is firing in vacuum. A mass ratio of e ≈ 2.718 at any Isp produces a delta-v equal to the exhaust velocity. An Isp of 300 s and a mass ratio of 5 produces Δv = 300 × 9.80665 × ln 5 ≈ 4,735 m/s.</p>
+      <h2>Stages</h2>
+      <p>A multi-stage vehicle’s ideal delta-v is the sum of each stage’s ideal delta-v, evaluated with that stage’s Isp and its own m0/mf (the “final” mass of a lower stage includes everything still stacked above it). Staging throws away empty tankage, which raises the effective mass ratio of the remaining vehicle.</p>
+      <h2>Sources</h2>
+      <p>Tsiolkovsky (1903); Sutton and Biblarz, <em>Rocket Propulsion Elements</em>; NASA Glenn Beginner’s Guide to Propulsion (specific impulse, rocket equation). For the orbital delta-v a Hohmann transfer needs, see the <a href="../hohmann-transfer/">Hohmann transfer calculator</a>.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>Why is g0 used in space?</h3>
+      <p>Isp is defined by ve = Isp × 9.80665 m/s² regardless of the local gravity. The product Isp g0 is simply a convenient way to quote exhaust velocity in seconds. The equation itself does not assume the vehicle is sitting on Earth.</p>
+      <h3>What masses go into m0 and mf?</h3>
+      <p>m0 is the mass at the start of the burn (vehicle plus remaining propellant plus payload). mf is the mass at cutoff — everything that is not expended in that burn, including residual propellant if you want a conservative figure.</p>
+      <h3>Does this include gravity and drag losses?</h3>
+      <p>No. Those depend on the trajectory. A launch to orbit can lose on the order of 1.5 km/s or more to gravity and drag relative to the ideal burn; a high-thrust vacuum burn loses much less. Add losses separately.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Rocket equation calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

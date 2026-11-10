@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Visual Descent Point Calculator — VDP Distance, 3° Path, and Descent Rate</title>
+  <meta name="description" content="Free visual descent point (VDP) calculator for instrument approaches. Compute VDP distance from HAT and glide-path angle (exact and the HAT/300 rule of thumb), optional DME, and the descent rate at your groundspeed.">
+  <meta name="keywords" content="visual descent point calculator, VDP, HAT/300, 3 degree glide path, MDA descent, non-precision approach, times five descent rate">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/visual-descent-point/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/visual-descent-point/">
+  <meta property="og:title" content="Visual Descent Point Calculator — HAT, 3° path, DME">
+  <meta property="og:description" content="VDP distance from height above touchdown and path angle, with the HAT/300 rule of thumb and descent rate.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Visual Descent Point Calculator">
+  <meta name="twitter:description" content="VDP from HAT and a 3° (or custom) path, plus fpm at your groundspeed.">
+  <meta name="application-name" content="Visual Descent Point Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Visual Descent Point Calculator",
+            "url": "https://aviatorcalcs.com/visual-descent-point/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free visual descent point (VDP) calculator for instrument approaches. Compute VDP distance from HAT and glide-path angle (exact and the HAT/300 rule of thumb), optional DME, and the descent rate at your groundspeed."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Is HAT the same as MDA?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. HAT is height above the touchdown zone. If you know MDA and TDZE, HAT = MDA − TDZE. Use the published figures from the approach chart."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Why do some schools teach HAT/300 and others HAT/320?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "A 3° slope is 318 ft/NM, which is close to both 300 and 320. HAT/300 is the more common U.S. memory item and is slightly conservative (it puts the VDP a little farther out). This page shows the exact tan(θ) distance as the primary figure."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What if the chart already has a VDP?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Fly the published, charted VDP. A number you compute here is only a planning aid, and it may differ from the charted location because of how the procedure was designed."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Visual descent point</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../top-of-descent/">Top of descent</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Visual Descent Point Calculator</h1>
+        <p class="lede">Find the visual descent point for a non-precision approach: the distance from the threshold at which a chosen descent angle — 3° by default — reaches your height above touchdown (HAT). The exact slope and the common HAT/300 rule of thumb are both shown. Add a groundspeed for descent rate, or a threshold DME to get a VDP DME fix.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div class="field-block"><div class="pair"><div><label for="hat">HAT (height above touchdown, ft)</label><input id="hat" class="input" type="number" inputmode="decimal" min="0" step="any" value="500" autocomplete="off"></div>
+<div><label for="angle">Descent angle (degrees)</label><input id="angle" class="input" type="number" inputmode="decimal" min="0" step="any" value="3" autocomplete="off"></div></div>
+<p class="hint">Or enter MDA and touchdown-zone elevation and HAT will be MDA − TDZE.</p>
+<div class="pair"><div><label for="mda">MDA (ft MSL) <span class="optional">optional</span></label><input id="mda" class="input" type="number" inputmode="decimal" step="any" placeholder="if HAT is blank" autocomplete="off"></div>
+<div><label for="tdze">TDZE (ft MSL) <span class="optional">optional</span></label><input id="tdze" class="input" type="number" inputmode="decimal" step="any" placeholder="touchdown zone" autocomplete="off"></div></div></div>
+<div class="field-block"><div class="pair"><div><label for="gs">Groundspeed (kt) <span class="optional">for fpm</span></label><input id="gs" class="input" type="number" inputmode="decimal" min="0" step="any" value="90" autocomplete="off"></div>
+<div><label for="dme">Threshold / runway DME (NM) <span class="optional">optional</span></label><input id="dme" class="input" type="number" inputmode="decimal" min="0" step="any" placeholder="to get VDP DME" autocomplete="off"></div></div></div>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-ex">Load 500 ft HAT, 3°, 90 kt</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">VDP from the threshold <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>A VDP computed here is a geometric planning aid. It is not a published procedure fix unless the approach chart depicts one, and it does not guarantee obstacle clearance or runway environment in sight. Always fly the published procedure, respect the MDA until the runway environment is in sight and a normal landing can be made, and defer to the AFM and the approach chart.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>Where the VDP sits</h2>
+      <p>The visual descent point is the point along the final approach course from which a normal (usually 3°) descent from the MDA reaches the runway. The exact distance from the threshold is</p>
+      <p><code>dist<sub>NM</sub> = HAT / (6,076.12 × tan θ)</code></p>
+      <p>A 3.00° path is 318.4 ft/NM, so a 300 ft HAT gives a VDP 0.94 NM from the threshold. The common memory item is <strong>HAT / 300</strong>, which would call that same example 1.0 NM. This page reports the exact distance, the /300 rule, and (for comparison) a /320 rule.</p>
+      <h2>Descent rate</h2>
+      <p>Feet per minute on the path is <code>fpm = (ft/NM) × groundspeed<sub>kt</sub> / 60</code>. For a 3° path that is very nearly the “times five” rule (fpm ≈ GS × 5). At 90 kt, times-five is 450 fpm; the exact 3° rate is about 477 fpm. For a cruise descent to the airport, see the <a href="../top-of-descent/">top of descent calculator</a>.</p>
+      <h2>Sources</h2>
+      <p>FAA Instrument Flying Handbook (visual descent point); FAA Instrument Procedures Handbook; AIM / TERPS 3° glide-path design. A computed VDP is not a TERPS fix unless it is charted.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>Is HAT the same as MDA?</h3>
+      <p>No. HAT is height above the touchdown zone. If you know MDA and TDZE, HAT = MDA − TDZE. Use the published figures from the approach chart.</p>
+      <h3>Why do some schools teach HAT/300 and others HAT/320?</h3>
+      <p>A 3° slope is 318 ft/NM, which is close to both 300 and 320. HAT/300 is the more common U.S. memory item and is slightly conservative (it puts the VDP a little farther out). This page shows the exact tan(θ) distance as the primary figure.</p>
+      <h3>What if the chart already has a VDP?</h3>
+      <p>Fly the published, charted VDP. A number you compute here is only a planning aid, and it may differ from the charted location because of how the procedure was designed.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Visual descent point calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

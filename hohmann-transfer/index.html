@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Hohmann Transfer Calculator — LEO to GEO Δv and Time of Flight</title>
+  <meta name="description" content="Free Hohmann transfer calculator. Compute the two impulsive delta-v values and the time of flight between coplanar circular orbits. Earth default, including a 300 km LEO to GEO example of about 3.9 km/s.">
+  <meta name="keywords" content="Hohmann transfer calculator, LEO to GEO delta-v, transfer orbit time of flight, coplanar circular orbits, Vallado Curtis">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/hohmann-transfer/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/hohmann-transfer/">
+  <meta property="og:title" content="Hohmann Transfer Calculator — LEO→GEO Δv">
+  <meta property="og:description" content="Two-impulse Hohmann delta-v and time of flight between circular orbits, including the textbook LEO-to-GEO case of about 3.9 km/s.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Hohmann Transfer Calculator">
+  <meta name="twitter:description" content="Δv1, Δv2, and time of flight for a Hohmann transfer. LEO→GEO ≈ 3.9 km/s.">
+  <meta name="application-name" content="Hohmann Transfer Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Hohmann Transfer Calculator",
+            "url": "https://aviatorcalcs.com/hohmann-transfer/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free Hohmann transfer calculator. Compute the two impulsive delta-v values and the time of flight between coplanar circular orbits. Earth default, including a 300 km LEO to GEO example of about 3.9 km/s."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Why is LEO-to-GEO quoted as about 3.9 km/s?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "That is the ideal two-impulse Hohmann total from a low circular Earth orbit (a few hundred kilometres) to a geosynchronous circular orbit, using Earth’s μ. It is not a launch-from-the-ground figure, and it does not include inclination change."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Does the order of the orbits matter?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The total of the absolute values of the two burns is the same going out or coming in. Each burn simply changes sign."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Is a Hohmann always the cheapest two-burn transfer?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Among impulsive coplanar transfers between circular orbits, yes, when the radius ratio is not extreme. For very large ratios, a bi-elliptic transfer can use less delta-v, at the cost of a much longer time of flight."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Hohmann transfer</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../orbital-velocity-period/">Orbital velocity</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Hohmann Transfer Calculator</h1>
+        <p class="lede">The two-impulse Hohmann transfer between coplanar circular orbits: a burn into a transfer ellipse that is tangent at both ends, then a second burn to circularize. The page reports each delta-v, the total, the transfer time of flight, and the ellipse’s periapsis and apoapsis speeds. Earth is the default body. A 300 km LEO to GEO transfer is about 3.9 km/s.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div class="field-block"><div class="field-label-row"><span class="sublabel">Earth radius</span>
+<div class="seg wrap-seg" role="group" aria-label="er"><button type="button" class="seg-btn is-active" data-unit-group="er" data-unit="equatorial" aria-pressed="true">WGS-84 equatorial</button><button type="button" class="seg-btn" data-unit-group="er" data-unit="mean" aria-pressed="false">Mean 6,371 km</button></div>
+</div></div>
+<div class="field-block"><div class="field-label-row"><label for="r1">Inner / first orbit</label>
+<div class="seg wrap-seg" role="group" aria-label="r1u"><button type="button" class="seg-btn is-active" data-unit-group="r1u" data-unit="altitude-km" aria-pressed="true">Altitude, km</button><button type="button" class="seg-btn" data-unit-group="r1u" data-unit="radius-km" aria-pressed="false">Radius, km</button><button type="button" class="seg-btn" data-unit-group="r1u" data-unit="geo" aria-pressed="false">GEO</button></div>
+</div><input id="r1" class="input" type="number" inputmode="decimal" min="0" step="any" value="300" autocomplete="off"></div>
+<div class="field-block"><div class="field-label-row"><label for="r2">Outer / second orbit</label>
+<div class="seg wrap-seg" role="group" aria-label="r2u"><button type="button" class="seg-btn" data-unit-group="r2u" data-unit="altitude-km" aria-pressed="false">Altitude, km</button><button type="button" class="seg-btn" data-unit-group="r2u" data-unit="radius-km" aria-pressed="false">Radius, km</button><button type="button" class="seg-btn is-active" data-unit-group="r2u" data-unit="geo" aria-pressed="true">GEO</button></div>
+</div><input id="r2" class="input" type="number" inputmode="decimal" min="0" step="any" value="0" autocomplete="off">
+<p class="hint">Choose “GEO” to use the circular radius whose period is one sidereal day (about 42,164 km). The first and second orbits can be in either order — an inward transfer has the same total |Δv|.</p></div>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-leo-geo">Load 300 km LEO → GEO</button>
+<button type="button" class="btn btn-ghost" id="btn-leo-gto">Load 200 km → 35,786 km</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Total Δv <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This is the ideal impulsive, coplanar, two-body Hohmann transfer. It ignores finite burn time, plane changes, Earth’s oblateness, and phasing. A real geostationary insertion also needs inclination and argument-of-perigee work that this page does not include.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>The Hohmann transfer</h2>
+      <p>Walter Hohmann’s 1925 coplanar transfer uses an ellipse that is tangent to two circular orbits of radii r1 and r2. The semi-major axis of the transfer is a<sub>t</sub> = (r1 + r2)/2. The two impulsive burns are the differences between the circular speeds and the vis-viva speeds on the ellipse at each tangency:</p>
+      <p><code>v<sub>c</sub> = √(μ/r)</code>, &nbsp; <code>v = √(μ (2/r − 1/a<sub>t</sub>))</code><br>
+         <code>Δv<sub>1</sub> = |v(r1) − v<sub>c</sub>(r1)|</code>, &nbsp; <code>Δv<sub>2</sub> = |v<sub>c</sub>(r2) − v(r2)|</code></p>
+      <p>Time of flight is half the transfer period: <code>t = π √(a<sub>t</sub>³ / μ)</code>.</p>
+      <h2>LEO to GEO, about 3.9 km/s</h2>
+      <p>From a 300 km circular orbit about the WGS-84 equator to a geosynchronous circular orbit (period = one sidereal day), the ideal two-burn total is about 3.9 km/s. A 200 km starting orbit is a little more; a 400 km starting orbit is a little less. This is the classic first estimate before plane-change and finite-burn penalties are added.</p>
+      <h2>Sources</h2>
+      <p>Hohmann (1925); Vallado, <em>Fundamentals of Astrodynamics and Applications</em>; Curtis, <em>Orbital Mechanics for Engineering Students</em>; Bate, Mueller and White, <em>Fundamentals of Astrodynamics</em>. Circular speeds themselves are on the <a href="../orbital-velocity-period/">orbital velocity calculator</a>.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>Why is LEO-to-GEO quoted as about 3.9 km/s?</h3>
+      <p>That is the ideal two-impulse Hohmann total from a low circular Earth orbit (a few hundred kilometres) to a geosynchronous circular orbit, using Earth’s μ. It is not a launch-from-the-ground figure, and it does not include inclination change.</p>
+      <h3>Does the order of the orbits matter?</h3>
+      <p>The total of the absolute values of the two burns is the same going out or coming in. Each burn simply changes sign.</p>
+      <h3>Is a Hohmann always the cheapest two-burn transfer?</h3>
+      <p>Among impulsive coplanar transfers between circular orbits, yes, when the radius ratio is not extreme. For very large ratios, a bi-elliptic transfer can use less delta-v, at the cost of a much longer time of flight.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Hohmann transfer calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
