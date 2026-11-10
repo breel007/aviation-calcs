@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Pressure Altitude Calculator — From Altimeter Setting, QNH, QNE, and QFE</title>
+  <meta name="description" content="Free pressure altitude calculator for pilots. Convert altimeter setting (QNH) and field or indicated elevation to pressure altitude with the ICAO ISA calibration, and compare the 1,000 ft per inHg rule of thumb. Also invert a station pressure, and show QFE and QNE.">
+  <meta name="keywords" content="pressure altitude calculator, altimeter setting, QNH QNE QFE, 29.92, ISA altimeter, 1000 feet per inch">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/pressure-altitude/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/pressure-altitude/">
+  <meta property="og:title" content="Pressure Altitude Calculator — QNH, QNE, QFE">
+  <meta property="og:description" content="Pressure altitude from altimeter setting and elevation, or from station pressure, with the ISA calibration and the 1,000 ft/inHg rule of thumb.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Pressure Altitude Calculator">
+  <meta name="twitter:description" content="PA from QNH and elevation, or from station pressure. QFE and QNE included.">
+  <meta name="application-name" content="Pressure Altitude Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Pressure Altitude Calculator",
+            "url": "https://aviatorcalcs.com/pressure-altitude/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free pressure altitude calculator for pilots. Convert altimeter setting (QNH) and field or indicated elevation to pressure altitude with the ICAO ISA calibration, and compare the 1,000 ft per inHg rule of thumb. Also invert a station pressure, and show QFE and QNE."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "If I set 29.92 on the ground at a 5,000 ft field, is my pressure altitude 5,000 ft?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes, when the official QNH is itself 29.92 inHg (standard). If QNH is lower than 29.92, pressure altitude is higher than field elevation, and the rule of thumb is 1,000 ft of PA for each inch of mercury the setting is below 29.92."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Is 29.92 inHg exactly 1013.25 hPa?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "1013.25 hPa is 29.92126 inHg using the conversion 1 inHg = 33.8638867 hPa. A typed 29.92 on this page is treated as that conventional standard, not as 29.92000, so a standard-day sea-level or field case comes out at the elevation you entered, not a foot high."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How is this different from density altitude?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Pressure altitude depends only on pressure. Density altitude also needs temperature (and, optionally, humidity). On a hot day, density altitude is higher than pressure altitude. Use the density-altitude calculator for performance estimates."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Pressure altitude</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../density-altitude/">Density altitude</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Pressure Altitude Calculator</h1>
+        <p class="lede">Compute pressure altitude from an altimeter setting (QNH) and a field or indicated elevation, using the ICAO standard-atmosphere calibration a sensitive altimeter assumes. Compare the exact result with the familiar rule of thumb: 1,000 ft for every 0.01? — actually 1,000 ft per inch of mercury below 29.92. You can also enter a station pressure directly. QNE (29.92 inHg / 1013.25 hPa) and QFE (the setting that reads zero at the field) are shown with the result.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div class="field-block"><div class="field-label-row"><span class="sublabel">I want to enter</span>
+<div class="seg wrap-seg" role="group" aria-label="mode"><button type="button" class="seg-btn is-active" data-unit-group="mode" data-unit="qnh-elevation" aria-pressed="true">QNH and elevation</button><button type="button" class="seg-btn" data-unit-group="mode" data-unit="station-pressure" aria-pressed="false">Station pressure</button></div>
+</div></div>
+<div class="field-block" id="block-qnh"><div class="field-label-row"><label for="altimeter">Altimeter setting (QNH)</label>
+<div class="seg wrap-seg" role="group" aria-label="alu"><button type="button" class="seg-btn is-active" data-unit-group="alu" data-unit="inhg" aria-pressed="true">inHg</button><button type="button" class="seg-btn" data-unit-group="alu" data-unit="hpa" aria-pressed="false">hPa</button></div>
+</div><input id="altimeter" class="input" type="number" inputmode="decimal" min="0" step="any" value="29.92" autocomplete="off">
+<div class="field-label-row" style="margin-top:0.7rem"><label for="elevation">Field or indicated elevation</label>
+<div class="seg wrap-seg" role="group" aria-label="elu"><button type="button" class="seg-btn is-active" data-unit-group="elu" data-unit="ft" aria-pressed="true">ft</button><button type="button" class="seg-btn" data-unit-group="elu" data-unit="m" aria-pressed="false">m</button></div>
+</div><input id="elevation" class="input" type="number" inputmode="decimal" step="any" value="5000" autocomplete="off">
+<p class="hint">With the altimeter set to the current official QNH, the indicated altitude at the field should match field elevation. Pressure altitude is what the same altimeter would read with 29.92 inHg / 1013.25 hPa in the Kollsman window.</p></div>
+<div class="field-block" id="block-stn" hidden><div class="field-label-row"><label for="station">Station pressure</label>
+<div class="seg wrap-seg" role="group" aria-label="stu"><button type="button" class="seg-btn is-active" data-unit-group="stu" data-unit="hpa" aria-pressed="true">hPa</button><button type="button" class="seg-btn" data-unit-group="stu" data-unit="inhg" aria-pressed="false">inHg</button><button type="button" class="seg-btn" data-unit-group="stu" data-unit="pa" aria-pressed="false">Pa</button></div>
+</div><input id="station" class="input" type="number" inputmode="decimal" min="0" step="any" value="1013.25" autocomplete="off"></div>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-std">Load 5,000 ft at 29.92</button>
+<button type="button" class="btn btn-ghost" id="btn-low">Load sea level at 28.92 inHg</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Pressure altitude <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This uses the ICAO ISA troposphere (and, above 11 km, the U.S. Standard Atmosphere 1976) that an altimeter is calibrated to. It is not a substitute for a current official altimeter setting, a field elevation from the Chart Supplement, or the density-altitude and performance charts in the POH or AFM. A typed 29.92 inHg is treated as the conventional standard 29.92126 inHg (1013.25 hPa), matching the density-altitude calculator on this site.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>What pressure altitude is</h2>
+      <p>Pressure altitude is the altitude in the standard atmosphere at which the pressure equals the pressure at your location. Operationally, it is what a sensitive altimeter reads when 29.92 inHg (1013.25 hPa) is set in the Kollsman window. Performance charts, true-airspeed calculations, and density altitude all start from it.</p>
+      <p>The altimeter is calibrated to the ICAO ISA troposphere. Station pressure is obtained from QNH and elevation by the same hydrostatic relation, and pressure altitude is the inverse of that relation — the same constants used on this site’s <a href="../density-altitude/">density altitude calculator</a> (T0 = 288.15 K, L = 0.0065 K/m, g0 = 9.80665 m/s², R = 287.05287 J/(kg·K)).</p>
+      <h2>The 1,000-foot rule of thumb</h2>
+      <p>The memory item is <code>PA ≈ elevation + 1,000 ft × (29.92 − QNH<sub>inHg</sub>)</code>. It is close, and it is what most pilots use on the ramp, but the ISA scale height is not exactly 1,000 ft per inch of mercury, so the exact altimeter calibration differs by a few tens of feet at a 1.00 inHg departure from standard. This page shows both.</p>
+      <h2>QNH, QNE, and QFE</h2>
+      <p>QNH is the altimeter setting that makes the instrument read field elevation on the ground. QNE is the standard setting 29.92 inHg / 1013.25 hPa, used for flight levels. QFE is the setting that makes the altimeter read zero at the field (it is the station pressure expressed as an altimeter setting). This page reports all three.</p>
+      <h2>Sources</h2>
+      <p>ICAO Doc 7488; FAA Pilot’s Handbook of Aeronautical Knowledge, Chapter 8 (altimetry, pressure altitude); AIM altimeter-setting procedures; U.S. Standard Atmosphere 1976. For the full ISA column, see the <a href="../standard-atmosphere/">standard atmosphere calculator</a>.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>If I set 29.92 on the ground at a 5,000 ft field, is my pressure altitude 5,000 ft?</h3>
+      <p>Yes, when the official QNH is itself 29.92 inHg (standard). If QNH is lower than 29.92, pressure altitude is higher than field elevation, and the rule of thumb is 1,000 ft of PA for each inch of mercury the setting is below 29.92.</p>
+      <h3>Is 29.92 inHg exactly 1013.25 hPa?</h3>
+      <p>1013.25 hPa is 29.92126 inHg using the conversion 1 inHg = 33.8638867 hPa. A typed 29.92 on this page is treated as that conventional standard, not as 29.92000, so a standard-day sea-level or field case comes out at the elevation you entered, not a foot high.</p>
+      <h3>How is this different from density altitude?</h3>
+      <p>Pressure altitude depends only on pressure. Density altitude also needs temperature (and, optionally, humidity). On a hot day, density altitude is higher than pressure altitude. Use the density-altitude calculator for performance estimates.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Pressure altitude calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+  <script src="../standard-atmosphere/calc.js"></script>
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

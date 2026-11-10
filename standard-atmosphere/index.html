@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Standard Atmosphere Calculator — ISA / U.S. Standard Atmosphere 1976</title>
+  <meta name="description" content="Free ISA and U.S. Standard Atmosphere 1976 calculator. Convert altitude to temperature, pressure, density, speed of sound, and Sutherland viscosity, or invert pressure and density to pressure and density altitude. SI and English units, through 86 km.">
+  <meta name="keywords" content="standard atmosphere calculator, ISA calculator, US Standard Atmosphere 1976, pressure altitude, density altitude, speed of sound, Sutherland viscosity, geopotential altitude">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/standard-atmosphere/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/standard-atmosphere/">
+  <meta property="og:title" content="Standard Atmosphere Calculator — ISA / USSA 1976">
+  <meta property="og:description" content="Altitude to temperature, pressure, density, speed of sound, and viscosity — or invert pressure and density. SI and English units, through 86 km.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Standard Atmosphere Calculator">
+  <meta name="twitter:description" content="ISA / U.S. Standard Atmosphere 1976: temperature, pressure, density, speed of sound, and viscosity, both ways.">
+  <meta name="application-name" content="Standard Atmosphere Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Standard Atmosphere Calculator",
+            "url": "https://aviatorcalcs.com/standard-atmosphere/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free ISA and U.S. Standard Atmosphere 1976 calculator. Convert altitude to temperature, pressure, density, speed of sound, and Sutherland viscosity, or invert pressure and density to pressure and density altitude. SI and English units, through 86 km."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "What is the difference between the ISA and the U.S. Standard Atmosphere 1976?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "They are the same model from sea level through 32 km. The 1976 U.S. Standard Atmosphere then continues, with defined temperature layers, through 86 km geometric (and, in the official document, on to 1,000 km with a different formulation). This calculator implements the 1976 layers through 86 km."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Why is 11 km geometric not exactly the tropopause?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The tropopause is defined at 11 km geopotential altitude. Geometric altitude is slightly higher than geopotential altitude at the same point, so 11 km geometric is still in the troposphere (about 10,981 m geopotential) and a little warmer than 216.65 K."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What viscosity law does this page use?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Sutherland’s law as given in the U.S. Standard Atmosphere 1976: μ = β T^{3/2} / (T + S), with β = 1.458×10⁻⁶ kg/(s·m·K^{1/2}) and S = 110.4 K. Kinematic viscosity is μ divided by density."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Can I convert a pressure or a density back to an altitude?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes. Enter a pressure to get pressure altitude, or a density to get density altitude, in both geopotential and geometric height, plus the rest of the standard-atmosphere properties at that level. The model is valid from sea level to 86 km geometric."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Standard atmosphere</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../density-altitude/">Density altitude</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Standard Atmosphere Calculator</h1>
+        <p class="lede">Look up the ICAO / U.S. Standard Atmosphere 1976 at a geopotential or geometric altitude, in SI or English units: temperature, pressure, density, the three ratios, speed of sound, and dynamic and kinematic viscosity from Sutherland’s law. Invert a pressure or a density to pressure altitude or density altitude. Results update as you type.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div class="field-block">
+  <div class="field-label-row"><span class="sublabel">I want to enter</span>
+<div class="seg wrap-seg" role="group" aria-label="mode"><button type="button" class="seg-btn is-active" data-unit-group="mode" data-unit="altitude" aria-pressed="true">Altitude</button><button type="button" class="seg-btn" data-unit-group="mode" data-unit="pressure" aria-pressed="false">Pressure</button><button type="button" class="seg-btn" data-unit-group="mode" data-unit="density" aria-pressed="false">Density</button></div>
+  </div>
+</div>
+<div class="field-block">
+  <div class="field-label-row"><span class="sublabel">Unit system</span>
+<div class="seg wrap-seg" role="group" aria-label="system"><button type="button" class="seg-btn is-active" data-unit-group="system" data-unit="si" aria-pressed="true">SI</button><button type="button" class="seg-btn" data-unit-group="system" data-unit="english" aria-pressed="false">English</button></div>
+  </div>
+</div>
+<div class="field-block" id="block-altitude">
+  <div class="field-label-row"><label for="altitude">Altitude</label>
+<div class="seg wrap-seg" role="group" aria-label="altu"><button type="button" class="seg-btn is-active" data-unit-group="altu" data-unit="m" aria-pressed="true">m</button><button type="button" class="seg-btn" data-unit-group="altu" data-unit="km" aria-pressed="false">km</button><button type="button" class="seg-btn" data-unit-group="altu" data-unit="ft" aria-pressed="false">ft</button><button type="button" class="seg-btn" data-unit-group="altu" data-unit="fl" aria-pressed="false">FL</button></div>
+  </div>
+  <input id="altitude" class="input" type="number" inputmode="decimal" min="0" step="any" value="0" autocomplete="off">
+  <div class="field-label-row" style="margin-top:0.7rem"><span class="sublabel">Altitude kind</span>
+<div class="seg wrap-seg" role="group" aria-label="kind"><button type="button" class="seg-btn is-active" data-unit-group="kind" data-unit="geopotential" aria-pressed="true">Geopotential</button><button type="button" class="seg-btn" data-unit-group="kind" data-unit="geometric" aria-pressed="false">Geometric</button></div>
+  </div>
+  <p class="hint">The 1976 model is defined on geopotential height H. Geometric altitude Z is related by H = r<sub>0</sub> Z / (r<sub>0</sub> + Z) with r<sub>0</sub> = 6,356,766 m. The tropopause is at 11 km geopotential, which is not exactly 11 km geometric.</p>
+</div>
+<div class="field-block" id="block-pressure" hidden>
+  <div class="field-label-row"><label for="pressure">Pressure</label>
+<div class="seg wrap-seg" role="group" aria-label="pu"><button type="button" class="seg-btn is-active" data-unit-group="pu" data-unit="pa" aria-pressed="true">Pa</button><button type="button" class="seg-btn" data-unit-group="pu" data-unit="hpa" aria-pressed="false">hPa</button><button type="button" class="seg-btn" data-unit-group="pu" data-unit="inhg" aria-pressed="false">inHg</button><button type="button" class="seg-btn" data-unit-group="pu" data-unit="psi" aria-pressed="false">psi</button><button type="button" class="seg-btn" data-unit-group="pu" data-unit="psf" aria-pressed="false">psf</button></div>
+  </div>
+  <input id="pressure" class="input" type="number" inputmode="decimal" min="0" step="any" value="101325" autocomplete="off">
+  <p class="hint">Inverted in the standard atmosphere to a unique pressure altitude (geopotential), then reported with the matching geometric height and the full property set.</p>
+</div>
+<div class="field-block" id="block-density" hidden>
+  <div class="field-label-row"><label for="density">Density</label>
+<div class="seg wrap-seg" role="group" aria-label="du"><button type="button" class="seg-btn is-active" data-unit-group="du" data-unit="kgm3" aria-pressed="true">kg/m³</button><button type="button" class="seg-btn" data-unit-group="du" data-unit="slugft3" aria-pressed="false">slug/ft³</button><button type="button" class="seg-btn" data-unit-group="du" data-unit="lbft3" aria-pressed="false">lb/ft³</button></div>
+  </div>
+  <input id="density" class="input" type="number" inputmode="decimal" min="0" step="any" value="1.225" autocomplete="off">
+  <p class="hint">Inverted to density altitude in the same model. Density, like pressure, decreases monotonically from sea level to 86 km.</p>
+</div>
+<div class="form-actions">
+  <button type="button" class="btn btn-ghost" id="btn-sl">Sea level</button>
+  <button type="button" class="btn btn-ghost" id="btn-trop">11 km tropopause</button>
+  <button type="button" class="btn btn-ghost" id="btn-fl360">FL360</button>
+  <button type="button" class="btn btn-ghost" id="btn-50km">50 km</button>
+</div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Atmosphere properties</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Temperature <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This calculator implements the public U.S. Standard Atmosphere 1976 / ICAO ISA model for a standard day. It is a planning and engineering aid, <strong>not</strong> a substitute for the POH or AFM, a certified air-data computer, or measured weather. Real temperature, pressure, and humidity depart from the standard. Molecular weight is held at the sea-level value through 86 km (the official tables introduce a small variation only above 80 km).</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>The U.S. Standard Atmosphere 1976 and the ICAO ISA</h2>
+      <p>The <strong>U.S. Standard Atmosphere, 1976</strong> (NOAA / NASA / USAF, NASA-TM-X-74335) is a defined, idealized vertical profile of temperature, pressure, and density for engineering and aviation work. Its lower 32 km is the same model as the <strong>ICAO Standard Atmosphere</strong> (Doc 7488) and ISO 2533 — the “ISA” used for altimeter calibration, performance charts, and most textbook atmosphere problems.</p>
+      <p>Sea-level defined values are T<sub>0</sub> = 288.15 K (15 °C), P<sub>0</sub> = 101,325 Pa, and ρ<sub>0</sub> = 1.225 kg/m³. The speed of sound at sea level is 340.29 m/s. The tropopause sits at <strong>11 km geopotential</strong>: 216.65 K and 22,632 Pa.</p>
+      <h2>Geopotential and geometric altitude</h2>
+      <p>The model is defined on <em>geopotential</em> altitude H, which absorbs the slight decrease of gravity with height so that the hydrostatic equation can be written with the constant standard gravity g<sub>0</sub> = 9.80665 m/s². Geometric altitude Z — the height you would measure with a tape from the surface — is related by the 1976 document’s radius r<sub>0</sub> = 6,356,766 m:</p>
+      <p><code>H = r<sub>0</sub> Z / (r<sub>0</sub> + Z)</code><br>
+         <code>Z = r<sub>0</sub> H / (r<sub>0</sub> − H)</code></p>
+      <p>The difference is small in the troposphere (about 19 m at 11 km) and grows with height. Always check which quantity a table or a problem statement is using. Flight levels and most aviation “pressure altitude” figures are geopotential, in the sense of the altimeter’s ISA calibration.</p>
+      <h2>The seven temperature layers, to 86 km</h2>
+      <p>From the surface to 86 km geometric (84.852 km geopotential) the molecular-scale temperature is piecewise linear. Layer bases (geopotential) and lapse rates L = dT/dH are:</p>
+      <div class="table-wrap"><table class="data-table"><thead><tr><th>H (km)</th><th>T (K)</th><th>Lapse (K/km)</th></tr></thead><tbody>
+      <tr><td>0</td><td>288.15</td><td>−6.5</td></tr>
+      <tr><td>11</td><td>216.65</td><td>0</td></tr>
+      <tr><td>20</td><td>216.65</td><td>+1.0</td></tr>
+      <tr><td>32</td><td>228.65</td><td>+2.8</td></tr>
+      <tr><td>47</td><td>270.65</td><td>0</td></tr>
+      <tr><td>51</td><td>270.65</td><td>−2.8</td></tr>
+      <tr><td>71</td><td>214.65</td><td>−2.0</td></tr>
+      <tr><td>84.852</td><td>186.95</td><td>—</td></tr>
+      </tbody></table></div>
+      <p>In a gradient layer, pressure follows <code>P / P<sub>b</sub> = (T / T<sub>b</sub>)<sup>−g<sub>0</sub> M<sub>0</sub> / (R* L)</sup></code>. In an isothermal layer, <code>P / P<sub>b</sub> = exp(−g<sub>0</sub> M<sub>0</sub> (H − H<sub>b</sub>) / (R* T<sub>b</sub>))</code>. Density comes from the equation of state with the 1976 constants R* = 8,314.32 N·m/(kmol·K) and M<sub>0</sub> = 28.9644 kg/kmol. This page holds molecular weight at M<sub>0</sub> through 86 km; the official tables apply a small M variation only above 80 km.</p>
+      <h2>Speed of sound and Sutherland viscosity</h2>
+      <p>With γ = 1.40, the speed of sound is <code>a = √(γ R T)</code>. Dynamic viscosity uses Sutherland’s law as written in the 1976 document:</p>
+      <p><code>μ = β T<sup>3/2</sup> / (T + S)</code>, with β = 1.458×10<sup>−6</sup> kg/(s·m·K<sup>1/2</sup>) and S = 110.4 K.</p>
+      <p>Kinematic viscosity is ν = μ / ρ. At sea level these give μ ≈ 1.7894×10<sup>−5</sup> kg/(m·s) and ν ≈ 1.4607×10<sup>−5</sup> m²/s.</p>
+      <h2>Pressure altitude and density altitude</h2>
+      <p>Pressure altitude is the geopotential height in this model at which the standard pressure equals the pressure you enter. Density altitude is the same idea for density. Both inversions are unique between sea level and 86 km because P and ρ decrease monotonically. For a flight-planning density altitude from a met observation (altimeter, OAT, optional humidity), use the <a href="../density-altitude/">density altitude calculator</a>, which applies the same troposphere constants to a non-standard temperature.</p>
+      <h2>Worked example</h2>
+      <p>At 11 km geopotential, the tropopause: T = 216.65 K, P = 22,632 Pa, ρ = 0.36392 kg/m³, a = 295.07 m/s. Eleven kilometres geometric is still in the troposphere (H ≈ 10,981 m), so the temperature is slightly warmer than 216.65 K — a reminder to pick the right altitude kind.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>What is the difference between the ISA and the U.S. Standard Atmosphere 1976?</h3>
+      <p>They are the same model from sea level through 32 km. The 1976 U.S. Standard Atmosphere then continues, with defined temperature layers, through 86 km geometric (and, in the official document, on to 1,000 km with a different formulation). This calculator implements the 1976 layers through 86 km.</p>
+      <h3>Why is 11 km geometric not exactly the tropopause?</h3>
+      <p>The tropopause is defined at 11 km <em>geopotential</em> altitude. Geometric altitude is slightly higher than geopotential altitude at the same point, so 11 km geometric is still in the troposphere (about 10,981 m geopotential) and a little warmer than 216.65 K.</p>
+      <h3>What viscosity law does this page use?</h3>
+      <p>Sutherland’s law as given in the U.S. Standard Atmosphere 1976: <code>μ = β T<sup>3/2</sup> / (T + S)</code>, with β = 1.458×10<sup>−6</sup> kg/(s·m·K<sup>1/2</sup>) and S = 110.4 K. Kinematic viscosity is μ divided by density.</p>
+      <h3>Can I convert a pressure or a density back to an altitude?</h3>
+      <p>Yes. Enter a pressure to get pressure altitude, or a density to get density altitude, in both geopotential and geometric height, plus the rest of the standard-atmosphere properties at that level. The model is valid from sea level to 86 km geometric.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — ISA / U.S. Standard Atmosphere 1976 calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

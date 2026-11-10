@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Mach Number and Dynamic Pressure Calculator — q, EAS, and a</title>
+  <meta name="description" content="Free Mach number and dynamic pressure calculator. Convert true airspeed or Mach to q = ½ρV² = ½γPM², speed of sound, and equivalent airspeed, using the standard atmosphere or ambient T, P, and ρ you enter.">
+  <meta name="keywords" content="dynamic pressure calculator, Mach number calculator, q bar, equivalent airspeed, speed of sound, impact pressure, 1/2 rho V squared">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/mach-dynamic-pressure/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/mach-dynamic-pressure/">
+  <meta property="og:title" content="Mach Number and Dynamic Pressure Calculator">
+  <meta property="og:description" content="Mach, speed of sound, dynamic pressure q, and equivalent airspeed from TAS or Mach and the ambient atmosphere.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Mach and Dynamic Pressure Calculator">
+  <meta name="twitter:description" content="q = ½ρV² = ½γPM², plus EAS and speed of sound.">
+  <meta name="application-name" content="Mach and Dynamic Pressure Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Mach and Dynamic Pressure Calculator",
+            "url": "https://aviatorcalcs.com/mach-dynamic-pressure/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free Mach number and dynamic pressure calculator. Convert true airspeed or Mach to q = ½ρV² = ½γPM², speed of sound, and equivalent airspeed, using the standard atmosphere or ambient T, P, and ρ you enter."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Is dynamic pressure the same as pitot pressure?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. Dynamic pressure q = ½ρV² is a defined quantity used in force coefficients. A pitot tube measures stagnation (total) pressure. The difference from static pressure is the impact pressure qc, which equals q only in the incompressible limit. At higher subsonic Mach they diverge, and above Mach 1 a shock stands in front of the tube."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Why is q also written ½γPM²?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Because a² = γRT and P = ρRT, so ½ρV² = ½ρ(aM)² = ½γPM². For air, ½γ = 0.7, which is a convenient check: q = 0.7 P M²."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How is equivalent airspeed related to q?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "EAS is the speed at sea-level density that produces the same dynamic pressure: q = ½ ρ0 VEAS². It is the natural speed to use when you are thinking in terms of aerodynamic force at altitude."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Mach &amp; dynamic pressure</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../true-airspeed/">True airspeed</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Mach Number and Dynamic Pressure Calculator</h1>
+        <p class="lede">Convert a true airspeed or a Mach number into dynamic pressure q, equivalent airspeed, and the speed of sound. The ambient atmosphere can be the U.S. Standard Atmosphere 1976 at a geopotential altitude, or a temperature, pressure, and density you enter.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div class="field-block"><div class="field-label-row"><span class="sublabel">I want to enter</span>
+<div class="seg wrap-seg" role="group" aria-label="speed"><button type="button" class="seg-btn is-active" data-unit-group="speed" data-unit="velocity" aria-pressed="true">True airspeed</button><button type="button" class="seg-btn" data-unit-group="speed" data-unit="mach" aria-pressed="false">Mach number</button></div>
+</div></div>
+<div class="field-block" id="block-vel"><div class="field-label-row"><label for="velocity">True airspeed</label>
+<div class="seg wrap-seg" role="group" aria-label="vu"><button type="button" class="seg-btn" data-unit-group="vu" data-unit="m/s" aria-pressed="false">m/s</button><button type="button" class="seg-btn is-active" data-unit-group="vu" data-unit="kt" aria-pressed="true">kt</button><button type="button" class="seg-btn" data-unit-group="vu" data-unit="mph" aria-pressed="false">mph</button><button type="button" class="seg-btn" data-unit-group="vu" data-unit="fps" aria-pressed="false">ft/s</button></div>
+</div><input id="velocity" class="input" type="number" inputmode="decimal" min="0" step="any" value="100" autocomplete="off"></div>
+<div class="field-block" id="block-mach" hidden><label for="mach">Mach number</label>
+<input id="mach" class="input" type="number" inputmode="decimal" min="0" step="any" value="0.8" autocomplete="off"></div>
+<div class="field-block"><div class="field-label-row"><span class="sublabel">Atmosphere</span>
+<div class="seg wrap-seg" role="group" aria-label="atm"><button type="button" class="seg-btn is-active" data-unit-group="atm" data-unit="isa" aria-pressed="true">ISA altitude</button><button type="button" class="seg-btn" data-unit-group="atm" data-unit="manual" aria-pressed="false">T, P or ρ</button></div>
+</div></div>
+<div class="field-block" id="block-isa"><div class="field-label-row"><label for="altitude">Geopotential altitude</label>
+<div class="seg wrap-seg" role="group" aria-label="altu"><button type="button" class="seg-btn" data-unit-group="altu" data-unit="m" aria-pressed="false">m</button><button type="button" class="seg-btn is-active" data-unit-group="altu" data-unit="ft" aria-pressed="true">ft</button><button type="button" class="seg-btn" data-unit-group="altu" data-unit="km" aria-pressed="false">km</button></div>
+</div><input id="altitude" class="input" type="number" inputmode="decimal" min="0" step="any" value="0" autocomplete="off">
+<label for="temp-isa" class="sublabel">Temperature override (K) <span class="optional">optional</span></label>
+<input id="temp-isa" class="input" type="number" inputmode="decimal" min="0" step="any" placeholder="ISA temperature" autocomplete="off"></div>
+<div class="field-block" id="block-man" hidden><div class="pair"><div><label for="temp">Temperature (K)</label><input id="temp" class="input" type="number" inputmode="decimal" min="0" step="any" value="288.15" autocomplete="off"></div>
+<div><label for="pressure">Pressure (Pa)</label><input id="pressure" class="input" type="number" inputmode="decimal" min="0" step="any" value="101325" autocomplete="off"></div></div>
+<label for="rho" class="sublabel">Density (kg/m³) <span class="optional">optional if T and P are set</span></label>
+<input id="rho" class="input" type="number" inputmode="decimal" min="0" step="any" placeholder="from P / RT" autocomplete="off"></div>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-ex">Load 100 kt at sea level</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Dynamic pressure q <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This page computes ideal-gas Mach number and incompressible-form dynamic pressure q = ½ρV², which is exact as a definition of q and is the dynamic pressure used in CL = L/(qS). The subsonic isentropic impact-pressure formula is also shown; above Mach 1 a pitot tube sits behind a shock and the Rayleigh-pitot formula on the <a href="../normal-shock/">normal-shock calculator</a> applies. Not a substitute for certified air-data equipment or the POH.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>Mach number and the speed of sound</h2>
+      <p><code>M = V / a</code>, with <code>a = √(γ R T)</code> and γ = 1.4 for air. At sea-level ISA, a = 340.29 m/s (661 kt). Mach number is a ratio of speeds; it does not by itself tell you dynamic pressure.</p>
+      <h2>Dynamic pressure</h2>
+      <p>Dynamic pressure — the “q” or “q-bar” in every lift and drag formula — is</p>
+      <p><code>q = ½ ρ V² = ½ γ P M²</code></p>
+      <p>At sea level, 100 kt true (and essentially 100 kt equivalent) gives q ≈ 1,622 Pa, or about 33.9 psf. Equivalent airspeed is defined from that same q by <code>q = ½ ρ<sub>0</sub> V<sub>EAS</sub>²</code> with ρ<sub>0</sub> = 1.225 kg/m³, so EAS equals TAS only at sea-level density.</p>
+      <p>For indicated / calibrated airspeed from a pitot-static system, see the <a href="../true-airspeed/">true airspeed calculator</a>, which uses the subsonic compressible pitot formula. The impact pressure shown here, qc = P[(1+0.2M²)<sup>3.5</sup> − 1], is that isentropic increment; it is not valid as a pitot reading above Mach 1.</p>
+      <h2>Sources</h2>
+      <p>NACA Report 1135; NASA Glenn Beginner’s Guide (dynamic pressure, Mach number); U.S. Standard Atmosphere 1976; Anderson, <em>Introduction to Flight</em>.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>Is dynamic pressure the same as pitot pressure?</h3>
+      <p>No. Dynamic pressure <code>q = ½ρV²</code> is a defined quantity used in force coefficients. A pitot tube measures stagnation (total) pressure. The difference from static pressure is the impact pressure q<sub>c</sub>, which equals q only in the incompressible limit. At higher subsonic Mach they diverge, and above Mach 1 a shock stands in front of the tube.</p>
+      <h3>Why is q also written ½γPM²?</h3>
+      <p>Because <code>a² = γRT</code> and <code>P = ρRT</code>, so <code>½ρV² = ½ρ(aM)² = ½γPM²</code>. For air, ½γ = 0.7, which is a convenient check: <code>q = 0.7 P M²</code>.</p>
+      <h3>How is equivalent airspeed related to q?</h3>
+      <p>EAS is the speed at sea-level density that produces the same dynamic pressure: <code>q = ½ ρ<sub>0</sub> V<sub>EAS</sub>²</code>. It is the natural speed to use when you are thinking in terms of aerodynamic force at altitude.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Mach number and dynamic pressure calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+  <script src="../standard-atmosphere/calc.js"></script>
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
