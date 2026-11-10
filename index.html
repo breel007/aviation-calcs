@@ -5,19 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#080c16">
   <meta name="color-scheme" content="dark">
-  <title>Aviation Calcs — Free Density Altitude, Crosswind &amp; Weight and Balance Calculators</title>
-  <meta name="description" content="Free aviation calculators for pilots: density altitude, crosswind component, and weight and balance. The same problems you would work with an E6B or electronic flight computer, in your browser. No account.">
+  <title>Aviator Calcs — Free Aviation Calculators &amp; Online E6B Flight Computer</title>
+  <meta name="description" content="Free aviation calculators and an online E6B for pilots: density altitude, crosswind component, weight and balance, METAR decoder, fuel planner, and more. No account.">
   <meta name="author" content="Aviation Calcs">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://aviatorcalcs.com/">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Aviation Calcs">
   <meta property="og:url" content="https://aviatorcalcs.com/">
-  <meta property="og:title" content="Aviation Calcs — Free Aviation Calculators for Pilots">
-  <meta property="og:description" content="Density altitude, crosswind component, and weight and balance calculators. Same work as an E6B or flight computer, in your browser.">
+  <meta property="og:title" content="Aviator Calcs — Free Aviation Calculators &amp; Online E6B Flight Computer">
+  <meta property="og:description" content="Free aviation calculators and an online E6B for pilots: density altitude, crosswind, weight and balance, METAR decoder, fuel planner, and more. No account.">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Aviation Calcs — Free Aviation Calculators">
-  <meta name="twitter:description" content="Density altitude, crosswind, and weight and balance calculators for pilots. No account. Runs in your browser.">
+  <meta name="twitter:title" content="Aviator Calcs — Free Aviation Calculators &amp; Online E6B">
+  <meta name="twitter:description" content="Free aviation calculators and an online E6B flight computer for pilots. Density altitude, crosswind, weight and balance, METAR, and more. No account.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,14 +27,108 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Aviation Calcs",
-    "url": "https://aviatorcalcs.com/",
-    "description": "Free density altitude, crosswind, and weight and balance calculators for pilots."
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://aviatorcalcs.com/#organization",
+        "name": "Aviation Calcs",
+        "alternateName": "Aviator Calcs",
+        "url": "https://aviatorcalcs.com/"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://aviatorcalcs.com/#website",
+        "name": "Aviation Calcs",
+        "alternateName": ["Aviator Calcs", "Aviation Calculators"],
+        "url": "https://aviatorcalcs.com/",
+        "description": "Free aviation calculators and an online E6B flight computer for pilots. Density altitude, crosswind, weight and balance, METAR and TAF decoders, fuel planning, and more.",
+        "publisher": { "@id": "https://aviatorcalcs.com/#organization" },
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://aviatorcalcs.com/#tools",
+        "name": "Aviation calculators",
+        "numberOfItems": 23,
+        "itemListOrder": "https://schema.org/ItemListOrderAscending",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "E6B Wind Triangle Calculator", "url": "https://aviatorcalcs.com/e6b-wind/" },
+          { "@type": "ListItem", "position": 2, "name": "Aviation Fuel Planner", "url": "https://aviatorcalcs.com/fuel-planning/" },
+          { "@type": "ListItem", "position": 3, "name": "Time, Speed and Distance Calculator", "url": "https://aviatorcalcs.com/time-speed-distance/" },
+          { "@type": "ListItem", "position": 4, "name": "True Airspeed Calculator", "url": "https://aviatorcalcs.com/true-airspeed/" },
+          { "@type": "ListItem", "position": 5, "name": "Top of Descent Calculator", "url": "https://aviatorcalcs.com/top-of-descent/" },
+          { "@type": "ListItem", "position": 6, "name": "Climb Gradient Calculator", "url": "https://aviatorcalcs.com/climb-gradient/" },
+          { "@type": "ListItem", "position": 7, "name": "Turn Radius Calculator", "url": "https://aviatorcalcs.com/turn-radius/" },
+          { "@type": "ListItem", "position": 8, "name": "Glide Distance Calculator", "url": "https://aviatorcalcs.com/glide-distance/" },
+          { "@type": "ListItem", "position": 9, "name": "Holding Pattern Entry Calculator", "url": "https://aviatorcalcs.com/holding-pattern-entry/" },
+          { "@type": "ListItem", "position": 10, "name": "Aviation Unit Converter", "url": "https://aviatorcalcs.com/aviation-unit-converter/" },
+          { "@type": "ListItem", "position": 11, "name": "Density Altitude Calculator", "url": "https://aviatorcalcs.com/density-altitude/" },
+          { "@type": "ListItem", "position": 12, "name": "Crosswind Component Calculator", "url": "https://aviatorcalcs.com/crosswind/" },
+          { "@type": "ListItem", "position": 13, "name": "Weight and Balance Calculator", "url": "https://aviatorcalcs.com/weight-balance/" },
+          { "@type": "ListItem", "position": 14, "name": "METAR Decoder", "url": "https://aviatorcalcs.com/metar-decoder/" },
+          { "@type": "ListItem", "position": 15, "name": "TAF Decoder", "url": "https://aviatorcalcs.com/taf-decoder/" },
+          { "@type": "ListItem", "position": 16, "name": "Cloud Base Calculator", "url": "https://aviatorcalcs.com/cloud-base/" },
+          { "@type": "ListItem", "position": 17, "name": "Sunrise, Sunset and FAA Night Calculator", "url": "https://aviatorcalcs.com/sunrise-sunset-twilight/" },
+          { "@type": "ListItem", "position": 18, "name": "Zulu Time Converter", "url": "https://aviatorcalcs.com/zulu-time-converter/" },
+          { "@type": "ListItem", "position": 19, "name": "Aircraft Ownership Cost Calculator", "url": "https://aviatorcalcs.com/aircraft-ownership-cost/" },
+          { "@type": "ListItem", "position": 20, "name": "Aircraft Loan Calculator", "url": "https://aviatorcalcs.com/aircraft-loan/" },
+          { "@type": "ListItem", "position": 21, "name": "Flight Training Cost Calculator", "url": "https://aviatorcalcs.com/flight-training-cost/" },
+          { "@type": "ListItem", "position": 22, "name": "Aircraft Rental Cost Calculator", "url": "https://aviatorcalcs.com/rental-cost/" },
+          { "@type": "ListItem", "position": 23, "name": "FAA Pilot Currency Checker", "url": "https://aviatorcalcs.com/pilot-currency/" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://aviatorcalcs.com/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Are these aviation calculators free?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Every calculator on Aviator Calcs is free to use in your browser. There is no account, no install, and no upload. The pages may show advertisements to keep the tools free."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is an E6B or flight computer?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "An E6B is the classic circular flight computer pilots use for aviation math: wind correction and groundspeed, true airspeed, time-speed-distance, fuel, and unit conversions. These pages do that same work as an online E6B, with the formulas shown."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need an account or an app?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. The calculators are static web pages. All of the math runs locally in your browser, so nothing you type is sent to a server."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use these instead of my POH or official weather?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. These are planning aids, not certified avionics. Always defer to the Pilot’s Operating Handbook or Aircraft Flight Manual, official weather, and the weight and balance report for the airplane you actually fly."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do the calculators work on a phone?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Every tool is built to work on a phone, tablet, or desktop. Search the list on this page to jump to a calculator by name or by a term such as density altitude, crosswind component, or METAR decoder."
+            }
+          }
+        ]
+      }
+    ]
   }
   </script>
 </head>
-<body>
+<body class="home-page">
+  <a class="skip-link" href="#tools">Skip to calculators</a>
   <header class="site-header">
     <div class="wrap header-inner">
       <a class="brand" href="./">
@@ -50,9 +145,7 @@
         </div>
       </a>
       <nav class="site-nav" aria-label="Site">
-        <a href="density-altitude/">Density altitude</a>
-        <a href="crosswind/">Crosswind</a>
-        <a href="weight-balance/">Weight &amp; balance</a>
+        <a href="#tools" aria-current="page">All tools</a>
         <a href="about.html">About</a>
       </nav>
     </div>
@@ -61,38 +154,204 @@
   <main class="wrap">
     <header class="landing-hero">
       <h1>Free aviation calculators for pilots</h1>
-      <p class="lede">Density altitude, crosswind component, and weight and balance — the same problems you would work with an E6B or an electronic flight computer, without leaving the browser. No account, no upload. Built for pilots, instructors, and flight-test work.</p>
+      <p class="lede">An online E6B and a set of pilot calculators for the aviation math you do before a flight: density altitude, crosswind component, weight and balance, fuel, true airspeed, and a METAR decoder. The same work you would do with a flight computer, in the browser. No account, no upload.</p>
     </header>
 
-    <h2 class="stat-label" style="margin:1.4rem 0 0.7rem">Calculators</h2>
-    <div class="card-grid">
-      <a class="tool-card" href="density-altitude/">
-        <h2>Density altitude calculator</h2>
-        <p>Pressure altitude, ICAO density altitude (a DA calc with optional humidity), ISA temperature and ISA deviation, and a clearly labeled takeoff and climb rule of thumb for high density altitude days.</p>
-        <span class="go">Open density altitude →</span>
-      </a>
-      <a class="tool-card" href="crosswind/">
-        <h2>Crosswind calculator</h2>
-        <p>Crosswind, headwind, and tailwind components for both runway ends, including gusts — a wind-component calculator in the same spirit as an E6B wind side or a runway crosswind chart.</p>
-        <span class="go">Open crosswind →</span>
-      </a>
-      <a class="tool-card" href="weight-balance/">
-        <h2>Weight and balance calculator</h2>
-        <p>A generic W&amp;B and CG calculator: editable stations, takeoff and landing center of gravity, and an envelope plot. Example Cessna 172 and Piper Archer arms included — always verify against your aircraft.</p>
-        <span class="go">Open weight &amp; balance →</span>
-      </a>
+    <div class="tool-search" id="tools">
+      <label class="visually-hidden" for="tool-filter">Search calculators</label>
+      <input id="tool-filter" type="search" placeholder="Search tools — E6B, density altitude, METAR, loan…" autocomplete="off" spellcheck="false">
+      <p class="filter-status" id="filter-status" hidden></p>
     </div>
 
-    <article class="panel explainer" style="margin-top:1.6rem">
-      <h2>Why these tools</h2>
-      <p>Most preflight questions come down to a handful of numbers: how much performance you will have at this density altitude, how much crosswind is on this runway, and whether the loaded airplane’s center of gravity is in the envelope. These calculators do that math in one place, with the formulas shown, so you can check an E6B, a flight-planning app, or a paper worksheet.</p>
+    <nav class="category-nav" aria-label="Calculator categories">
+      <a href="#flight-planning">Flight planning &amp; E6B</a>
+      <a href="#performance">Performance &amp; weight</a>
+      <a href="#weather">Weather &amp; time</a>
+      <a href="#costs">Pilot costs &amp; currency</a>
+    </nav>
+
+    <section class="tool-group" id="flight-planning" aria-labelledby="cat-flight">
+      <h2 id="cat-flight">Flight Planning &amp; E6B</h2>
+      <div class="card-grid">
+        <a class="tool-card" href="e6b-wind/" data-keywords="e6b flight computer wind triangle wind correction angle wca true heading groundspeed winds aloft crab angle navigation">
+          <h3>E6B wind triangle</h3>
+          <p>Wind correction angle, true heading, and groundspeed — or solve in reverse for winds aloft.</p>
+          <span class="go">Open E6B wind →</span>
+        </a>
+        <a class="tool-card" href="fuel-planning/" data-keywords="fuel planner trip fuel reserve vfr ifr endurance 100ll jet-a gallons pounds burn">
+          <h3>Aviation fuel planner</h3>
+          <p>Trip fuel, VFR and IFR reserves, endurance, and 100LL / Jet-A weight.</p>
+          <span class="go">Open fuel planner →</span>
+        </a>
+        <a class="tool-card" href="time-speed-distance/" data-keywords="time speed distance tsd ete eta groundspeed leg e6b flight computer aviation math">
+          <h3>Time, speed &amp; distance</h3>
+          <p>Solve any of time, groundspeed, or distance, and get an ETA from a departure time.</p>
+          <span class="go">Open time / speed / distance →</span>
+        </a>
+        <a class="tool-card" href="true-airspeed/" data-keywords="true airspeed tas cas ias indicated calibrated mach eas equivalent pitot">
+          <h3>True airspeed</h3>
+          <p>Convert indicated or calibrated airspeed to TAS, Mach, and equivalent airspeed.</p>
+          <span class="go">Open true airspeed →</span>
+        </a>
+        <a class="tool-card" href="top-of-descent/" data-keywords="top of descent tod 3 degree path descent rate groundspeed times five 3 to 1 rule">
+          <h3>Top of descent</h3>
+          <p>TOD distance and descent rate for a 3° path or a custom angle, including the common rules of thumb.</p>
+          <span class="go">Open top of descent →</span>
+        </a>
+        <a class="tool-card" href="climb-gradient/" data-keywords="climb gradient feet per nautical mile fpm percent departure procedure dp 200 ft/nm">
+          <h3>Climb gradient</h3>
+          <p>Convert ft/NM, feet per minute, percent, and degrees, and check a departure minimum.</p>
+          <span class="go">Open climb gradient →</span>
+        </a>
+        <a class="tool-card" href="turn-radius/" data-keywords="turn radius standard rate bank load factor stall speed rate of turn tas">
+          <h3>Turn radius</h3>
+          <p>Standard-rate bank, turn radius, load factor, and how much stall speed rises in a bank.</p>
+          <span class="go">Open turn radius →</span>
+        </a>
+        <a class="tool-card" href="glide-distance/" data-keywords="glide distance best glide ratio range engine out still air wind">
+          <h3>Glide distance</h3>
+          <p>Best-glide range from altitude and glide ratio, then apply a headwind or tailwind.</p>
+          <span class="go">Open glide distance →</span>
+        </a>
+        <a class="tool-card" href="holding-pattern-entry/" data-keywords="holding pattern entry direct teardrop parallel aim instrument ifr hold inbound">
+          <h3>Holding pattern entry</h3>
+          <p>See whether the AIM-recommended entry is direct, teardrop, or parallel, with a diagram.</p>
+          <span class="go">Open holding entry →</span>
+        </a>
+        <a class="tool-card" href="aviation-unit-converter/" data-keywords="unit converter knots mph nautical miles feet inhg hpa millibars gallons litres celsius fahrenheit fpm e6b">
+          <h3>Aviation unit converter</h3>
+          <p>Knots, nautical miles, feet, inHg, gallons, Celsius, feet per minute, and the other usual conversions.</p>
+          <span class="go">Open unit converter →</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="tool-group" id="performance" aria-labelledby="cat-perf">
+      <h2 id="cat-perf">Performance &amp; Weight</h2>
+      <div class="card-grid">
+        <a class="tool-card" href="density-altitude/" data-keywords="density altitude da calc pressure altitude isa deviation isa temperature humidity takeoff performance high da">
+          <h3>Density altitude calculator</h3>
+          <p>Pressure altitude, ISA temperature, and density altitude, including a two-way ISA +/− box.</p>
+          <span class="go">Open density altitude →</span>
+        </a>
+        <a class="tool-card" href="crosswind/" data-keywords="crosswind component headwind tailwind runway wind gust e6b wind side chart">
+          <h3>Crosswind calculator</h3>
+          <p>Crosswind, headwind, and tailwind components for both runway ends, including gusts.</p>
+          <span class="go">Open crosswind →</span>
+        </a>
+        <a class="tool-card" href="weight-balance/" data-keywords="weight and balance w&amp;b wb cg center of gravity moment envelope cessna 172 piper archer">
+          <h3>Weight and balance calculator</h3>
+          <p>Build a station table, find the center of gravity, and plot takeoff and landing CG on an envelope.</p>
+          <span class="go">Open weight &amp; balance →</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="tool-group" id="weather" aria-labelledby="cat-wx">
+      <h2 id="cat-wx">Weather &amp; Time</h2>
+      <div class="card-grid">
+        <a class="tool-card" href="metar-decoder/" data-keywords="metar decoder speci weather plain english vfr mvfr ifr lifr flight category altimeter">
+          <h3>METAR decoder</h3>
+          <p>Paste a raw METAR or SPECI and get wind, visibility, sky, and FAA flight category in plain English.</p>
+          <span class="go">Open METAR decoder →</span>
+        </a>
+        <a class="tool-card" href="taf-decoder/" data-keywords="taf decoder forecast fm tempo becmg prob terminal aerodrome flight category">
+          <h3>TAF decoder</h3>
+          <p>Read each FM, TEMPO, BECMG, and PROB group in plain English, with flight category.</p>
+          <span class="go">Open TAF decoder →</span>
+        </a>
+        <a class="tool-card" href="cloud-base/" data-keywords="cloud base temperature dewpoint spread relative humidity freezing level convective agl">
+          <h3>Cloud base calculator</h3>
+          <p>Estimate convective cloud base from the temperature–dewpoint spread, plus a freezing-level estimate.</p>
+          <span class="go">Open cloud base →</span>
+        </a>
+        <a class="tool-card" href="sunrise-sunset-twilight/" data-keywords="sunrise sunset civil twilight faa night currency 61.57 position lights 91.209 logging">
+          <h3>Sunrise, sunset &amp; FAA night</h3>
+          <p>Sunrise, sunset, and civil twilight, with the FAA night definitions for logging, currency, and lights.</p>
+          <span class="go">Open sunrise &amp; night →</span>
+        </a>
+        <a class="tool-card" href="zulu-time-converter/" data-keywords="zulu time converter utc gmt local daylight saving eta flight plan clock">
+          <h3>Zulu time converter</h3>
+          <p>Convert local time to UTC and back, see a live Zulu clock, and add an ETE for a flight-plan ETA.</p>
+          <span class="go">Open Zulu time →</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="tool-group" id="costs" aria-labelledby="cat-costs">
+      <h2 id="cat-costs">Pilot Costs &amp; Currency</h2>
+      <div class="card-grid">
+        <a class="tool-card" href="aircraft-ownership-cost/" data-keywords="aircraft ownership cost hourly annual hangar insurance reserve fuel breakeven partnership">
+          <h3>Aircraft ownership cost</h3>
+          <p>Estimate the annual and per-hour cost to own, and the breakeven hours versus renting.</p>
+          <span class="go">Open ownership cost →</span>
+        </a>
+        <a class="tool-card" href="aircraft-loan/" data-keywords="aircraft loan calculator payment amortization balloon affordability airplane financing">
+          <h3>Aircraft loan calculator</h3>
+          <p>Monthly payment, total interest, and an amortization schedule — or work backward from a budget.</p>
+          <span class="go">Open aircraft loan →</span>
+        </a>
+        <a class="tool-card" href="flight-training-cost/" data-keywords="flight training cost private pilot ppl instrument commercial cfi hours wet rate dpe">
+          <h3>Flight training cost</h3>
+          <p>Private, instrument, commercial, and CFI costs, from FAA minimums or a national average you can edit.</p>
+          <span class="go">Open flight training →</span>
+        </a>
+        <a class="tool-card" href="rental-cost/" data-keywords="aircraft rental hobbs tach wet dry instructor landing fee 61.113 pro-rata split">
+          <h3>Aircraft rental cost</h3>
+          <p>Price a trip on Hobbs or tach, wet or dry, and split operating cost under the 61.113 pro-rata rule.</p>
+          <span class="go">Open rental cost →</span>
+        </a>
+        <a class="tool-card" href="pilot-currency/" data-keywords="faa pilot currency 61.57 landings ifr 61.56 flight review 61.23 medical basicmed passenger">
+          <h3>FAA pilot currency checker</h3>
+          <p>Day and night landing currency, instrument experience, flight review, and medical-certificate dates.</p>
+          <span class="go">Open currency checker →</span>
+        </a>
+      </div>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot">
+        <span>Ad slot — 728×90 desktop / 320×100 mobile</span>
+      </div>
+    </div>
+
+    <article class="panel explainer">
+      <h2>A flight computer in the browser</h2>
+      <p>Most preflight questions come down to a handful of numbers: how much performance you will have at this density altitude, how much crosswind is on this runway, whether the loaded airplane’s center of gravity is in the envelope, and how much fuel, time, and wind correction the trip will take. These calculators do that aviation math in one place, with the formulas shown, so you can check an E6B, a flight-planning app, or a paper worksheet.</p>
       <p>They are planning aids, not certified avionics. Always defer to the POH or AFM, official weather, and the weight and balance report for the airplane you actually fly.</p>
+    </article>
+
+    <article class="panel explainer" id="faq">
+      <h2>Frequently asked questions</h2>
+      <ul class="faq-list">
+        <li>
+          <h3>Are these aviation calculators free?</h3>
+          <p>Yes. Every calculator here is free to use in your browser. There is no account, no install, and no upload. The pages may show advertisements to keep the tools free.</p>
+        </li>
+        <li>
+          <h3>What is an E6B or flight computer?</h3>
+          <p>An E6B is the classic circular flight computer pilots use for wind correction and groundspeed, true airspeed, time-speed-distance, fuel, and unit conversions. These pages do that same work as an online E6B, with the formulas shown.</p>
+        </li>
+        <li>
+          <h3>Do I need an account or an app?</h3>
+          <p>No. The calculators are static web pages. All of the math runs locally in your browser, so nothing you type is sent to a server.</p>
+        </li>
+        <li>
+          <h3>Can I use these instead of my POH or official weather?</h3>
+          <p>No. These are planning aids, not certified avionics. Always defer to the Pilot’s Operating Handbook or Aircraft Flight Manual, official weather, and the weight and balance report for the airplane you actually fly.</p>
+        </li>
+        <li>
+          <h3>Do the calculators work on a phone?</h3>
+          <p>Yes. Every tool is built to work on a phone, tablet, or desktop. Use the search box above to jump to a calculator by name or by a term such as density altitude, crosswind component, or METAR decoder.</p>
+        </li>
+      </ul>
     </article>
   </main>
 
   <footer class="site-footer">
     <div class="wrap">
-      <p>Aviation Calcs — free aviation calculators. All math runs locally in your browser.</p>
+      <p>Aviation Calcs — free aviation calculators and an online E6B. All math runs locally in your browser.</p>
       <p class="footer-fine">Not a certified aviation tool. Always defer to the POH/AFM and current official weather.</p>
       <nav class="footer-nav" aria-label="Footer">
         <a href="about.html">About</a>
@@ -100,5 +359,52 @@
       </nav>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      var input = document.getElementById("tool-filter");
+      var status = document.getElementById("filter-status");
+      if (!input || !status) return;
+
+      function norm(s) {
+        return String(s || "")
+          .toLowerCase()
+          .replace(/[–—]/g, "-")
+          .replace(/&amp;/g, "&")
+          .replace(/\s+/g, " ")
+          .trim();
+      }
+
+      function filter() {
+        var q = norm(input.value);
+        var cards = document.querySelectorAll(".tool-card");
+        var groups = document.querySelectorAll(".tool-group");
+        var shown = 0;
+
+        cards.forEach(function (card) {
+          var hay = norm(card.textContent + " " + (card.getAttribute("data-keywords") || ""));
+          var ok = !q || hay.indexOf(q) !== -1;
+          card.hidden = !ok;
+          if (ok) shown += 1;
+        });
+
+        groups.forEach(function (group) {
+          group.hidden = !group.querySelector(".tool-card:not([hidden])");
+        });
+
+        if (q) {
+          status.hidden = false;
+          status.textContent = shown
+            ? shown + " tool" + (shown === 1 ? "" : "s") + " match “" + input.value.trim() + "”."
+            : "No tools match that search. Try E6B, density altitude, METAR, or loan.";
+        } else {
+          status.hidden = true;
+          status.textContent = "";
+        }
+      }
+
+      input.addEventListener("input", filter);
+    })();
+  </script>
 </body>
 </html>

@@ -933,3 +933,135 @@ a.brand:hover .brand-name {
   .header-inner { align-items: flex-start; flex-wrap: wrap; padding: 0.55rem 0; }
   .site-nav { justify-content: flex-start; width: 100%; }
 }
+
+/* ---- Home / landing index ---- */
+body.home-page {
+  --wrap: 58rem;
+}
+
+.home-page .card-grid .tool-card:first-child {
+  grid-column: auto;
+}
+
+.landing-hero .lede {
+  max-width: 42rem;
+  margin-bottom: 0;
+}
+
+.tool-search {
+  margin: 1.25rem 0 0.35rem;
+}
+
+.tool-search input[type="search"] {
+  width: 100%;
+  max-width: 32rem;
+  padding: 0.7rem 0.95rem;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.tool-search input[type="search"]::placeholder {
+  color: var(--faint);
+}
+
+.tool-search input[type="search"]:focus {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+  border-color: rgba(232, 184, 74, 0.45);
+}
+
+.filter-status {
+  margin: 0.55rem 0 0;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.category-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.5rem;
+  margin: 1rem 0 0.2rem;
+}
+
+.category-nav a {
+  display: inline-block;
+  padding: 0.28rem 0.7rem;
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  background: var(--gold-soft);
+  border: 1px solid rgba(232, 184, 74, 0.28);
+  border-radius: 999px;
+}
+
+.category-nav a:hover,
+.category-nav a:focus-visible {
+  border-color: var(--gold);
+}
+
+.category-nav a:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.tool-group {
+  margin: 1.6rem 0 0;
+}
+
+.tool-group h2 {
+  margin: 0 0 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.home-page .tool-card {
+  padding: 1rem 1.1rem 1.1rem;
+}
+
+.home-page .tool-card h3 {
+  font-size: 1.08rem;
+}
+
+.home-page .tool-card p {
+  font-size: 0.9rem;
+}
+
+.home-page .tool-card .go {
+  margin-top: 0.7rem;
+  font-size: 0.84rem;
+}
+
+.faq-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.faq-list + .faq-list,
+.faq-list li + li {
+  margin-top: 1rem;
+}
+
+.faq-list h3 {
+  margin: 0 0 0.3rem;
+  font-size: 1.02rem;
+}
+
+.faq-list p {
+  margin: 0;
+}
+
+@media (min-width: 900px) {
+  body.home-page { --wrap: 62rem; }
+  .home-page .card-grid { grid-template-columns: 1fr 1fr; }
+}
