@@ -8,8 +8,12 @@
   var userRemoved = [];
   var userAdded = [];
   var selected = [];
-  var running = false;
-  var CACHE_PREFIX = "aviatorcalcs.wxgnog.v1:";
+  var CACHE_PREFIX = "aviatorcalcs.wxgnog.v2:";
+  var MIN_REQUEST_GAP_MS = 2200; // IEM's advertised 1s IP throttle is closer to 2s in practice
+  var lastRequestStart = 0;
+  var fetchGen = 0;
+  var fetchTimer = null;
+  var lastFetch = null; // { key, parts, windows, selected, done }
 
   function pad2(n) { return (n < 10 ? "0" : "") + n; }
 
@@ -162,10 +166,38 @@
   }
 
   function cacheGet(key) {
-    try { return sessionStorage.getItem(key); } catch (e) { return null; }
+    try {
+      var raw = localStorage.getItem(key);
+      if (!raw) return null;
+      var obj = JSON.parse(raw);
+      if (!obj || typeof obj.text !== "string") return null;
+      var age = Date.now() - (obj.saved || 0);
+      var thisYear = new Date().getFullYear();
+      var maxAge = obj.year === thisYear ? 12 * 3600 * 1000 : 30 * 24 * 3600 * 1000;
+      if (age > maxAge) return null;
+      return obj.text;
+    } catch (e) { return null; }
   }
-  function cacheSet(key, val) {
-    try { sessionStorage.setItem(key, val); } catch (e) { /* quota / private mode */ }
+
+  function evictWxCache() {
+    try {
+      var keys = [];
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        if (k && k.indexOf("aviatorcalcs.wxgnog.") === 0) keys.push(k);
+      }
+      keys.forEach(function (k) { localStorage.removeItem(k); });
+    } catch (e) { /* ignore */ }
+  }
+
+  function cacheSet(key, val, year) {
+    var payload = JSON.stringify({ v: 2, saved: Date.now(), year: year, text: val });
+    try {
+      localStorage.setItem(key, payload);
+    } catch (e) {
+      evictWxCache();
+      try { localStorage.setItem(key, payload); } catch (e2) { /* quota / private mode */ }
+    }
   }
 
   function fetchText(url) {
@@ -180,18 +212,38 @@
     return new Promise(function (resolve) { setTimeout(resolve, ms); });
   }
 
-  function loadYearCsv(sids, windowObj, attempt) {
+  function waitForThrottle() {
+    var wait = MIN_REQUEST_GAP_MS - (Date.now() - lastRequestStart);
+    if (wait <= 0) {
+      lastRequestStart = Date.now();
+      return Promise.resolve();
+    }
+    return delay(wait).then(function () { lastRequestStart = Date.now(); });
+  }
+
+  function cacheKey(sids, windowObj) {
+    return CACHE_PREFIX + sids.join(",") + ":" + windowObj.start.year + "-" + windowObj.start.month + "-" + windowObj.start.day + ":" + windowObj.end.year + "-" + windowObj.end.month + "-" + windowObj.end.day;
+  }
+
+  function loadYearCsv(sids, windowObj, attempt, gen) {
+    if (gen !== fetchGen) return Promise.reject({ aborted: true });
     var url = C.buildAsosUrl(sids, windowObj.start, windowObj.end);
-    var key = CACHE_PREFIX + sids.join(",") + ":" + windowObj.start.year + "-" + windowObj.start.month + "-" + windowObj.start.day + ":" + windowObj.end.year + "-" + windowObj.end.month + "-" + windowObj.end.day;
+    var key = cacheKey(sids, windowObj);
     var cached = cacheGet(key);
     if (cached) return Promise.resolve({ text: cached, cached: true, year: windowObj.year });
-    return fetchText(url).then(function (res) {
+    return waitForThrottle().then(function () {
+      if (gen !== fetchGen) return Promise.reject({ aborted: true });
+      return fetchText(url);
+    }).then(function (res) {
+      if (gen !== fetchGen) return Promise.reject({ aborted: true });
       var parsed = C.parseCsv(res.text);
-      if (parsed.error === "rate-limited" && (!attempt || attempt < 2)) {
-        setProgress("Archive asked us to slow down — waiting, then retrying " + windowObj.year + "…");
-        return delay(15000).then(function () { return loadYearCsv(sids, windowObj, (attempt || 0) + 1); });
-      }
       if (parsed.error === "rate-limited") {
+        var n = attempt || 0;
+        if (n < 4) {
+          var back = Math.min(20000, 2500 * Math.pow(2, n));
+          setProgress("Archive asked us to slow down — waiting " + Math.round(back / 1000) + "s, then retrying " + windowObj.year + "…");
+          return delay(back).then(function () { return loadYearCsv(sids, windowObj, n + 1, gen); });
+        }
         throw new Error("The Iowa Environmental Mesonet asked us to slow down. Wait a minute and try again.");
       }
       if (!res.ok && parsed.error) {
@@ -200,7 +252,7 @@
       if (parsed.error && parsed.error !== "empty") {
         throw new Error(parsed.message || "Could not parse archive data for " + windowObj.year + ".");
       }
-      if (!parsed.error) cacheSet(key, res.text);
+      if (!parsed.error) cacheSet(key, res.text, windowObj.year);
       return { text: res.text, cached: false, year: windowObj.year };
     });
   }
@@ -351,111 +403,155 @@
     barChart($("hour-chart"), hourItems);
   }
 
-  function run() {
-    if (running) return;
+  function queryPlan() {
     if (!selected.length) refreshStations();
-    if (!selected.length) {
-      setWarnings(["Enter a departure and/or destination identifier, or add a station to the list."]);
-      return;
-    }
     var dateVal = $("date").value;
     var dm = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateVal);
-    if (!dm) {
-      setWarnings(["Pick a calendar date so the week of the year is known."]);
-      return;
-    }
+    if (!selected.length || !dm) return null;
     var month = Number(dm[2]), day = Number(dm[3]);
     var tz = $("tz").value || "UTC";
     var years = Number($("years").value) || C.DEFAULT_YEARS;
     var radius = Number($("radius").value);
     if (!isFinite(radius)) radius = C.DEFAULT_RADIUS_DAYS;
-    var hourStart = Number($("hour-start").value);
-    var hourEnd = Number($("hour-end").value);
-    var mins = readMins();
     var windows = C.dateWindows(month, day, { years: years, radiusDays: radius, tz: tz, now: new Date() });
-    if (!windows.length) {
-      setWarnings(["Could not build a historical date window."]);
+    if (!windows.length) return null;
+    var sids = selected.map(function (s) { return s.sid; });
+    return {
+      month: month,
+      day: day,
+      tz: tz,
+      years: years,
+      radius: radius,
+      windows: windows,
+      padded: C.paddedFetchWindows(windows, 1),
+      sids: sids,
+      selected: selected.slice(),
+      key: sids.join(",") + "|" + month + "-" + day + "|" + years + "|" + radius,
+      stubs: selected.filter(function (s) { return s.lat == null; })
+    };
+  }
+
+  function applyParts(parts, plan, partial) {
+    var allRows = [];
+    var emptyYears = [];
+    parts.forEach(function (part) {
+      var parsed = C.parseCsv(part.text);
+      if (!parsed.rows.length) emptyYears.push(part.year);
+      allRows = allRows.concat(parsed.rows);
+    });
+    if (!allRows.length) {
+      if (!partial) {
+        setWarnings(["The archive returned no routine METARs for these stations and dates. Check the identifiers, or try a more recent year range."]);
+        setProgress("");
+      }
       return;
     }
-    var padded = C.paddedFetchWindows(windows, 1);
-    var sids = selected.map(function (s) { return s.sid; });
-    var stubs = selected.filter(function (s) { return s.lat == null; });
-
-    running = true;
-    $("btn-run").disabled = true;
-    $("results-wrap").hidden = true;
-    var warn = [];
-    if (stubs.length) {
-      warn.push("No coordinates for " + stubs.map(function (s) { return s.icao || s.sid; }).join(", ") + ", so they could not be auto-placed on the corridor. They will still be requested from the archive.");
+    var loadedYears = parts.map(function (p) { return p.year; });
+    var usedWindows = plan.windows.filter(function (w) { return loadedYears.indexOf(w.year) !== -1; });
+    var grouped = groupRows(allRows);
+    var series = plan.selected.map(function (s) {
+      return {
+        sid: s.sid,
+        icao: s.icao,
+        name: s.name,
+        rows: grouped[s.sid] || grouped[C.toIemId(s.icao)] || []
+      };
+    });
+    var missing = series.filter(function (s) { return !s.rows.length; }).map(function (s) { return s.icao || s.sid; });
+    var result = C.computeClimatology(series, {
+      tz: $("tz").value || plan.tz || "UTC",
+      hourStart: Number($("hour-start").value),
+      hourEnd: Number($("hour-end").value),
+      mins: readMins(),
+      windows: usedWindows,
+      dropSparse: true,
+      keepInRoute: plan.selected.filter(function (s) {
+        return s.role === "departure" || s.role === "destination";
+      }).map(function (s) { return s.sid; })
+    });
+    var notes = [];
+    if (plan.stubs.length) {
+      notes.push("No coordinates for " + plan.stubs.map(function (s) { return s.icao || s.sid; }).join(", ") + ", so they could not be auto-placed on the corridor. They will still be requested from the archive.");
     }
-    setWarnings(warn);
-    setProgress("Requesting " + windows.length + " year-window" + (windows.length === 1 ? "" : "s") + " from the Iowa Environmental Mesonet…");
+    if (partial) {
+      notes.push("Showing " + loadedYears[0] + (loadedYears.length > 1 ? "–" + loadedYears[loadedYears.length - 1] : "") + " so far (" + parts.length + " of " + plan.padded.length + " years). Later years will fill in as they arrive.");
+    }
+    if (emptyYears.length) notes.push("No rows came back for " + emptyYears.join(", ") + " (the window may pre-date a station, or the archive had a gap).");
+    if (missing.length) notes.push("No observations for " + missing.join(", ") + " in this sample. They are omitted from route-hour denominators when missing.");
+    if (result.droppedFromRoute && result.droppedFromRoute.length) {
+      notes.push("Left out of the combined route score because of a short or patchy archive (still shown per station): " +
+        result.droppedFromRoute.map(function (d) {
+          return (d.icao || d.sid) + " (" + d.years + " of " + d.refYears + " years, " + d.hours + " of " + d.refHours + " hours)";
+        }).join("; ") + ".");
+    }
+    if (!partial && result.route.hours.n === 0) {
+      notes.push("No complete route-hours were scored. Try widening the time window, dropping a station with a short archive, or loosening the minimums’ required fields.");
+    }
+    setWarnings(notes);
+    renderResults(result);
+    var cachedN = parts.filter(function (p) { return p.cached; }).length;
+    if (partial) {
+      setProgress("Loaded " + parts.length + " of " + plan.padded.length + " years (" + allRows.length.toLocaleString("en-US") + " observations so far)…");
+    } else {
+      setProgress("Done. " + allRows.length.toLocaleString("en-US") + " archived observations used" +
+        (cachedN ? " (" + cachedN + " year" + (cachedN === 1 ? "" : "s") + " from browser cache)" : "") + ".");
+    }
+  }
 
-    var chain = Promise.resolve([]);
-    padded.forEach(function (w, idx) {
-      chain = chain.then(function (acc) {
-        setProgress("Fetching " + w.year + " (" + (idx + 1) + " of " + padded.length + ") for " + sids.length + " station" + (sids.length === 1 ? "" : "s") + "…");
-        return loadYearCsv(sids, w).then(function (part) {
-          acc.push(part);
-          return acc;
-        }).then(function (acc2) {
-          return delay(idx === padded.length - 1 ? 0 : 1200).then(function () { return acc2; });
+  function recomputeLocal() {
+    if (!lastFetch || !lastFetch.parts.length) return;
+    applyParts(lastFetch.parts, lastFetch.plan, !lastFetch.done);
+  }
+
+  function startFetch() {
+    var plan = queryPlan();
+    if (!plan) {
+      if (!selected.length) setWarnings(["Enter a departure and/or destination identifier, or add a station to the list."]);
+      else setWarnings(["Pick a calendar date so the week of the year is known."]);
+      return;
+    }
+    if (lastFetch && lastFetch.key === plan.key) {
+      lastFetch.plan = plan;
+      if (lastFetch.parts.length) applyParts(lastFetch.parts, plan, !lastFetch.done);
+      return;
+    }
+    fetchGen += 1;
+    var gen = fetchGen;
+    lastFetch = { key: plan.key, parts: [], plan: plan, done: false };
+    setWarnings(plan.stubs.length ? ["No coordinates for " + plan.stubs.map(function (s) { return s.icao || s.sid; }).join(", ") + ", so they could not be auto-placed on the corridor. They will still be requested from the archive."] : []);
+    setProgress("Requesting " + plan.windows.length + " year-window" + (plan.windows.length === 1 ? "" : "s") + " from the Iowa Environmental Mesonet…");
+
+    var chain = Promise.resolve();
+    plan.padded.forEach(function (w, idx) {
+      chain = chain.then(function () {
+        if (gen !== fetchGen) return Promise.reject({ aborted: true });
+        setProgress("Fetching " + w.year + " (" + (idx + 1) + " of " + plan.padded.length + ") for " + plan.sids.length + " station" + (plan.sids.length === 1 ? "" : "s") + "…");
+        return loadYearCsv(plan.sids, w, 0, gen).then(function (part) {
+          if (gen !== fetchGen) return;
+          lastFetch.parts.push(part);
+          applyParts(lastFetch.parts, plan, lastFetch.parts.length < plan.padded.length);
         });
       });
     });
-
-    chain.then(function (parts) {
-      var allRows = [];
-      var emptyYears = [];
-      parts.forEach(function (part) {
-        var parsed = C.parseCsv(part.text);
-        if (!parsed.rows.length) emptyYears.push(part.year);
-        allRows = allRows.concat(parsed.rows);
-      });
-      if (!allRows.length) {
-        throw new Error("The archive returned no routine METARs for these stations and dates. Check the identifiers, or try a more recent year range.");
+    chain.then(function () {
+      if (gen !== fetchGen) return;
+      lastFetch.done = true;
+      if (!lastFetch.parts.length) {
+        setWarnings(["The archive returned no routine METARs for these stations and dates. Check the identifiers, or try a more recent year range."]);
+        setProgress("");
+        return;
       }
-      var grouped = groupRows(allRows);
-      var series = selected.map(function (s) {
-        return {
-          sid: s.sid,
-          icao: s.icao,
-          name: s.name,
-          rows: grouped[s.sid] || grouped[C.toIemId(s.icao)] || []
-        };
-      });
-      var missing = series.filter(function (s) { return !s.rows.length; }).map(function (s) { return s.icao || s.sid; });
-      var result = C.computeClimatology(series, {
-        tz: tz,
-        hourStart: hourStart,
-        hourEnd: hourEnd,
-        mins: mins,
-        windows: windows,
-        dropSparse: true,
-        keepInRoute: selected.filter(function (s) {
-          return s.role === "departure" || s.role === "destination";
-        }).map(function (s) { return s.sid; })
-      });
-      var notes = warn.slice();
-      if (emptyYears.length) notes.push("No rows came back for " + emptyYears.join(", ") + " (the window may pre-date a station, or the archive had a gap).");
-      if (missing.length) notes.push("No observations for " + missing.join(", ") + " in this sample. They are omitted from route-hour denominators when missing.");
-      if (result.droppedFromRoute && result.droppedFromRoute.length) {
-        notes.push("Left out of the combined route score because of a short or patchy archive (still shown per station): " +
-          result.droppedFromRoute.map(function (d) {
-            return (d.icao || d.sid) + " (" + d.years + " of " + d.refYears + " years, " + d.hours + " of " + d.refHours + " hours)";
-          }).join("; ") + ".");
-      }
-      if (result.route.hours.n === 0) notes.push("No complete route-hours were scored. Try widening the time window, dropping a station with a short archive, or loosening the minimums’ required fields.");
-      setWarnings(notes);
-      renderResults(result);
-      setProgress("Done. " + allRows.length.toLocaleString("en-US") + " archived observations used" + (parts.filter(function (p) { return p.cached; }).length ? " (some years from session cache)" : "") + ".");
+      applyParts(lastFetch.parts, plan, false);
     }).catch(function (err) {
+      if (err && err.aborted) return;
       setWarnings([err && err.message ? err.message : String(err)]);
       setProgress("");
-    }).then(function () {
-      running = false;
-      $("btn-run").disabled = false;
     });
+  }
+
+  function scheduleFetch() {
+    clearTimeout(fetchTimer);
+    fetchTimer = setTimeout(startFetch, 300);
   }
 
   function showHits(q) {
@@ -486,22 +582,40 @@
     $("add-station").value = "";
     $("search-hits").hidden = true;
     refreshStations();
+    scheduleFetch();
   }
 
   fillHourSelects();
   applyPreset("VFR");
 
+  var routeTimer = null;
+  function onRouteChange(lockTz) {
+    if (!lockTz) refreshStations._tzLocked = false;
+    refreshStations();
+    scheduleFetch();
+  }
   ["dep", "dest"].forEach(function (id) {
-    $(id).addEventListener("change", function () {
-      refreshStations._tzLocked = false;
-      refreshStations();
+    $(id).addEventListener("input", function () {
+      clearTimeout(routeTimer);
+      routeTimer = setTimeout(function () { onRouteChange(false); }, 400);
     });
-    $(id).addEventListener("blur", function () { refreshStations(); });
+    $(id).addEventListener("change", function () { onRouteChange(false); });
+    $(id).addEventListener("blur", function () { onRouteChange(false); });
   });
   ["corridor", "max-stations"].forEach(function (id) {
-    $(id).addEventListener("change", refreshStations);
+    $(id).addEventListener("change", function () { onRouteChange(true); });
   });
-  $("tz").addEventListener("change", function () { refreshStations._tzLocked = true; });
+  ["date", "years", "radius"].forEach(function (id) {
+    $(id).addEventListener("change", scheduleFetch);
+  });
+  $("tz").addEventListener("change", function () {
+    refreshStations._tzLocked = true;
+    recomputeLocal();
+  });
+  ["hour-start", "hour-end", "min-ceil", "min-vis", "max-wind", "max-gust", "ex-rain", "ex-snow", "ex-fz", "ex-sev"].forEach(function (id) {
+    $(id).addEventListener("input", recomputeLocal);
+    $(id).addEventListener("change", recomputeLocal);
+  });
 
   $("station-body").addEventListener("click", function (ev) {
     var btn = ev.target.closest("[data-remove]");
@@ -510,12 +624,14 @@
     if (userRemoved.indexOf(sid) === -1) userRemoved.push(sid);
     userAdded = userAdded.filter(function (s) { return s.sid !== sid; });
     refreshStations();
+    scheduleFetch();
   });
 
   $("btn-reset-stations").addEventListener("click", function () {
     userRemoved = [];
     userAdded = [];
     refreshStations();
+    scheduleFetch();
   });
 
   var searchTimer = null;
@@ -535,32 +651,16 @@
   });
 
   document.querySelectorAll("[data-preset]").forEach(function (btn) {
-    btn.addEventListener("click", function () { applyPreset(btn.getAttribute("data-preset")); });
-  });
-
-  $("btn-example").addEventListener("click", function () {
-    $("dep").value = "KSBA";
-    $("dest").value = "KSJC";
-    $("date").value = "2026-06-15";
-    $("years").value = "5";
-    $("hour-start").value = "7";
-    $("hour-end").value = "10";
-    $("radius").value = "3";
-    $("corridor").value = "25";
-    $("max-stations").value = "10";
-    applyPreset("VFR");
-    userRemoved = [];
-    userAdded = [];
-    refreshStations._tzLocked = false;
-    refreshStations();
-    setWarnings([]);
-    setProgress("Example loaded: Santa Barbara to San Jose, mid-June mornings, VFR 3,000 / 5, 5 years. Press “Check historical go / no-go” to query the archive.");
+    btn.addEventListener("click", function () {
+      applyPreset(btn.getAttribute("data-preset"));
+      recomputeLocal();
+    });
   });
 
   $("calc-form").addEventListener("submit", function (ev) {
     ev.preventDefault();
-    run();
   });
 
   refreshStations();
+  scheduleFetch();
 })();

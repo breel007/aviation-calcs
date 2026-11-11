@@ -71,7 +71,7 @@
                     "name": "Where does the historical weather come from?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Routine (hourly) METARs are fetched in your browser from the Iowa Environmental Mesonet ASOS/AWOS archive at Iowa State University. Only the needed fields and the week window in each past year are requested, and responses are cached in the session. Special observations (SPECIs) are omitted so bad weather is not over-sampled."
+                        "text": "Routine (hourly) METARs are fetched in your browser from the Iowa Environmental Mesonet ASOS/AWOS archive at Iowa State University. Only the needed fields and the week window in each past year are requested, and responses are cached in the browser. Special observations (SPECIs) are omitted so bad weather is not over-sampled."
                     }
                 },
                 {
@@ -278,10 +278,6 @@
           <p class="hint">Ceiling is the lowest broken, overcast, or vertical-visibility layer. Few and scattered do not make a ceiling. Thresholds are inclusive (a 3,000 ft ceiling meets a 3,000 ft minimum). The VFR / MVFR / IFR buttons are AIM flight-category starting points for personal minimums, not the legal VFR minima in 14 CFR 91.155.</p>
         </fieldset>
 
-        <div class="form-actions">
-          <button type="submit" class="btn btn-run" id="btn-run">Check historical go / no-go</button>
-          <button type="button" class="btn btn-ghost" id="btn-example">Load KSBA → KSJC mid-June morning</button>
-        </div>
         <p class="progress" id="progress" role="status"></p>
       </form>
 
@@ -357,7 +353,7 @@
       <p>Observations that are missing a field you are actually checking (no sky condition, or no visibility) are dropped from the denominator rather than scored as a no-go. A <strong>route-go hour</strong> is one in which every selected station has an evaluable observation and all of them are go. The headline figure is the share of historical days in the window that had <em>at least one</em> route-go hour — “a go window existed that morning.” The page also reports the stricter share of hours that were simultaneously go, and the share of days on which every hour in the window was a go (“a solid morning”).</p>
 
       <h2>The archive, sampling, and request limits</h2>
-      <p>Data are fetched in your browser from the Iowa Environmental Mesonet ASOS/AWOS download service (<code>mesonet.agron.iastate.edu</code>), which allows cross-origin requests. The URL asks only for sky cover and height, visibility, weather codes, and wind, for the week window in each year (padded by one UTC day so local midnights are not clipped), and only for routine METARs (<code>report_type=3</code>). Special observations cluster in deteriorating weather and would bias the climatology toward no-go if they were included. Several stations are combined in one request per year; responses are cached in <code>sessionStorage</code> so a rerun with the same stations and dates does not hit the archive again. Please do not script heavy downloads against IEM from this idea — the page is intentionally light. IEM station identifiers for the lower 48 are usually the three-letter id (KSBA is <code>SBA</code> in the archive); Alaska, Hawaii, and many non-CONUS sites use the four-letter ICAO.</p>
+      <p>Data are fetched in your browser from the Iowa Environmental Mesonet ASOS/AWOS download service (<code>mesonet.agron.iastate.edu</code>), which allows cross-origin requests. The URL asks only for sky cover and height, visibility, weather codes, and wind, for the week window in each year (padded by one UTC day so local midnights are not clipped), and only for routine METARs (<code>report_type=3</code>). Special observations cluster in deteriorating weather and would bias the climatology toward no-go if they were included. Several stations are combined in one request per year. The Iowa Environmental Mesonet allows about one request every two seconds from a given IP, so the page spaces year-windows out and shows results as each year arrives. Responses are cached in <code>localStorage</code> so a repeat visit with the same stations and dates is instant. Results update automatically when you change the route, dates, or minimums. Please do not script heavy downloads against IEM from this idea — the page is intentionally light. IEM station identifiers for the lower 48 are usually the three-letter id (KSBA is <code>SBA</code> in the archive); Alaska, Hawaii, and many non-CONUS sites use the four-letter ICAO.</p>
 
       <h2>VFR minimums and flight category</h2>
       <p>The VFR preset (3,000 ft and 5 SM), MVFR-or-better preset (1,000 and 3), and IFR personal preset (500 and 1, plus freezing precipitation and severe weather excluded) follow the familiar AIM flight-category breakpoints as a starting point for personal minimums. Comparisons are inclusive. They are <strong>not</strong> a restatement of 14 CFR 91.155, whose basic VFR visibility and cloud-clearance values depend on airspace class and altitude and are sometimes lower than “flight category VFR,” sometimes not. Use the legal rule that applies to the airspace, then apply your own tighter minimums here if you wish.</p>
@@ -378,7 +374,7 @@
       <h3>How is a route go decided?</h3>
       <p>All selected stations must have an evaluable routine METAR that meets every limit in that local hour. The headline day percentage is the share of historical sessions with at least one such hour. Per-station columns show which airport is the usual weak point.</p>
       <h3>Where does the historical weather come from?</h3>
-      <p>The Iowa Environmental Mesonet ASOS/AWOS archive, requested from your browser, routine hourly METARs only, with light, cached year-window downloads.</p>
+      <p>The Iowa Environmental Mesonet ASOS/AWOS archive, requested from your browser, routine hourly METARs only, with light, cached year-window downloads that start automatically.</p>
       <h3>How is ceiling defined, and how do the VFR presets relate to 14 CFR 91.155?</h3>
       <p>Ceiling is the lowest BKN, OVC, or VV layer (AIM). The presets are AIM-style flight-category starting points for personal minimums, not a substitute for 91.155.</p>
     </article>
