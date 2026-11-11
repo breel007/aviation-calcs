@@ -282,7 +282,7 @@
       items.push({
         angleDeg: R.DA_POINTER,
         label: "DA " + fmt(result.densityAltitudeFt, 0) + " ft",
-        r: 108
+        r: R.R_DA_OUT
       });
     } else if (mode === "convert") {
       items.push({ angleDeg: E6B.scaleAngle(E6B.CONVERSION_MARKS.nm), label: fmt(result.nm, 2) + " NM", r: 348 });
