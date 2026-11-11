@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Hover Power Calculator — Actuator Disk, Disk Loading, and Ceiling | Aviator Calcs</title>
+  <meta name="description" content="Compute helicopter hover induced power and disk loading from thrust and rotor area, and an ideal hover ceiling from available shaft power. Educational; not a HOGE chart.">
+  <meta name="keywords" content="undefined">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/hover-power/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/hover-power/">
+  <meta property="og:title" content="Hover Power Calculator — Actuator Disk, Disk Loading, and Ceiling | Aviator Calcs">
+  <meta property="og:description" content="Compute helicopter hover induced power and disk loading from thrust and rotor area, and an ideal hover ceiling from available shaft power. Educational; not a HOGE chart.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:description" content="Compute helicopter hover induced power and disk loading from thrust and rotor area, and an ideal hover ceiling from available shaft power. Educational; not a HOGE chart.">
+  <meta name="application-name" content="undefined">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Hover Power Calculator — Actuator Disk, Disk Loading, and Ceiling | Aviator Calcs",
+            "url": "https://aviatorcalcs.com/hover-power/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Compute helicopter hover induced power and disk loading from thrust and rotor area, and an ideal hover ceiling from available shaft power. Educational; not a HOGE chart."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Is this a hover-out-of-ground-effect ceiling?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. It is an induced-power ceiling at the figure of merit you type, in a standard atmosphere, with no engine lapse and no profile power. Use the flight-manual HOGE chart for a real number."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What figure of merit is typical?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Well-designed helicopter rotors often sit around 0.6–0.8 in hover. 0.70 is a round default."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Does ground effect change the answer?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes, in the real helicopter — in ground effect you need less power. This page is the out-of-ground-effect ideal disk."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">undefined</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Hover Power Calculator</h1>
+        <p class="lede">A hovering rotor is an actuator disk: disk loading is thrust over area, induced velocity is √(DL / (2ρ)), and ideal power is thrust times that speed. Divide by a figure of merit to get a shaft-power estimate, and, if you enter an available power, invert the same relation through the standard atmosphere for an induced-power hover ceiling. It is not a published hover-out-of-ground-effect chart.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<p class="hint">Thrust in hover is the weight you want to lift. Diameter is the rotor disk, not a blade chord. Figure of merit defaults to 0.70. Altitude is used only for the density in the power at that height; the ceiling uses available power and ISA density.</p>
+<div class="pair">
+  <div class="field"><label for="thrust">Thrust (or weight) in hover</label><input id="thrust" type="text" inputmode="decimal" value="20000"></div>
+  <div class="field"><label for="thrustUnit">Thrust unit</label>
+    <select id="thrustUnit"><option value="n" selected>N</option><option value="lbf">lbf</option><option value="kgf">kgf</option></select></div>
+</div>
+<div class="pair">
+  <div class="field"><label for="diameter">Rotor diameter</label><input id="diameter" type="text" inputmode="decimal" value="20"></div>
+  <div class="field"><label for="diaUnit">Diameter unit</label>
+    <select id="diaUnit"><option value="m" selected>metres</option><option value="ft">feet</option></select></div>
+</div>
+<div class="pair">
+  <div class="field"><label for="fm">Figure of merit</label><input id="fm" type="text" inputmode="decimal" value="0.7"></div>
+  <div class="field"><label for="alt">Density altitude (for power at height)</label><input id="alt" type="text" inputmode="decimal" value="0"></div>
+</div>
+<div class="pair">
+  <div class="field"><label for="altUnit">Altitude unit</label>
+    <select id="altUnit"><option value="ft" selected>feet</option><option value="m">metres</option></select></div>
+  <div class="field"><label for="power">Available shaft power (optional, for a ceiling)</label><input id="power" type="text" inputmode="decimal" value=""></div>
+</div>
+<div class="field"><label for="powerUnit">Power unit</label>
+  <select id="powerUnit"><option value="kw" selected>kW</option><option value="hp">hp / shp</option><option value="w">W</option></select></div>
+<button type="button" class="btn" id="calcBtn">Calculate hover power</button>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="ex20">Example: 20 kN, 20 m disk, FM 0.70</button>
+<button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Result <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>undefined</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+<h2>Ideal hover power is T times √(DL / 2ρ)</h2>
+<p>Disk loading DL = T/A, induced velocity v<sub>i</sub> = √(DL / (2ρ)), and ideal power P<sub>i</sub> = T v<sub>i</sub>. Shaft power is P<sub>i</sub> / FM. A 20 kN thrust on a 20-metre disk (10 m radius) at sea level, with FM = 0.70, needs on the order of a hundred-plus kilowatts of shaft power — the exact figure is in the calculator. Given an available shaft power P, the minimum density that can still hover is ρ<sub>min</sub> = (T / (2A)) (T / (P FM))², which this page converts to a pressure altitude in the U.S. Standard Atmosphere, 1976.</p>
+<p>That ceiling only knows about induced power and ISA density. It does not lapse the engine, add profile or tail-rotor power, or include ground effect, retreating-blade stall, or tip Mach. A HOGE chart in the flight manual always wins. Related tools: <a href="/rotor-tip-speed/">rotor tip speed</a>, <a href="/propeller-static-thrust/">propeller static thrust</a>, and <a href="/drone-flight-time/">drone flight time</a> for a battery-powered multirotor.</p>
+<h2>Sources</h2>
+<ul>
+<li>Momentum / actuator-disk theory (Gessow and Myers; Leishman, <cite>Principles of Helicopter Aerodynamics</cite>).</li>
+<li>Hover figure of merit.</li>
+<li>U.S. Standard Atmosphere, 1976, for the density-to-altitude inversion.</li>
+</ul>
+      <h2>Frequently asked questions</h2>
+      <h3>Is this a hover-out-of-ground-effect ceiling?</h3>
+      <p>No. It is an induced-power ceiling at the figure of merit you type, in a standard atmosphere, with no engine lapse and no profile power. Use the flight-manual HOGE chart for a real number.</p>
+      <h3>What figure of merit is typical?</h3>
+      <p>Well-designed helicopter rotors often sit around 0.6–0.8 in hover. 0.70 is a round default.</p>
+      <h3>Does ground effect change the answer?</h3>
+      <p>Yes, in the real helicopter — in ground effect you need less power. This page is the out-of-ground-effect ideal disk.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Hover Power Calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

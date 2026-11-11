@@ -49,6 +49,7 @@ The tools are grouped in two sides. Some calculators appear in both.
 - [Weight and balance](weight-balance/) — generic W&B / CG calculator with an editable envelope and example Cessna 172S, Piper Archer, and Cessna 152 arms.
 - [CG percent MAC](cg-percent-mac/) — convert a CG station and LEMAC to percent of mean aerodynamic chord, or invert a % MAC to a station (also listed under Aerodynamics).
 - [True airspeed](true-airspeed/) — CAS/IAS to TAS, Mach, and equivalent airspeed.
+- [Vmo / Mmo crossover](crossover-altitude/) — pressure altitude at which a Vmo calibrated-airspeed limit and an Mmo Mach limit coincide.
 - [Service ceiling](service-ceiling/) — service and absolute ceilings from a linear rate-of-climb versus density-altitude model, or from two climb rates.
 - [Hydroplaning speed](hydroplaning-speed/) — dynamic hydroplaning speed 9√P and the locked-wheel 7.7√P figure from tire inflation pressure.
 - [Stall speed vs weight and bank](stall-speed-weight-bank/) — Vs scaled by √(W/Wref) and √n, with a bank table.
@@ -56,12 +57,14 @@ The tools are grouped in two sides. Some calculators appear in both.
 - [Pull-up load factor](pull-up-load-factor/) — n = 1 + V²/(gR) at the bottom of a pull-up, n = V²/(gR) − 1 at the top of a loop, and Vs √n (also listed under Aerodynamics).
 - [Pivotal altitude](pivotal-altitude/) — eights-on-pylons pivotal altitude from groundspeed (AFH GS²/11.3 and GS²/15, plus exact V²/g).
 - [Aviation fuel weight](fuel-weight/) — gallons, litres, pounds, and kilograms for 100LL, Jet-A, Jet-B, JP-5, and JP-8, with an optional temperature correction.
+- [Drone / multirotor flight time](drone-flight-time/) — hover endurance and thrust-to-weight from weight, rotor size, battery energy, and a figure of merit.
 - [Drag polar and L/D max](drag-polar/) — quadratic polar, (L/D)max, and propeller / jet range and endurance lift coefficients (also listed under Aerodynamics).
 - [MacCready speed to fly](maccready/) — glider speed to fly from a quadratic polar and a next-thermal climb rate (also listed under Flight planning).
 - [Parachute descent](parachute-descent/) — time to the ground and wind drift from a descent rate or from mass, Cd, and area (also listed under Aerodynamics).
 - [Hot-air balloon lift](balloon-lift/) — gross and useful lift from envelope volume and the inside/outside temperature difference.
 - [Thrust and power required](thrust-power-required/) — level-flight T_req and P_req from a drag polar, with (L/D)max and minimum-power speeds (also listed under Aerodynamics and Propulsion).
 - [Breguet range and endurance](breguet-range-endurance/) — jet and propeller range and endurance from L/D, speed, and fuel fraction (also listed under Propulsion).
+- [Electric aircraft endurance](electric-aircraft-endurance/) — battery endurance and range from usable watt-hours and cruise power, or from weight, speed, and L/D (also listed under Propulsion).
 
 ### Weather & time
 
@@ -130,8 +133,12 @@ The tools are grouped in two sides. Some calculators appear in both.
 - [Rocket equation](rocket-equation/) — Tsiolkovsky Δv, Isp, mass ratio, and multi-stage burns (also listed under Space).
 - [Delta-v budget](delta-v-budget/) — sum mission Δv items, an ideal mass ratio from Isp, and a pure plane-change helper (also listed under Space).
 - [Breguet range and endurance](breguet-range-endurance/) — jet and propeller range and endurance (also listed under Performance).
+- [Electric aircraft endurance](electric-aircraft-endurance/) — battery-electric endurance and still-air range (also listed under Performance).
 - [Thrust and power required](thrust-power-required/) — T_req, P_req, and optional propeller shaft power (also listed under Performance).
 - [Propeller advance ratio and tip Mach](propeller-advance-ratio/) — J = V/(nD), rotational and helical tip speed, and tip Mach.
+- [Propeller static thrust](propeller-static-thrust/) — static thrust from shaft power and disk area, T = (2ρAP²)¹/³, by momentum theory.
+- [Hover power / disk loading](hover-power/) — actuator-disk hover power and an ideal induced-power hover ceiling from available shaft power.
+- [Rotor tip speed](rotor-tip-speed/) — helicopter tip speed ΩR, advance ratio μ = V/(ΩR), and tip Mach.
 - [Isentropic flow](isentropic-flow/) — nozzle and stagnation relations (also listed under Aerodynamics).
 - [C-D nozzle](cd-nozzle/) — exit Mach, pe/p0, and ideal thrust coefficient for a convergent-divergent nozzle (also listed under Aerodynamics).
 

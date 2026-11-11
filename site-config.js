@@ -101,6 +101,12 @@
       { path: "/maccready/", title: "MacCready speed-to-fly calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/balloon-lift/", title: "Hot-air balloon lift calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/parachute-descent/", title: "Parachute descent calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/drone-flight-time/", title: "Drone and multirotor flight time calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/electric-aircraft-endurance/", title: "Electric aircraft endurance calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/propeller-static-thrust/", title: "Propeller static thrust calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/hover-power/", title: "Hover power and disk loading calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/rotor-tip-speed/", title: "Rotor tip speed calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/crossover-altitude/", title: "Vmo/Mmo crossover altitude calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/about.html", title: "About", changefreq: "yearly", priority: "0.4" },
       { path: "/privacy.html", title: "Privacy policy", changefreq: "yearly", priority: "0.3" }
     ]
