@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Carburetor Icing, Dewpoint and Frost Point Calculator</title>
+  <meta name="description" content="Free carburetor icing, dewpoint, relative humidity, and frost point calculator for pilots. Classify icing potential with FAA PHAK Figure 7-12 (high potential vs possible) and the AC 20-113 temperature–dewpoint spread screen.">
+  <meta name="keywords" content="carburetor icing chart, FAA PHAK 7-12, carb ice risk, dewpoint frost point, relative humidity Magnus, temperature dewpoint spread, AC 20-113">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/carburetor-icing/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/carburetor-icing/">
+  <meta property="og:title" content="Carburetor Icing, Dewpoint and Frost Point Calculator">
+  <meta property="og:description" content="RH, frost point, and FAA PHAK Figure 7-12 carburetor-icing zones from temperature and dewpoint or humidity.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Carburetor Icing and Frost Point Calculator">
+  <meta name="twitter:description" content="PHAK Fig. 7-12 carb-ice zones, dewpoint, RH, and frost point.">
+  <meta name="application-name" content="Carburetor Icing, Dewpoint and Frost Point Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Carburetor Icing, Dewpoint and Frost Point Calculator",
+            "url": "https://aviatorcalcs.com/carburetor-icing/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free carburetor icing, dewpoint, relative humidity, and frost point calculator for pilots. Classify icing potential with FAA PHAK Figure 7-12 (high potential vs possible) and the AC 20-113 temperature–dewpoint spread screen."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "When is carburetor icing in the PHAK high-potential zone?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "When the outside air temperature is between 20 and 70 °F and the relative humidity is 80 to 100 percent, according to FAA PHAK Figure 7-12. Icing can still occur outside that box."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What is frost point, and how does it differ from dewpoint?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Frost point is the temperature at which the current vapor pressure would saturate over ice rather than liquid water. Below 0 °C it is slightly warmer than the dewpoint. At 0 °C the two are the same."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "If I am outside the shaded zones, am I safe from carb ice?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. The PHAK figure’s caption says icing is possible under conditions not shown on the chart. Treat an “outside” result as “not in the shaded training zones,” not as a clearance."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Carburetor icing / frost point</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../cloud-base/">Cloud base</a>
+        <a href="../metar-decoder/">METAR decoder</a>
+        <a href="../standard-atmosphere/">Standard atmosphere</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Carburetor Icing, Dewpoint and Frost Point Calculator</h1>
+        <p class="lede">Enter an outside air temperature and either a dewpoint or a relative humidity. The calculator reports relative humidity, dewpoint depression, frost point, and the FAA Pilot’s Handbook Figure 7-12 carburetor-icing zone: high potential (20–70 °F and 80–100% RH) or possible (20–100 °F and RH of 50% or more). The chart caption, and AC 20-113, are clear that icing can still occur outside those shaded areas.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div class="field-block"><div class="field-label-row"><span class="sublabel">Temperature unit</span>
+<div class="seg wrap-seg" role="group" aria-label="temp unit"><button type="button" class="seg-btn is-active" data-unit-group="tu" data-unit="C" aria-pressed="true">°C</button><button type="button" class="seg-btn" data-unit-group="tu" data-unit="F" aria-pressed="false">°F</button></div></div></div>
+<div class="field-block"><div class="field-label-row"><span class="sublabel">I want to enter</span>
+<div class="seg wrap-seg" role="group" aria-label="mode"><button type="button" class="seg-btn is-active" data-unit-group="mode" data-unit="dewpoint" aria-pressed="true">Dewpoint</button><button type="button" class="seg-btn" data-unit-group="mode" data-unit="rh" aria-pressed="false">Relative humidity</button></div></div></div>
+<div class="field-block"><div class="field-label-row"><label for="temperature">Outside air temperature</label></div>
+<input id="temperature" class="input" type="number" inputmode="decimal" step="any" value="18" autocomplete="off"></div>
+<div class="field-block" id="block-td"><div class="field-label-row"><label for="dewpoint">Dewpoint</label></div>
+<input id="dewpoint" class="input" type="number" inputmode="decimal" step="any" value="15" autocomplete="off">
+<p class="hint">Dewpoint cannot be above the temperature. Relative humidity uses the same Magnus / Bolton formula as the cloud-base calculator.</p></div>
+<div class="field-block" id="block-rh" hidden><div class="field-label-row"><label for="rh">Relative humidity</label><span class="sublabel">percent</span></div>
+<input id="rh" class="input" type="number" inputmode="decimal" min="0" max="100" step="any" value="60" autocomplete="off"></div>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-ex1">Load 18 °C / 15 °C (high potential)</button>
+<button type="button" class="btn btn-ghost" id="btn-ex2">Load 80 °F, 60% RH (possible)</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Carburetor icing <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This applies the FAA PHAK Figure 7-12 temperature and relative-humidity zones and a standard Magnus dewpoint / frost-point calculation. It is not a forecast, it does not replace a carburetor-heat or alternate-air procedure, and icing is possible under conditions the chart does not shade. Always use the POH procedure and official weather.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>Dewpoint, relative humidity, and frost point</h2>
+      <p>Relative humidity is computed from the same Magnus / Bolton (1980) approximation used on this site's <a href="../cloud-base/">cloud-base calculator</a>: es(t) = 6.112 exp(17.67 t / (t + 243.5)) with t in °C, and RH = 100 × es(Td) / es(T). You can enter temperature and dewpoint, or temperature and RH, and the other is filled in. The temperature–dewpoint spread is reported in both Celsius and Fahrenheit.</p>
+      <p>Frost point is the temperature at which the current vapor pressure would saturate over a plane ice surface. It is computed from a Magnus formula over ice (constants 21.87 and 265.5). When the dewpoint is below 0 °C, frost point is slightly warmer than dewpoint, because ice saturates at a lower vapor pressure than supercooled liquid water. At 0 °C the two temperatures coincide.</p>
+      <h2>PHAK Figure 7-12 carburetor-icing zones</h2>
+      <p>The Pilot's Handbook of Aeronautical Knowledge chart of carburetor-icing potential, Figure 7-12, is plotted against temperature and relative humidity. This page uses the zones as stated in that figure and its supporting text:</p>
+      <p><code>High potential: &nbsp;OAT 20–70 °F and RH 80–100%<br>
+         Icing possible: &nbsp;OAT 20–100 °F and RH 50% or more</code></p>
+      <p>The high-potential region is a subset of the possible region. The caption of the figure states that icing is possible under conditions not depicted on the chart — so “outside the shaded zones” does not mean icing is impossible. Advisory Circular 20-113 notes that a temperature–dewpoint spread of about 20 °F or less corresponds roughly to a relative humidity of 50% or more, which is the threshold of the “possible” zone. That screen is reported alongside the PHAK classification.</p>
+      <p>This is the PHAK training chart, not a digitized version of the more detailed “serious icing — descent / cruise / any power” envelope published in some older FAA and Transport Canada material. Those finer polygons are not recreated here because they are not given as exact numerical boundaries in PHAK Figure 7-12.</p>
+      <h2>Sources</h2>
+      <p>FAA Pilot's Handbook of Aeronautical Knowledge, Figure 7-12 (carburetor icing); FAA Advisory Circular 20-113; Bolton (1980) Magnus formula for saturation over water; Alduchov &amp; Eskridge-style Magnus constants for saturation over ice. For cloud base from the same spread, see the <a href="../cloud-base/">cloud-base calculator</a>.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>When is carburetor icing in the PHAK high-potential zone?</h3>
+      <p>When the outside air temperature is between 20 and 70 °F and the relative humidity is 80 to 100 percent, according to FAA PHAK Figure 7-12. Icing can still occur outside that box.</p>
+      <h3>What is frost point, and how does it differ from dewpoint?</h3>
+      <p>Frost point is the temperature at which the current vapor pressure would saturate over ice rather than liquid water. Below 0 °C it is slightly warmer than the dewpoint. At 0 °C the two are the same.</p>
+      <h3>If I am outside the shaded zones, am I safe from carb ice?</h3>
+      <p>No. The PHAK figure’s caption says icing is possible under conditions not shown on the chart. Treat an “outside” result as “not in the shaded training zones,” not as a clearance.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Carburetor icing, dewpoint and frost point calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

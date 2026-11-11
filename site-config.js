@@ -75,6 +75,14 @@
       { path: "/prandtl-meyer/", title: "Prandtl–Meyer expansion calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/rvr-visibility/", title: "RVR to visibility calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/thrust-power-required/", title: "Thrust and power required calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/approach-speed/", title: "Approach and landing speed calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/true-magnetic-heading/", title: "True and magnetic heading calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/carburetor-icing/", title: "Carburetor icing, dewpoint and frost point calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/heat-index/", title: "Heat index calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/time-to-turn/", title: "Time to turn calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/pull-up-load-factor/", title: "Pull-up load factor calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/cd-nozzle/", title: "Convergent-divergent nozzle calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/satellite-fov/", title: "Satellite footprint and field-of-view calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/about.html", title: "About", changefreq: "yearly", priority: "0.4" },
       { path: "/privacy.html", title: "Privacy policy", changefreq: "yearly", priority: "0.3" }
     ]

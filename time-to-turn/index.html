@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Time to Turn Calculator — Standard Rate and Heading Change</title>
+  <meta name="description" content="Free time-to-turn calculator for pilots. Time to turn 90°, 180°, or any heading change at the standard rate of 3° per second (a two-minute turn), at half-standard, or at a custom rate. Optional TAS and bank for the actual rate.">
+  <meta name="keywords" content="time to turn calculator, standard rate turn, 3 degrees per second, two minute turn, heading change, half standard rate, 90 degree turn 30 seconds">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/time-to-turn/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/time-to-turn/">
+  <meta property="og:title" content="Time to Turn Calculator — Standard-Rate Heading Change">
+  <meta property="og:description" content="Time to turn a heading change at 3°/s, half-standard, or a rate from TAS and bank. 90° is 30 seconds; 360° is two minutes.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Time to Turn Calculator">
+  <meta name="twitter:description" content="Standard-rate and custom time to turn a heading change.">
+  <meta name="application-name" content="Time to Turn Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Time to Turn Calculator",
+            "url": "https://aviatorcalcs.com/time-to-turn/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free time-to-turn calculator for pilots. Time to turn 90°, 180°, or any heading change at the standard rate of 3° per second (a two-minute turn), at half-standard, or at a custom rate. Optional TAS and bank for the actual rate."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "How long is a 90° standard-rate turn?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "30 seconds. A standard-rate turn is 3° per second, so 90 / 3 = 30. A 180° turn is one minute; a 360° turn is two minutes."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What is half-standard rate?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "1.5° per second, or a four-minute 360° turn. It is sometimes used at higher true airspeeds so the bank angle stays smaller."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Does this include roll-in, roll-out, or wind?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. The time is the heading change divided by a constant rate. Wind, and the time spent rolling in and out, are not modelled. Use it as a planning number, then fly the instruments."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Time to turn</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../turn-radius/">Turn radius</a>
+        <a href="../holding-pattern-entry/">Holding entry</a>
+        <a href="../stall-speed-weight-bank/">Stall speed</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Time to Turn Calculator</h1>
+        <p class="lede">A standard-rate (rate-one) turn is 3° per second — 90° in 30 seconds, 180° in one minute, and 360° in two minutes. Enter a heading change, or a from/to pair, and choose standard rate, half-standard (1.5°/s), or a custom rate. If you also enter true airspeed and bank, the page reports the actual rate ω = (g tan φ) / V and the time at that rate, using the same identities as the turn-radius calculator.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div class="field-block"><div class="field-label-row"><span class="sublabel">I want to enter</span>
+<div class="seg wrap-seg" role="group" aria-label="mode"><button type="button" class="seg-btn is-active" data-unit-group="mode" data-unit="delta" aria-pressed="true">Heading change</button><button type="button" class="seg-btn" data-unit-group="mode" data-unit="headings" aria-pressed="false">From / to headings</button></div></div></div>
+<div class="field-block" id="block-delta"><div class="field-label-row"><label for="change">Heading change</label><span class="sublabel">degrees</span></div>
+<input id="change" class="input" type="number" inputmode="decimal" step="any" value="90" autocomplete="off">
+<p class="hint">A 90° change at standard rate takes 30 seconds; 180° takes one minute; 360° takes two minutes.</p></div>
+<div id="block-hdg" hidden><div class="pair"><div class="field-block"><div class="field-label-row"><label for="fromH">From heading</label><span class="sublabel">degrees</span></div>
+<input id="fromH" class="input" type="number" inputmode="decimal" min="0" max="360" step="any" value="90" autocomplete="off"></div>
+<div class="field-block"><div class="field-label-row"><label for="toH">To heading</label><span class="sublabel">degrees</span></div>
+<input id="toH" class="input" type="number" inputmode="decimal" min="0" max="360" step="any" value="360" autocomplete="off"></div></div>
+<p class="hint">The shorter way is used for the primary time; the long way is also shown.</p></div>
+<div class="field-block"><div class="field-label-row"><span class="sublabel">Turn rate</span>
+<div class="seg wrap-seg" role="group" aria-label="rate"><button type="button" class="seg-btn is-active" data-unit-group="rate" data-unit="standard" aria-pressed="true">Standard 3°/s</button><button type="button" class="seg-btn" data-unit-group="rate" data-unit="half" aria-pressed="false">Half 1.5°/s</button><button type="button" class="seg-btn" data-unit-group="rate" data-unit="custom" aria-pressed="false">Custom</button></div></div></div>
+<div class="field-block" id="block-custom" hidden><div class="field-label-row"><label for="rate">Custom rate</label><span class="sublabel">degrees per second</span></div>
+<input id="rate" class="input" type="number" inputmode="decimal" step="any" value="2" autocomplete="off"></div>
+<div class="pair"><div class="field-block"><div class="field-label-row"><label for="tas">True airspeed</label><span class="sublabel">optional</span></div>
+<div class="seg wrap-seg" role="group" aria-label="speed unit"><button type="button" class="seg-btn is-active" data-unit-group="su" data-unit="kt" aria-pressed="true">kt</button><button type="button" class="seg-btn" data-unit-group="su" data-unit="mph" aria-pressed="false">mph</button></div>
+<input id="tas" class="input" type="number" inputmode="decimal" min="0" step="any" value="" placeholder="optional" autocomplete="off"></div>
+<div class="field-block"><div class="field-label-row"><label for="bank">Bank angle</label><span class="sublabel">optional, degrees</span></div>
+<input id="bank" class="input" type="number" inputmode="decimal" step="any" value="" placeholder="optional" autocomplete="off"></div></div>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-ex1">Load 90° standard rate</button>
+<button type="button" class="btn btn-ghost" id="btn-ex2">Load 090° to 360°</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Time to turn <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This is a timing aid for a chosen heading change and turn rate. It is not a substitute for the turn coordinator, the heading indicator, or ATC instructions, and it does not include wind, roll-in or roll-out time, or a standard-rate bank limit (typically a maximum of 25° or 30° in instrument flight). For radius, bank, and load factor, use the turn-radius calculator.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>Standard rate is 3° per second</h2>
+      <p>A standard-rate, or rate-one, turn is defined as 3° of heading change per second. That is a complete 360° turn in two minutes, a 180° turn in one minute, and a 90° turn in 30 seconds — the numbers every instrument student memorizes. Half-standard rate is 1.5°/s, or a four-minute complete turn, and is sometimes used at higher true airspeeds so the bank stays modest. Time is simply the heading change divided by the rate.</p>
+      <p>If you enter a from heading and a to heading, the calculator takes the shorter way as the primary change and also reports the long way (the other way around the compass). A change of 090° to 360° is 90° left (30 seconds at standard rate) or 270° right (90 seconds).</p>
+      <h2>Actual rate from bank and TAS</h2>
+      <p>The turn rate at a given bank and true airspeed is ω = (g tan φ) / V, the same identity used on the <a href="../turn-radius/">turn-radius calculator</a>. Enter both optional boxes and this page will show that rate and the time it implies for your heading change. In instrument flight the usual practice is still to fly a standard-rate turn, or a 25–30° bank, whichever is less — the bank required for standard rate increases with TAS. This page does not cap the bank for you.</p>
+      <h2>Sources</h2>
+      <p>FAA Airplane Flying Handbook (standard-rate turn, 3° per second, two-minute turn); FAA Pilot's Handbook of Aeronautical Knowledge; FAA Aeronautical Information Manual (standard-rate in holding and instrument procedures). For radius, load factor, and stall-speed increase in a bank, see the <a href="../turn-radius/">turn-radius calculator</a>.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>How long is a 90° standard-rate turn?</h3>
+      <p>30 seconds. A standard-rate turn is 3° per second, so 90 / 3 = 30. A 180° turn is one minute; a 360° turn is two minutes.</p>
+      <h3>What is half-standard rate?</h3>
+      <p>1.5° per second, or a four-minute 360° turn. It is sometimes used at higher true airspeeds so the bank angle stays smaller.</p>
+      <h3>Does this include roll-in, roll-out, or wind?</h3>
+      <p>No. The time is the heading change divided by a constant rate. Wind, and the time spent rolling in and out, are not modelled. Use it as a planning number, then fly the instruments.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Time to turn calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

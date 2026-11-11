@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Pull-Up Load Factor Calculator — Loop and Accelerated Stall</title>
+  <meta name="description" content="Free pull-up and loop load factor calculator. Compute n = 1 + V²/(gR) at the bottom of a pull-up, n = V²/(gR) − 1 at the top of a loop, and the accelerated stall speed Vs √n. Invert any two of speed, radius, and n.">
+  <meta name="keywords" content="pull-up load factor, loop load factor, n = 1 + V^2/gR, accelerated stall, centripetal acceleration, aerobatic pull-up, lift to weight">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/pull-up-load-factor/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/pull-up-load-factor/">
+  <meta property="og:title" content="Pull-Up Load Factor Calculator — n = 1 + V²/(gR)">
+  <meta property="og:description" content="Load factor at the bottom of a pull-up and the top of a loop, plus accelerated stall speed, from true airspeed and radius.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Pull-Up Load Factor Calculator">
+  <meta name="twitter:description" content="n = 1 + V²/(gR) at the bottom, n = V²/(gR) − 1 at the top, and Vs √n.">
+  <meta name="application-name" content="Pull-Up Load Factor Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Pull-Up Load Factor Calculator",
+            "url": "https://aviatorcalcs.com/pull-up-load-factor/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free pull-up and loop load factor calculator. Compute n = 1 + V²/(gR) at the bottom of a pull-up, n = V²/(gR) − 1 at the top of a loop, and the accelerated stall speed Vs √n. Invert any two of speed, radius, and n."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "What is the load factor at the bottom of a 100-knot, 1,000-foot pull-up?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "About 1.89 g. n = 1 + V²/(gR), with V converted to feet per second and g = 32.174 ft/s²."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "When is the top of a loop possible?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "When V²/(gR) is greater than 1, so n_top = V²/(gR) − 1 is positive. At 100 kt and 1,000 ft, V²/(gR) is only about 0.89, so that combination cannot sustain an inverted top."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Is this the same as load factor in a level turn?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. A level coordinated turn has n = 1 / cos φ, with the load factor in the vertical used to provide the centripetal force in the horizontal plane. A pull-up is a vertical-plane maneuver: n = 1 + V²/(gR) at the bottom. Both raise stall speed by √n."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Pull-up load factor</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../stall-speed-weight-bank/">Stall speed</a>
+        <a href="../turn-radius/">Turn radius</a>
+        <a href="../maneuvering-speed-weight/">Maneuvering speed</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Pull-Up Load Factor Calculator</h1>
+        <p class="lede">In a vertical-plane pull-up, lift must provide both the weight and the centripetal acceleration V²/R. From level flight the load factor at the bottom is n = 1 + V²/(gR). At the top of a loop, weight helps the turn, so n = V²/(gR) − 1. Enter any two of speed, radius, and n, and optionally a stall speed to see the accelerated stall Vs √n — the same square-root rule as the stall-speed calculator.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div class="field-block"><div class="field-label-row"><span class="sublabel">I want to enter</span>
+<div class="seg wrap-seg" role="group" aria-label="mode"><button type="button" class="seg-btn is-active" data-unit-group="mode" data-unit="vr" aria-pressed="true">Speed and radius</button><button type="button" class="seg-btn" data-unit-group="mode" data-unit="vn" aria-pressed="false">Speed and n</button><button type="button" class="seg-btn" data-unit-group="mode" data-unit="nr" aria-pressed="false">n and radius</button></div></div></div>
+<div class="field-block" id="block-speed"><div class="field-label-row"><label for="speed">True airspeed</label>
+<div class="seg wrap-seg" role="group" aria-label="speed unit"><button type="button" class="seg-btn is-active" data-unit-group="su" data-unit="kt" aria-pressed="true">kt</button><button type="button" class="seg-btn" data-unit-group="su" data-unit="mph" aria-pressed="false">mph</button><button type="button" class="seg-btn" data-unit-group="su" data-unit="mps" aria-pressed="false">m/s</button></div></div>
+<input id="speed" class="input" type="number" inputmode="decimal" min="0" step="any" value="100" autocomplete="off"></div>
+<div class="field-block" id="block-radius"><div class="field-label-row"><label for="radius">Flight-path radius</label>
+<div class="seg wrap-seg" role="group" aria-label="radius unit"><button type="button" class="seg-btn is-active" data-unit-group="ru" data-unit="ft" aria-pressed="true">ft</button><button type="button" class="seg-btn" data-unit-group="ru" data-unit="m" aria-pressed="false">m</button><button type="button" class="seg-btn" data-unit-group="ru" data-unit="nm" aria-pressed="false">NM</button></div></div>
+<input id="radius" class="input" type="number" inputmode="decimal" min="0" step="any" value="1000" autocomplete="off"></div>
+<div class="field-block" id="block-n" hidden><div class="field-label-row"><label for="n">Load factor at the bottom</label><span class="sublabel">n, must be greater than 1</span></div>
+<input id="n" class="input" type="number" inputmode="decimal" min="1" step="any" value="3" autocomplete="off"></div>
+<div class="field-block"><div class="field-label-row"><label for="vs">Wings-level stall speed</label><span class="sublabel">optional, same units as speed</span></div>
+<input id="vs" class="input" type="number" inputmode="decimal" min="0" step="any" value="" placeholder="optional" autocomplete="off">
+<p class="hint">When a stall speed is entered, the accelerated stall at the bottom is Vs × √n.</p></div>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-ex1">Load 100 kt, 1,000 ft</button>
+<button type="button" class="btn btn-ghost" id="btn-ex2">Load 3 g at 120 kt</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Load factor at the bottom <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This is the ideal kinematics of a vertical-plane pull-up or loop in a constant-speed, constant-radius arc. It does not include thrust, drag, a changing speed around the loop, or structural limits. Never exceed the airplane’s limit load factor or airspeed; many light airplanes are certificated to +3.8 g (normal category) or +6.0 g (acrobatic). This is not a substitute for the POH/AFM or aerobatic instruction.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>Load factor at the bottom and at the top</h2>
+      <p>Along a curved path of radius R at true airspeed V, the centripetal acceleration is V²/R, or V²/(gR) in g units. In a pull-up that starts from level flight, lift must also support the weight, so the load factor — lift over weight — at the bottom is</p>
+      <p><code>n<sub>bottom</sub> = 1 + V² / (g R)</code></p>
+      <p>A 100 kt pull-up with a 1,000 ft radius is about 1.89 g at the bottom. A push-over from level flight has the opposite sign, n = 1 − V²/(gR). At the top of a loop the airplane is inverted and weight helps the turn:</p>
+      <p><code>n<sub>top</sub> = V² / (g R) − 1</code></p>
+      <p>That top load factor is only physical when V²/(gR) is greater than 1; otherwise the speed and radius cannot sustain an inverted top. This page reports all three numbers from the same V and R, and will invert any two of {V, R, n<sub>bottom</sub>} for the third: R = V² / (g(n − 1)) and V = √[g R (n − 1)].</p>
+      <h2>Accelerated stall and a level-turn contrast</h2>
+      <p>Stall speed rises with the square root of load factor, Vs,n = Vs √n, the same rule as the <a href="../stall-speed-weight-bank/">stall-speed vs weight and bank</a> calculator. A 60 kt wings-level stall becomes 90 kt at 2.25 g. That is independent of whether the load factor comes from a pull-up or from a level banked turn (where n = 1 / cos φ). For radius and rate in a level turn, use the <a href="../turn-radius/">turn-radius calculator</a>. For the airspeed that protects the limit load factor in turbulence, see <a href="../maneuvering-speed-weight/">maneuvering speed vs weight</a>.</p>
+      <h2>Sources</h2>
+      <p>FAA Pilot's Handbook of Aeronautical Knowledge (load factor, accelerated stall); FAA Airplane Flying Handbook; NASA Glenn Beginner's Guide (lift and load factor); Anderson, Introduction to Flight (pull-up and loop). g = 9.80665 m/s² (32.174 ft/s²).</p>
+      <h2>Frequently asked questions</h2>
+      <h3>What is the load factor at the bottom of a 100-knot, 1,000-foot pull-up?</h3>
+      <p>About 1.89 g. n = 1 + V²/(gR), with V converted to feet per second and g = 32.174 ft/s².</p>
+      <h3>When is the top of a loop possible?</h3>
+      <p>When V²/(gR) is greater than 1, so n_top = V²/(gR) − 1 is positive. At 100 kt and 1,000 ft, V²/(gR) is only about 0.89, so that combination cannot sustain an inverted top.</p>
+      <h3>Is this the same as load factor in a level turn?</h3>
+      <p>No. A level coordinated turn has n = 1 / cos φ, with the load factor in the vertical used to provide the centripetal force in the horizontal plane. A pull-up is a vertical-plane maneuver: n = 1 + V²/(gR) at the bottom. Both raise stall speed by √n.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Pull-up load factor calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

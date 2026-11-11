@@ -14,12 +14,14 @@ The tools are grouped in two sides. Some calculators appear in both.
 - [E6B wind triangle](e6b-wind/) — wind correction angle, true heading, and groundspeed, or winds aloft in reverse.
 - [Fuel planner](fuel-planning/) — trip fuel, VFR/IFR reserves, endurance, and 100LL / Jet-A weight.
 - [Aviation unit converter](aviation-unit-converter/) — knots, nautical miles, inHg, gallons, Celsius, fpm, and more.
+- [True / magnetic heading](true-magnetic-heading/) — convert true, magnetic, and compass heading or course with variation and optional deviation (east is least, west is best).
 - [Top of descent](top-of-descent/) — TOD distance and descent rate for a 3° path or a custom angle.
 - [Descent rate / glideslope VSI](descent-rate/) — required vertical speed for a 3° ILS or a custom path, in fpm and ft/NM, versus the GS × 5 rule.
 - [Holding pattern entry](holding-pattern-entry/) — AIM-recommended direct, teardrop, or parallel entry.
 - [Climb gradient](climb-gradient/) — ft/NM, fpm, percent, and degrees, plus a departure-minimum check.
 - [Glide distance](glide-distance/) — best-glide range from altitude and glide ratio, with wind.
 - [Turn radius](turn-radius/) — standard-rate bank, turn radius, load factor, and stall speed in a bank.
+- [Time to turn](time-to-turn/) — time for a heading change at 3°/s, half-standard, or a rate from TAS and bank.
 - [Visual descent point](visual-descent-point/) — VDP distance from HAT and path angle (exact and the HAT/300 rule), optional DME, and descent rate.
 - [RVR to visibility](rvr-visibility/) — comparable RVR and statute-mile visibility from 14 CFR 91.175(h) (also listed under Weather & time).
 - [VOR / DME and the 1-in-60 rule](vor-dme-1-in-60/) — course-error offset, time and distance to a station, DME slant-range correction, and lead radial.
@@ -32,6 +34,7 @@ The tools are grouped in two sides. Some calculators appear in both.
 
 - [Density altitude](density-altitude/) — pressure altitude, ICAO density altitude, humidity correction, two-way ISA deviation (ISA +/−), and a rough takeoff/climb estimate.
 - [Takeoff and landing distance](takeoff-landing-distance/) — correct a POH baseline for wind, weight, density altitude, slope, and surface, including the PHAK 19% / 21% wind identity.
+- [Approach and landing speed](approach-speed/) — Vref = 1.3 × Vso, a √(W/Wref) weight correction, and the FAA gust-factor additive of half the gust increment.
 - [Crosswind](crosswind/) — crosswind, headwind, and tailwind components for both runway ends, including gusts and a wind diagram.
 - [Runway selection](runway-selection/) — headwind and crosswind on every runway, true-to-magnetic variation, and a recommended heading within your crosswind limit.
 - [Weight and balance](weight-balance/) — generic W&B / CG calculator with an editable envelope and example Cessna 172S, Piper Archer, and Cessna 152 arms.
@@ -40,6 +43,7 @@ The tools are grouped in two sides. Some calculators appear in both.
 - [Hydroplaning speed](hydroplaning-speed/) — dynamic hydroplaning speed 9√P and the locked-wheel 7.7√P figure from tire inflation pressure.
 - [Stall speed vs weight and bank](stall-speed-weight-bank/) — Vs scaled by √(W/Wref) and √n, with a bank table.
 - [Maneuvering speed vs weight](maneuvering-speed-weight/) — Va = Va_ref × √(W/Wref), optionally from stall speed and limit load factor.
+- [Pull-up load factor](pull-up-load-factor/) — n = 1 + V²/(gR) at the bottom of a pull-up, n = V²/(gR) − 1 at the top of a loop, and Vs √n (also listed under Aerodynamics).
 - [Pivotal altitude](pivotal-altitude/) — eights-on-pylons pivotal altitude from groundspeed (AFH GS²/11.3 and GS²/15, plus exact V²/g).
 - [Aviation fuel weight](fuel-weight/) — gallons, litres, pounds, and kilograms for 100LL, Jet-A, Jet-B, JP-5, and JP-8, with an optional temperature correction.
 - [Drag polar and L/D max](drag-polar/) — quadratic polar, (L/D)max, and propeller / jet range and endurance lift coefficients (also listed under Aerodynamics).
@@ -53,6 +57,8 @@ The tools are grouped in two sides. Some calculators appear in both.
 - [RVR to visibility](rvr-visibility/) — 14 CFR 91.175(h) comparable values of RVR and ground visibility; no interpolation.
 - [Pressure altitude](pressure-altitude/) — from altimeter setting (QNH), with QFE and QNE, and the 1,000 ft per inHg rule of thumb.
 - [Cloud base](cloud-base/) — convective cloud base from the temperature–dewpoint spread, plus freezing level.
+- [Carburetor icing, dewpoint & frost point](carburetor-icing/) — RH, frost point, and FAA PHAK Figure 7-12 carburetor-icing zones.
+- [Heat index](heat-index/) — NWS apparent temperature from the Rothfusz regression, humidity adjustments, and the Steadman fallback.
 - [Zulu time converter](zulu-time-converter/) — local ↔ UTC, a live Zulu clock, and flight-plan ETAs.
 - [Sunrise, sunset & FAA night](sunrise-sunset-twilight/) — sunrise, sunset, civil twilight, and FAA night definitions.
 - [Standard atmosphere](standard-atmosphere/) — ISA / U.S. Standard Atmosphere 1976 properties, and the inverse to pressure and density altitude (also listed under Atmosphere).
@@ -89,12 +95,14 @@ The tools are grouped in two sides. Some calculators appear in both.
 - [Thrust and power required](thrust-power-required/) — drag, L/D, thrust required, and power required in level flight (also listed under Performance and Propulsion).
 - [CG percent MAC](cg-percent-mac/) — CG as a percent of mean aerodynamic chord, with a tapered-wing MAC helper (also listed under Performance).
 - [Isentropic flow](isentropic-flow/) — Mach, T/T0, P/P0, ρ/ρ0, and A/A* (NACA Report 1135), including stagnation temperature and pressure.
+- [C-D nozzle](cd-nozzle/) — isentropic exit Mach from Ae/At, ideal thrust coefficient Cf, and over- / perfectly / under-expanded status (also listed under Propulsion).
 - [Normal shock](normal-shock/) — M2, static ratios, and total-pressure loss P02/P01 (NACA Report 1135).
 - [Oblique shock](oblique-shock/) — θ–β–M relation, weak and strong wave angles, and downstream Mach and pressure ratios (NACA Report 1135).
 - [Prandtl–Meyer expansion](prandtl-meyer/) — ν(M), downstream Mach after a turning angle, and isentropic static ratios (NACA Report 1135).
 - [Stall speed vs weight and bank](stall-speed-weight-bank/) — Vs scaled by weight and load factor (also listed under Performance).
 - [True airspeed](true-airspeed/) — CAS/IAS to TAS, Mach, and EAS (also listed under Performance).
 - [Turn radius](turn-radius/) — turn radius, standard-rate bank, and load factor (also listed under Flight planning).
+- [Pull-up load factor](pull-up-load-factor/) — n = 1 + V²/(gR) in a vertical-plane pull-up or loop, and accelerated stall speed (also listed under Performance).
 
 ### Propulsion
 
@@ -104,10 +112,12 @@ The tools are grouped in two sides. Some calculators appear in both.
 - [Thrust and power required](thrust-power-required/) — T_req, P_req, and optional propeller shaft power (also listed under Performance).
 - [Propeller advance ratio and tip Mach](propeller-advance-ratio/) — J = V/(nD), rotational and helical tip speed, and tip Mach.
 - [Isentropic flow](isentropic-flow/) — nozzle and stagnation relations (also listed under Aerodynamics).
+- [C-D nozzle](cd-nozzle/) — exit Mach, pe/p0, and ideal thrust coefficient for a convergent-divergent nozzle (also listed under Aerodynamics).
 
 ### Space
 
 - [Orbital velocity and period](orbital-velocity-period/) — circular speed, period, escape speed, and vis-viva speeds on an ellipse.
+- [Satellite footprint and FOV](satellite-fov/) — geometric horizon, swath for a nadir half-angle, and circular period from altitude.
 - [Hohmann transfer](hohmann-transfer/) — two-impulse Δv and time of flight between coplanar circular orbits, including LEO to GEO.
 - [Rocket equation](rocket-equation/) — ideal Δv from Isp and mass ratio (also listed under Propulsion).
 - [Specific impulse](specific-impulse/) — Isp, exhaust velocity, thrust, and mass flow (also listed under Propulsion).
