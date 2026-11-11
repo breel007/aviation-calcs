@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Jet Engine Thrust Calculator — Momentum, Pressure Term, and TSFC | Aviator Calcs</title>
+  <meta name="description" content="Compute turbojet net thrust from air and fuel mass flow, flight and exit velocity, and an optional (pe−p0)Ae term, plus TSFC. Educational; not a cycle deck.">
+  <meta name="keywords" content="undefined">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/jet-engine-thrust/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/jet-engine-thrust/">
+  <meta property="og:title" content="Jet Engine Thrust Calculator — Momentum, Pressure Term, and TSFC | Aviator Calcs">
+  <meta property="og:description" content="Compute turbojet net thrust from air and fuel mass flow, flight and exit velocity, and an optional (pe−p0)Ae term, plus TSFC. Educational; not a cycle deck.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:description" content="Compute turbojet net thrust from air and fuel mass flow, flight and exit velocity, and an optional (pe−p0)Ae term, plus TSFC. Educational; not a cycle deck.">
+  <meta name="application-name" content="undefined">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Jet Engine Thrust Calculator — Momentum, Pressure Term, and TSFC | Aviator Calcs",
+            "url": "https://aviatorcalcs.com/jet-engine-thrust/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Compute turbojet net thrust from air and fuel mass flow, flight and exit velocity, and an optional (pe−p0)Ae term, plus TSFC. Educational; not a cycle deck."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "What if I do not know the fuel/air ratio?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Enter a fuel mass flow instead, or leave both blank to compute a cold-jet (f = 0) thrust."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "When is the pressure term zero?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "When the nozzle is perfectly expanded (p_e = p_0) or when you omit the pressure and area inputs."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Is a negative TSFC meaningful?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Only if the computed “thrust” were negative (a net drag). Check that the exit speed is larger than the flight speed for a jet that is actually producing thrust."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">undefined</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Jet Engine Thrust Calculator</h1>
+        <p class="lede">A turbojet’s net thrust is the change in stream momentum, plus a pressure term if the nozzle is not perfectly expanded: F = ṁ_a ((1+f) u_e − u_0) + (p_e − p_0) A_e. Enter air mass flow, exit and flight speeds, and a fuel/air ratio (or a fuel flow), and this page returns thrust and thrust-specific fuel consumption. It is a control-volume identity, not a cycle analysis.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<p class="hint">Fuel/air ratio f defaults to zero if you leave both f and fuel flow blank (a cold jet). A perfectly expanded nozzle has no pressure term — leave those boxes blank. Speeds default to metres per second.</p>
+<div class="pair">
+  <div class="field"><label for="air">Inlet air mass flow</label><input id="air" type="text" inputmode="decimal" value="50"></div>
+  <div class="field"><label for="airUnit">Airflow unit</label>
+    <select id="airUnit"><option value="kg/s" selected>kg/s</option><option value="lb/s">lb/s</option></select></div>
+</div>
+<div class="pair">
+  <div class="field"><label for="ue">Exit velocity u_e</label><input id="ue" type="text" inputmode="decimal" value="600"></div>
+  <div class="field"><label for="u0">Flight speed u_0</label><input id="u0" type="text" inputmode="decimal" value="0"></div>
+</div>
+<div class="field"><label for="speedUnit">Speed unit</label>
+  <select id="speedUnit"><option value="mps" selected>m/s</option><option value="kt">knots</option><option value="fps">ft/s</option></select></div>
+<div class="pair">
+  <div class="field"><label for="far">Fuel/air ratio f (optional)</label><input id="far" type="text" inputmode="decimal" value="0.02"></div>
+  <div class="field"><label for="fuel">Fuel mass flow (optional, instead of f)</label><input id="fuel" type="text" inputmode="decimal" value=""></div>
+</div>
+<div class="pair">
+  <div class="field"><label for="pe">Exit pressure p_e (optional)</label><input id="pe" type="text" inputmode="decimal" value=""></div>
+  <div class="field"><label for="p0">Ambient pressure p_0</label><input id="p0" type="text" inputmode="decimal" value=""></div>
+</div>
+<div class="pair">
+  <div class="field"><label for="ae">Exit area A_e (m², with pressures)</label><input id="ae" type="text" inputmode="decimal" value=""></div>
+  <div class="field"><label for="pressureUnit">Pressure unit</label>
+    <select id="pressureUnit"><option value="pa" selected>Pa</option><option value="kpa">kPa</option></select></div>
+</div>
+<button type="button" class="btn" id="calcBtn">Calculate thrust and TSFC</button>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="ex50">Example: 50 kg/s, 600 m/s exit, f = 0.02, static</button>
+<button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Result <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>undefined</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+<h2>Momentum plus (p_e − p_0) A_e</h2>
+<p>Across a control volume around the engine, net thrust is the outgoing minus incoming stream momentum, plus the unbalanced pressure force at a non-ideally expanded exit: F = ṁ_a ((1+f) u_e − u_0) + (p_e − p_0) A_e, with f = ṁ_f / ṁ_a. A static, perfectly expanded engine with 50 kg/s of air, 600 m/s of exit speed, and f = 0.02 therefore makes 30,600 N, and TSFC is ṁ_f / F. TSFC is reported in kg/(N·s) and in the aviation unit (lbm/h)/lbf.</p>
+<p>This identity does not invent an exit speed from chamber conditions — for a nozzle thrust coefficient from chamber pressure and area ratio, see the <a href="/cd-nozzle/">C-D nozzle</a> page. For an ideal cycle efficiency, see the <a href="/brayton-cycle/">Brayton cycle</a> calculator. For Isp and a rocket mass flow, see <a href="/specific-impulse/">specific impulse</a>.</p>
+<h2>Sources</h2>
+<ul>
+<li>Hill and Peterson, <cite>Mechanics and Thermodynamics of Propulsion</cite>.</li>
+<li>Mattingly, <cite>Elements of Propulsion</cite>; Cumpsty, <cite>Jet Propulsion</cite>.</li>
+<li>TSFC as fuel-mass-flow per unit thrust.</li>
+</ul>
+      <h2>Frequently asked questions</h2>
+      <h3>What if I do not know the fuel/air ratio?</h3>
+      <p>Enter a fuel mass flow instead, or leave both blank to compute a cold-jet (f = 0) thrust.</p>
+      <h3>When is the pressure term zero?</h3>
+      <p>When the nozzle is perfectly expanded (p_e = p_0) or when you omit the pressure and area inputs.</p>
+      <h3>Is a negative TSFC meaningful?</h3>
+      <p>Only if the computed “thrust” were negative (a net drag). Check that the exit speed is larger than the flight speed for a jet that is actually producing thrust.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Jet Engine Thrust Calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

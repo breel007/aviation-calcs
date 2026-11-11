@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Rayleigh Flow Calculator — Heat Addition in a Constant-Area Duct | Aviator Calcs</title>
+  <meta name="description" content="Compute Rayleigh-line starred ratios P/P*, T/T*, T0/T0*, and P0/P0* from Mach number for frictionless constant-area flow with heat addition. Educational gas dynamics.">
+  <meta name="keywords" content="undefined">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/rayleigh-flow/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/rayleigh-flow/">
+  <meta property="og:title" content="Rayleigh Flow Calculator — Heat Addition in a Constant-Area Duct | Aviator Calcs">
+  <meta property="og:description" content="Compute Rayleigh-line starred ratios P/P*, T/T*, T0/T0*, and P0/P0* from Mach number for frictionless constant-area flow with heat addition. Educational gas dynamics.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:description" content="Compute Rayleigh-line starred ratios P/P*, T/T*, T0/T0*, and P0/P0* from Mach number for frictionless constant-area flow with heat addition. Educational gas dynamics.">
+  <meta name="application-name" content="undefined">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Rayleigh Flow Calculator — Heat Addition in a Constant-Area Duct | Aviator Calcs",
+            "url": "https://aviatorcalcs.com/rayleigh-flow/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Compute Rayleigh-line starred ratios P/P*, T/T*, T0/T0*, and P0/P0* from Mach number for frictionless constant-area flow with heat addition. Educational gas dynamics."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "What does T0/T0* tell me?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "How close the flow is to thermal choke. A value of 1 is Mach 1 on the same Rayleigh line; you cannot add more stagnation temperature without changing the inlet state or the mass flow."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Does heat addition always increase static temperature?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Not once you are past the point of maximum T on the subsonic branch. The table is the right place to look; T/T* has a peak near M = 1/√γ, not at M = 1."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Is this a burner model?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Only in the one-dimensional, constant-area, perfect-gas sense. A real combustor has area change, pressure loss, and a changing composition."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">undefined</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Rayleigh Flow Calculator</h1>
+        <p class="lede">Rayleigh flow is frictionless, constant-area flow with heat addition or rejection. Properties are referenced to the sonic (*) state at the peak of the Rayleigh line — the thermal-choke point. Enter a Mach number and this page returns P/P*, T/T*, ρ/ρ*, P0/P0*, and T0/T0* for a perfect gas (γ defaults to 1.4).</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<p class="hint">T0/T0* = 1 is the thermal choke. Heat addition drives both a subsonic and a supersonic Rayleigh flow toward Mach 1. At M = 0.50 and γ = 1.4, T/T* is about 0.790 and P/P* is 1.778.</p>
+<div class="pair">
+  <div class="field"><label for="mach">Mach number</label><input id="mach" type="text" inputmode="decimal" value="0.5"></div>
+  <div class="field"><label for="gamma">Ratio of specific heats γ</label><input id="gamma" type="text" inputmode="decimal" value="1.4"></div>
+</div>
+<button type="button" class="btn" id="calcBtn">Calculate Rayleigh ratios</button>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="ex05">Example: M = 0.50, γ = 1.4</button>
+<button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Result <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>undefined</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+<h2>Starred ratios on the Rayleigh line</h2>
+<p>For a perfect gas, P/P* = (1+γ) / (1 + γ M²) and T/T* = [M (1+γ) / (1 + γ M²)]². The stagnation-temperature ratio T0/T0* = 2(γ+1) M² (1 + (γ−1)M²/2) / (1 + γ M²)² reaches 1 at Mach 1: you cannot add more heat without choking the duct or changing the mass flow. At every starred station the ratios are 1, as they are on the Fanno line, but the path between stations is heat, not friction.</p>
+<p>For friction without heat, use the <a href="/fanno-flow/">Fanno flow</a> calculator. Area change without heat or friction is <a href="/isentropic-flow/">isentropic flow</a>. A normal shock can connect the subsonic and supersonic branches of a Rayleigh or Fanno line; that jump is on the <a href="/normal-shock/">normal-shock</a> page.</p>
+<h2>Sources</h2>
+<ul>
+<li>John and Keith, <cite>Gas Dynamics</cite>; Zucker and Biblarz, <cite>Fundamentals of Gas Dynamics</cite>.</li>
+<li>Anderson, <cite>Modern Compressible Flow</cite>.</li>
+</ul>
+      <h2>Frequently asked questions</h2>
+      <h3>What does T0/T0* tell me?</h3>
+      <p>How close the flow is to thermal choke. A value of 1 is Mach 1 on the same Rayleigh line; you cannot add more stagnation temperature without changing the inlet state or the mass flow.</p>
+      <h3>Does heat addition always increase static temperature?</h3>
+      <p>Not once you are past the point of maximum T on the subsonic branch. The table is the right place to look; T/T* has a peak near M = 1/√γ, not at M = 1.</p>
+      <h3>Is this a burner model?</h3>
+      <p>Only in the one-dimensional, constant-area, perfect-gas sense. A real combustor has area change, pressure loss, and a changing composition.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Rayleigh Flow Calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

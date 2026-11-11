@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Brayton Cycle Calculator — Ideal Thermal Efficiency vs Pressure Ratio | Aviator Calcs</title>
+  <meta name="description" content="Compute cold air-standard Brayton-cycle thermal efficiency η = 1 − 1/r_p^{(γ−1)/γ}, with optional station temperatures and net work. Educational; not a real engine deck.">
+  <meta name="keywords" content="undefined">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/brayton-cycle/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/brayton-cycle/">
+  <meta property="og:title" content="Brayton Cycle Calculator — Ideal Thermal Efficiency vs Pressure Ratio | Aviator Calcs">
+  <meta property="og:description" content="Compute cold air-standard Brayton-cycle thermal efficiency η = 1 − 1/r_p^{(γ−1)/γ}, with optional station temperatures and net work. Educational; not a real engine deck.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:description" content="Compute cold air-standard Brayton-cycle thermal efficiency η = 1 − 1/r_p^{(γ−1)/γ}, with optional station temperatures and net work. Educational; not a real engine deck.">
+  <meta name="application-name" content="undefined">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Brayton Cycle Calculator — Ideal Thermal Efficiency vs Pressure Ratio | Aviator Calcs",
+            "url": "https://aviatorcalcs.com/brayton-cycle/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Compute cold air-standard Brayton-cycle thermal efficiency η = 1 − 1/r_p^{(γ−1)/γ}, with optional station temperatures and net work. Educational; not a real engine deck."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Why doesn’t T3 appear in the simple efficiency formula?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "On the ideal cycle with constant cp, η depends only on the pressure ratio (or equivalently on T1/T2). T3 changes the work and the heat input in the same proportion."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What if T3 is lower than T2?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "That is not a heat-engine cycle — you would be “adding” negative heat. The page rejects it."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Is this a turbofan or a ramjet?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "It is the ideal Brayton (gas-turbine) cycle. A ramjet is a related Brayton process without the turbomachinery, and a turbofan adds a bypass stream this page does not model."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">undefined</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Brayton Cycle Calculator</h1>
+        <p class="lede">The ideal air-standard Brayton cycle — the textbook model of a simple turbojet or gas turbine — has a thermal efficiency that depends only on the compressor pressure ratio: η = 1 − 1 / r_p^{(γ−1)/γ}. Enter a pressure ratio (and optionally inlet and turbine-inlet temperatures) and this page returns that efficiency, the isentropic station temperatures, and the net work and heat input per kilogram. It is the ideal cycle, not a real engine.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<p class="hint">γ defaults to 1.4 (cold air). A pressure ratio of 10 then has η ≈ 48.2%. Temperatures are optional; if you enter T1, T2 follows from the isentropic relation, and T3 (turbine inlet) produces T4, heat in, and net work.</p>
+<div class="pair">
+  <div class="field"><label for="rp">Compressor pressure ratio r_p</label><input id="rp" type="text" inputmode="decimal" value="10"></div>
+  <div class="field"><label for="gamma">Ratio of specific heats γ</label><input id="gamma" type="text" inputmode="decimal" value="1.4"></div>
+</div>
+<div class="pair">
+  <div class="field"><label for="t1">Compressor inlet T1 (optional)</label><input id="t1" type="text" inputmode="decimal" value="300"></div>
+  <div class="field"><label for="t3">Turbine inlet T3 (optional)</label><input id="t3" type="text" inputmode="decimal" value="1400"></div>
+</div>
+<div class="field"><label for="tempUnit">Temperature unit</label>
+  <select id="tempUnit"><option value="K" selected>kelvin</option><option value="C">°C</option><option value="F">°F</option></select></div>
+<button type="button" class="btn" id="calcBtn">Calculate Brayton efficiency</button>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="ex10">Example: r_p = 10, T1 = 300 K, T3 = 1,400 K</button>
+<button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Result <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>undefined</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+<h2>Efficiency is fixed by the pressure ratio</h2>
+<p>For constant specific heats and isentropic compression and expansion, the Brayton thermal efficiency is η = 1 − 1 / r_p^{(γ−1)/γ}. At r_p = 10 and γ = 1.4 that is about 48.2%. If you enter a compressor-inlet temperature T1, the isentropic compressor exit is T2 = T1 r_p^{(γ−1)/γ}; an optional turbine-inlet T3 then gives T4 = T3 / r_p^{(γ−1)/γ}, a heat input c_p(T3−T2), and a net work c_p((T3−T4) − (T2−T1)). The efficiency implied by those temperatures matches the pressure-ratio formula on the ideal cycle. This page uses c_p = 1,004.5 J/(kg·K) for the optional work numbers only.</p>
+<p>A real engine has burner pressure loss, cooling bleed, and component efficiencies that all cut η. For a control-volume thrust from mass flow and velocity, see <a href="/jet-engine-thrust/">jet engine thrust</a>; for a rocket, see <a href="/specific-impulse/">specific impulse</a>.</p>
+<h2>Sources</h2>
+<ul>
+<li>Cengel and Boles, <cite>Thermodynamics: An Engineering Approach</cite>, air-standard Brayton cycle.</li>
+<li>Hill and Peterson, <cite>Mechanics and Thermodynamics of Propulsion</cite>.</li>
+<li>Mattingly, <cite>Elements of Propulsion</cite>.</li>
+</ul>
+      <h2>Frequently asked questions</h2>
+      <h3>Why doesn’t T3 appear in the simple efficiency formula?</h3>
+      <p>On the ideal cycle with constant cp, η depends only on the pressure ratio (or equivalently on T1/T2). T3 changes the work and the heat input in the same proportion.</p>
+      <h3>What if T3 is lower than T2?</h3>
+      <p>That is not a heat-engine cycle — you would be “adding” negative heat. The page rejects it.</p>
+      <h3>Is this a turbofan or a ramjet?</h3>
+      <p>It is the ideal Brayton (gas-turbine) cycle. A ramjet is a related Brayton process without the turbomachinery, and a turbofan adds a bypass stream this page does not model.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Brayton Cycle Calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

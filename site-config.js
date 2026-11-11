@@ -107,6 +107,12 @@
       { path: "/hover-power/", title: "Hover power and disk loading calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/rotor-tip-speed/", title: "Rotor tip speed calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/crossover-altitude/", title: "Vmo/Mmo crossover altitude calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/thin-airfoil-lift/", title: "Thin-airfoil lift calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/lift-slope-ar/", title: "Finite-wing lift-slope calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/fanno-flow/", title: "Fanno flow calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/rayleigh-flow/", title: "Rayleigh flow calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/jet-engine-thrust/", title: "Jet engine thrust calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/brayton-cycle/", title: "Brayton cycle efficiency calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/about.html", title: "About", changefreq: "yearly", priority: "0.4" },
       { path: "/privacy.html", title: "Privacy policy", changefreq: "yearly", priority: "0.3" }
     ]

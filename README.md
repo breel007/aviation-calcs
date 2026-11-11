@@ -111,9 +111,11 @@ The tools are grouped in two sides. Some calculators appear in both.
 - [Mach and dynamic pressure](mach-dynamic-pressure/) — Mach, q = ½ρV², speed of sound, and equivalent airspeed.
 - [Reynolds number](reynolds-number/) — Re = ρVL/μ with ISA air properties or values you enter.
 - [Lift and drag coefficients](lift-drag-coefficient/) — CL, CD, and L/D from force, speed, density, and reference area.
+- [Thin-airfoil lift](thin-airfoil-lift/) — section lift coefficient cl = 2π(α − α_L0), with an optional dimensional lift.
 - [Terminal velocity and ballistic re-entry](terminal-velocity/) — ballistic coefficient, ISA terminal speed, and the Allen–Eggers peak-deceleration pulse (also listed under Space).
 - [Parachute descent](parachute-descent/) — time-to-ground and wind drift, with an optional v_t from Cd A (also listed under Performance).
 - [Wing loading and aspect ratio](wing-loading-aspect-ratio/) — W/S, AR, tapered-wing chords and MAC, and a stall-speed estimate from CLmax.
+- [Finite-wing lift slope](lift-slope-ar/) — Prandtl lifting-line and Helmbold corrections of a section lift-curve slope for aspect ratio.
 - [Drag polar and L/D max](drag-polar/) — CD = CD0 + k CL², (L/D)max, and the classic propeller and jet range and endurance lift coefficients.
 - [Thrust and power required](thrust-power-required/) — drag, L/D, thrust required, and power required in level flight (also listed under Performance and Propulsion).
 - [CG percent MAC](cg-percent-mac/) — CG as a percent of mean aerodynamic chord, with a tapered-wing MAC helper (also listed under Performance).
@@ -122,6 +124,8 @@ The tools are grouped in two sides. Some calculators appear in both.
 - [Normal shock](normal-shock/) — M2, static ratios, and total-pressure loss P02/P01 (NACA Report 1135).
 - [Oblique shock](oblique-shock/) — θ–β–M relation, weak and strong wave angles, and downstream Mach and pressure ratios (NACA Report 1135).
 - [Prandtl–Meyer expansion](prandtl-meyer/) — ν(M), downstream Mach after a turning angle, and isentropic static ratios (NACA Report 1135).
+- [Fanno flow](fanno-flow/) — adiabatic constant-area flow with friction: starred ratios and 4fL*/D to sonic.
+- [Rayleigh flow](rayleigh-flow/) — frictionless constant-area flow with heat addition: starred Rayleigh-line ratios.
 - [Stall speed vs weight and bank](stall-speed-weight-bank/) — Vs scaled by weight and load factor (also listed under Performance).
 - [True airspeed](true-airspeed/) — CAS/IAS to TAS, Mach, and EAS (also listed under Performance).
 - [Turn radius](turn-radius/) — turn radius, standard-rate bank, and load factor (also listed under Flight planning).
@@ -130,6 +134,8 @@ The tools are grouped in two sides. Some calculators appear in both.
 ### Propulsion
 
 - [Specific impulse](specific-impulse/) — Isp, effective exhaust velocity, thrust, and mass flow, with an optional ideal Δv (also listed under Space).
+- [Jet engine thrust / TSFC](jet-engine-thrust/) — net thrust from the momentum and pressure terms, plus thrust-specific fuel consumption.
+- [Brayton cycle efficiency](brayton-cycle/) — ideal air-standard Brayton thermal efficiency versus pressure ratio, with optional station temperatures.
 - [Rocket equation](rocket-equation/) — Tsiolkovsky Δv, Isp, mass ratio, and multi-stage burns (also listed under Space).
 - [Delta-v budget](delta-v-budget/) — sum mission Δv items, an ideal mass ratio from Isp, and a pure plane-change helper (also listed under Space).
 - [Breguet range and endurance](breguet-range-endurance/) — jet and propeller range and endurance (also listed under Performance).
