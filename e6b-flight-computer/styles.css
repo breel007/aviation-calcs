@@ -67,6 +67,10 @@
   margin: 0 auto;
 }
 
+.wind-wrap {
+  max-width: 44rem;
+}
+
 .computer-wrap svg,
 .wind-wrap svg {
   display: block;

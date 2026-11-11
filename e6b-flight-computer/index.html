@@ -66,7 +66,7 @@
           "name": "How do you use the wind side of an E6B?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Rotate the azimuth until the wind direction is under the true index. Plot a mark from the grommet toward the true index at the wind speed. Slide the grid until the grommet is on true airspeed. Rotate the azimuth until the true course is under the true index. Read wind correction angle and groundspeed at the wind mark. Heading is course plus WCA (a right correction is a crab to the right). The illustration follows that procedure; the numbers are the exact wind-triangle solution."
+            "text": "Rotate the azimuth until the wind direction is under the true index. Plot a pencil mark from the grommet toward the true index at the wind speed. Slide the card so the grommet sits on the true-airspeed arc, then rotate until the true course is under the true index. Slide again until the wind mark lies on the true-airspeed arc. Read the wind correction angle at the mark and the groundspeed under the grommet. Heading is course plus WCA (a right correction is a crab to the right). The polar grid matches the exact wind-triangle solution to drawing precision."
           }
         },
         {
@@ -333,12 +333,12 @@
             <div class="wind-wrap" id="wind-mount" aria-label="E6B wind side illustration"></div>
             <ol class="step-list" id="wind-steps">
               <li>Rotate the azimuth until the wind direction is under the true index.</li>
-              <li>From the grommet, plot a mark toward the true index at the wind speed.</li>
-              <li>Slide the grid until the grommet is on true airspeed.</li>
+              <li>From the grommet, plot a pencil mark toward the true index at the wind speed.</li>
+              <li>Slide the card so the grommet sits on the true-airspeed arc.</li>
               <li>Rotate the azimuth until the true course is under the true index.</li>
-              <li>Read wind correction angle and groundspeed at the wind mark. Heading = course + WCA.</li>
+              <li>Slide the card until the wind mark lies on the true-airspeed arc. Read WCA at the mark and groundspeed under the grommet. Heading = course + WCA.</li>
             </ol>
-            <p class="stage-caption">A rectangular grid is slightly approximate in a pure crosswind. The numbers in the result panel are the exact wind-triangle solution.</p>
+            <p class="stage-caption">The sliding card is a polar grid (concentric speed arcs and radiating drift lines), so a reading at the wind mark matches the exact wind-triangle solution to drawing precision. The result panel prints the same trig values.</p>
           </div>
         </div>
       </div>
@@ -392,13 +392,13 @@
       <p>Worked TAS check: 100 KCAS at 8,000 ft in ISA conditions is <strong>112.7 kt</strong> by the compressible formula; the dial (CAS / √σ) reads 112.8 kt. At 6,000 ft and 0 °C, 120 KCAS is 130.4 kt exact and 130.5 kt on the dial. For density altitude, 5,000 ft pressure altitude at 30 °C is 7,801 ft by the ICAO inversion; the 120 ft/°C rule gives 7,989 ft.</p>
 
       <h2>The wind side</h2>
-      <p>The back of an E6B is a plotter: a rotating azimuth (compass rose) with a true-index marker, a transparent window with a grommet at the center, and a sliding grid card of speed arcs and drift lines. The standard method, taught in the FAA Pilot’s Handbook and in E6B computer manuals, is:</p>
+      <p>The back of an E6B is a plotter: a rotating azimuth (compass rose) with a true-index marker, a large frosted circular plotting disc with a grommet at the center, and a sliding card of concentric speed arcs and radiating drift lines that shows through the disc and extends above and below the frame. The standard method, taught in the FAA Pilot’s Handbook and in E6B computer manuals, is:</p>
       <ol>
         <li>Rotate the azimuth until the wind direction is under the true index.</li>
         <li>From the grommet, plot a pencil mark toward the true index a distance equal to the wind speed.</li>
-        <li>Slide the grid until the grommet is on true airspeed.</li>
-        <li>Rotate the azimuth until the true course is under the true index.</li>
-        <li>Read the wind correction angle (left or right of the centerline) and the groundspeed at the wind mark. True heading is true course plus WCA, with a right correction positive (crab right when the wind is from the right).</li>
+        <li>Slide the card so the grommet sits on the true-airspeed arc (any convenient speed works for plotting the mark; this page uses TAS).</li>
+        <li>Rotate the azimuth until the true course is under the true index. The mark stays on the frosted disc and swings with it.</li>
+        <li>Slide the card until the wind mark lies on the true-airspeed arc. Read the wind correction angle at the mark (left or right of the centerline) and the groundspeed under the grommet. True heading is true course plus WCA, with a right correction positive (crab right when the wind is from the right).</li>
       </ol>
       <p>The illustration animates those steps. The printed answers use the exact wind-triangle solution, the same closed form as the <a href="../e6b-wind/">E6B wind triangle calculator</a>:</p>
       <div class="formula-block">
@@ -407,7 +407,7 @@
         <p><code>WCA = arcsin(crosswind / TAS)</code></p>
         <p><code>GS = √(TAS² − crosswind²) − headwind</code></p>
       </div>
-      <p>A rectangular or polar card is slightly approximate: a pure crosswind of 20 kt at 120 kt TAS leaves the wind mark on the 120-kt line, while the exact groundspeed is 118.3 kt and the exact WCA is 9.6° left. Use the numbers in the result panel, not the last pencil-width on the card, when the two disagree. Classic check case: true course 090, TAS 120 kt, wind 360 at 20 kt → WCA 9.6° left, true heading 080, groundspeed 118.3 kt.</p>
+      <p>The sliding card is a section of a large polar plot: speed lines are concentric arcs about a zero-speed origin far above the window, and drift lines radiate from that same point, so a distance along the centerline is a uniform speed scale. Because the geometry is the same as the wind triangle, a reading at the pencil mark matches the exact solution to drawing precision. Classic check case: true course 090, TAS 120 kt, wind 360 at 20 kt → the mark sits about 9.6° left of the centerline on the 120-kt arc, and the grommet sits on 118.3 kt. The result panel prints those same trig values.</p>
 
       <h2>Related calculators</h2>
       <ul class="related-tools">
@@ -436,7 +436,7 @@
       <h3>Does the TAS window on an E6B give an exact true airspeed?</h3>
       <p>No. A mechanical E6B lines up outside air temperature with pressure altitude so the inner and outer scales are shifted by 1 over the square root of the density ratio. That is the incompressible approximation TAS ≈ CAS / √σ. The number reported here is the subsonic compressible pitot-static solution; the dial is shown with the mechanical alignment and the two values are compared.</p>
       <h3>How do you use the wind side of an E6B?</h3>
-      <p>Rotate the azimuth until the wind direction is under the true index. Plot a mark from the grommet toward the true index at the wind speed. Slide the grid until the grommet is on true airspeed. Rotate the azimuth until the true course is under the true index. Read wind correction angle and groundspeed at the wind mark. Heading is course plus WCA (a right correction is a crab to the right). The illustration follows that procedure; the numbers are the exact wind-triangle solution.</p>
+      <p>Rotate the azimuth until the wind direction is under the true index. Plot a pencil mark from the grommet toward the true index at the wind speed. Slide the card so the grommet sits on the true-airspeed arc, then rotate until the true course is under the true index. Slide again until the wind mark lies on the true-airspeed arc. Read the wind correction angle at the mark and the groundspeed under the grommet. Heading is course plus WCA (a right correction is a crab to the right). The polar grid matches the exact wind-triangle solution to drawing precision.</p>
       <h3>Is a positive wind correction angle to the right or the left?</h3>
       <p>A positive WCA is a correction to the right: true heading = true course + WCA. Wind from the right produces a right crab. This page labels a left correction as L and a right correction as R, and it uses the same sign convention as the <a href="../e6b-wind/">E6B wind triangle calculator</a>.</p>
       <h3>Can I use this E6B instead of the POH or a certified flight computer?</h3>

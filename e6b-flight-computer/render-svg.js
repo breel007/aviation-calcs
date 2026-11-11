@@ -593,117 +593,253 @@
   }
 
   // ---------- Wind side -------------------------------------------------
+  // Polar sliding card: speed arcs are concentric about a zero-speed
+  // origin far above the window; drift lines radiate from the same point.
+  // Distance down the centerline is a uniform speed scale. The card is
+  // clipped by the circular frosted disc and extends above and below the
+  // circular frame, as on a metal E6B.
 
-  var WX = 320;
-  var GROMMET_Y = 292;
+  var WX = 420;
+  var GROMMET_Y = 400;
   var ROSE_OUTER = 248;
-  var ROSE_INNER = 202;
-  var WIN = { x: 190, y: 150, w: 260, h: 290 };
-  var PX_PER_KT = 2.15;
+  var ROSE_INNER = 210;
+  var PX_PER_KT = 2.35;
   var CARD_SPEED0 = 30;
   var CARD_SPEED1 = 260;
+  var CARD_W = 520;
+  var CARD_ORIGIN_Y = 70; // zero-speed point in card-local coordinates
+  var CARD_FOOTER = 36;
+  var BODY_W = 800;
+  var BODY_H = 860;
 
   function windCardLocalY(speed) {
-    return (speed - CARD_SPEED0) * PX_PER_KT;
+    return CARD_ORIGIN_Y + speed * PX_PER_KT;
   }
 
-  function cardOffsetForTas(tas) {
-    return GROMMET_Y - windCardLocalY(tas);
+  function cardOffsetForTas(speed) {
+    // Translate Y that places the given speed under the grommet.
+    return GROMMET_Y - windCardLocalY(speed);
+  }
+
+  function cardX() {
+    return WX - CARD_W / 2;
+  }
+
+  function cardTransform(speed) {
+    return "translate(" + cardX().toFixed(2) + " " + cardOffsetForTas(speed).toFixed(2) + ")";
+  }
+
+  function cardHeight() {
+    return windCardLocalY(CARD_SPEED1) + CARD_FOOTER;
+  }
+
+  function speedArcPath(cx, originY, r, xLeft, xRight) {
+    if (r <= 0) return "";
+    var left = Math.max(xLeft, cx - r);
+    var right = Math.min(xRight, cx + r);
+    if (right - left < 0.8) return "";
+    function yAt(x) {
+      var d = x - cx;
+      var h2 = r * r - d * d;
+      if (h2 < 0) h2 = 0;
+      return originY + Math.sqrt(h2);
+    }
+    var yL = yAt(left);
+    var yR = yAt(right);
+    // Lower arc, left → right: counterclockwise in SVG (y-down). sweep=0.
+    return "M" + left.toFixed(2) + " " + yL.toFixed(2) +
+      " A" + r.toFixed(2) + " " + r.toFixed(2) + " 0 0 0 " +
+      right.toFixed(2) + " " + yR.toFixed(2);
   }
 
   function buildWindCard() {
-    var w = WIN.w;
-    var h = windCardLocalY(CARD_SPEED1) + 20;
+    var w = CARD_W;
+    var h = cardHeight();
     var cx = w / 2;
-    var originY = windCardLocalY(0); // radials emanate from zero-speed
+    var originY = CARD_ORIGIN_Y;
+    var xLeft = 0.8;
+    var xRight = w - 0.8;
     var parts = [];
-    parts.push(el("rect", { x: 0, y: 0, width: w, height: h, fill: "#d8c9a0" }));
-    // faint paper grain lines
-    for (var gy = 0; gy < h; gy += 18) {
-      parts.push(el("line", { x1: 0, y1: gy, x2: w, y2: gy, stroke: "rgba(80,60,20,0.06)", "stroke-width": 1 }));
+
+    parts.push(el("rect", {
+      x: 0, y: 0, width: w, height: h, rx: 6,
+      fill: "#f3efe4",
+      stroke: "#8a8478",
+      "stroke-width": 1
+    }));
+    // faint paper grain
+    for (var gy = 10; gy < h; gy += 22) {
+      parts.push(el("line", {
+        x1: 8, y1: gy, x2: w - 8, y2: gy,
+        stroke: "rgba(80,70,50,0.045)", "stroke-width": 1
+      }));
     }
 
-    var speeds = [];
-    for (var s = 40; s <= 250; s += 10) speeds.push(s);
-    speeds.forEach(function (s) {
-      var r = Math.max(8, s * PX_PER_KT);
-      var cy = originY;
-      var major = s % 50 === 0;
-      var mid = s % 20 === 0;
-      var span = 70 * Math.PI / 180;
-      var a0 = -Math.PI / 2 - span / 2;
-      var a1 = -Math.PI / 2 + span / 2;
-      // Arc of radius r around the zero-speed origin, clipped later by the window.
-      var x0 = cx + r * Math.cos(a0);
-      var y0 = cy + r * Math.sin(a0);
-      var x1 = cx + r * Math.cos(a1);
-      var y1 = cy + r * Math.sin(a1);
-      parts.push(el("path", {
-        d: "M" + x0.toFixed(2) + " " + y0.toFixed(2) + " A" + r.toFixed(2) + " " + r.toFixed(2) + " 0 0 1 " + x1.toFixed(2) + " " + y1.toFixed(2),
-        fill: "none",
-        stroke: major ? "#2a2418" : mid ? "#4a4438" : "#7a7468",
-        "stroke-width": major ? 1.4 : mid ? 0.9 : 0.45
-      }));
-      if (major || s % 20 === 0) {
-        // Numbers sit only to the right of the centerline so a callout
-        // in the left half of the window cannot cover them.
-        parts.push(el("text", {
-          x: cx + 14,
-          y: windCardLocalY(s) + 3,
-          fill: "#1a160e",
-          "font-family": FONT,
-          "font-size": major ? 11 : 8.5,
-          "font-weight": 700
-        }, String(s)));
-      }
-    });
+    // Header on the low-speed end (top of the card, toward the origin)
+    parts.push(el("rect", {
+      x: 1, y: 1, width: w - 2, height: 28, rx: 5,
+      fill: "#2a2e34"
+    }));
+    parts.push(el("text", {
+      x: cx, y: 19,
+      "text-anchor": "middle",
+      fill: "#f3efe4",
+      "font-family": FONT,
+      "font-size": 9,
+      "font-weight": 700,
+      "letter-spacing": 1.2
+    }, "LOW SPEED   ·   30 – 260 KT"));
 
-    // Drift radials from the zero-speed origin
-    var angles = [];
-    for (var d = -40; d <= 40; d += 2) angles.push(d);
-    angles.forEach(function (d) {
-      if (d === 0) return;
-      var rad = d * Math.PI / 180;
-      var len = CARD_SPEED1 * PX_PER_KT + 40;
-      var x2 = cx + len * Math.sin(rad);
-      var y2 = originY + len * Math.cos(rad);
-      var major = d % 10 === 0;
+    // Drift (WCA) rays from the origin — drawn first so arcs sit on top a little?
+    // Real cards have both in one grid; rays under or with the arcs is fine.
+    // 2° throughout; 1° from the 150-kt radius outward; heavier every 5 / 10.
+    var rMin = CARD_SPEED0 * PX_PER_KT;
+    var rMax = CARD_SPEED1 * PX_PER_KT;
+    var r150 = 150 * PX_PER_KT;
+    var maxDeg = 42;
+    function clipRay(angDeg, r0, r1) {
+      var th = angDeg * Math.PI / 180;
+      var s = Math.sin(th);
+      var c = Math.cos(th);
+      var a = r0;
+      var b = r1;
+      if (Math.abs(s) > 1e-9) {
+        var rSide = ((s > 0 ? xRight : xLeft) - cx) / s;
+        if (rSide > 0) b = Math.min(b, rSide);
+      }
+      if (Math.abs(c) > 1e-9) {
+        var rBot = (h - 2 - originY) / c;
+        if (rBot > 0) b = Math.min(b, rBot);
+        var rTop = (30 - originY) / c; // keep out of the header
+        if (c > 0 && rTop > 0) a = Math.max(a, rTop);
+      }
+      if (b - a < 1) return null;
+      return {
+        x1: cx + a * s, y1: originY + a * c,
+        x2: cx + b * s, y2: originY + b * c
+      };
+    }
+    var d;
+    // 1° ticks only on the high-speed (outer) portion
+    for (d = -maxDeg; d <= maxDeg; d += 1) {
+      if (d === 0) continue;
+      if (d % 2 === 0) continue; // evens drawn as 2° lines below
+      var seg = clipRay(d, r150, rMax);
+      if (!seg) continue;
       parts.push(el("line", {
-        x1: cx, y1: originY, x2: x2.toFixed(2), y2: y2.toFixed(2),
-        stroke: major ? "rgba(140,30,30,0.65)" : "rgba(60,50,30,0.28)",
-        "stroke-width": major ? 1.05 : 0.45
+        x1: seg.x1.toFixed(2), y1: seg.y1.toFixed(2),
+        x2: seg.x2.toFixed(2), y2: seg.y2.toFixed(2),
+        stroke: "#3a4a62",
+        "stroke-width": 0.35
       }));
-      if (major) {
-        var labR = 210 * PX_PER_KT;
-        var lx = cx + labR * Math.sin(rad);
-        var ly = originY + labR * Math.cos(rad);
-        parts.push(el("text", {
-          x: lx.toFixed(2), y: ly.toFixed(2),
-          fill: "#8a1a1a",
-          "font-family": FONT,
-          "font-size": 8,
-          "font-weight": 700,
-          "text-anchor": "middle",
-          "dominant-baseline": "middle"
-        }, String(Math.abs(d)) + "°"));
-      }
-    });
+    }
+    for (d = -maxDeg; d <= maxDeg; d += 2) {
+      if (d === 0) continue;
+      var heavy10 = d % 10 === 0;
+      var heavy5 = d % 5 === 0;
+      var ray = clipRay(d, rMin, rMax);
+      if (!ray) continue;
+      parts.push(el("line", {
+        x1: ray.x1.toFixed(2), y1: ray.y1.toFixed(2),
+        x2: ray.x2.toFixed(2), y2: ray.y2.toFixed(2),
+        stroke: heavy10 ? "#1a2838" : heavy5 ? "#2a3a50" : "#3a4a62",
+        "stroke-width": heavy10 ? 1.05 : heavy5 ? 0.7 : 0.4
+      }));
+    }
 
-    // Centerline
+    // Speed arcs: every 2 kt, heavier / labeled every 10
+    var s;
+    for (s = CARD_SPEED0; s <= CARD_SPEED1; s += 2) {
+      var r = s * PX_PER_KT;
+      var major = s % 50 === 0;
+      var ten = s % 10 === 0;
+      var dpath = speedArcPath(cx, originY, r, xLeft, xRight);
+      if (!dpath) continue;
+      parts.push(el("path", {
+        d: dpath,
+        fill: "none",
+        stroke: major ? "#1a1a1a" : ten ? "#222" : "#5a564c",
+        "stroke-width": major ? 1.45 : ten ? 0.9 : 0.4
+      }));
+    }
+
+    // Bold centerline
+    var y0 = originY + rMin;
+    var y1 = originY + rMax;
+    if (y0 < 32) y0 = 32;
+    if (y1 > h - 4) y1 = h - 4;
     parts.push(el("line", {
-      x1: cx, y1: 0, x2: cx, y2: h,
-      stroke: "#1a140c",
-      "stroke-width": 1.6
+      x1: cx, y1: y0, x2: cx, y2: y1,
+      stroke: "#141414",
+      "stroke-width": 1.8
     }));
 
+    // Speed labels on both sides of the centerline, every 10 kt
+    for (s = CARD_SPEED0; s <= CARD_SPEED1; s += 10) {
+      var ly = originY + s * PX_PER_KT;
+      if (ly < 40 || ly > h - 14) continue;
+      var fs = s % 50 === 0 ? 11 : 9;
+      parts.push(el("text", {
+        x: cx + 11, y: ly + 3.5,
+        fill: "#141414",
+        "font-family": FONT,
+        "font-size": fs,
+        "font-weight": 700
+      }, String(s)));
+      parts.push(el("text", {
+        x: cx - 11, y: ly + 3.5,
+        fill: "#141414",
+        "font-family": FONT,
+        "font-size": fs,
+        "font-weight": 700,
+        "text-anchor": "end"
+      }, String(s)));
+    }
+
+    // Drift labels every 10° (and 5° on a mid arc) along selected speed arcs
+    function driftLabel(angDeg, atSpeed, extra) {
+      var th = angDeg * Math.PI / 180;
+      var r = atSpeed * PX_PER_KT;
+      var x = cx + r * Math.sin(th);
+      var y = originY + r * Math.cos(th);
+      if (x < 16 || x > w - 16 || y < 40 || y > h - 12) return "";
+      var txt = String(Math.abs(angDeg)) + "°";
+      return el("text", {
+        x: x.toFixed(2), y: y.toFixed(2),
+        fill: "#1a2838",
+        "font-family": FONT,
+        "font-size": extra || 7.5,
+        "font-weight": 700,
+        "text-anchor": "middle",
+        "dominant-baseline": "middle"
+      }, txt);
+    }
+    var labSpeeds = [80, 140, 200];
+    labSpeeds.forEach(function (sp) {
+      for (d = -40; d <= 40; d += 10) {
+        if (d === 0) continue;
+        parts.push(driftLabel(d, sp, 8));
+      }
+    });
+    // 5° ticks labeled on the 140 arc only, to keep the face readable
+    [-25, -15, -5, 5, 15, 25].forEach(function (ang) {
+      parts.push(driftLabel(ang, 140, 6.5));
+    });
     parts.push(el("text", {
-      x: 10, y: 16,
-      fill: "#3a3220",
+      x: 22, y: originY + 90 * PX_PER_KT,
+      fill: "#1a2838",
+      "font-family": FONT,
+      "font-size": 8,
+      "font-weight": 700
+    }, "L"));
+    parts.push(el("text", {
+      x: w - 22, y: originY + 90 * PX_PER_KT,
+      fill: "#1a2838",
       "font-family": FONT,
       "font-size": 8,
       "font-weight": 700,
-      "letter-spacing": 1
-    }, "TAS / GS — KT"));
+      "text-anchor": "end"
+    }, "R"));
 
     return { svg: parts.join(""), width: w, height: h, cx: cx, originY: originY };
   }
@@ -725,24 +861,33 @@
       fill: "url(#e6b-bezel)",
       "fill-rule": "evenodd",
       stroke: "#2c3036",
-      "stroke-width": 1
+      "stroke-width": 1.1
     }));
-    parts.push(el("circle", { cx: WX, cy: GROMMET_Y, r: ROSE_INNER, fill: "none", stroke: "#4a5058", "stroke-width": 1.2 }));
-    for (var d = 0; d < 360; d++) {
+    parts.push(el("circle", {
+      cx: WX, cy: GROMMET_Y, r: ROSE_INNER,
+      fill: "none", stroke: "#4a5058", "stroke-width": 1.3
+    }));
+    // Frosted plotting disc (the card shows through)
+    parts.push(el("circle", {
+      cx: WX, cy: GROMMET_Y, r: ROSE_INNER - 1,
+      fill: "rgba(255,255,252,0.16)",
+      stroke: "none"
+    }));
+    var d;
+    for (d = 0; d < 360; d++) {
       var major = d % 10 === 0;
       var mid = d % 5 === 0;
       var len = major ? 14 : mid ? 9 : 5;
-      var w = major ? 1.5 : mid ? 1 : 0.6;
+      var wt = major ? 1.5 : mid ? 1 : 0.6;
       var a0 = E6B.pointAtAngle(WX, GROMMET_Y, ROSE_OUTER - 2, d);
       var a1 = E6B.pointAtAngle(WX, GROMMET_Y, ROSE_OUTER - 2 - len, d);
       parts.push(el("line", {
         x1: a0.x.toFixed(2), y1: a0.y.toFixed(2),
         x2: a1.x.toFixed(2), y2: a1.y.toFixed(2),
-        stroke: "#141414", "stroke-width": w
+        stroke: "#141414", "stroke-width": wt
       }));
       if (major) {
         var lab = d === 0 ? "360" : String(d);
-        // Compass: 0 at top, numbers increase clockwise — already our convention.
         parts.push((function (ang, text) {
           var p = E6B.pointAtAngle(WX, GROMMET_Y, ROSE_OUTER - 28, ang);
           return el("text", {
@@ -752,17 +897,15 @@
             "dominant-baseline": "middle",
             fill: (ang === 0 || ang === 90 || ang === 180 || ang === 270) ? "#8a1a1a" : "#141414",
             "font-family": FONT,
-            "font-size": (ang % 30 === 0) ? 12 : 9,
+            "font-size": (ang % 30 === 0) ? 13 : 9,
             "font-weight": 700
           }, esc(text));
         })(d, lab));
       }
     }
-    // Cardinals sit in the gap inside the ring so they do not collide
-    // with 360 / 090 / 180 / 270 on the compass scale.
-    var dirs = [[0, "N"], [90, "E"], [180, "S"], [270, "W"]];
-    dirs.forEach(function (dir) {
-      var p = E6B.pointAtAngle(WX, GROMMET_Y, ROSE_INNER - 16, dir[0]);
+    // Cardinals sit just inside the ring, clear of 360 / 090 / 180 / 270
+    [[0, "N"], [90, "E"], [180, "S"], [270, "W"]].forEach(function (dir) {
+      var p = E6B.pointAtAngle(WX, GROMMET_Y, ROSE_INNER + 14, dir[0]);
       parts.push(el("text", {
         x: p.x.toFixed(2), y: p.y.toFixed(2),
         transform: "rotate(" + dir[0] + " " + p.x.toFixed(2) + " " + p.y.toFixed(2) + ")",
@@ -770,52 +913,51 @@
         "dominant-baseline": "middle",
         fill: "#8a1a1a",
         "font-family": FONT,
-        "font-size": 10,
+        "font-size": 11,
         "font-weight": 700
       }, dir[1]));
+    });
+    // Decorative assembly screws on the ring, as on a metal E6B
+    [45, 135, 225, 315].forEach(function (ang) {
+      var p = E6B.pointAtAngle(WX, GROMMET_Y, (ROSE_OUTER + ROSE_INNER) / 2, ang);
+      parts.push(el("circle", {
+        cx: p.x.toFixed(2), cy: p.y.toFixed(2), r: 5.2,
+        fill: "url(#e6b-bezel)", stroke: "#2c3036", "stroke-width": 0.8
+      }));
+      parts.push(el("circle", {
+        cx: p.x.toFixed(2), cy: p.y.toFixed(2), r: 1.4,
+        fill: "#2c3036"
+      }));
     });
     return parts.join("");
   }
 
   function wcaScale() {
-    // Fixed scale in an opaque header band so sliding-card speed labels
-    // (the 60s when the grommet is on 120) do not show through it.
+    // Fixed scale on the frame, an arc either side of the true index —
+    // the real layout: TRUE INDEX at the top, correction degrees L / R.
     var parts = [];
-    var y = WIN.y + 11;
-    var mid = WX;
-    parts.push(el("rect", {
-      x: WIN.x, y: WIN.y, width: WIN.w, height: WCA_BAND_H, rx: 6,
-      fill: "#c5c9ce"
-    }));
-    parts.push(el("rect", {
-      x: WIN.x, y: WIN.y + WCA_BAND_H - 8, width: WIN.w, height: 8,
-      fill: "#c5c9ce"
-    }));
-    parts.push(el("line", {
-      x1: WIN.x, y1: WIN.y + WCA_BAND_H,
-      x2: WIN.x + WIN.w, y2: WIN.y + WCA_BAND_H,
-      stroke: "#2a2e34", "stroke-width": 1
-    }));
-    parts.push(el("text", {
-      x: mid, y: y + 1,
-      "text-anchor": "middle",
-      fill: "#8a1a1a",
-      "font-family": FONT,
-      "font-size": 7,
-      "font-weight": 700,
-      "letter-spacing": 0.8
-    }, "WIND CORRECTION ANGLE"));
-    for (var d = -30; d <= 30; d += 2) {
-      var x = mid + d * 3.2;
+    var rTick0 = ROSE_OUTER + 7;
+    var rTick1 = ROSE_OUTER + 14;
+    var rLab = ROSE_OUTER + 28;
+    var d;
+    for (d = -30; d <= 30; d += 2) {
+      if (d === 0) continue;
       var major = d % 10 === 0;
+      var p0 = E6B.pointAtAngle(WX, GROMMET_Y, rTick0, d);
+      var p1 = E6B.pointAtAngle(WX, GROMMET_Y, rTick0 + (major ? 11 : 6), d);
       parts.push(el("line", {
-        x1: x, y1: y + 5, x2: x, y2: y + (major ? 14 : 10),
-        stroke: "#8a1a1a", "stroke-width": major ? 1.3 : 0.7
+        x1: p0.x.toFixed(2), y1: p0.y.toFixed(2),
+        x2: p1.x.toFixed(2), y2: p1.y.toFixed(2),
+        stroke: "#8a1a1a",
+        "stroke-width": major ? 1.3 : 0.7
       }));
-      if (major && d !== 0) {
+      if (major) {
+        var p = E6B.pointAtAngle(WX, GROMMET_Y, rLab, d);
         parts.push(el("text", {
-          x: x, y: y + 25,
+          x: p.x.toFixed(2), y: p.y.toFixed(2),
+          transform: "rotate(" + d + " " + p.x.toFixed(2) + " " + p.y.toFixed(2) + ")",
           "text-anchor": "middle",
+          "dominant-baseline": "middle",
           fill: "#8a1a1a",
           "font-family": FONT,
           "font-size": 7,
@@ -823,8 +965,20 @@
         }, String(Math.abs(d)) + "°"));
       }
     }
-    parts.push(el("text", { x: mid - 118, y: y + 25, "text-anchor": "middle", fill: "#8a1a1a", "font-family": FONT, "font-size": 7, "font-weight": 700 }, "L"));
-    parts.push(el("text", { x: mid + 118, y: y + 25, "text-anchor": "middle", fill: "#8a1a1a", "font-family": FONT, "font-size": 7, "font-weight": 700 }, "R"));
+    var pL = E6B.pointAtAngle(WX, GROMMET_Y, rLab + 2, -34);
+    var pR = E6B.pointAtAngle(WX, GROMMET_Y, rLab + 2, 34);
+    parts.push(el("text", {
+      x: pL.x.toFixed(2), y: pL.y.toFixed(2),
+      transform: "rotate(-34 " + pL.x.toFixed(2) + " " + pL.y.toFixed(2) + ")",
+      "text-anchor": "middle", "dominant-baseline": "middle",
+      fill: "#8a1a1a", "font-family": FONT, "font-size": 7.5, "font-weight": 700
+    }, "L"));
+    parts.push(el("text", {
+      x: pR.x.toFixed(2), y: pR.y.toFixed(2),
+      transform: "rotate(34 " + pR.x.toFixed(2) + " " + pR.y.toFixed(2) + ")",
+      "text-anchor": "middle", "dominant-baseline": "middle",
+      fill: "#8a1a1a", "font-family": FONT, "font-size": 7.5, "font-weight": 700
+    }, "R"));
     return el("g", { id: "e6b-wca-scale" }, parts.join(""));
   }
 
@@ -839,11 +993,11 @@
     var wca = opts.wca;
     var gs = opts.groundspeed;
     var bg = opts.background != null ? opts.background : "none";
+    var grommetSpeed = opts.grommetSpeed != null ? opts.grommetSpeed
+      : (showCallouts && isFinite(gs) ? gs : tas);
     var card = buildWindCard();
-    var cardX = WX - card.cx;
-    var cardY = cardOffsetForTas(tas);
 
-    var clipId = "e6b-wind-clip";
+    var clipId = "e6b-wind-disc-clip";
     var defs = el("defs", null, [
       el("radialGradient", { id: "e6b-bezel", cx: "35%", cy: "30%", r: "80%" }, [
         el("stop", { offset: "0%", "stop-color": "#d8dce2" }),
@@ -857,70 +1011,32 @@
         el("stop", { offset: "100%", "stop-color": "#6e5220" })
       ]),
       el("filter", { id: "e6b-glow", x: "-50%", y: "-50%", width: "200%", height: "200%" }, [
-        el("feGaussianBlur", { "stdDeviation": "3.5", result: "b" }),
+        el("feGaussianBlur", { "stdDeviation": "2.2", result: "b" }),
         el("feMerge", null, [el("feMergeNode", { in: "b" }), el("feMergeNode", { in: "SourceGraphic" })])
       ]),
       el("clipPath", { id: clipId }, [
-        el("rect", { x: WIN.x, y: WIN.y + WCA_BAND_H, width: WIN.w, height: WIN.h - WCA_BAND_H })
+        el("circle", { cx: WX, cy: GROMMET_Y, r: ROSE_INNER - 0.5 })
       ])
     ].join(""));
 
-    // Frame / body
-    var bodyW = 640;
-    var bodyH = 780;
-    var frame = [
-      bg && bg !== "none" ? el("rect", { x: 0, y: 0, width: bodyW, height: bodyH, fill: bg }) : "",
-      el("rect", { x: 36, y: 16, width: 568, height: 748, rx: 28, fill: "url(#e6b-bezel)", stroke: "#2c3036", "stroke-width": 1.5 }),
-      el("rect", { x: 52, y: 32, width: 536, height: 716, rx: 20, fill: "#cfd3d8", stroke: "#6a7078", "stroke-width": 1 }),
-      el("text", {
-        x: WX, y: 58,
-        "text-anchor": "middle",
-        fill: "#1a1a1a",
-        "font-family": FONT,
-        "font-size": 13,
-        "font-weight": 700,
-        "letter-spacing": 2.4
-      }, "E6B  ·  WIND SIDE"),
-      el("text", {
-        x: WX, y: 74,
-        "text-anchor": "middle",
-        fill: "#8a1a1a",
-        "font-family": FONT,
-        "font-size": 9,
-        "font-weight": 600,
-        "letter-spacing": 1.4
-      }, "TRUE COURSE INDEX")
+    var frameBg = [
+      bg && bg !== "none" ? el("rect", { x: 0, y: 0, width: BODY_W, height: BODY_H, fill: bg }) : ""
     ].join("");
 
-    var trueIndex = (function () {
-      var top = GROMMET_Y - ROSE_OUTER;
-      var pts = WX + "," + (top - 2) + " " + (WX - 12) + "," + (top - 22) + " " + (WX + 12) + "," + (top - 22);
-      return el("g", { id: "e6b-true-index" }, [
-        el("polygon", { points: pts, fill: "#8a1a1a" }),
-        el("text", {
-          x: WX, y: top - 26,
-          "text-anchor": "middle",
-          fill: "#8a1a1a",
-          "font-family": FONT,
-          "font-size": 8,
-          "font-weight": 700,
-          "letter-spacing": 1
-        }, "TRUE INDEX")
-      ]);
-    })();
-
-    var cardGroup = el("g", { "clip-path": "url(#" + clipId + ")" }, [
-      el("g", {
-        id: "e6b-wind-card",
-        transform: "translate(" + cardX.toFixed(2) + " " + cardY.toFixed(2) + ")"
-      }, card.svg)
-    ].join(""));
+    var cardGroup = el("g", {
+      id: "e6b-wind-card",
+      transform: cardTransform(grommetSpeed)
+    }, card.svg);
 
     var roseRot = -((roseHeading === 360) ? 0 : roseHeading);
     var rose = el("g", {
       id: "e6b-wind-rose",
       transform: "rotate(" + roseRot.toFixed(4) + " " + WX + " " + GROMMET_Y + ")"
     }, compassRose());
+
+    // Pencil wind dot lives on the frosted disc (rotates with the rose,
+    // does not slide with the card) and is clipped to the circular window.
+    var dotCy = GROMMET_Y - windSpeed * PX_PER_KT;
     var windDot = el("g", { "clip-path": "url(#" + clipId + ")" }, [
       el("g", {
         id: "e6b-wind-dot",
@@ -930,77 +1046,82 @@
         el("circle", {
           id: "e6b-wind-dot-mark",
           cx: WX,
-          cy: GROMMET_Y - windSpeed * PX_PER_KT,
-          r: 6,
-          fill: "#8a1a1a",
-          stroke: "#fff4d0",
-          "stroke-width": 1.6,
-          filter: showCallouts ? "url(#e6b-glow)" : null
+          cy: dotCy,
+          r: 5.2,
+          fill: "none",
+          stroke: "#3a3a38",
+          "stroke-width": 1.15
         }),
         el("circle", {
           id: "e6b-wind-dot-core",
           cx: WX,
-          cy: GROMMET_Y - windSpeed * PX_PER_KT,
-          r: 2,
-          fill: "#fff4d0"
+          cy: dotCy,
+          r: 2.6,
+          fill: "#4a4a46",
+          opacity: 0.92
         })
       ].join(""))
     ].join(""));
 
-    var windowFrame = [
-      el("rect", {
-        x: WIN.x, y: WIN.y, width: WIN.w, height: WIN.h, rx: 6,
-        fill: "none",
-        stroke: "#2a2e34",
-        "stroke-width": 3
-      }),
-      // grommet
-      el("g", { id: "e6b-grommet" }, [
-        el("circle", { cx: WX, cy: GROMMET_Y, r: 11, fill: "none", stroke: "#c4a35a", "stroke-width": 4 }),
-        el("circle", { cx: WX, cy: GROMMET_Y, r: 7, fill: "none", stroke: "#5a4314", "stroke-width": 1 }),
-        el("circle", { cx: WX, cy: GROMMET_Y, r: 2.2, fill: "#1a140c" })
-      ].join("")),
-      wcaScale()
-    ].join("");
+    var trueIndex = (function () {
+      var top = GROMMET_Y - ROSE_OUTER;
+      var pts = WX + "," + (top - 1) + " " + (WX - 11) + "," + (top - 20) + " " + (WX + 11) + "," + (top - 20);
+      return el("g", { id: "e6b-true-index" }, [
+        el("polygon", { points: pts, fill: "#8a1a1a" }),
+        el("text", {
+          x: WX, y: top - 26,
+          "text-anchor": "middle",
+          fill: "#8a1a1a",
+          "font-family": FONT,
+          "font-size": 8.5,
+          "font-weight": 700,
+          "letter-spacing": 1.2
+        }, "TRUE INDEX")
+      ]);
+    })();
+
+    var grommet = el("g", { id: "e6b-grommet" }, [
+      el("circle", { cx: WX, cy: GROMMET_Y, r: 11, fill: "none", stroke: "#c4a35a", "stroke-width": 4 }),
+      el("circle", { cx: WX, cy: GROMMET_Y, r: 7, fill: "none", stroke: "#5a4314", "stroke-width": 1 }),
+      el("circle", { cx: WX, cy: GROMMET_Y, r: 2.2, fill: "#1a140c" })
+    ].join(""));
 
     var callouts = "";
     if (showCallouts && showDot && isFinite(wca) && isFinite(gs)) {
       var side = wca < 0 ? "L" : wca > 0 ? "R" : "";
       var wcaLbl = (wca === 0 ? "WCA 0°" : "WCA " + Math.abs(wca).toFixed(1) + "° " + side);
       var gsLbl = "GS " + gs.toFixed(1) + " kt";
-      // Place callouts near the (world) wind-dot position
       var world = E6B.windDotOffset(windFrom, roseHeading, windSpeed);
       var cX = WX + world.x * PX_PER_KT;
       var cY = GROMMET_Y - world.y * PX_PER_KT;
-      // Boxed callout in the lower-left of the window — on the open grid,
-      // left of the TAS/GS numbers and below the wind dot.
-      var boxW = 112;
+      // Box sits in the left margin, outside the compass ring, so it
+      // never covers the wind dot, the grommet, or the card numbers.
+      var boxW = 118;
       var boxH = 42;
-      var boxX = WIN.x + 12;
-      var boxY = WIN.y + WIN.h - 96;
-      var tipX = cX - 14;
-      var tipY = cY + 14;
+      var boxX = 16;
+      var boxY = cY + 36;
+      var tipX = cX - 12;
+      var tipY = cY + 4;
       var joinX = boxX + boxW;
       var joinY = boxY + 10;
       callouts = el("g", { id: "e6b-wind-callouts" }, [
         el("circle", {
-          cx: cX.toFixed(2), cy: cY.toFixed(2), r: 14,
-          fill: "none", stroke: "#e8b84a", "stroke-width": 3,
-          filter: "url(#e6b-glow)"
+          cx: cX.toFixed(2), cy: cY.toFixed(2), r: 9,
+          fill: "none", stroke: "#6a6258", "stroke-width": 1.2
         }),
         el("line", {
           x1: tipX.toFixed(2), y1: tipY.toFixed(2),
           x2: joinX.toFixed(2), y2: joinY.toFixed(2),
-          stroke: "#c4a35a", "stroke-width": 1.4
+          stroke: "#c4a35a", "stroke-width": 1.3
         }),
         el("rect", {
-          x: boxX, y: boxY.toFixed(2), width: boxW, height: boxH, rx: 6,
+          x: boxX, y: boxY, width: boxW, height: boxH, rx: 6,
           fill: "#fff8e8",
           stroke: "#c4a35a",
           "stroke-width": 1.5
         }),
         el("text", {
-          x: boxX + 10, y: (boxY + 17).toFixed(2),
+          x: boxX + 10, y: boxY + 17,
           "text-anchor": "start",
           fill: "#5a3a00",
           "font-family": FONT,
@@ -1008,7 +1129,7 @@
           "font-weight": 700
         }, esc(wcaLbl)),
         el("text", {
-          x: boxX + 10, y: (boxY + 32).toFixed(2),
+          x: boxX + 10, y: boxY + 33,
           "text-anchor": "start",
           fill: "#5a3a00",
           "font-family": FONT,
@@ -1021,30 +1142,31 @@
     }
 
     var footer = el("text", {
-      x: WX, y: 742,
+      x: WX, y: BODY_H - 18,
       "text-anchor": "middle",
-      fill: "#333",
+      fill: "#9aa3b0",
       "font-family": FONT,
       "font-size": 8,
       "font-weight": 600
-    }, "Plot wind toward the true index  ·  grommet on TAS  ·  read WCA and GS at the wind mark");
+    }, "Plot wind toward the true index  ·  slide the card until the mark sits on TAS  ·  read WCA at the mark and GS under the grommet");
 
     var svgAttrs = {
       xmlns: "http://www.w3.org/2000/svg",
-      viewBox: "0 0 " + bodyW + " " + bodyH,
+      viewBox: "0 0 " + BODY_W + " " + BODY_H,
       role: "img",
-      "aria-label": opts.ariaLabel || "E6B wind side: rotating azimuth, sliding grid, and grommet",
+      "aria-label": opts.ariaLabel || "E6B wind side: rotating azimuth, sliding polar grid, and grommet",
       class: "e6b-wind-svg"
     };
     if (opts.width) svgAttrs.width = opts.width;
     if (opts.height) svgAttrs.height = opts.height;
 
     var content = [
-      defs, frame,
+      defs, frameBg,
       cardGroup,
       rose,
       windDot,
-      windowFrame,
+      grommet,
+      wcaScale(),
       trueIndex,
       callouts,
       footer
@@ -1064,12 +1186,13 @@
     R_OUTER: R_OUTER,
     R_DA_OUT: R_DA_OUT,
     DA_POINTER: DA_POINTER,
+    CARD_W: CARD_W,
     cardOffsetForTas: cardOffsetForTas,
+    cardTransform: cardTransform,
     windCardLocalY: windCardLocalY,
     buildComputerSvg: buildComputerSvg,
     buildWindSvg: buildWindSvg,
-    highlightsSvg: highlightGroup,
-    WIN: WIN
+    highlightsSvg: highlightGroup
   };
 
   root.E6BRender = api;

@@ -395,12 +395,10 @@
       if (rose) rose.setAttribute("transform", t);
       if (dot) dot.setAttribute("transform", t);
     }
-    function setCard(tasVal) {
+    function setCard(speedAtGrommet) {
       var card = $("e6b-wind-card");
       if (!card) return;
-      var y = R.cardOffsetForTas(tasVal);
-      var x = R.WX - (R.WIN.w / 2);
-      card.setAttribute("transform", "translate(" + x.toFixed(2) + " " + y.toFixed(2) + ")");
+      card.setAttribute("transform", R.cardTransform(speedAtGrommet));
     }
     function setDotVisible(on, speed) {
       var dot = $("e6b-wind-dot");
@@ -424,7 +422,8 @@
       rebuildWind({
         roseHeading: tc, tas: tas, windFrom: wd, windSpeed: ws,
         showDot: true, showCallouts: true,
-        wca: result.wca, groundspeed: result.groundspeed
+        wca: result.wca, groundspeed: result.groundspeed,
+        grommetSpeed: isFinite(result.groundspeed) ? result.groundspeed : tas
       });
       setWindSteps(4);
       if (done) done();
@@ -432,14 +431,14 @@
 
     if (dur === 0) { finish(); return; }
 
-    // Step 1 already: wind under true index
+    // Step 0 already: wind under true index
     setWindSteps(0);
     setTimeout(function () {
       setWindSteps(1);
       setDotVisible(true, ws);
       setTimeout(function () {
         setWindSteps(2);
-        // card already on TAS; give a little slide from a nearby value
+        // Slide the card so the grommet sits on the TAS arc
         var fromTas = Math.max(40, tas - 30);
         animateValue(fromTas, tas, 550, function (v) { setCard(v); }, function () {
           setCard(tas);
@@ -447,7 +446,13 @@
           var fromH = wd;
           animateAngle(fromH, tc, dur, function (h) { setRose(h); }, function () {
             setRose(tc);
-            setTimeout(finish, 200);
+            setWindSteps(4);
+            // Final slide: wind mark onto the TAS arc (grommet then reads GS)
+            var endSpeed = isFinite(result.groundspeed) ? result.groundspeed : tas;
+            animateValue(tas, endSpeed, 550, function (v) { setCard(v); }, function () {
+              setCard(endSpeed);
+              setTimeout(finish, 200);
+            });
           });
         });
       }, 400);
