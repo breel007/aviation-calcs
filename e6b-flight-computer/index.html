@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>E6B Flight Computer — Rotating Slide Rule &amp; Wind Side</title>
+  <meta name="description" content="Animated online E6B flight computer. Enter time, speed, fuel, TAS, or wind, watch the disk rotate to the answer, and follow the wind-side method step by step.">
+  <meta name="keywords" content="E6B flight computer, E6B calculator, rotating E6B, slide rule, time speed distance, fuel burn, true airspeed, density altitude, wind correction angle, wind side">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/e6b-flight-computer/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/e6b-flight-computer/">
+  <meta property="og:title" content="E6B Flight Computer — Rotating Slide Rule &amp; Wind Side">
+  <meta property="og:description" content="Enter values and watch an old-school E6B rotate to the answer, with the wind-side method illustrated step by step.">
+  <meta property="og:image" content="https://aviatorcalcs.com/e6b-flight-computer/e6b-og.png">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="E6B Flight Computer — Rotating Slide Rule &amp; Wind Side">
+  <meta name="twitter:description" content="Animated circular E6B and illustrated wind side, with exact formulas behind the dial.">
+  <meta name="twitter:image" content="https://aviatorcalcs.com/e6b-flight-computer/e6b-og.png">
+  <meta name="application-name" content="E6B Flight Computer">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='12' fill='none' stroke='%23c5c9d0' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='8' fill='none' stroke='%23e8b84a' stroke-width='1.4'/%3E%3Ccircle cx='16' cy='16' r='1.7' fill='%23c4a35a'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["WebApplication", "SoftwareApplication"],
+      "name": "E6B Flight Computer",
+      "url": "https://aviatorcalcs.com/e6b-flight-computer/",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "Free animated E6B flight computer. Solves time-speed-distance, fuel burn, true airspeed, density altitude, unit conversion, and the wind triangle, and shows how a mechanical E6B is set."
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do you use an E6B to solve time, speed, and distance?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Place the rate index (the black triangle at 60 on the inner, minutes scale) under the groundspeed on the outer scale. Then read distance on the outer scale opposite time on the inner scale, or time opposite distance. The same setting works for fuel flow, time, and fuel quantity. This page rotates the inner disk to that alignment and highlights the answer tick."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the TAS window on an E6B give an exact true airspeed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. A mechanical E6B lines up outside air temperature with pressure altitude so the inner and outer scales are shifted by 1 over the square root of the density ratio. That is the incompressible approximation TAS ≈ CAS / √σ. The number reported here is the subsonic compressible pitot-static solution; the dial is shown with the mechanical alignment and the two values are compared."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you use the wind side of an E6B?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Rotate the azimuth until the wind direction is under the true index. Plot a mark from the grommet toward the true index at the wind speed. Slide the grid until the grommet is on true airspeed. Rotate the azimuth until the true course is under the true index. Read wind correction angle and groundspeed at the wind mark. Heading is course plus WCA (a right correction is a crab to the right). The illustration follows that procedure; the numbers are the exact wind-triangle solution."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a positive wind correction angle to the right or the left?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A positive WCA is a correction to the right: true heading = true course + WCA. Wind from the right produces a right crab. This page labels a left correction as L and a right correction as R, and it uses the same sign convention as the E6B wind triangle calculator."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use this E6B instead of the POH or a certified flight computer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. This is a training and illustration aid. It is not a substitute for the Pilot’s Operating Handbook or Aircraft Flight Manual, a certified flight computer, official weather, or a navigation log used for flight. Always defer to those sources."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">E6B Flight Computer</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../e6b-wind/">E6B wind</a>
+        <a href="../time-speed-distance/">Time / speed / distance</a>
+        <a href="../true-airspeed/">True airspeed</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">E6B Flight Computer</h1>
+        <p class="lede">An old-school rotating E6B. Enter the values, press Solve, and the inner disk turns to the alignment a mechanical computer would use, with the answer tick highlighted. The wind side walks through the standard grommet-and-wind-dot method. You can also drag the inner disk by hand.</p>
+      </header>
+
+      <div class="e6b-workbench">
+        <form id="calc-form" action="#" method="get" novalidate>
+          <div class="field-block">
+            <div class="field-label-row">
+              <span class="sublabel" style="margin:0">Mode</span>
+            </div>
+            <div class="seg mode-grid" role="group" aria-label="Calculator mode">
+              <button type="button" class="seg-btn is-active" data-unit-group="mode" data-unit="tsd" aria-pressed="true">Time / speed / distance</button>
+              <button type="button" class="seg-btn" data-unit-group="mode" data-unit="fuel" aria-pressed="false">Fuel burn</button>
+              <button type="button" class="seg-btn" data-unit-group="mode" data-unit="tas" aria-pressed="false">True airspeed</button>
+              <button type="button" class="seg-btn" data-unit-group="mode" data-unit="da" aria-pressed="false">Density altitude</button>
+              <button type="button" class="seg-btn" data-unit-group="mode" data-unit="convert" aria-pressed="false">NM / SM / km</button>
+              <button type="button" class="seg-btn" data-unit-group="mode" data-unit="offcourse" aria-pressed="false">Off course</button>
+              <button type="button" class="seg-btn" data-unit-group="mode" data-unit="wind" aria-pressed="false">Wind side</button>
+            </div>
+          </div>
+
+          <div class="mode-fields" data-mode="tsd">
+            <div class="field-block">
+              <div class="field-label-row">
+                <span class="sublabel" style="margin:0">Solve for</span>
+                <div class="seg" role="group" aria-label="Solve for">
+                  <button type="button" class="seg-btn" data-unit-group="tsd-solve" data-unit="time" aria-pressed="false">Time</button>
+                  <button type="button" class="seg-btn" data-unit-group="tsd-solve" data-unit="speed" aria-pressed="false">Speed</button>
+                  <button type="button" class="seg-btn is-active" data-unit-group="tsd-solve" data-unit="distance" aria-pressed="true">Distance</button>
+                </div>
+              </div>
+            </div>
+            <div class="field-block">
+              <label for="tsd-speed">Speed (kt)</label>
+              <input id="tsd-speed" class="input" type="number" inputmode="decimal" step="any" min="0" value="120" autocomplete="off">
+            </div>
+            <fieldset class="field-block">
+              <legend>Time</legend>
+              <div class="pair">
+                <div>
+                  <label for="tsd-hours" class="sublabel">Hours</label>
+                  <input id="tsd-hours" class="input" type="number" inputmode="decimal" step="any" min="0" value="0" autocomplete="off">
+                </div>
+                <div>
+                  <label for="tsd-minutes" class="sublabel">Minutes</label>
+                  <input id="tsd-minutes" class="input" type="number" inputmode="decimal" step="any" min="0" value="45" autocomplete="off">
+                </div>
+              </div>
+            </fieldset>
+            <div class="field-block">
+              <label for="tsd-distance">Distance (NM)</label>
+              <input id="tsd-distance" class="input" type="number" inputmode="decimal" step="any" min="0" value="" autocomplete="off">
+            </div>
+          </div>
+
+          <div class="mode-fields" data-mode="fuel" hidden>
+            <div class="field-block">
+              <div class="field-label-row">
+                <span class="sublabel" style="margin:0">Solve for</span>
+                <div class="seg" role="group" aria-label="Fuel solve for">
+                  <button type="button" class="seg-btn" data-unit-group="fuel-solve" data-unit="time" aria-pressed="false">Time</button>
+                  <button type="button" class="seg-btn" data-unit-group="fuel-solve" data-unit="rate" aria-pressed="false">Rate</button>
+                  <button type="button" class="seg-btn is-active" data-unit-group="fuel-solve" data-unit="fuel" aria-pressed="true">Fuel</button>
+                </div>
+              </div>
+            </div>
+            <div class="field-block">
+              <label for="fuel-rate">Fuel flow (gph)</label>
+              <input id="fuel-rate" class="input" type="number" inputmode="decimal" step="any" min="0" value="8.5" autocomplete="off">
+            </div>
+            <fieldset class="field-block">
+              <legend>Time</legend>
+              <div class="pair">
+                <div>
+                  <label for="fuel-hours" class="sublabel">Hours</label>
+                  <input id="fuel-hours" class="input" type="number" inputmode="decimal" step="any" min="0" value="2" autocomplete="off">
+                </div>
+                <div>
+                  <label for="fuel-minutes" class="sublabel">Minutes</label>
+                  <input id="fuel-minutes" class="input" type="number" inputmode="decimal" step="any" min="0" value="30" autocomplete="off">
+                </div>
+              </div>
+            </fieldset>
+            <div class="field-block">
+              <label for="fuel-qty">Fuel quantity (gal)</label>
+              <input id="fuel-qty" class="input" type="number" inputmode="decimal" step="any" min="0" value="" autocomplete="off">
+            </div>
+          </div>
+
+          <div class="mode-fields" data-mode="tas" hidden>
+            <div class="field-block">
+              <label for="tas-cas">Calibrated airspeed (kt)</label>
+              <input id="tas-cas" class="input" type="number" inputmode="decimal" step="any" min="0" value="120" autocomplete="off">
+              <p class="hint">Treat indicated airspeed as CAS only after you have applied the POH airspeed calibration.</p>
+            </div>
+            <div class="field-block">
+              <label for="tas-pa">Pressure altitude (ft)</label>
+              <input id="tas-pa" class="input" type="number" inputmode="decimal" step="any" value="6000" autocomplete="off">
+            </div>
+            <div class="field-block">
+              <div class="field-label-row">
+                <label for="tas-oat">Outside air temperature</label>
+                <div class="seg" role="group" aria-label="OAT unit">
+                  <button type="button" class="seg-btn is-active" data-unit-group="tas-temp" data-unit="c" aria-pressed="true">°C</button>
+                  <button type="button" class="seg-btn" data-unit-group="tas-temp" data-unit="f" aria-pressed="false">°F</button>
+                </div>
+              </div>
+              <input id="tas-oat" class="input" type="number" inputmode="decimal" step="any" value="0" autocomplete="off">
+            </div>
+          </div>
+
+          <div class="mode-fields" data-mode="da" hidden>
+            <div class="field-block">
+              <label for="da-pa">Pressure altitude (ft)</label>
+              <input id="da-pa" class="input" type="number" inputmode="decimal" step="any" value="5000" autocomplete="off">
+            </div>
+            <div class="field-block">
+              <div class="field-label-row">
+                <label for="da-oat">Outside air temperature</label>
+                <div class="seg" role="group" aria-label="OAT unit">
+                  <button type="button" class="seg-btn is-active" data-unit-group="da-temp" data-unit="c" aria-pressed="true">°C</button>
+                  <button type="button" class="seg-btn" data-unit-group="da-temp" data-unit="f" aria-pressed="false">°F</button>
+                </div>
+              </div>
+              <input id="da-oat" class="input" type="number" inputmode="decimal" step="any" value="30" autocomplete="off">
+            </div>
+          </div>
+
+          <div class="mode-fields" data-mode="convert" hidden>
+            <div class="field-block">
+              <div class="field-label-row">
+                <label for="conv-value">Distance</label>
+                <div class="seg" role="group" aria-label="From unit">
+                  <button type="button" class="seg-btn is-active" data-unit-group="conv-from" data-unit="nm" aria-pressed="true">NM</button>
+                  <button type="button" class="seg-btn" data-unit-group="conv-from" data-unit="sm" aria-pressed="false">SM</button>
+                  <button type="button" class="seg-btn" data-unit-group="conv-from" data-unit="km" aria-pressed="false">km</button>
+                </div>
+              </div>
+              <input id="conv-value" class="input" type="number" inputmode="decimal" step="any" min="0" value="100" autocomplete="off">
+            </div>
+          </div>
+
+          <div class="mode-fields" data-mode="offcourse" hidden>
+            <div class="field-block">
+              <div class="field-label-row">
+                <span class="sublabel" style="margin:0">Solve for</span>
+                <div class="seg" role="group" aria-label="Off-course solve for">
+                  <button type="button" class="seg-btn is-active" data-unit-group="oc-solve" data-unit="distanceOff" aria-pressed="true">Distance off</button>
+                  <button type="button" class="seg-btn" data-unit-group="oc-solve" data-unit="degreesOff" aria-pressed="false">Degrees off</button>
+                  <button type="button" class="seg-btn" data-unit-group="oc-solve" data-unit="distanceFlown" aria-pressed="false">Distance flown</button>
+                </div>
+              </div>
+            </div>
+            <div class="field-block">
+              <label for="oc-flown">Distance flown (NM)</label>
+              <input id="oc-flown" class="input" type="number" inputmode="decimal" step="any" min="0" value="60" autocomplete="off">
+            </div>
+            <div class="field-block">
+              <label for="oc-deg">Degrees off course</label>
+              <input id="oc-deg" class="input" type="number" inputmode="decimal" step="any" value="6" autocomplete="off">
+            </div>
+            <div class="field-block">
+              <label for="oc-off">Distance off course (NM)</label>
+              <input id="oc-off" class="input" type="number" inputmode="decimal" step="any" min="0" value="" autocomplete="off">
+            </div>
+          </div>
+
+          <div class="mode-fields" data-mode="wind" hidden>
+            <div class="field-block">
+              <label for="wind-tc">True course (°)</label>
+              <input id="wind-tc" class="input" type="number" inputmode="decimal" step="any" value="90" autocomplete="off">
+            </div>
+            <div class="field-block">
+              <label for="wind-tas">True airspeed (kt)</label>
+              <input id="wind-tas" class="input" type="number" inputmode="decimal" step="any" min="0" value="120" autocomplete="off">
+            </div>
+            <div class="field-block">
+              <label for="wind-from">Wind direction (from, °)</label>
+              <input id="wind-from" class="input" type="number" inputmode="decimal" step="any" value="360" autocomplete="off">
+            </div>
+            <div class="field-block">
+              <label for="wind-speed">Wind speed (kt)</label>
+              <input id="wind-speed" class="input" type="number" inputmode="decimal" step="any" min="0" value="20" autocomplete="off">
+            </div>
+            <p class="hint">Use one reference throughout: a true course with a true wind, or a magnetic course with a magnetic wind. Do not mix them.</p>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-solid" id="btn-solve">Solve</button>
+            <button type="button" class="btn btn-ghost" id="btn-example">Load example</button>
+            <button type="button" class="btn btn-ghost" id="btn-reset">Reset</button>
+          </div>
+        </form>
+
+        <div class="e6b-stage">
+          <div class="stage-toolbar">
+            <div class="seg side-toggle" role="group" aria-label="Computer or wind side">
+              <button type="button" class="seg-btn is-active" data-unit-group="side" data-unit="computer" aria-pressed="true">Computer side</button>
+              <button type="button" class="seg-btn" data-unit-group="side" data-unit="wind" aria-pressed="false">Wind side</button>
+            </div>
+          </div>
+          <div id="computer-stage">
+            <div class="computer-wrap" id="computer-mount" aria-label="Circular E6B computer"></div>
+            <p class="stage-caption">Drag the inner disk, or press Solve and watch it rotate to the answer. The red hairline is the 10-index at the top.</p>
+            <p class="drag-readout" id="drag-readout" aria-live="polite"></p>
+          </div>
+          <div id="wind-stage" hidden>
+            <div class="wind-wrap" id="wind-mount" aria-label="E6B wind side illustration"></div>
+            <ol class="step-list" id="wind-steps">
+              <li>Rotate the azimuth until the wind direction is under the true index.</li>
+              <li>From the grommet, plot a mark toward the true index at the wind speed.</li>
+              <li>Slide the grid until the grommet is on true airspeed.</li>
+              <li>Rotate the azimuth until the true course is under the true index.</li>
+              <li>Read wind correction angle and groundspeed at the wind mark. Heading = course + WCA.</li>
+            </ol>
+            <p class="stage-caption">A rectangular grid is slightly approximate in a pure crosswind. The numbers in the result panel are the exact wind-triangle solution.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="warnings" class="warnings" hidden role="status"></div>
+
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label" id="hero-label">Result</p>
+          <p class="hero-value" id="hero-value"><span class="num">—</span> <span class="unit"></span></p>
+          <p class="hero-sub" id="hero-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+      </section>
+
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This page is a training aid and an illustration of a mechanical E6B. It is <strong>not</strong> a substitute for the Pilot’s Operating Handbook or Aircraft Flight Manual, a certified flight computer, official weather, or a navigation log used to plan or conduct a flight. The TAS dial uses the standard incompressible E6B window; the number labeled “exact” uses the subsonic compressible pitot-static formula. Always defer to the POH/AFM and current regulations.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>How a circular E6B is laid out</h2>
+      <p>The front of a mechanical E6B is a circular slide rule. The outer scale is fixed and is used for miles, gallons, true airspeed, and any other quantity in the same family. The inner disk rotates and is graduated in minutes, with an hours ring just inside it. Both scales are one logarithmic decade — the ticks from 10 to 100 go once around the face, and 10, 100, and 1,000 sit on the same mark.</p>
+      <p>The angle of a value <code>x</code>, measured clockwise from the 10-index at the top, is:</p>
+      <div class="formula-block">
+        <p><code>angle(x) = 360° × log₁₀(x / 10)</code></p>
+        <p>with <code>x</code> first wrapped into the decade [10, 100). So 8.5, 85, and 850 share a tick.</p>
+      </div>
+      <p>The black triangle at 60 on the inner scale is the <strong>rate index</strong>. To fly 120 knots for 45 minutes, you set that triangle under 12 (the 120 tick). Forty-five on the minutes scale then sits under 90 on the miles scale, because 120 × 45/60 = 90. Fuel burn is the same identity: 8.5 gph for 2 hours 30 minutes is 21.25 gallons.</p>
+      <p>The red NAUT, STAT, and KM arrows are a fixed angle apart equal to the exact SI ratios (1 NM = 1 852 m, 1 SM = 1 609.344 m). Align the known distance under its unit mark and read the other two under their marks. Off-course problems use the same 60-index as the <a href="../vor-dme-1-in-60/">1-in-60 rule</a>: 1° off for 60 NM flown is 1 NM off course.</p>
+
+      <h2>The TAS and density-altitude windows</h2>
+      <p>In the airspeed-correction window you line up outside air temperature with pressure altitude. That rotation is chosen so the inner and outer scales differ by the incompressible E6B relation</p>
+      <div class="formula-block">
+        <p><code>TAS ≈ CAS / √σ</code></p>
+        <p>where <code>σ = ρ / ρ₀ = (p / p₀) × (T₀ / T)</code> is the density ratio from the ICAO Standard Atmosphere (Doc 7488 / ISO 2533) at the entered pressure altitude and OAT. The window rotation is <code>360° × log₁₀(1/√σ) = −180° × log₁₀(σ)</code>.</p>
+      </div>
+      <p>A mechanical computer stops there. This page reports the <strong>subsonic compressible</strong> true airspeed as the numeric answer — the same pitot-static formulas as the <a href="../true-airspeed/">true airspeed calculator</a> — and shows the dial at the E6B alignment so you can see the difference. At light-airplane speeds the two are close; they diverge as Mach increases. IAS equals CAS only after instrument and position error are applied from the POH.</p>
+      <p>The density-altitude window is geared to the same setting. Density altitude is the ICAO geopotential height that has the same density, inverted in the troposphere as</p>
+      <div class="formula-block">
+        <p><code>DA = (T₀ / L) × (1 − σ<sup>1 / (g/(R L) − 1)</sup>)</code></p>
+        <p>or about <code>145 442 × (1 − σ<sup>0.234969</sup>)</code> feet. A rule of thumb, <code>DA ≈ PA + 120 × (OAT − ISA)</code>, is shown for comparison. Humidity is omitted here; use the <a href="../density-altitude/">density altitude calculator</a> when dewpoint is available.</p>
+      </div>
+      <p>Worked TAS check: 100 KCAS at 8,000 ft in ISA conditions is <strong>112.7 kt</strong> by the compressible formula; the dial (CAS / √σ) reads 112.8 kt. At 6,000 ft and 0 °C, 120 KCAS is 130.4 kt exact and 130.5 kt on the dial. For density altitude, 5,000 ft pressure altitude at 30 °C is 7,801 ft by the ICAO inversion; the 120 ft/°C rule gives 7,989 ft.</p>
+
+      <h2>The wind side</h2>
+      <p>The back of an E6B is a plotter: a rotating azimuth (compass rose) with a true-index marker, a transparent window with a grommet at the center, and a sliding grid card of speed arcs and drift lines. The standard method, taught in the FAA Pilot’s Handbook and in E6B computer manuals, is:</p>
+      <ol>
+        <li>Rotate the azimuth until the wind direction is under the true index.</li>
+        <li>From the grommet, plot a pencil mark toward the true index a distance equal to the wind speed.</li>
+        <li>Slide the grid until the grommet is on true airspeed.</li>
+        <li>Rotate the azimuth until the true course is under the true index.</li>
+        <li>Read the wind correction angle (left or right of the centerline) and the groundspeed at the wind mark. True heading is true course plus WCA, with a right correction positive (crab right when the wind is from the right).</li>
+      </ol>
+      <p>The illustration animates those steps. The printed answers use the exact wind-triangle solution, the same closed form as the <a href="../e6b-wind/">E6B wind triangle calculator</a>:</p>
+      <div class="formula-block">
+        <p><code>crosswind = WS × sin(wind − course)</code> (positive from the right)</p>
+        <p><code>headwind = WS × cos(wind − course)</code></p>
+        <p><code>WCA = arcsin(crosswind / TAS)</code></p>
+        <p><code>GS = √(TAS² − crosswind²) − headwind</code></p>
+      </div>
+      <p>A rectangular or polar card is slightly approximate: a pure crosswind of 20 kt at 120 kt TAS leaves the wind mark on the 120-kt line, while the exact groundspeed is 118.3 kt and the exact WCA is 9.6° left. Use the numbers in the result panel, not the last pencil-width on the card, when the two disagree. Classic check case: true course 090, TAS 120 kt, wind 360 at 20 kt → WCA 9.6° left, true heading 080, groundspeed 118.3 kt.</p>
+
+      <h2>Related calculators</h2>
+      <ul class="related-tools">
+        <li><a href="../e6b-wind/">E6B wind triangle</a></li>
+        <li><a href="../time-speed-distance/">Time, speed and distance</a></li>
+        <li><a href="../true-airspeed/">True airspeed</a></li>
+        <li><a href="../density-altitude/">Density altitude</a></li>
+        <li><a href="../aviation-unit-converter/">Aviation unit converter</a></li>
+        <li><a href="../fuel-planning/">Fuel planner</a></li>
+        <li><a href="../vor-dme-1-in-60/">VOR / DME and the 1-in-60 rule</a></li>
+      </ul>
+
+      <h2>Sources</h2>
+      <ul>
+        <li>FAA-H-8083-25C, <cite>Pilot’s Handbook of Aeronautical Knowledge</cite>, Chapter 11 (Aircraft Performance — density altitude, true airspeed) and Chapter 16 (Navigation — dead reckoning, the wind triangle, and the mechanical flight computer).</li>
+        <li>FAA-H-8083-3, <cite>Airplane Flying Handbook</cite>, wind-correction and ground-reference procedures consistent with the wind-side method.</li>
+        <li>ICAO Document 7488 / ISO 2533, Standard Atmosphere: <code>T₀ = 288.15 K</code>, <code>L = 0.0065 K/m</code>, <code>p₀ = 1013.25 hPa</code>, <code>g = 9.80665 m/s²</code>, <code>R = 287.05287 J/(kg·K)</code>.</li>
+        <li>Standard E6B computer-manual conventions: rate index at 60, TAS window by pressure altitude and OAT, statute/nautical/kilometre conversion indexes, and the wind-up / grommet-on-TAS plotting method.</li>
+        <li>Subsonic pitot-static relations as used in flight-test work and on the <a href="../true-airspeed/">true airspeed</a> page: <code>q<sub>c</sub>/p₀ = (1 + 0.2 (CAS/a₀)²)<sup>7/2</sup> − 1</code>, <code>M = √{5[(q<sub>c</sub>/p + 1)<sup>2/7</sup> − 1]}</code>, <code>TAS = M · a(T)</code>.</li>
+      </ul>
+      <p class="cite">The face drawn here follows those conventions. It is an original illustration, not a copy of any manufacturer’s product.</p>
+
+      <h2>Frequently asked questions</h2>
+      <h3>How do you use an E6B to solve time, speed, and distance?</h3>
+      <p>Place the rate index (the black triangle at 60 on the inner, minutes scale) under the groundspeed on the outer scale. Then read distance on the outer scale opposite time on the inner scale, or time opposite distance. The same setting works for fuel flow, time, and fuel quantity. This page rotates the inner disk to that alignment and highlights the answer tick.</p>
+      <h3>Does the TAS window on an E6B give an exact true airspeed?</h3>
+      <p>No. A mechanical E6B lines up outside air temperature with pressure altitude so the inner and outer scales are shifted by 1 over the square root of the density ratio. That is the incompressible approximation TAS ≈ CAS / √σ. The number reported here is the subsonic compressible pitot-static solution; the dial is shown with the mechanical alignment and the two values are compared.</p>
+      <h3>How do you use the wind side of an E6B?</h3>
+      <p>Rotate the azimuth until the wind direction is under the true index. Plot a mark from the grommet toward the true index at the wind speed. Slide the grid until the grommet is on true airspeed. Rotate the azimuth until the true course is under the true index. Read wind correction angle and groundspeed at the wind mark. Heading is course plus WCA (a right correction is a crab to the right). The illustration follows that procedure; the numbers are the exact wind-triangle solution.</p>
+      <h3>Is a positive wind correction angle to the right or the left?</h3>
+      <p>A positive WCA is a correction to the right: true heading = true course + WCA. Wind from the right produces a right crab. This page labels a left correction as L and a right correction as R, and it uses the same sign convention as the <a href="../e6b-wind/">E6B wind triangle calculator</a>.</p>
+      <h3>Can I use this E6B instead of the POH or a certified flight computer?</h3>
+      <p>No. This is a training and illustration aid. It is not a substitute for the Pilot’s Operating Handbook or Aircraft Flight Manual, a certified flight computer, official weather, or a navigation log used for flight. Always defer to those sources.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — E6B flight computer. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation tool. Always defer to the POH/AFM, official weather, and the current regulations.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use a mechanical E6B: set the 60-index under speed, and read distance opposite time. For the wind side, use WCA = arcsin(crosswind / TAS) and GS = √(TAS² − crosswind²) − headwind.</p></noscript>
+  <script src="calc.js"></script>
+  <script src="render-svg.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -10,6 +10,7 @@ The tools are grouped in two sides. Some calculators appear in both.
 
 ### Flight planning & navigation
 
+- [E6B flight computer](e6b-flight-computer/) — animated circular slide rule and illustrated wind side: time/speed/distance, fuel, TAS, density altitude, conversions, and the wind triangle.
 - [Time, speed & distance](time-speed-distance/) — solve any of time, groundspeed, or distance, plus ETA.
 - [Great-circle distance](great-circle-distance/) — haversine range and initial true course between two points, entered as an airport / navaid / fix identifier or as latitude and longitude.
 - [E6B wind triangle](e6b-wind/) — wind correction angle, true heading, and groundspeed, or winds aloft in reverse.
@@ -175,6 +176,21 @@ Open [http://127.0.0.1:8765/](http://127.0.0.1:8765/).
 for f in */test.js; do echo "== $f =="; node "$f" || exit 1; done
 ```
 
+## Site check
+
+After adding or changing a calculator, regenerate the sitemap and then run the site-wide checker:
+
+```bash
+node scripts/write-site-files.js
+node scripts/site-check.js
+# optional: also HEAD-check cited external links
+node scripts/site-check.js --external
+```
+
+The checker verifies internal links, AdSense and Open Graph tags, unique titles and descriptions, catalog / README / sitemap / index JSON-LD agreement, robots.txt, sitemap lastmod freshness, and that JSON-LD parses. It then prints any new or changed sitemap URLs (compared with the committed snapshot at `scripts/.sitemap-snapshot.json`) so they can be submitted in Google Search Console, and updates the snapshot.
+
+`write-site-files.js` stamps `lastmod` with the local Pacific date and keeps the previous date unless a page is new or its content (HTML body, or a `.js` / `.css` / `.svg` / `.png` in the page folder) changed.
+
 
 Identifier data on the great-circle page is built from a [FAA NASR 28-day subscription](https://www.faa.gov/air_traffic/flight_info/aeronav/aero_data/NASR_Subscription/) (public domain; files `APT_BASE`, `NAV_BASE`, and `FIX_BASE`) with an optional merge of [OurAirports](https://ourairports.com/data/) (public domain) for non-U.S. ICAO airports. To regenerate the compact JSON shards after a new cycle is published:
 
@@ -198,4 +214,4 @@ To change the public host:
 1. Change `baseUrl` in `site-config.js` (no trailing slash).
 2. Run `node scripts/write-site-files.js`.
 
-That regenerates `sitemap.xml` and `robots.txt` and updates canonical / Open Graph URLs in the HTML pages.
+That regenerates `sitemap.xml` and `robots.txt` and updates canonical / Open Graph URLs in the HTML pages. Then run `node scripts/site-check.js`.

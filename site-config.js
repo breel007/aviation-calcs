@@ -20,6 +20,7 @@
       { path: "/crosswind/", title: "Crosswind component calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/weight-balance/", title: "Weight and balance calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/e6b-wind/", title: "E6B wind triangle calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/e6b-flight-computer/", title: "E6B flight computer", changefreq: "monthly", priority: "0.9" },
       { path: "/fuel-planning/", title: "Aviation fuel planner", changefreq: "monthly", priority: "0.9" },
       { path: "/aviation-unit-converter/", title: "Aviation unit converter", changefreq: "monthly", priority: "0.9" },
       { path: "/true-airspeed/", title: "True airspeed calculator", changefreq: "monthly", priority: "0.9" },
@@ -118,6 +119,17 @@
       { path: "/planetary-transfer/", title: "Planetary Hohmann transfer calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/about.html", title: "About", changefreq: "yearly", priority: "0.4" },
       { path: "/privacy.html", title: "Privacy policy", changefreq: "yearly", priority: "0.3" }
+    ],
+    // Catalog order for the home page (and README). Some slugs appear in more than one group.
+    groups: [
+      { side: "pilot", id: "flight-planning", heading: "Flight Planning & Navigation", slugs: ["e6b-flight-computer", "time-speed-distance", "great-circle-distance", "e6b-wind", "fuel-planning", "inflight-fuel-eta", "aviation-unit-converter", "true-magnetic-heading", "compass-turning-errors", "top-of-descent", "descent-rate", "ils-glideslope-height", "holding-pattern-entry", "climb-gradient", "glide-distance", "maccready", "turn-radius", "time-to-turn", "visual-descent-point", "rvr-visibility", "wake-turbulence-separation", "vor-dme-1-in-60", "radio-horizon", "point-of-no-return", "true-altitude", "flight-level", "cold-temperature-correction", "weather-go-no-go"] },
+      { side: "pilot", id: "performance", heading: "Performance", slugs: ["density-altitude", "takeoff-landing-distance", "accelerate-stop", "approach-speed", "crosswind", "runway-selection", "weight-balance", "cg-percent-mac", "true-airspeed", "crossover-altitude", "service-ceiling", "hydroplaning-speed", "stall-speed-weight-bank", "maneuvering-speed-weight", "pull-up-load-factor", "pivotal-altitude", "fuel-weight", "drone-flight-time", "drag-polar", "maccready", "parachute-descent", "balloon-lift", "thrust-power-required", "breguet-range-endurance", "electric-aircraft-endurance"] },
+      { side: "pilot", id: "weather", heading: "Weather & Time", slugs: ["metar-decoder", "taf-decoder", "rvr-visibility", "pressure-altitude", "flight-level", "cloud-base", "carburetor-icing", "thunderstorm-distance", "heat-index", "wind-chill", "wind-shear-gradient", "zulu-time-converter", "sunrise-sunset-twilight", "standard-atmosphere", "true-altitude", "cold-temperature-correction", "weather-go-no-go"] },
+      { side: "pilot", id: "costs", heading: "Regs, Currency & Costs", slugs: ["flight-training-cost", "aircraft-ownership-cost", "rental-cost", "fuel-cost", "aircraft-loan", "logbook-time", "pilot-currency", "oxygen-requirements"] },
+      { side: "engineering", id: "atmosphere", heading: "Atmosphere", slugs: ["standard-atmosphere", "density-altitude", "pressure-altitude", "aviation-unit-converter"] },
+      { side: "engineering", id: "aerodynamics", heading: "Aerodynamics", slugs: ["mach-dynamic-pressure", "reynolds-number", "lift-drag-coefficient", "thin-airfoil-lift", "terminal-velocity", "parachute-descent", "wing-loading-aspect-ratio", "lift-slope-ar", "drag-polar", "thrust-power-required", "cg-percent-mac", "isentropic-flow", "cd-nozzle", "normal-shock", "oblique-shock", "prandtl-meyer", "fanno-flow", "rayleigh-flow", "stall-speed-weight-bank", "true-airspeed", "turn-radius", "pull-up-load-factor"] },
+      { side: "engineering", id: "propulsion", heading: "Propulsion", slugs: ["specific-impulse", "jet-engine-thrust", "brayton-cycle", "rocket-equation", "delta-v-budget", "breguet-range-endurance", "electric-aircraft-endurance", "thrust-power-required", "propeller-advance-ratio", "propeller-static-thrust", "hover-power", "rotor-tip-speed", "isentropic-flow", "cd-nozzle"] },
+      { side: "engineering", id: "space", heading: "Space", slugs: ["orbital-velocity-period", "satellite-fov", "sun-synchronous", "hohmann-transfer", "planetary-transfer", "synodic-period", "delta-v-budget", "rocket-equation", "specific-impulse", "terminal-velocity"] }
     ]
   };
 

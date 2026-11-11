@@ -1,0 +1,421 @@
+{
+  "generated": "2026-11-11T05:22:00.914Z",
+  "urls": [
+    {
+      "loc": "https://aviatorcalcs.com/",
+      "lastmod": "2026-11-10"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/density-altitude/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/crosswind/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/weight-balance/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/e6b-wind/",
+      "lastmod": "2026-11-10"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/e6b-flight-computer/",
+      "lastmod": "2026-11-10"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/fuel-planning/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/aviation-unit-converter/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/true-airspeed/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/time-speed-distance/",
+      "lastmod": "2026-11-10"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/top-of-descent/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/metar-decoder/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/taf-decoder/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/pilot-currency/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/turn-radius/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/aircraft-ownership-cost/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/aircraft-loan/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/flight-training-cost/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/rental-cost/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/glide-distance/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/cloud-base/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/sunrise-sunset-twilight/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/zulu-time-converter/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/holding-pattern-entry/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/climb-gradient/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/standard-atmosphere/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/pressure-altitude/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/true-altitude/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/reynolds-number/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/mach-dynamic-pressure/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/lift-drag-coefficient/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/wing-loading-aspect-ratio/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/isentropic-flow/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/normal-shock/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/rocket-equation/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/orbital-velocity-period/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/hohmann-transfer/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/breguet-range-endurance/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/visual-descent-point/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/vor-dme-1-in-60/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/fuel-weight/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/oxygen-requirements/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/maneuvering-speed-weight/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/stall-speed-weight-bank/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/point-of-no-return/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/weather-go-no-go/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/descent-rate/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/takeoff-landing-distance/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/runway-selection/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/hydroplaning-speed/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/cg-percent-mac/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/pivotal-altitude/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/cold-temperature-correction/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/fuel-cost/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/drag-polar/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/propeller-advance-ratio/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/specific-impulse/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/oblique-shock/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/prandtl-meyer/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/rvr-visibility/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/thrust-power-required/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/approach-speed/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/true-magnetic-heading/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/carburetor-icing/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/heat-index/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/time-to-turn/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/pull-up-load-factor/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/cd-nozzle/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/satellite-fov/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/logbook-time/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/delta-v-budget/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/terminal-velocity/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/great-circle-distance/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/wind-chill/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/thunderstorm-distance/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/radio-horizon/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/ils-glideslope-height/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/flight-level/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/wake-turbulence-separation/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/inflight-fuel-eta/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/compass-turning-errors/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/accelerate-stop/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/service-ceiling/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/wind-shear-gradient/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/maccready/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/balloon-lift/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/parachute-descent/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/drone-flight-time/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/electric-aircraft-endurance/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/propeller-static-thrust/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/hover-power/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/rotor-tip-speed/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/crossover-altitude/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/thin-airfoil-lift/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/lift-slope-ar/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/fanno-flow/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/rayleigh-flow/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/jet-engine-thrust/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/brayton-cycle/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/sun-synchronous/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/synodic-period/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/planetary-transfer/",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/about.html",
+      "lastmod": "2026-11-11"
+    },
+    {
+      "loc": "https://aviatorcalcs.com/privacy.html",
+      "lastmod": "2026-11-11"
+    }
+  ]
+}
