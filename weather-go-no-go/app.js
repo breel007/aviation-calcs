@@ -8,6 +8,13 @@
   var userRemoved = [];
   var userAdded = [];
   var selected = [];
+  var resolvedWaypoints = [];
+  var unknownWaypoints = [];
+  var ambiguousWaypoints = [];
+  var routeGen = 0;
+  var navLookup = window.NavLookup
+    ? window.NavLookup.create({ dataDir: "../great-circle-distance/data" })
+    : null;
   var CACHE_PREFIX = "aviatorcalcs.wxgnog.v2:";
   var MIN_REQUEST_GAP_MS = 2200; // IEM's advertised 1s IP throttle is closer to 2s in practice
   var lastRequestStart = 0;
@@ -62,12 +69,108 @@
   function currentRoute() {
     var dep = lookup($("dep").value);
     var dest = lookup($("dest").value);
-    return { dep: dep, dest: dest };
+    return {
+      dep: dep,
+      dest: dest,
+      waypoints: resolvedWaypoints.slice(),
+      unknown: unknownWaypoints.slice()
+    };
   }
 
-  function refreshStations() {
-    var route = currentRoute();
-    var extras = userAdded.slice();
+  function routeFieldValue() {
+    var el = $("route");
+    return el ? el.value : "";
+  }
+
+  function findStationExact(token) {
+    var q = String(token || "").trim().toUpperCase();
+    if (!q) return null;
+    var list = S.all();
+    var i, s;
+    for (i = 0; i < list.length; i++) {
+      s = list[i];
+      if (s.sid === q || s.icao === q) return s;
+    }
+    if (q.length === 4 && q.charAt(0) === "K") {
+      var shortId = q.slice(1);
+      for (i = 0; i < list.length; i++) {
+        if (list[i].sid === shortId) return list[i];
+      }
+    }
+    if (q.length === 3) {
+      for (i = 0; i < list.length; i++) {
+        if (list[i].icao === "K" + q) return list[i];
+      }
+    }
+    return null;
+  }
+
+  function resolveIdent(token) {
+    // Exact ICAO / FAA LID / K-prefix only. S.find also treats a unique
+    // 3-letter suffix as a hit (AVE → PAVE Venetie), which would send a
+    // navaid waypoint to the wrong place; those go to the NASR lookup.
+    var hit = findStationExact(token);
+    if (hit) {
+      return Promise.resolve({
+        ok: true,
+        token: token,
+        point: {
+          sid: hit.sid,
+          icao: hit.icao,
+          name: hit.name,
+          lat: hit.lat,
+          lon: hit.lon,
+          tz: hit.tz,
+          state: hit.state,
+          ident: token,
+          source: "station"
+        }
+      });
+    }
+    if (!navLookup) return Promise.resolve({ ok: false, token: token });
+    return navLookup.lookup(token).then(function (result) {
+      var matches = result.matches || [];
+      if (!matches.length) return { ok: false, token: token };
+      var rec = matches[0];
+      return {
+        ok: true,
+        token: token,
+        ambiguous: matches.length > 1,
+        chosen: rec,
+        point: {
+          sid: rec.icao || rec.id,
+          icao: rec.icao || rec.id,
+          id: rec.id,
+          name: rec.name,
+          lat: rec.lat,
+          lon: rec.lon,
+          type: rec.type,
+          state: rec.state,
+          ident: token,
+          source: "nasr"
+        }
+      };
+    }).catch(function () {
+      return { ok: false, token: token };
+    });
+  }
+
+  function waypointNotes() {
+    var msgs = [];
+    unknownWaypoints.forEach(function (tok) {
+      msgs.push("Could not find waypoint “" + escapeHtml(tok) + "”. Check the identifier (airport ICAO or FAA LID, navaid, or five-letter fix).");
+    });
+    ambiguousWaypoints.forEach(function (row) {
+      var rec = row.chosen;
+      var label = (rec && (rec.name || rec.id)) || row.token;
+      var kind = rec && rec.type ? rec.type : "place";
+      var loc = rec && rec.state ? ", " + rec.state : "";
+      msgs.push("“" + escapeHtml(row.token) + "” matches more than one place; using " + escapeHtml(label) + " (" + escapeHtml(kind) + loc + ").");
+    });
+    return msgs;
+  }
+
+  function applySelection(route) {
     if (route.dep && route.dep.tz) {
       ensureTzOption(route.dep.tz);
       // Only auto-switch tz when the departure changes and the user
@@ -77,32 +180,80 @@
     selected = C.selectRouteStations(S.all(), route.dep, route.dest, {
       corridorNm: Number($("corridor").value) || C.DEFAULT_CORRIDOR_NM,
       maxStations: Number($("max-stations").value) || C.DEFAULT_MAX_STATIONS,
-      extras: extras,
-      removed: userRemoved
+      extras: userAdded.slice(),
+      removed: userRemoved,
+      waypoints: route.waypoints || []
     });
     renderStationTable(route);
+    if (!lastFetch || lastFetch.done) {
+      setWarnings(waypointNotes());
+    }
+  }
+
+  function refreshStations() {
+    var dep = lookup($("dep").value);
+    var dest = lookup($("dest").value);
+    var tokens = C.trimRouteTokens(C.parseRouteTokens(routeFieldValue()), dep, dest);
+    var gen = ++routeGen;
+    if (!tokens.length) {
+      resolvedWaypoints = [];
+      unknownWaypoints = [];
+      ambiguousWaypoints = [];
+      applySelection({ dep: dep, dest: dest, waypoints: [], unknown: [] });
+      return Promise.resolve();
+    }
+    return Promise.all(tokens.map(resolveIdent)).then(function (results) {
+      if (gen !== routeGen) return;
+      resolvedWaypoints = [];
+      unknownWaypoints = [];
+      ambiguousWaypoints = [];
+      results.forEach(function (row) {
+        if (row && row.ok && row.point) {
+          resolvedWaypoints.push(row.point);
+          if (row.ambiguous) ambiguousWaypoints.push(row);
+        } else if (row && row.token) {
+          unknownWaypoints.push(row.token);
+        }
+      });
+      applySelection({
+        dep: dep,
+        dest: dest,
+        waypoints: resolvedWaypoints.slice(),
+        unknown: unknownWaypoints.slice()
+      });
+    });
   }
 
   function renderStationTable(route) {
     var panel = $("station-panel");
     var body = $("station-body");
     var summary = $("station-summary");
-    if (!route.dep && !route.dest) {
+    var hasPath = !!(route.dep || route.dest || (route.waypoints && route.waypoints.length) || (route.unknown && route.unknown.length));
+    if (!hasPath) {
       panel.hidden = true;
       body.innerHTML = "";
       return;
     }
     panel.hidden = false;
     if (!selected.length) {
-      summary.textContent = "Enter a known U.S. departure or destination so stations can be looked up. You can still add a station by identifier.";
+      summary.textContent = "Enter a known U.S. departure or destination so stations can be looked up. You can still add a station by identifier, or type waypoints in the route field.";
       body.innerHTML = "";
       return;
     }
-    var routeNm = selected[0] && selected[0].routeNm;
     var autoN = selected.filter(function (s) { return s.auto; }).length;
-    var bits = [selected.length + " station" + (selected.length === 1 ? "" : "s") + " selected"];
-    if (isFinite(routeNm) && routeNm >= 5) bits.push("great-circle " + routeNm.toFixed(0) + " NM");
+    var bits = [];
+    var labeled = C.formatRouteSummary(route.dep, route.dest, route.waypoints || []);
+    if (labeled && labeled.label && labeled.pointCount >= 2) {
+      bits.push(labeled.label);
+    } else {
+      var routeNm = selected[0] && selected[0].routeNm;
+      if (isFinite(routeNm) && routeNm >= 5) bits.push("great-circle " + routeNm.toFixed(0) + " NM");
+    }
+    bits.push(selected.length + " station" + (selected.length === 1 ? "" : "s") + " selected");
     bits.push(autoN + " auto-picked along the corridor");
+    if (route.unknown && route.unknown.length) {
+      bits.push("unknown waypoint" + (route.unknown.length === 1 ? "" : "s") + ": " + route.unknown.join(", "));
+    }
     summary.textContent = bits.join(" · ");
     body.innerHTML = selected.map(function (s) {
       var along = isFinite(s.alongNm) ? s.alongNm.toFixed(0) + " NM" : "—";
@@ -440,7 +591,7 @@
     });
     if (!allRows.length) {
       if (!partial) {
-        setWarnings(["The archive returned no routine METARs for these stations and dates. Check the identifiers, or try a more recent year range."]);
+        setWarnings(waypointNotes().concat(["The archive returned no routine METARs for these stations and dates. Check the identifiers, or try a more recent year range."]));
         setProgress("");
       }
       return;
@@ -486,7 +637,7 @@
     if (!partial && result.route.hours.n === 0) {
       notes.push("No complete route-hours were scored. Try widening the time window, dropping a station with a short archive, or loosening the minimums’ required fields.");
     }
-    setWarnings(notes);
+    setWarnings(waypointNotes().concat(notes));
     renderResults(result);
     var cachedN = parts.filter(function (p) { return p.cached; }).length;
     if (partial) {
@@ -508,15 +659,24 @@
   }
 
   function startFetch() {
+    setRunBusy(true);
+    Promise.resolve(refreshStations()).then(function () {
+      startFetchAfterRoute();
+    });
+  }
+
+  function startFetchAfterRoute() {
     var plan = queryPlan();
     if (!plan) {
-      if (!selected.length) setWarnings(["Enter a departure and/or destination identifier, or add a station to the list."]);
-      else setWarnings(["Pick a calendar date so the week of the year is known."]);
+      if (!selected.length) setWarnings(waypointNotes().concat(["Enter a departure and/or destination identifier, or add a station to the list."]));
+      else setWarnings(waypointNotes().concat(["Pick a calendar date so the week of the year is known."]));
+      setRunBusy(false);
       return;
     }
     if (lastFetch && lastFetch.key === plan.key && lastFetch.done) {
       lastFetch.plan = plan;
       applyParts(lastFetch.parts, plan, false);
+      setRunBusy(false);
       return;
     }
     if (lastFetch && lastFetch.key === plan.key && !lastFetch.done) {
@@ -526,7 +686,7 @@
     var gen = fetchGen;
     lastFetch = { key: plan.key, parts: [], plan: plan, done: false };
     setRunBusy(true);
-    setWarnings(plan.stubs.length ? ["No coordinates for " + plan.stubs.map(function (s) { return s.icao || s.sid; }).join(", ") + ", so they could not be auto-placed on the corridor. They will still be requested from the archive."] : []);
+    setWarnings(waypointNotes().concat(plan.stubs.length ? ["No coordinates for " + plan.stubs.map(function (s) { return s.icao || s.sid; }).join(", ") + ", so they could not be auto-placed on the corridor. They will still be requested from the archive."] : []));
     setProgress("Requesting " + plan.windows.length + " year-window" + (plan.windows.length === 1 ? "" : "s") + " from the Iowa Environmental Mesonet…");
 
     var chain = Promise.resolve();
@@ -552,7 +712,7 @@
       applyParts(lastFetch.parts, plan, false);
     }).catch(function (err) {
       if (err && err.aborted) return;
-      setWarnings([err && err.message ? err.message : String(err)]);
+      setWarnings(waypointNotes().concat([err && err.message ? err.message : String(err)]));
       setProgress("");
     }).then(function () {
       if (gen === fetchGen) setRunBusy(false);
@@ -597,7 +757,8 @@
     if (!lockTz) refreshStations._tzLocked = false;
     refreshStations();
   }
-  ["dep", "dest"].forEach(function (id) {
+  ["dep", "dest", "route"].forEach(function (id) {
+    if (!$(id)) return;
     $(id).addEventListener("input", function () {
       clearTimeout(routeTimer);
       routeTimer = setTimeout(function () { onRouteChange(false); }, 400);
@@ -665,13 +826,18 @@
   });
 
   $("btn-clear").addEventListener("click", function () {
-    // Abort any in-flight download so it cannot refill the results.
+    // Abort any in-flight download or waypoint lookup so they cannot refill the results.
     fetchGen += 1;
+    routeGen += 1;
     lastFetch = null;
+    resolvedWaypoints = [];
+    unknownWaypoints = [];
+    ambiguousWaypoints = [];
     setRunBusy(false);
 
     $("dep").value = "";
     $("dest").value = "";
+    if ($("route")) $("route").value = "";
     $("date").value = "";
     $("add-station").value = "";
     var hits = $("search-hits");

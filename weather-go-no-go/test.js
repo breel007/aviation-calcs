@@ -388,6 +388,160 @@ var kept = C.computeClimatology(
 );
 eq(kept.route.hours.n, 3, "without dropSparse, the route sample shrinks to the 3 hours all three stations share");
 
+console.log("\nCase 14  Route-token parsing and two-point polyline equivalence");
+eq(C.parseRouteTokens("PRB SNS").join(","), "PRB,SNS", "space-separated waypoints");
+eq(C.parseRouteTokens("KSBA, PRB, KSJC").join(","), "KSBA,PRB,KSJC", "comma-separated full route");
+eq(C.parseRouteTokens("KSBA → PRB → KSJC").join(","), "KSBA,PRB,KSJC", "arrow-separated full route");
+eq(C.parseRouteTokens("  prb/sns  ").join(","), "PRB,SNS", "lowercase and slash separators");
+eq(C.trimRouteTokens(C.parseRouteTokens("KSBA PRB KSJC"), { icao: "KSBA", sid: "SBA" }, { icao: "KSJC", sid: "SJC" }).join(","), "PRB", "full route trims dep and dest");
+eq(C.trimRouteTokens(C.parseRouteTokens("PRB SNS"), { icao: "KSBA", sid: "SBA" }, { icao: "KSJC", sid: "SJC" }).join(","), "PRB,SNS", "intermediate-only list is unchanged");
+eq(C.trimRouteTokens(C.parseRouteTokens(""), { icao: "KSBA" }, { icao: "KSJC" }).length, 0, "empty route string yields no tokens");
+
+function eqPt(lat, lon, sid) {
+  return { sid: sid, icao: sid, name: sid, lat: lat, lon: lon, tz: "UTC", state: "XX" };
+}
+var offBend = eqPt(0.15, 5.15, "OFFBEND");
+var straightDep = eqPt(0, 0, "DEP");
+var straightDest = eqPt(5, 5, "DEST");
+var gDirect = C.routeGeometry(offBend, straightDep, straightDest);
+var gPoly2 = C.polylineGeometry(offBend, [straightDep, straightDest]);
+nearly(gPoly2.routeNm, gDirect.routeNm, 1e-12, "two-point polyline route length matches routeGeometry");
+nearly(gPoly2.alongNm, gDirect.alongNm, 1e-12, "two-point polyline along-track matches routeGeometry");
+nearly(gPoly2.alongFrac, gDirect.alongFrac, 1e-12, "two-point polyline fraction matches routeGeometry");
+nearly(gPoly2.crossNm, gDirect.crossNm, 1e-12, "two-point polyline signed cross-track matches routeGeometry");
+nearly(gPoly2.absCrossNm, gDirect.absCrossNm, 1e-12, "two-point polyline abs cross-track matches routeGeometry");
+nearly(gPoly2.distanceToDepNm, gDirect.distanceToDepNm, 1e-12, "two-point polyline distance-to-dep matches routeGeometry");
+nearly(gDirect.absCrossNm, 212.54323700124849, 1e-8, "OFFBEND is 212.543 NM off the straight (0,0)→(5,5) track");
+
+console.log("\nCase 15  Multi-leg corridor: a dog-leg picks the bend and misses the shortcut");
+/*
+ * Equator-then-meridian dog-leg, hand-checked with NM_EARTH = 3440.065:
+ *   dep (0°, 0°) → wp (0°, 5°E) → dest (5°N, 5°E).
+ * Each leg is exactly 5° of a great circle (equator, then a meridian),
+ * so the polyline length is 10 × 60.04046073261873 = 600.4046073261873 NM.
+ * The straight great-circle from dep to dest is 424.2803821325909 NM.
+ *
+ * OFFBEND (0.15°N, 5.15°E) sits ~9.006 NM off the bend — inside a 25 NM
+ * corridor of the dog-leg, but 212.543 NM off the straight track.
+ * SHORTCUT (2.5°N, 2.5°E) sits 0.303 NM off the straight track, but
+ * ~149.958 NM from both legs of the dog-leg.
+ */
+var wp = eqPt(0, 5, "WP");
+var shortcut = eqPt(2.5, 2.5, "SHORTCUT");
+var mid1 = eqPt(0, 2.5, "MID1");
+var mid2 = eqPt(2.5, 5, "MID2");
+var off36 = eqPt(-0.6, 5, "OFF36");
+var path = C.buildRoutePath(straightDep, straightDest, [wp]);
+nearly(path.routeNm, 10 * DEG_NM, 1e-9, "dog-leg length is 10 × 60.04046 NM (5° + 5°)");
+eq(path.legs.length, 2, "dog-leg has two legs");
+nearly(path.legs[0].nm, 5 * DEG_NM, 1e-9, "first leg (along the equator) is 5°");
+nearly(path.legs[1].nm, 5 * DEG_NM, 1e-9, "second leg (along the meridian) is 5°");
+
+var gWp = C.polylineGeometry(wp, path);
+nearly(gWp.alongNm, 5 * DEG_NM, 1e-9, "waypoint along-track is 5° (end of the first leg)");
+nearly(gWp.absCrossNm, 0, 1e-9, "waypoint sits on the polyline");
+nearly(gWp.alongFrac, 0.5, 1e-9, "waypoint is halfway along a 10° polyline");
+
+var gMid1 = C.polylineGeometry(mid1, path);
+nearly(gMid1.alongNm, 2.5 * DEG_NM, 1e-9, "MID1 along-track is 2.5°");
+nearly(gMid1.absCrossNm, 0, 1e-9, "MID1 is on the first leg");
+eq(gMid1.legIndex, 0, "MID1 is attributed to leg 0");
+
+var gMid2 = C.polylineGeometry(mid2, path);
+nearly(gMid2.alongNm, 7.5 * DEG_NM, 1e-9, "MID2 along-track is 7.5° (cumulative)");
+nearly(gMid2.absCrossNm, 0, 1e-9, "MID2 is on the second leg");
+eq(gMid2.legIndex, 1, "MID2 is attributed to leg 1");
+
+var gOffb = C.polylineGeometry(offBend, path);
+nearly(gOffb.absCrossNm, 9.00603825, 1e-6, "OFFBEND is 9.006 NM off the polyline near the bend");
+nearly(gOffb.alongNm, 309.20840364, 1e-6, "OFFBEND cumulative along-track is 309.208 NM");
+isTrue(gOffb.absCrossNm <= 25, "OFFBEND is inside a 25 NM polyline corridor");
+isTrue(gDirect.absCrossNm > 25, "OFFBEND is outside a 25 NM straight-line corridor");
+
+var gCut = C.polylineGeometry(shortcut, path);
+nearly(gCut.absCrossNm, 149.95819819, 1e-6, "SHORTCUT is 149.958 NM off the polyline");
+var gCutStraight = C.routeGeometry(shortcut, straightDep, straightDest);
+nearly(gCutStraight.absCrossNm, 0.3033, 5e-4, "SHORTCUT is 0.303 NM off the straight track");
+isTrue(gCut.absCrossNm > 25, "SHORTCUT is outside a 25 NM polyline corridor");
+isTrue(gCutStraight.absCrossNm <= 25, "SHORTCUT is inside a 25 NM straight-line corridor");
+
+var gOff36 = C.polylineGeometry(off36, path);
+nearly(gOff36.absCrossNm, 0.6 * DEG_NM, 1e-6, "OFF36 is 0.6° = 36.024 NM off the bend");
+
+var dogCatalog = [
+  straightDep, wp, straightDest, shortcut, offBend, off36, mid1, mid2
+];
+for (var lon = 1; lon <= 4; lon++) dogCatalog.push(eqPt(0, lon, "L" + lon));
+for (var lat = 1; lat <= 4; lat++) dogCatalog.push(eqPt(lat, 5, "M" + lat));
+
+var dogCorridor = C.stationsInCorridor(dogCatalog, straightDep, straightDest, 25, [wp]).map(function (c) { return c.station.sid; });
+var straightCorridor = C.stationsInCorridor(dogCatalog, straightDep, straightDest, 25).map(function (c) { return c.station.sid; });
+isTrue(dogCorridor.indexOf("OFFBEND") !== -1, "dog-leg corridor includes the near-bend station OFFBEND");
+isTrue(dogCorridor.indexOf("WP") !== -1 && dogCorridor.indexOf("MID1") !== -1 && dogCorridor.indexOf("MID2") !== -1, "dog-leg corridor includes the waypoint and mid-leg stations");
+isTrue(dogCorridor.indexOf("SHORTCUT") === -1, "dog-leg corridor excludes the straight-line shortcut");
+isTrue(dogCorridor.indexOf("OFF36") === -1, "dog-leg corridor excludes a station 36 NM off the bend");
+isTrue(straightCorridor.indexOf("SHORTCUT") !== -1, "straight corridor includes the shortcut");
+isTrue(straightCorridor.indexOf("OFFBEND") === -1 && straightCorridor.indexOf("WP") === -1, "straight corridor misses the bend (OFFBEND and WP)");
+
+var dogPicked = C.selectRouteStations(dogCatalog, straightDep, straightDest, {
+  corridorNm: 25, maxStations: 6, waypoints: [wp]
+});
+var dogIds = dogPicked.map(function (s) { return s.sid; });
+eq(dogIds[0], "DEP", "dog-leg selection still starts at departure");
+eq(dogIds[dogIds.length - 1], "DEST", "dog-leg selection still ends at destination");
+isTrue(dogIds.indexOf("WP") !== -1, "dog-leg selection includes the waypoint station at the bend");
+isTrue(dogIds.indexOf("OFFBEND") !== -1 || dogIds.indexOf("MID1") !== -1 || dogIds.indexOf("M1") !== -1, "dog-leg selection includes a station at or near the bend");
+isTrue(dogIds.indexOf("SHORTCUT") === -1, "dog-leg selection does not pick the straight-line shortcut");
+var dogOrdered = true;
+for (var di = 1; di < dogPicked.length; di++) {
+  if (dogPicked[di].alongNm + 1e-9 < dogPicked[di - 1].alongNm) dogOrdered = false;
+}
+isTrue(dogOrdered, "dog-leg selection is ordered by cumulative along-track distance");
+nearly(dogPicked[dogPicked.length - 1].alongNm, 10 * DEG_NM, 1e-9, "destination along-track is the full polyline length");
+
+var summary = C.formatRouteSummary(straightDep, straightDest, [{ ident: "WP", lat: 0, lon: 5, sid: "WP" }]);
+eq(summary.label, "DEP → WP → DEST, 600 NM", "resolved-route label is 'DEP → WP → DEST, 600 NM'");
+eq(summary.legCount, 2, "summary reports two legs");
+
+console.log("\nCase 16  Empty waypoints match the current great-circle behavior; single-airport still works");
+var emptyWp = C.selectRouteStations(catalog, dep, dest, { corridorNm: 25, maxStations: 5, waypoints: [] });
+var omittedWp = C.selectRouteStations(catalog, dep, dest, { corridorNm: 25, maxStations: 5 });
+eq(emptyWp.map(function (s) { return s.sid; }).join(","), omittedWp.map(function (s) { return s.sid; }).join(","), "waypoints: [] selects the same stations as omitting waypoints");
+isTrue(emptyWp.every(function (s, i) {
+  return Math.abs((s.alongNm || 0) - (omittedWp[i].alongNm || 0)) < 1e-12 &&
+    Math.abs((s.absCrossNm || 0) - (omittedWp[i].absCrossNm || 0)) < 1e-12;
+}), "waypoints: [] also matches along-track and cross-track of the great-circle path");
+eq(C.stationsInCorridor(catalog, dep, dest, 25, []).map(function (c) { return c.station.sid; }).join(","),
+  C.stationsInCorridor(catalog, dep, dest, 25).map(function (c) { return c.station.sid; }).join(","),
+  "empty-waypoints corridor membership matches the single great-circle corridor");
+
+var onlyDep = C.selectRouteStations(catalog, dep, null, { corridorNm: 25, maxStations: 10, waypoints: [] });
+eq(onlyDep.length, 1, "destination omitted keeps a single station");
+eq(onlyDep[0].sid, "DEP", "that station is the departure");
+var sameEnds = C.selectRouteStations(catalog, dep, dep, { corridorNm: 25, maxStations: 10, waypoints: [] });
+eq(sameEnds.length, 1, "departure equal to destination keeps a single station");
+eq(sameEnds[0].sid, "DEP", "dep==dest does not auto-pick corridor stations");
+
+var S = require("./stations.js");
+var sba = S.find("KSBA");
+var prb = S.find("PRB");
+var sjc = S.find("KSJC");
+isTrue(!!sba && !!prb && !!sjc, "KSBA, PRB, and KSJC are in the bundled ASOS list");
+var viaPrb = C.selectRouteStations(S.all(), sba, sjc, {
+  corridorNm: 25,
+  maxStations: 10,
+  waypoints: [Object.assign({ ident: "PRB" }, prb)]
+});
+var viaIds = viaPrb.map(function (s) { return s.icao || s.sid; });
+isTrue(viaIds.indexOf("KPRB") !== -1, "KSBA → PRB → KSJC includes Paso Robles (KPRB)");
+isTrue(viaIds.indexOf("KSBP") !== -1, "KSBA → PRB → KSJC also includes nearby San Luis Obispo (KSBP, 26 NM from PRB)");
+eq(viaIds[0], "KSBA", "real-route selection starts at KSBA");
+eq(viaIds[viaIds.length - 1], "KSJC", "real-route selection ends at KSJC");
+var prbRow = viaPrb.filter(function (s) { return s.sid === "PRB"; })[0];
+nearly(prbRow.absCrossNm, 0, 1e-6, "KPRB sits on the KSBA–PRB–KSJC polyline (cross-track 0)");
+var prbLabel = C.formatRouteSummary(sba, sjc, [Object.assign({ ident: "PRB" }, prb)]);
+eq(prbLabel.label, "KSBA → PRB → KSJC, 203 NM", "resolved-route label for the California example");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

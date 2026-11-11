@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#080c16">
   <meta name="color-scheme" content="dark">
   <title>Route Weather Go / No-Go Calculator — Historical Ceiling, Visibility &amp; Convective Climatology</title>
-  <meta name="description" content="Free route weather climatology for pilots. Enter departure, destination, and personal minimums to see how often that week and time of day met your ceiling, visibility, wind, and weather limits over the last 5 years, at airports along the route. Built from archived METARs.">
+  <meta name="description" content="Free route weather climatology for pilots. Enter departure, destination, optional waypoints, and personal minimums to see how often that week and time of day met your ceiling, visibility, wind, and weather limits over the last 5 years, at airports along the route. Built from archived METARs.">
   <meta name="keywords" content="route weather climatology, go no-go calculator, historical METAR probability, ceiling visibility climatology, VFR personal minimums, ASOS archive, flight planning weather odds">
   <meta name="author" content="Aviation Calcs">
   <meta name="robots" content="index, follow">
@@ -14,7 +14,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://aviatorcalcs.com/weather-go-no-go/">
   <meta property="og:title" content="Route Weather Go / No-Go — Historical Climatology">
-  <meta property="og:description" content="See how often a week and time of day met your ceiling, visibility, and weather minimums along a route over the last 5 years, from archived METARs.">
+  <meta property="og:description" content="See how often a week and time of day met your ceiling, visibility, and weather minimums along a route — including optional waypoints — over the last 5 years, from archived METARs.">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Route Weather Go / No-Go Calculator">
@@ -47,7 +47,7 @@
                     "name": "What does this route weather go / no-go calculator tell me?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "It looks at archived hourly METARs for the same week of the year and time of day, at the departure, destination, and automatically chosen ASOS/AWOS stations along the route, and reports how often those observations met your personal ceiling, visibility, wind, and weather limits. A route go means every selected station met the limits in the same hour."
+                        "text": "It looks at archived hourly METARs for the same week of the year and time of day, at the departure, destination, and automatically chosen ASOS/AWOS stations along the route, and reports how often those observations met your personal ceiling, visibility, wind, and weather limits. A route go means every selected station met the limits in the same hour. Optional waypoints bend the corridor along each leg; a single airport is enough if you leave the destination and route blank."
                     }
                 },
                 {
@@ -80,6 +80,22 @@
                     "acceptedAnswer": {
                         "@type": "Answer",
                         "text": "Ceiling is the lowest broken, overcast, or vertical-visibility layer, as in the Aeronautical Information Manual. Few and scattered layers are not a ceiling. The VFR, MVFR, and IFR presets use AIM-style flight-category starting points (3,000 feet and 5 SM; 1,000 and 3; 500 and 1) as personal-minimum defaults. They are not a substitute for the airspace-specific legal VFR minima in 14 CFR 91.155, which can be more or less restrictive."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Can I enter a route with waypoints, not just a straight line?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes. The optional route field accepts intermediate waypoints — airport identifiers, navaids, or five-letter fixes — separated by spaces or commas, for example PRB SNS or the full KSBA PRB KSJC. Stations are then picked in a 25 NM corridor of any leg, spaced along the whole polyline. If you leave that field blank, the path is the single great-circle between departure and destination."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Does the weather lookup work with only one location?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes. Enter a departure and leave the destination and route blank, or enter the same identifier in both airport boxes. The page then scores that one airport’s archived METARs for the chosen week and time of day."
                     }
                 }
             ]
@@ -119,7 +135,7 @@
     <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
       <header class="panel-head">
         <h1 id="calc-title">Route Weather Go / No-Go</h1>
-        <p class="lede">See how often a week of the year and time of day historically met your personal minimums along a route, using the last 5 years of archived hourly METARs. The tool pulls observations for the departure, destination, and ASOS/AWOS stations in a corridor along the great-circle, then reports go / no-go likelihoods — climatology, not a forecast.</p>
+        <p class="lede">See how often a week of the year and time of day historically met your personal minimums along a route, using the last 5 years of archived hourly METARs. The tool pulls observations for the departure, destination, and ASOS/AWOS stations in a corridor along the path — a great-circle, or a bent route if you add waypoints — then reports go / no-go likelihoods. A single airport is enough if you leave the destination blank. This is climatology, not a forecast.</p>
       </header>
       <form id="calc-form" action="#" method="get" novalidate>
         <fieldset class="field-block">
@@ -134,7 +150,11 @@
               <input id="dest" class="input" type="text" spellcheck="false" autocomplete="off" placeholder="KSJC" value="KSJC" maxlength="8">
             </div>
           </div>
-          <p class="hint">U.S. ASOS/AWOS identifiers work as ICAO or 3-letter ids (KSBA or SBA; PHNL or HNL). You can add or remove en-route and alternate stations below after the corridor is built.</p>
+          <div>
+            <label for="route" class="sublabel">Route (optional waypoints)</label>
+            <input id="route" class="input" type="text" spellcheck="false" autocomplete="off" placeholder="PRB SNS" maxlength="160">
+          </div>
+          <p class="hint">U.S. ASOS/AWOS identifiers work as ICAO or 3-letter ids (KSBA or SBA; PHNL or HNL). Optional waypoints — airports, navaids, or five-letter fixes, separated by spaces or commas — bend the corridor along each leg (for example PRB SNS, or the full KSBA PRB KSJC). A departure alone is enough if you leave the destination and route blank. You can still add or remove stations below after the corridor is built.</p>
         </fieldset>
 
         <fieldset class="field-block">
@@ -201,7 +221,7 @@
               </select>
             </div>
           </div>
-          <p class="hint">Stations are chosen from a bundled U.S. ASOS/AWOS list, kept inside the corridor of the great-circle, and spaced along the route. Departure and destination are always included unless you remove them. The cap applies to automatic picks; stations you add yourself are kept even if the list grows past the cap.</p>
+          <p class="hint">Stations are chosen from a bundled U.S. ASOS/AWOS list, kept inside the corridor of the route (the great-circle, or each leg if you entered waypoints), and spaced along the whole path. Departure and destination are always included unless you remove them. The cap applies to automatic picks; stations you add yourself are kept even if the list grows past the cap.</p>
         </fieldset>
 
         <div id="station-panel" class="station-panel" hidden>
@@ -333,7 +353,7 @@
       <p>This calculator answers a planning question: <em>in this week of the year, at this time of day, how often have the airports along this route been at or above my personal minimums?</em> It does that by counting archived routine METARs. A 70% historical go rate for mid-June mornings is a useful prior — coastal marine layers, afternoon thunderstorms, and winter icing seasons are real patterns — but it is not a prediction for next Tuesday. Obtain an official briefing and read the METARs, TAFs, AIRMETs, SIGMETs, and convective outlooks that actually apply to the flight.</p>
 
       <h2>How stations along the route are chosen</h2>
-      <p>Given a departure and destination, the page looks up each site in a compact U.S. ASOS/AWOS list (identifiers, coordinates, and time zones from the Iowa Environmental Mesonet state networks). It then finds other stations whose cross-track distance to the great-circle is at most the corridor width (25 NM by default) and whose along-track position sits between the endpoints. Those candidates are thinned to a capped, evenly spaced set — departure and destination first, then the largest remaining gaps along the route — so a 200 NM hop does not fire a request for every AWOS on the coast. You can remove any of them, add an alternate or a site the auto-picker skipped, and widen or narrow the corridor. A route go requires <strong>every selected station</strong> to meet the minimums in the same hour, so the table also shows each station alone — the lowest one is the historically weakest segment. Auto-picked sites with a short or patchy archive (for example a station that only came online in the last year or two) are still listed, but they are left out of that combined route score so they do not erase earlier years of data.</p>
+      <p>Given a departure and destination, the page looks up each site in a compact U.S. ASOS/AWOS list (identifiers, coordinates, and time zones from the Iowa Environmental Mesonet state networks). An optional route field accepts intermediate waypoints — airports (ICAO or FAA LID), navaids, or five-letter fixes, separated by spaces or commas — such as <code>PRB SNS</code> or the full <code>KSBA PRB KSJC</code>. Stations are then taken from a corridor around that path: any station within the corridor half-width (25 NM by default) of any leg, with along-track position measured from the departure along the whole polyline. If you leave the waypoint field blank, the path is the single great-circle between the two airports. A destination is also optional: a departure alone, or the same identifier in both boxes, scores that one airport. Those candidates are thinned to a capped, evenly spaced set — departure and destination first, then the largest remaining gaps along the route — so a 200 NM hop does not fire a request for every AWOS on the coast. You can remove any of them, add an alternate or a site the auto-picker skipped, and widen or narrow the corridor. A route go requires <strong>every selected station</strong> to meet the minimums in the same hour, so the table also shows each station alone — the lowest one is the historically weakest segment. Auto-picked sites with a short or patchy archive (for example a station that only came online in the last year or two) are still listed, but they are left out of that combined route score so they do not erase earlier years of data.</p>
 
       <h2>How a go hour and a go day are counted</h2>
       <p>For the chosen month and day, the tool takes a window of ±3 days (a seven-day week; you can shorten or lengthen it) in each of the last 5 years. Times are converted from the archive’s UTC stamps into one time zone — the departure zone unless you change it — and only observations in your local hour window are scored. The end hour is exclusive (07–10 is 07:00–09:59). A single observation is a go when:</p>
@@ -361,7 +381,7 @@
 
       <h2>Frequently asked questions</h2>
       <h3>What does this route weather go / no-go calculator tell me?</h3>
-      <p>How often, in the same week of the year and time of day, archived hourly METARs at the selected airports along your route met the personal minimums you entered. A route go means every selected station was a go in the same hour.</p>
+      <p>How often, in the same week of the year and time of day, archived hourly METARs at the selected airports along your route met the personal minimums you entered. A route go means every selected station was a go in the same hour. Optional waypoints bend the corridor; a single airport is enough if you leave the destination and route blank.</p>
       <h3>Is this a weather forecast?</h3>
       <p>No. It is climatology and says nothing reliable about the actual day. Get an official briefing.</p>
       <h3>How is a route go decided?</h3>
@@ -370,6 +390,10 @@
       <p>The Iowa Environmental Mesonet ASOS/AWOS archive, requested from your browser, routine hourly METARs only, with light, cached 5-year week-window downloads.</p>
       <h3>How is ceiling defined, and how do the VFR presets relate to 14 CFR 91.155?</h3>
       <p>Ceiling is the lowest BKN, OVC, or VV layer (AIM). The presets are AIM-style flight-category starting points for personal minimums, not a substitute for 91.155.</p>
+      <h3>Can I enter a route with waypoints, not just a straight line?</h3>
+      <p>Yes. Type intermediate waypoints in the route field — airport identifiers, navaids, or five-letter fixes — separated by spaces or commas, for example <code>PRB SNS</code> or the full <code>KSBA PRB KSJC</code>. Stations are picked in a 25 NM corridor of any leg and spaced along the whole path. Leave the field blank and the path is the great-circle between departure and destination.</p>
+      <h3>Does the weather lookup work with only one location?</h3>
+      <p>Yes. Enter a departure and leave the destination and route blank, or put the same identifier in both airport boxes. The page then scores that one airport’s archived METARs for the chosen week and time of day.</p>
     </article>
   </main>
 
@@ -387,6 +411,7 @@
   <noscript><p class="noscript">This calculator needs JavaScript, both to apply your minimums and to request archived METARs from the Iowa Environmental Mesonet.</p></noscript>
   <script src="stations.js"></script>
   <script src="calc.js"></script>
+  <script src="../great-circle-distance/lookup.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

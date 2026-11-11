@@ -171,3 +171,6 @@
 @media (max-width: 639px) {
   .chart-row { grid-template-columns: 2.6rem 1fr 2.8rem; }
 }
+
+#route { width: 100%; }
+.field-block .pair + div { margin-top: 0.7rem; }

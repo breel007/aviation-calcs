@@ -5,7 +5,9 @@
  * Historical METARs are fetched elsewhere (app.js) from the Iowa
  * Environmental Mesonet ASOS archive; this module parses those CSV
  * rows, applies ceiling / visibility / weather / wind minimums, and
- * picks ASOS/AWOS stations along a great-circle corridor.
+ * picks ASOS/AWOS stations along a route corridor (a single
+ * great-circle, or a polyline of great-circle legs through optional
+ * waypoints).
  *
  * Ceiling is the lowest BKN, OVC, or VV layer (AIM). Few and scattered
  * layers are not a ceiling. Flight-category thresholds in the presets
@@ -79,6 +81,64 @@
 
   function normId(s) {
     return String(s || "").trim().toUpperCase();
+  }
+
+  /**
+   * Split a typed route string into identifier tokens. Spaces, commas,
+   * slashes, and arrows are all accepted as separators, so "PRB SNS",
+   * "KSBA, PRB, KSJC", and "KSBA → PRB → KSJC" produce the same list.
+   */
+  function parseRouteTokens(str) {
+    return String(str || "")
+      .toUpperCase()
+      .split(/[^A-Z0-9]+/)
+      .filter(Boolean);
+  }
+
+  function identList(place) {
+    if (!place) return [];
+    var out = [];
+    function add(v) {
+      var id = normId(v);
+      if (!id) return;
+      if (out.indexOf(id) === -1) out.push(id);
+      if (id.length === 4 && id.charAt(0) === "K") {
+        var shortId = id.slice(1);
+        if (out.indexOf(shortId) === -1) out.push(shortId);
+      } else if (id.length === 3) {
+        var longId = "K" + id;
+        if (out.indexOf(longId) === -1) out.push(longId);
+      }
+    }
+    add(place.ident);
+    add(place.icao);
+    add(place.sid);
+    add(place.id);
+    return out;
+  }
+
+  function identMatches(token, place) {
+    var t = normId(token);
+    if (!t) return false;
+    return identList(place).indexOf(t) !== -1;
+  }
+
+  /**
+   * Drop a leading token that restates the departure and a trailing
+   * token that restates the destination, so "KSBA PRB KSJC" and
+   * "PRB" mean the same intermediate list when dep/dest are set.
+   */
+  function trimRouteTokens(tokens, dep, dest) {
+    var t = (tokens || []).map(normId).filter(Boolean);
+    if (t.length && identMatches(t[0], dep)) t = t.slice(1);
+    if (t.length && identMatches(t[t.length - 1], dest)) t = t.slice(0, -1);
+    return t;
+  }
+
+  function displayIdent(p) {
+    if (!p) return "";
+    if (p.ident) return normId(p.ident);
+    return normId(p.icao || p.sid || p.id);
   }
 
   /**
@@ -183,26 +243,175 @@
   }
 
   /**
+   * Deduplicate a vertex list: drop points without coordinates and
+   * consecutive vertices closer than 0.001 NM. Returns { points, legs,
+   * routeNm } where each leg has a, b, nm, and startAlong (cumulative
+   * NM from the first vertex).
+   */
+  function buildRoutePath(dep, dest, waypoints) {
+    var raw = [];
+    if (dep) raw.push(dep);
+    (waypoints || []).forEach(function (p) { raw.push(p); });
+    if (dest) raw.push(dest);
+    var points = [];
+    for (var i = 0; i < raw.length; i++) {
+      var p = raw[i];
+      if (!p || !isFiniteNumber(p.lat) || !isFiniteNumber(p.lon)) continue;
+      if (points.length) {
+        var prev = points[points.length - 1];
+        if (haversineNm(prev.lat, prev.lon, p.lat, p.lon) < 1e-3) continue;
+      }
+      points.push(p);
+    }
+    var legs = [];
+    var acc = 0;
+    for (var j = 0; j < points.length - 1; j++) {
+      var nm = haversineNm(points[j].lat, points[j].lon, points[j + 1].lat, points[j + 1].lon);
+      legs.push({ a: points[j], b: points[j + 1], nm: nm, startAlong: acc, index: j });
+      acc += nm;
+    }
+    return { points: points, legs: legs, routeNm: acc };
+  }
+
+  /**
+   * Placement of a point relative to a polyline of great-circle legs.
+   * alongNm is measured from the first vertex, along the whole path,
+   * to the closest foot on any leg. For a single-leg path this matches
+   * routeGeometry exactly (including along-track values past the ends).
+   */
+  function polylineGeometry(station, pathOrPoints) {
+    var path = pathOrPoints && pathOrPoints.legs && pathOrPoints.points
+      ? pathOrPoints
+      : buildRoutePath(null, null, pathOrPoints);
+    if (!station || !isFiniteNumber(station.lat) || !isFiniteNumber(station.lon)) return null;
+    if (!path.points.length) return null;
+    if (path.legs.length === 0) {
+      var d0 = haversineNm(path.points[0].lat, path.points[0].lon, station.lat, station.lon);
+      return {
+        routeNm: 0,
+        alongNm: 0,
+        alongFrac: 0,
+        crossNm: 0,
+        absCrossNm: d0,
+        distanceToDepNm: d0,
+        legIndex: 0
+      };
+    }
+    if (path.legs.length === 1) {
+      var g1 = routeGeometry(station, path.legs[0].a, path.legs[0].b);
+      if (g1) g1.legIndex = 0;
+      return g1;
+    }
+    var best = null;
+    for (var i = 0; i < path.legs.length; i++) {
+      var leg = path.legs[i];
+      var g = routeGeometry(station, leg.a, leg.b);
+      if (!g) continue;
+      var onSeg = g.alongFrac >= 0 && g.alongFrac <= 1;
+      var alongClamped = Math.max(0, Math.min(leg.nm, g.alongNm));
+      var dist;
+      if (onSeg) {
+        dist = g.absCrossNm;
+      } else if (g.alongNm < 0) {
+        dist = haversineNm(station.lat, station.lon, leg.a.lat, leg.a.lon);
+      } else {
+        dist = haversineNm(station.lat, station.lon, leg.b.lat, leg.b.lon);
+      }
+      var cand = {
+        routeNm: path.routeNm,
+        alongNm: leg.startAlong + alongClamped,
+        alongFrac: path.routeNm < 1e-6 ? 0 : (leg.startAlong + alongClamped) / path.routeNm,
+        crossNm: onSeg ? g.crossNm : 0,
+        absCrossNm: dist,
+        distanceToDepNm: haversineNm(path.points[0].lat, path.points[0].lon, station.lat, station.lon),
+        legIndex: i,
+        onSeg: onSeg
+      };
+      if (!best) {
+        best = cand;
+        continue;
+      }
+      if (cand.onSeg && !best.onSeg) {
+        best = cand;
+        continue;
+      }
+      if (best.onSeg && !cand.onSeg) continue;
+      if (cand.absCrossNm + 1e-9 < best.absCrossNm) {
+        best = cand;
+      } else if (Math.abs(cand.absCrossNm - best.absCrossNm) <= 1e-9 && cand.alongNm < best.alongNm) {
+        best = cand;
+      }
+    }
+    return best;
+  }
+
+  function stationInPathCorridor(station, path, width) {
+    if (!path || !path.legs || !path.legs.length) return false;
+    for (var i = 0; i < path.legs.length; i++) {
+      var g = routeGeometry(station, path.legs[i].a, path.legs[i].b);
+      if (!g) continue;
+      if (g.absCrossNm <= width + 1e-6 && g.alongFrac >= -0.01 && g.alongFrac <= 1.01) return true;
+    }
+    return false;
+  }
+
+  function formatRouteSummary(dep, dest, waypoints) {
+    var wps = waypoints || [];
+    var parts = [];
+    function pushIdent(p) {
+      var id = displayIdent(p);
+      if (!id) return;
+      if (parts.length && parts[parts.length - 1] === id) return;
+      parts.push(id);
+    }
+    pushIdent(dep);
+    wps.forEach(pushIdent);
+    pushIdent(dest);
+    var path = buildRoutePath(dep, dest, wps);
+    var label = parts.join(" → ");
+    if (path.routeNm >= 0.5 && parts.length >= 2) {
+      label += ", " + Math.round(path.routeNm) + " NM";
+    }
+    return {
+      label: label,
+      routeNm: path.routeNm,
+      pointCount: path.points.length,
+      legCount: path.legs.length
+    };
+  }
+
+  function findStationForWaypoint(stations, wp) {
+    if (!wp) return null;
+    var keys = {};
+    identList(wp).forEach(function (id) { keys[id] = true; });
+    if (!Object.keys(keys).length) return null;
+    var list = stations || [];
+    for (var i = 0; i < list.length; i++) {
+      var s = list[i];
+      if (keys[sidOf(s)] || keys[normId(s.icao)]) return s;
+    }
+    return null;
+  }
+
+  /**
    * Stations inside a corridor of half-width `corridorNm` around the
    * great-circle from dep to dest, and between the endpoints
    * (along-track fraction in [0, 1], with a tiny numerical pad).
    * Result is sorted by along-track distance.
    */
-  function stationsInCorridor(stations, dep, dest, corridorNm) {
+  function stationsInCorridor(stations, dep, dest, corridorNm, waypoints) {
     var width = corridorNm == null ? DEFAULT_CORRIDOR_NM : Number(corridorNm);
     var out = [];
-    if (!dep || !dest || !isFiniteNumber(dep.lat) || !isFiniteNumber(dest.lat)) return out;
-    var routeNm = haversineNm(dep.lat, dep.lon, dest.lat, dest.lon);
-    if (routeNm < 5) return out;
+    var path = buildRoutePath(dep, dest, waypoints);
+    if (path.routeNm < 5) return out;
     var list = stations || [];
     for (var i = 0; i < list.length; i++) {
       var s = list[i];
       if (!isFiniteNumber(s.lat) || !isFiniteNumber(s.lon)) continue;
-      var g = routeGeometry(s, dep, dest);
+      if (!stationInPathCorridor(s, path, width)) continue;
+      var g = polylineGeometry(s, path);
       if (!g) continue;
-      if (g.absCrossNm <= width + 1e-6 && g.alongFrac >= -0.01 && g.alongFrac <= 1.01) {
-        out.push(Object.assign({ station: s }, g));
-      }
+      out.push(Object.assign({ station: s }, g));
     }
     out.sort(function (a, b) { return a.alongNm - b.alongNm; });
     return out;
@@ -234,6 +443,9 @@
     var removed = {};
     (opts.removed || []).forEach(function (id) { removed[sidOf(id)] = true; });
 
+    var waypoints = opts.waypoints || [];
+    var path = buildRoutePath(dep, dest, waypoints);
+
     var bySid = {};
     function remember(s, role, auto) {
       if (!s) return;
@@ -241,9 +453,14 @@
       if (!id) return;
       if (removed[id]) return;
       var existing = bySid[id];
-      var g = (dep && dest && isFiniteNumber(s.lat) && isFiniteNumber(dep.lat) && isFiniteNumber(dest.lat))
-        ? routeGeometry(s, dep, dest)
-        : null;
+      var g = null;
+      if (isFiniteNumber(s.lat)) {
+        if (path.points.length >= 2 && path.routeNm >= 1e-6) {
+          g = polylineGeometry(s, path);
+        } else if (dep && dest && isFiniteNumber(dep.lat) && isFiniteNumber(dest.lat)) {
+          g = routeGeometry(s, dep, dest);
+        }
+      }
       var row = {
         sid: id,
         icao: s.icao || (id.length === 3 ? "K" + id : id),
@@ -276,14 +493,16 @@
     remember(dep, "departure", false);
     remember(dest, "destination", false);
     extras.forEach(function (s) { remember(s, "extra", false); });
+    waypoints.forEach(function (wp) {
+      var hit = findStationForWaypoint(stations, wp);
+      if (hit) remember(hit, "enroute", true);
+    });
 
     var selected = Object.keys(bySid).map(function (k) { return bySid[k]; });
-    var routeNm = (dep && dest && isFiniteNumber(dep.lat) && isFiniteNumber(dest.lat))
-      ? haversineNm(dep.lat, dep.lon, dest.lat, dest.lon)
-      : 0;
+    var routeNm = path.routeNm;
 
     if (routeNm >= 5 && (stations || []).length) {
-      var corridor = stationsInCorridor(stations, dep, dest, corridorNm);
+      var corridor = stationsInCorridor(stations, dep, dest, corridorNm, waypoints);
       var slots = maxStations - selected.length;
       if (slots > 0) {
         var candidates = [];
@@ -1055,6 +1274,11 @@
     hourInWindow: hourInWindow,
     sessionDateKey: sessionDateKey,
     localTimeParts: localTimeParts,
+    parseRouteTokens: parseRouteTokens,
+    trimRouteTokens: trimRouteTokens,
+    buildRoutePath: buildRoutePath,
+    polylineGeometry: polylineGeometry,
+    formatRouteSummary: formatRouteSummary,
     parseValidUtc: parseValidUtc,
     parseCsv: parseCsv,
     ceilingFromLayers: ceilingFromLayers,
