@@ -5,21 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#080c16">
   <meta name="color-scheme" content="dark">
-  <title>Great-Circle Distance Calculator — Haversine Range and Initial Course | Aviator Calcs</title>
-  <meta name="description" content="Find the great-circle distance and initial true course between two latitude/longitude points with the haversine formula. Educational; not a certified flight-planning system.">
-  <meta name="keywords" content="undefined">
+  <title>Great-Circle Distance Calculator — Airport, Navaid, or Lat/Lon | Aviator Calcs</title>
+  <meta name="description" content="Find the great-circle distance and initial true course between two points. Enter an airport ICAO or FAA LID, a navaid, a five-letter fix, or latitude and longitude. Educational; not a certified flight-planning system.">
+  <meta name="keywords" content="great circle distance calculator, haversine, airport identifier, ICAO, FAA LID, navaid, VOR, intersection, NASR, initial course, KSBA, KLAX">
   <meta name="author" content="Aviation Calcs">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://aviatorcalcs.com/great-circle-distance/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://aviatorcalcs.com/great-circle-distance/">
-  <meta property="og:title" content="Great-Circle Distance Calculator — Haversine Range and Initial Course | Aviator Calcs">
-  <meta property="og:description" content="Find the great-circle distance and initial true course between two latitude/longitude points with the haversine formula. Educational; not a certified flight-planning system.">
+  <meta property="og:title" content="Great-Circle Distance Calculator — Airport, Navaid, or Lat/Lon | Aviator Calcs">
+  <meta property="og:description" content="Find the great-circle distance and initial true course between two points. Enter an airport ICAO or FAA LID, a navaid, a five-letter fix, or latitude and longitude. Educational; not a certified flight-planning system.">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="undefined">
-  <meta name="twitter:description" content="Find the great-circle distance and initial true course between two latitude/longitude points with the haversine formula. Educational; not a certified flight-planning system.">
-  <meta name="application-name" content="undefined">
+  <meta name="twitter:title" content="Great-Circle Distance Calculator — Airport, Navaid, or Lat/Lon | Aviator Calcs">
+  <meta name="twitter:description" content="Find the great-circle distance and initial true course between two points. Enter an airport ICAO or FAA LID, a navaid, a five-letter fix, or latitude and longitude. Educational; not a certified flight-planning system.">
+  <meta name="application-name" content="Great-Circle Distance Calculator">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,7 +35,7 @@
                 "WebApplication",
                 "SoftwareApplication"
             ],
-            "name": "Great-Circle Distance Calculator — Haversine Range and Initial Course | Aviator Calcs",
+            "name": "Great-Circle Distance Calculator — Airport, Navaid, or Lat/Lon | Aviator Calcs",
             "url": "https://aviatorcalcs.com/great-circle-distance/",
             "applicationCategory": "UtilitiesApplication",
             "operatingSystem": "Any",
@@ -44,17 +44,25 @@
                 "price": "0",
                 "priceCurrency": "USD"
             },
-            "description": "Find the great-circle distance and initial true course between two latitude/longitude points with the haversine formula. Educational; not a certified flight-planning system."
+            "description": "Find the great-circle distance and initial true course between two points. Enter an airport ICAO or FAA LID, a navaid, a five-letter fix, or latitude and longitude. Educational; not a certified flight-planning system."
         },
         {
             "@type": "FAQPage",
             "mainEntity": [
                 {
                     "@type": "Question",
+                    "name": "Can I enter an airport, navaid, or fix instead of latitude and longitude?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes. Each point accepts an airport ICAO or FAA LID (KSBA or SBA), a navaid ident (LAX VOR), or a five-letter fix (SADDE), or decimal latitude and longitude as before. Coordinates come from the public-domain FAA NASR 28-day subscription (APT_BASE, NAV_BASE, and FIX_BASE). Non-U.S. ICAO airports are merged from OurAirports, also public domain. If an identifier is used for more than one place, the page shows a picker with type, name, and state. The NASR cycle date is printed on the page."
+                    }
+                },
+                {
+                    "@type": "Question",
                     "name": "Why is my distance a little different from a GPS or a chart plotter?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "This page uses a sphere of radius 6,371 km. GPS receivers and many airline tools use the WGS-84 ellipsoid, which is slightly flattened. On a transcontinental leg the difference is typically a few nautical miles. Rhumb-line (constant-heading) distances are longer still."
+                        "text": "This page uses a sphere of radius 6,371 km. GPS receivers and many airline tools use the WGS-84 ellipsoid, which is slightly flattened. On a transcontinental leg the difference is typically a few nautical miles. Rhumb-line (constant-heading) distances are longer still. Identifier coordinates are airport reference points, navaid positions, or fix positions from NASR, which can differ slightly from a gate or a runway threshold."
                     }
                 },
                 {
@@ -70,7 +78,7 @@
                     "name": "Can I use this as a flight plan?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "No. It is an educational range and course estimate. File and fly with a certified planner, current charts, and the winds and routing that apply to the flight."
+                        "text": "No. It is an educational range and course estimate. File and fly with a certified planner, current charts, and the winds and routing that apply to the flight. Identifier data can lag the current NASR cycle and is not a substitute for official source data."
                     }
                 }
             ]
@@ -95,7 +103,7 @@
         </svg>
         <div>
           <p class="brand-kicker">Aviation Calcs</p>
-          <p class="brand-name">undefined</p>
+          <p class="brand-name">Great-Circle Distance</p>
         </div>
       </a>
       <nav class="site-nav" aria-label="Site">
@@ -110,22 +118,48 @@
     <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
       <header class="panel-head">
         <h1 id="calc-title">Great-Circle Distance Calculator</h1>
-        <p class="lede">Enter two latitudes and longitudes and this page returns the shortest path over a spherical Earth: the great-circle distance and the initial (and arrival) true course. The calculation is the standard haversine formula used in aviation trip planning, with the same mean Earth radius that underpins many public range tools. It is a range and course estimate, not a route-approved flight plan.</p>
+        <p class="lede">Enter an airport, navaid, or five-letter fix — or a latitude and longitude — for each end of a leg, and this page returns the shortest path over a spherical Earth: the great-circle distance and the initial (and arrival) true course. Optional waypoints are chained as successive great-circle legs. The calculation is the standard haversine formula used in aviation trip planning, with the same mean Earth radius that underpins many public range tools. It is a range and course estimate, not a route-approved flight plan.</p>
       </header>
       <form id="calc-form" action="#" method="get" novalidate>
-<p class="hint">Latitudes and longitudes in decimal degrees. South and west are negative (Los Angeles is about 33.94, −118.41). A course of 0° is true north.</p>
-<div class="pair">
-  <div class="field"><label for="lat1">Latitude 1</label><input id="lat1" type="text" inputmode="decimal" value="40.6413"></div>
-  <div class="field"><label for="lon1">Longitude 1</label><input id="lon1" type="text" inputmode="decimal" value="-73.7781"></div>
+<p class="hint">Identifiers can be an airport ICAO or FAA LID (KSBA or SBA), a navaid (LAX or “LAX VOR”), or a five-letter intersection (SADDE). Latitude and longitude are decimal degrees; south and west are negative. A course of 0° is true north.</p>
+<div id="route-points">
+  <div class="point-card" data-role="from">
+    <div class="point-head"><h3 class="point-title">From</h3></div>
+    <div class="field">
+      <label for="ident-from">Identifier</label>
+      <input id="ident-from" class="ident-input" type="text" value="KJFK" placeholder="KSBA, SBA, LAX, SADDE" autocomplete="off" spellcheck="false" autocapitalize="characters">
+    </div>
+    <p class="or-sep">or latitude / longitude</p>
+    <div class="pair">
+      <div class="field"><label for="lat-from">Latitude</label><input id="lat-from" class="lat-input" type="text" inputmode="decimal" value="40.639928"></div>
+      <div class="field"><label for="lon-from">Longitude</label><input id="lon-from" class="lon-input" type="text" inputmode="decimal" value="-73.778692"></div>
+    </div>
+    <p class="resolved" hidden></p>
+    <div class="picker" hidden></div>
+  </div>
+  <div id="via-points"></div>
+  <div class="point-card" data-role="to">
+    <div class="point-head"><h3 class="point-title">To</h3></div>
+    <div class="field">
+      <label for="ident-to">Identifier</label>
+      <input id="ident-to" class="ident-input" type="text" value="KLAX" placeholder="KSBA, SBA, LAX, SADDE" autocomplete="off" spellcheck="false" autocapitalize="characters">
+    </div>
+    <p class="or-sep">or latitude / longitude</p>
+    <div class="pair">
+      <div class="field"><label for="lat-to">Latitude</label><input id="lat-to" class="lat-input" type="text" inputmode="decimal" value="33.942496"></div>
+      <div class="field"><label for="lon-to">Longitude</label><input id="lon-to" class="lon-input" type="text" inputmode="decimal" value="-118.408049"></div>
+    </div>
+    <p class="resolved" hidden></p>
+    <div class="picker" hidden></div>
+  </div>
 </div>
-<div class="pair">
-  <div class="field"><label for="lat2">Latitude 2</label><input id="lat2" type="text" inputmode="decimal" value="33.9425"></div>
-  <div class="field"><label for="lon2">Longitude 2</label><input id="lon2" type="text" inputmode="decimal" value="-118.4081"></div>
-</div>
+<p class="form-actions waypoint-actions"><button type="button" class="btn btn-ghost" id="addWp">Add waypoint</button></p>
 <button type="button" class="btn" id="calcBtn">Calculate distance and course</button>
 <div class="form-actions"><button type="button" class="btn btn-ghost" id="exJfkLax">Example: KJFK–KLAX</button>
 <button type="button" class="btn btn-ghost" id="exLhrSyd">Example: EGLL–YSSY</button>
+<button type="button" class="btn btn-ghost" id="exSbaSadde">Example: KSBA–SADDE</button>
 <button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
+<p class="data-cycle" id="nasr-cycle">Airport, navaid, and fix coordinates are from the <a href="https://www.faa.gov/air_traffic/flight_info/aeronav/aero_data/NASR_Subscription/">FAA NASR 28-day subscription</a> effective 29 October 2026 (public domain). Non-U.S. ICAO airports are merged from OurAirports (public domain).</p>
       </form>
       <div id="warnings" class="warnings" hidden role="status"></div>
       <section class="results" aria-live="polite" aria-labelledby="results-heading">
@@ -140,7 +174,7 @@
       </section>
       <aside class="disclaimer" role="note">
         <h2>Disclaimer</h2>
-        <p>undefined</p>
+        <p>This calculator is a planning and training aid only. It is <strong>not</strong> a substitute for a certified flight-planning system, current charts, or ATC clearance. Identifier coordinates come from the public-domain FAA NASR 28-day subscription and, for non-U.S. ICAO airports, OurAirports; they can lag the current cycle and are not a substitute for the official source.</p>
       </aside>
     </section>
 
@@ -155,28 +189,34 @@
 <p>hav(<i>c</i>) = hav(Δφ) + cos φ<sub>1</sub> cos φ<sub>2</sub> hav(Δλ),</p>
 <p>where hav(θ) = sin²(θ/2). The distance is then <i>d</i> = <i>R c</i>, with <i>c</i> in radians. This page uses the mean Earth radius <i>R</i> = 6,371 km (the same conventional value used by many public great-circle tools; WGS-84 is an ellipsoid, so a certified navigator may differ by a few tenths of a percent on a long haul). The initial true course is the forward azimuth of the inverse problem</p>
 <p>θ = atan2( sin Δλ cos φ<sub>2</sub>, cos φ<sub>1</sub> sin φ<sub>2</sub> − sin φ<sub>1</sub> cos φ<sub>2</sub> cos Δλ ),</p>
-<p>and the arrival course is the azimuth at the destination, computed the same way with the points reversed and then folded back to the inbound heading.</p>
+<p>and the arrival course is the azimuth at the destination, computed the same way with the points reversed and then folded back to the inbound heading. Optional waypoints are summed as successive great-circle legs; the initial course is that of the first leg and the arrival course is that of the last.</p>
+<h2>Identifier lookup</h2>
+<p>Each point can be typed as an identifier instead of raw coordinates. The page looks up airport ICAO codes and FAA location identifiers (KSBA or SBA), navaids (a VOR, VORTAC, or NDB ident such as LAX), and five-letter fixes and intersections (SADDE). U.S. and NASR-listed positions come from the public-domain <a href="https://www.faa.gov/air_traffic/flight_info/aeronav/aero_data/NASR_Subscription/">FAA NASR 28-day subscription</a> files APT_BASE, NAV_BASE, and FIX_BASE, currently the cycle effective 29 October 2026. Non-U.S. ICAO airports are merged from the public-domain OurAirports database so examples such as EGLL and YSSY resolve. When the same ident belongs to more than one place — a city airport and a nearby VORTAC, or two NDBs that share a Morse ident — a picker lists type, name, and state so you can choose. The resolved name and coordinates are shown under the field. Data files are split by type and first letter and loaded only as needed; nothing you type is uploaded.</p>
 <h2>What this does and does not include</h2>
 <p>A great-circle is the shortest path on the sphere. Real airways, winds, ETOPS, and preferred routes usually make the flown distance longer. Antipodal points have a well-defined distance (half the circumference) but no unique initial course, which the calculator reports rather than inventing a heading. The page does not apply magnetic variation — pair the true course with the <a href="/true-magnetic-heading/">true/magnetic heading</a> calculator — and it does not compute wind-corrected heading; use the <a href="/e6b-wind/">wind triangle</a> for that. For time en route at a given groundspeed, see <a href="/time-speed-distance/">time, speed, and distance</a>.</p>
 <h2>Sources</h2>
 <ul>
+<li>FAA, <cite>NASR 28-day subscription</cite>, cycle effective 29 October 2026, files APT_BASE, NAV_BASE, and FIX_BASE (public domain). <a href="https://www.faa.gov/air_traffic/flight_info/aeronav/aero_data/NASR_Subscription/">NASR Subscription</a>.</li>
+<li>OurAirports, <cite>airports.csv</cite> (public domain), used only to add non-U.S. ICAO airports that are not already in NASR.</li>
 <li>W. M. Smart, <cite>Textbook on Spherical Astronomy</cite> (haversine / spherical cosine rule).</li>
 <li>NIMA / NGA, <cite>Department of Defense World Geodetic System 1984</cite> (ellipsoid vs. spherical approximation).</li>
 <li>FAA, <cite>Pilot’s Handbook of Aeronautical Knowledge</cite>, navigation and dead-reckoning chapters (true course, magnetic variation).</li>
 </ul>
       <h2>Frequently asked questions</h2>
+      <h3>Can I enter an airport, navaid, or fix instead of latitude and longitude?</h3>
+      <p>Yes. Each point accepts an airport ICAO or FAA LID (KSBA or SBA), a navaid ident (LAX VOR), or a five-letter fix (SADDE), or decimal latitude and longitude as before. Coordinates come from the public-domain FAA NASR 28-day subscription (APT_BASE, NAV_BASE, and FIX_BASE). Non-U.S. ICAO airports are merged from OurAirports, also public domain. If an identifier is used for more than one place, the page shows a picker with type, name, and state. The NASR cycle date is printed on the page.</p>
       <h3>Why is my distance a little different from a GPS or a chart plotter?</h3>
-      <p>This page uses a sphere of radius 6,371 km. GPS receivers and many airline tools use the WGS-84 ellipsoid, which is slightly flattened. On a transcontinental leg the difference is typically a few nautical miles. Rhumb-line (constant-heading) distances are longer still.</p>
+      <p>This page uses a sphere of radius 6,371 km. GPS receivers and many airline tools use the WGS-84 ellipsoid, which is slightly flattened. On a transcontinental leg the difference is typically a few nautical miles. Rhumb-line (constant-heading) distances are longer still. Identifier coordinates are airport reference points, navaid positions, or fix positions from NASR, which can differ slightly from a gate or a runway threshold.</p>
       <h3>What is the difference between initial course and arrival course?</h3>
       <p>On a great-circle the true course changes continuously except on the equator or a meridian. The initial course is the tangent at the departure point; the arrival course is the tangent at the destination. Neither is a magnetic heading.</p>
       <h3>Can I use this as a flight plan?</h3>
-      <p>No. It is an educational range and course estimate. File and fly with a certified planner, current charts, and the winds and routing that apply to the flight.</p>
+      <p>No. It is an educational range and course estimate. File and fly with a certified planner, current charts, and the winds and routing that apply to the flight. Identifier data can lag the current NASR cycle and is not a substitute for official source data.</p>
     </article>
   </main>
 
   <footer class="site-footer">
     <div class="wrap">
-      <p>Aviation Calcs — Great-Circle Distance Calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p>Aviation Calcs — Great-Circle Distance Calculator. All math and identifier lookup run locally in your browser; nothing is uploaded.</p>
       <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
@@ -185,9 +225,30 @@
       </nav>
     </div>
   </footer>
-  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer. Identifier lookup also requires JavaScript.</p></noscript>
+
+  <template id="wp-template">
+    <div class="point-card" data-role="via">
+      <div class="point-head">
+        <h3 class="point-title">Waypoint</h3>
+        <button type="button" class="btn btn-ghost wp-remove">Remove</button>
+      </div>
+      <div class="field">
+        <label>Identifier</label>
+        <input class="ident-input" type="text" placeholder="KSBA, SBA, LAX, SADDE" autocomplete="off" spellcheck="false" autocapitalize="characters">
+      </div>
+      <p class="or-sep">or latitude / longitude</p>
+      <div class="pair">
+        <div class="field"><label>Latitude</label><input class="lat-input" type="text" inputmode="decimal"></div>
+        <div class="field"><label>Longitude</label><input class="lon-input" type="text" inputmode="decimal"></div>
+      </div>
+      <p class="resolved" hidden></p>
+      <div class="picker" hidden></div>
+    </div>
+  </template>
 
   <script src="calc.js"></script>
+  <script src="lookup.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

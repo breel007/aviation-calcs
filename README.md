@@ -11,7 +11,7 @@ The tools are grouped in two sides. Some calculators appear in both.
 ### Flight planning & navigation
 
 - [Time, speed & distance](time-speed-distance/) — solve any of time, groundspeed, or distance, plus ETA.
-- [Great-circle distance](great-circle-distance/) — haversine range and initial true course between two latitudes and longitudes.
+- [Great-circle distance](great-circle-distance/) — haversine range and initial true course between two points, entered as an airport / navaid / fix identifier or as latitude and longitude.
 - [E6B wind triangle](e6b-wind/) — wind correction angle, true heading, and groundspeed, or winds aloft in reverse.
 - [Fuel planner](fuel-planning/) — trip fuel, VFR/IFR reserves, endurance, and 100LL / Jet-A weight.
 - [In-flight fuel and ETA](inflight-fuel-eta/) — remaining distance, current groundspeed and fuel flow, fuel at the destination, and a 91.151 / 91.167 reserve check.
@@ -174,6 +174,20 @@ Open [http://127.0.0.1:8765/](http://127.0.0.1:8765/).
 ```bash
 for f in */test.js; do echo "== $f =="; node "$f" || exit 1; done
 ```
+
+
+Identifier data on the great-circle page is built from a [FAA NASR 28-day subscription](https://www.faa.gov/air_traffic/flight_info/aeronav/aero_data/NASR_Subscription/) (public domain; files `APT_BASE`, `NAV_BASE`, and `FIX_BASE`) with an optional merge of [OurAirports](https://ourairports.com/data/) (public domain) for non-U.S. ICAO airports. To regenerate the compact JSON shards after a new cycle is published:
+
+```bash
+# Download the APT, NAV, and FIX CSV group zips from the cycle page, unzip them,
+# and (optionally) fetch OurAirports airports.csv, then:
+node scripts/build-nav-data.js --dir /path/to/extracted-csvs     --ourairports /path/to/airports.csv     --out great-circle-distance/data
+
+# Or let the script fetch the current-cycle zips and OurAirports:
+node scripts/build-nav-data.js --download --cycle 2026-10-29     --out great-circle-distance/data
+```
+
+The script writes lazy-loaded files under `great-circle-distance/data/` split by type (`apt`, `nav`, `fix`) and first character, plus `meta.json` with the NASR cycle date.
 
 ## Site URL
 

@@ -98,7 +98,52 @@
     };
   }
 
-  var api = { R_MEAN_M: R_MEAN_M, wrap360: wrap360, compute: compute };
+  function computeRoute(points, radiusM) {
+    if (!points || points.length < 2) return null;
+    var legs = [];
+    var totalM = 0;
+    var initial = null;
+    var finalCrs = null;
+    var anyAntipodal = false;
+    var i;
+    for (i = 0; i < points.length - 1; i++) {
+      var a = points[i], b = points[i + 1];
+      if (!a || !b) return null;
+      var r = compute({
+        lat1: a.lat, lon1: a.lon, lat2: b.lat, lon2: b.lon, radiusM: radiusM
+      });
+      if (!r) return null;
+      legs.push({
+        from: a,
+        to: b,
+        distanceM: r.distanceM,
+        distanceNm: r.distanceNm,
+        distanceKm: r.distanceKm,
+        initialCourse: r.initialCourse,
+        finalCourse: r.finalCourse,
+        coincident: r.coincident,
+        antipodal: r.antipodal,
+        centralAngleDeg: r.centralAngleDeg
+      });
+      totalM += r.distanceM;
+      if (i === 0) initial = r.initialCourse;
+      finalCrs = r.finalCourse;
+      if (r.antipodal) anyAntipodal = true;
+    }
+    return {
+      legs: legs,
+      distanceM: totalM,
+      distanceNm: totalM / M_PER_NM,
+      distanceKm: totalM / 1000,
+      distanceSm: totalM / M_PER_SM,
+      initialCourse: initial,
+      finalCourse: finalCrs,
+      antipodalLeg: anyAntipodal,
+      radiusM: (radiusM != null && radiusM !== "") ? Number(radiusM) : R_MEAN_M
+    };
+  }
+
+  var api = { R_MEAN_M: R_MEAN_M, wrap360: wrap360, compute: compute, computeRoute: computeRoute };
   root.GreatCircleDistanceCalcs = api;
   if (typeof module !== "undefined" && module.exports) module.exports = api;
 })(typeof window !== "undefined" ? window : globalThis);
