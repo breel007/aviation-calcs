@@ -94,6 +94,13 @@
       { path: "/flight-level/", title: "Flight level and transition calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/wake-turbulence-separation/", title: "Wake turbulence separation calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/inflight-fuel-eta/", title: "In-flight fuel and ETA calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/compass-turning-errors/", title: "Compass turning errors calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/accelerate-stop/", title: "Accelerate-stop distance calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/service-ceiling/", title: "Service ceiling calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/wind-shear-gradient/", title: "Wind shear and gradient calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/maccready/", title: "MacCready speed-to-fly calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/balloon-lift/", title: "Hot-air balloon lift calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/parachute-descent/", title: "Parachute descent calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/about.html", title: "About", changefreq: "yearly", priority: "0.4" },
       { path: "/privacy.html", title: "Privacy policy", changefreq: "yearly", priority: "0.3" }
     ]

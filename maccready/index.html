@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>MacCready Speed-to-Fly Calculator — Glider Polar | Aviator Calcs</title>
+  <meta name="description" content="Find MacCready speed-to-fly, still-air best glide, and minimum sink from a quadratic glider polar and a next-thermal climb rate. Educational; not a flight computer.">
+  <meta name="keywords" content="undefined">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/maccready/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/maccready/">
+  <meta property="og:title" content="MacCready Speed-to-Fly Calculator — Glider Polar | Aviator Calcs">
+  <meta property="og:description" content="Find MacCready speed-to-fly, still-air best glide, and minimum sink from a quadratic glider polar and a next-thermal climb rate. Educational; not a flight computer.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:description" content="Find MacCready speed-to-fly, still-air best glide, and minimum sink from a quadratic glider polar and a next-thermal climb rate. Educational; not a flight computer.">
+  <meta name="application-name" content="undefined">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "MacCready Speed-to-Fly Calculator — Glider Polar | Aviator Calcs",
+            "url": "https://aviatorcalcs.com/maccready/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Find MacCready speed-to-fly, still-air best glide, and minimum sink from a quadratic glider polar and a next-thermal climb rate. Educational; not a flight computer."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "What MacCready setting should I use?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The expected climb rate in the next thermal, in the same units as sink. Mc = 0 is still-air best glide — useful when you only need to reach a point, not to average a high cross-country speed."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Why does the linear coefficient disappear?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The MacCready condition is w + Mc = V dw/dV. For a quadratic, that reduces to a + Mc = c V², independent of b. Minimum-sink speed still depends on b."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Does this include wind?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. A headwind raises the speed to fly and a tailwind lowers it. This page is the still-air MacCready speed."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">undefined</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">MacCready Speed-to-Fly Calculator</h1>
+        <p class="lede">In a glider, the fastest way around a course is not always the flattest glide. Given a sink polar and an expected climb rate in the next thermal — the MacCready setting — there is a speed to fly that minimizes the time spent both gliding and climbing. This page fits a quadratic polar from two or three points (or from coefficients you type) and returns that speed, the still-air best-glide speed, and, when the polar supports it, minimum-sink speed.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<p class="hint">Sink and the MacCready climb are positive numbers in the same unit (knots of vertical speed, or ft/min). Two polar points fit w = a + c V². A third point adds a linear term. Airspeeds are true, in still air.</p>
+<div class="pair">
+  <div class="field"><label for="v1">Polar point 1 — airspeed</label><input id="v1" type="text" inputmode="decimal" value="20"></div>
+  <div class="field"><label for="w1">Point 1 — sink</label><input id="w1" type="text" inputmode="decimal" value="2"></div>
+</div>
+<div class="pair">
+  <div class="field"><label for="v2">Polar point 2 — airspeed</label><input id="v2" type="text" inputmode="decimal" value="40"></div>
+  <div class="field"><label for="w2">Point 2 — sink</label><input id="w2" type="text" inputmode="decimal" value="5"></div>
+</div>
+<div class="pair">
+  <div class="field"><label for="v3">Optional point 3 — airspeed</label><input id="v3" type="text" inputmode="decimal" value=""></div>
+  <div class="field"><label for="w3">Optional point 3 — sink</label><input id="w3" type="text" inputmode="decimal" value=""></div>
+</div>
+<div class="pair">
+  <div class="field"><label for="mc">MacCready climb (next thermal)</label><input id="mc" type="text" inputmode="decimal" value="3"></div>
+  <div class="field"><label for="sinkUnit">Sink and Mc unit</label>
+    <select id="sinkUnit"><option value="kt" selected>knots</option><option value="fpm">ft/min</option></select></div>
+</div>
+<div class="field"><label for="speedUnit">Airspeed unit</label>
+  <select id="speedUnit"><option value="kt" selected>knots</option><option value="mph">mph</option><option value="kph">km/h</option></select></div>
+<button type="button" class="btn" id="calcBtn">Calculate speed to fly</button>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="ex40">Example: 40 kt speed to fly, Mc = 3 kt</button>
+<button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Result <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>undefined</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+<h2>Speed to fly is √((a + Mc) / c)</h2>
+<p>A quadratic sink polar w(<i>V</i>) = <i>a</i> + <i>b V</i> + <i>c V</i>² (sink positive) and a next-thermal climb Mc satisfy the classic MacCready condition w + Mc = <i>V</i> w′. The linear term cancels, and the speed to fly is <i>V</i><sub>stf</sub> = √((<i>a</i> + Mc)/<i>c</i>). With Mc = 0 that is also the still-air best-glide speed, √(<i>a</i>/<i>c</i>). Minimum sink, when the polar has a useful linear term, is at −<i>b</i>/(2<i>c</i>). A polar w = 1 + 0.0025 <i>V</i>² (knots of airspeed and sink) and a 3-knot MacCready setting therefore fly at 40 knots, with 5 knots of sink; still-air best glide is 20 knots on that same (intentionally simple) polar.</p>
+<p>A real glider polar is measured, not invented, and speed to fly also changes in sinking or rising air between thermals and with a headwind or tailwind (a cruise-speed addition this page does not apply). Use the polar from the flight manual or a logger, not a guess. Related tools: <a href="/glide-distance/">glide distance</a> and the <a href="/drag-polar/">drag polar / L/D max</a> calculator.</p>
+<h2>Sources</h2>
+<ul>
+<li>P. B. MacCready, “Optimum Airspeed Selector,” <cite>Soaring</cite>, 1958.</li>
+<li>FAA <cite>Glider Flying Handbook</cite>, speed to fly and MacCready theory.</li>
+<li>Helmut Reichmann, <cite>Cross-Country Soaring</cite> (quadratic polar and speed-to-fly).</li>
+</ul>
+      <h2>Frequently asked questions</h2>
+      <h3>What MacCready setting should I use?</h3>
+      <p>The expected climb rate in the next thermal, in the same units as sink. Mc = 0 is still-air best glide — useful when you only need to reach a point, not to average a high cross-country speed.</p>
+      <h3>Why does the linear coefficient disappear?</h3>
+      <p>The MacCready condition is w + Mc = V dw/dV. For a quadratic, that reduces to a + Mc = c V², independent of b. Minimum-sink speed still depends on b.</p>
+      <h3>Does this include wind?</h3>
+      <p>No. A headwind raises the speed to fly and a tailwind lowers it. This page is the still-air MacCready speed.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — MacCready Speed-to-Fly Calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

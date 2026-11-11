@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Compass Turning Errors Calculator — UNOS, ANDS, and Magnetic Dip | Aviator Calcs</title>
+  <meta name="description" content="Estimate magnetic dip from latitude and apply the UNOS / ANDS compass turning and acceleration errors. Educational; no invented lag in degrees.">
+  <meta name="keywords" content="undefined">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/compass-turning-errors/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/compass-turning-errors/">
+  <meta property="og:title" content="Compass Turning Errors Calculator — UNOS, ANDS, and Magnetic Dip | Aviator Calcs">
+  <meta property="og:description" content="Estimate magnetic dip from latitude and apply the UNOS / ANDS compass turning and acceleration errors. Educational; no invented lag in degrees.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:description" content="Estimate magnetic dip from latitude and apply the UNOS / ANDS compass turning and acceleration errors. Educational; no invented lag in degrees.">
+  <meta name="application-name" content="undefined">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Compass Turning Errors Calculator — UNOS, ANDS, and Magnetic Dip | Aviator Calcs",
+            "url": "https://aviatorcalcs.com/compass-turning-errors/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Estimate magnetic dip from latitude and apply the UNOS / ANDS compass turning and acceleration errors. Educational; no invented lag in degrees."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Why doesn’t the page give a number of degrees to lead or lag?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "There is no single published lag formula that applies to every wet compass and every bank. The PHAK teaches the direction of the error (UNOS / ANDS), not a universal number of degrees. Inventing one would be less honest than saying “roll out early.”"
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Can I use geographic latitude for dip?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Only as an estimate. The formula uses magnetic latitude. The magnetic equator is offset from the geographic equator, so a dip chart or a current model is better if you need a precise inclination."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Does this replace a timed turn or a GPS track?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. In IMC, a standard-rate turn is flown on the attitude indicator and checked against the heading indicator, not chased on the magnetic compass."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">undefined</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Compass Turning Errors Calculator</h1>
+        <p class="lede">A magnetic compass has dip, turning, and acceleration errors that every private-pilot oral still asks about. Enter a latitude and this page estimates the dipole dip angle, names the hemisphere memory item — UNOS and ANDS in the north, the reverse in the south — and, if you enter a heading, tells you qualitatively whether to roll out early or late, or whether an acceleration would pull the card toward north or south. It does not invent a number of degrees of lag: that depends on the compass, the bank, and the rate, and is not a single published formula.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<p class="hint">Latitude is used as a stand-in for magnetic latitude. The magnetic and geographic equators are not the same, so the dip is an estimate, not a charted value. Headings are magnetic, 0° to 360°.</p>
+<div class="pair">
+  <div class="field"><label for="lat">Latitude (degrees, south negative)</label><input id="lat" type="text" inputmode="decimal" value="40"></div>
+  <div class="field"><label for="heading">Roll-out or present heading (optional)</label><input id="heading" type="text" inputmode="decimal" value="0" placeholder="e.g. 0 for north"></div>
+</div>
+<button type="button" class="btn" id="calcBtn">Calculate dip and errors</button>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="exN">Example: 40°N, rolling out on north</button>
+<button type="button" class="btn btn-ghost" id="exS">Example: 40°S, heading east</button>
+<button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Result <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>undefined</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+<h2>Dip, UNOS, and ANDS</h2>
+<p>In a centered dipole field the magnetic inclination (dip) <i>I</i> and magnetic latitude λ are related by tan <i>I</i> = 2 tan λ. At 45° that is about 63.4° of dip; at the equator it is zero; at the pole it is 90°. The vertical component of that field is what produces the compass errors taught in the Pilot’s Handbook.</p>
+<p>Turning error in the northern hemisphere: the compass lags when you turn through north and leads when you turn through south. The memory item is UNOS — Undershoot North, Overshoot South — roll out early when rolling out on a northerly heading, and late when rolling out on a southerly heading. South of the magnetic equator the sense reverses (OSUN). Acceleration error, on an easterly or westerly heading, is ANDS in the north — Accelerate North, Decelerate South — and the reverse in the south. Both errors vanish at the magnetic equator and, for acceleration, on a heading of north or south. This page reports those qualitative rules. It does not compute a lag angle in degrees.</p>
+<p>For converting true, magnetic, and compass heading with variation and deviation, use the <a href="/true-magnetic-heading/">true/magnetic heading</a> calculator. Neither page replaces a compass correction card or a timed standard-rate turn on the attitude indicator.</p>
+<h2>Sources</h2>
+<ul>
+<li>FAA <cite>Pilot’s Handbook of Aeronautical Knowledge</cite>, magnetic compass, dip, turning and acceleration errors, UNOS / ANDS.</li>
+<li>FAA <cite>Airplane Flying Handbook</cite>, compass turns.</li>
+<li>Dipole inclination tan <i>I</i> = 2 tan λ (standard geomagnetism; e.g. Chapman and Bartels, <cite>Geomagnetism</cite>).</li>
+</ul>
+      <h2>Frequently asked questions</h2>
+      <h3>Why doesn’t the page give a number of degrees to lead or lag?</h3>
+      <p>There is no single published lag formula that applies to every wet compass and every bank. The PHAK teaches the direction of the error (UNOS / ANDS), not a universal number of degrees. Inventing one would be less honest than saying “roll out early.”</p>
+      <h3>Can I use geographic latitude for dip?</h3>
+      <p>Only as an estimate. The formula uses magnetic latitude. The magnetic equator is offset from the geographic equator, so a dip chart or a current model is better if you need a precise inclination.</p>
+      <h3>Does this replace a timed turn or a GPS track?</h3>
+      <p>No. In IMC, a standard-rate turn is flown on the attitude indicator and checked against the heading indicator, not chased on the magnetic compass.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Compass Turning Errors Calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -17,12 +17,14 @@ The tools are grouped in two sides. Some calculators appear in both.
 - [In-flight fuel and ETA](inflight-fuel-eta/) — remaining distance, current groundspeed and fuel flow, fuel at the destination, and a 91.151 / 91.167 reserve check.
 - [Aviation unit converter](aviation-unit-converter/) — knots, nautical miles, inHg, gallons, Celsius, fpm, and more.
 - [True / magnetic heading](true-magnetic-heading/) — convert true, magnetic, and compass heading or course with variation and optional deviation (east is least, west is best).
+- [Compass turning errors](compass-turning-errors/) — magnetic dip from latitude, plus the UNOS / ANDS turning and acceleration errors (qualitative; no invented lag in degrees).
 - [Top of descent](top-of-descent/) — TOD distance and descent rate for a 3° path or a custom angle.
 - [Descent rate / glideslope VSI](descent-rate/) — required vertical speed for a 3° ILS or a custom path, in fpm and ft/NM, versus the GS × 5 rule.
 - [ILS glideslope height](ils-glideslope-height/) — height above the threshold from distance, path angle, and TCH, or the distance for a given height, plus an optional descent rate.
 - [Holding pattern entry](holding-pattern-entry/) — AIM-recommended direct, teardrop, or parallel entry.
 - [Climb gradient](climb-gradient/) — ft/NM, fpm, percent, and degrees, plus a departure-minimum check.
 - [Glide distance](glide-distance/) — best-glide range from altitude and glide ratio, with wind.
+- [MacCready speed to fly](maccready/) — speed to fly, still-air best glide, and minimum sink from a quadratic glider polar (also listed under Performance).
 - [Turn radius](turn-radius/) — standard-rate bank, turn radius, load factor, and stall speed in a bank.
 - [Time to turn](time-to-turn/) — time for a heading change at 3°/s, half-standard, or a rate from TAS and bank.
 - [Visual descent point](visual-descent-point/) — VDP distance from HAT and path angle (exact and the HAT/300 rule), optional DME, and descent rate.
@@ -40,12 +42,14 @@ The tools are grouped in two sides. Some calculators appear in both.
 
 - [Density altitude](density-altitude/) — pressure altitude, ICAO density altitude, humidity correction, two-way ISA deviation (ISA +/−), and a rough takeoff/climb estimate.
 - [Takeoff and landing distance](takeoff-landing-distance/) — correct a POH baseline for wind, weight, density altitude, slope, and surface, including the PHAK 19% / 21% wind identity.
+- [Accelerate-stop distance](accelerate-stop/) — educational distance to a decision speed, through a recognition delay, and to a stop (not a certified ASDR or V1).
 - [Approach and landing speed](approach-speed/) — Vref = 1.3 × Vso, a √(W/Wref) weight correction, and the FAA gust-factor additive of half the gust increment.
 - [Crosswind](crosswind/) — crosswind, headwind, and tailwind components for both runway ends, including gusts and a wind diagram.
 - [Runway selection](runway-selection/) — headwind and crosswind on every runway, true-to-magnetic variation, and a recommended heading within your crosswind limit.
 - [Weight and balance](weight-balance/) — generic W&B / CG calculator with an editable envelope and example Cessna 172S, Piper Archer, and Cessna 152 arms.
 - [CG percent MAC](cg-percent-mac/) — convert a CG station and LEMAC to percent of mean aerodynamic chord, or invert a % MAC to a station (also listed under Aerodynamics).
 - [True airspeed](true-airspeed/) — CAS/IAS to TAS, Mach, and equivalent airspeed.
+- [Service ceiling](service-ceiling/) — service and absolute ceilings from a linear rate-of-climb versus density-altitude model, or from two climb rates.
 - [Hydroplaning speed](hydroplaning-speed/) — dynamic hydroplaning speed 9√P and the locked-wheel 7.7√P figure from tire inflation pressure.
 - [Stall speed vs weight and bank](stall-speed-weight-bank/) — Vs scaled by √(W/Wref) and √n, with a bank table.
 - [Maneuvering speed vs weight](maneuvering-speed-weight/) — Va = Va_ref × √(W/Wref), optionally from stall speed and limit load factor.
@@ -53,6 +57,9 @@ The tools are grouped in two sides. Some calculators appear in both.
 - [Pivotal altitude](pivotal-altitude/) — eights-on-pylons pivotal altitude from groundspeed (AFH GS²/11.3 and GS²/15, plus exact V²/g).
 - [Aviation fuel weight](fuel-weight/) — gallons, litres, pounds, and kilograms for 100LL, Jet-A, Jet-B, JP-5, and JP-8, with an optional temperature correction.
 - [Drag polar and L/D max](drag-polar/) — quadratic polar, (L/D)max, and propeller / jet range and endurance lift coefficients (also listed under Aerodynamics).
+- [MacCready speed to fly](maccready/) — glider speed to fly from a quadratic polar and a next-thermal climb rate (also listed under Flight planning).
+- [Parachute descent](parachute-descent/) — time to the ground and wind drift from a descent rate or from mass, Cd, and area (also listed under Aerodynamics).
+- [Hot-air balloon lift](balloon-lift/) — gross and useful lift from envelope volume and the inside/outside temperature difference.
 - [Thrust and power required](thrust-power-required/) — level-flight T_req and P_req from a drag polar, with (L/D)max and minimum-power speeds (also listed under Aerodynamics and Propulsion).
 - [Breguet range and endurance](breguet-range-endurance/) — jet and propeller range and endurance from L/D, speed, and fuel fraction (also listed under Propulsion).
 
@@ -68,6 +75,7 @@ The tools are grouped in two sides. Some calculators appear in both.
 - [Thunderstorm flash-to-bang](thunderstorm-distance/) — storm range from the seconds between a lightning flash and its thunder, using the local speed of sound.
 - [Heat index](heat-index/) — NWS apparent temperature from the Rothfusz regression, humidity adjustments, and the Steadman fallback.
 - [Wind chill](wind-chill/) — North American wind-chill temperature from the NWS 2001 formula.
+- [Wind shear / gradient](wind-shear-gradient/) — wind at a second height from a 1/7-power-law profile or a linear shear in knots per 100 feet.
 - [Zulu time converter](zulu-time-converter/) — local ↔ UTC, a live Zulu clock, and flight-plan ETAs.
 - [Sunrise, sunset & FAA night](sunrise-sunset-twilight/) — sunrise, sunset, civil twilight, and FAA night definitions.
 - [Standard atmosphere](standard-atmosphere/) — ISA / U.S. Standard Atmosphere 1976 properties, and the inverse to pressure and density altitude (also listed under Atmosphere).
@@ -101,6 +109,7 @@ The tools are grouped in two sides. Some calculators appear in both.
 - [Reynolds number](reynolds-number/) — Re = ρVL/μ with ISA air properties or values you enter.
 - [Lift and drag coefficients](lift-drag-coefficient/) — CL, CD, and L/D from force, speed, density, and reference area.
 - [Terminal velocity and ballistic re-entry](terminal-velocity/) — ballistic coefficient, ISA terminal speed, and the Allen–Eggers peak-deceleration pulse (also listed under Space).
+- [Parachute descent](parachute-descent/) — time-to-ground and wind drift, with an optional v_t from Cd A (also listed under Performance).
 - [Wing loading and aspect ratio](wing-loading-aspect-ratio/) — W/S, AR, tapered-wing chords and MAC, and a stall-speed estimate from CLmax.
 - [Drag polar and L/D max](drag-polar/) — CD = CD0 + k CL², (L/D)max, and the classic propeller and jet range and endurance lift coefficients.
 - [Thrust and power required](thrust-power-required/) — drag, L/D, thrust required, and power required in level flight (also listed under Performance and Propulsion).
