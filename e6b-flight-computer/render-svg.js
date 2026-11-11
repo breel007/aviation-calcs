@@ -887,36 +887,24 @@
         stroke: "#141414", "stroke-width": wt
       }));
       if (major) {
-        var lab = d === 0 ? "360" : String(d);
-        parts.push((function (ang, text) {
+        // Real E6Bs put N/E/S/W in place of 360/90/180/270 on the ring.
+        var cardinal = { 0: "N", 90: "E", 180: "S", 270: "W" }[d];
+        var lab = cardinal || (d === 0 ? "360" : String(d));
+        parts.push((function (ang, text, isCardinal) {
           var p = E6B.pointAtAngle(WX, GROMMET_Y, ROSE_OUTER - 28, ang);
           return el("text", {
             x: p.x.toFixed(2), y: p.y.toFixed(2),
             transform: "rotate(" + ang + " " + p.x.toFixed(2) + " " + p.y.toFixed(2) + ")",
             "text-anchor": "middle",
             "dominant-baseline": "middle",
-            fill: (ang === 0 || ang === 90 || ang === 180 || ang === 270) ? "#8a1a1a" : "#141414",
+            fill: isCardinal ? "#8a1a1a" : "#141414",
             "font-family": FONT,
-            "font-size": (ang % 30 === 0) ? 13 : 9,
+            "font-size": isCardinal ? 15 : (ang % 30 === 0) ? 13 : 9,
             "font-weight": 700
           }, esc(text));
-        })(d, lab));
+        })(d, lab, !!cardinal));
       }
     }
-    // Cardinals sit just inside the ring, clear of 360 / 090 / 180 / 270
-    [[0, "N"], [90, "E"], [180, "S"], [270, "W"]].forEach(function (dir) {
-      var p = E6B.pointAtAngle(WX, GROMMET_Y, ROSE_INNER + 14, dir[0]);
-      parts.push(el("text", {
-        x: p.x.toFixed(2), y: p.y.toFixed(2),
-        transform: "rotate(" + dir[0] + " " + p.x.toFixed(2) + " " + p.y.toFixed(2) + ")",
-        "text-anchor": "middle",
-        "dominant-baseline": "middle",
-        fill: "#8a1a1a",
-        "font-family": FONT,
-        "font-size": 11,
-        "font-weight": 700
-      }, dir[1]));
-    });
     // Decorative assembly screws on the ring, as on a metal E6B
     [45, 135, 225, 315].forEach(function (ang) {
       var p = E6B.pointAtAngle(WX, GROMMET_Y, (ROSE_OUTER + ROSE_INNER) / 2, ang);
