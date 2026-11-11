@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Takeoff and Landing Distance Correction Calculator — Wind, Weight, DA, Slope, Surface</title>
+  <meta name="description" content="Free takeoff and landing distance correction calculator. Adjust a POH baseline for wind, weight, density altitude, runway slope, and surface using PHAK (V−Vw)² and W² factors, a 1/σ density factor, and published grass and slope planning factors.">
+  <meta name="keywords" content="takeoff distance calculator, landing distance correction, density altitude takeoff, headwind 19 percent, grass runway factor, runway slope, PHAK performance">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/takeoff-landing-distance/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/takeoff-landing-distance/">
+  <meta property="og:title" content="Takeoff and Landing Distance Correction Calculator">
+  <meta property="og:description" content="Correct a baseline takeoff or landing distance for wind, weight, density altitude, slope, and surface, with the PHAK 19%/21% wind identity.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Takeoff and Landing Distance Calculator">
+  <meta name="twitter:description" content="PHAK wind and weight factors, density altitude, slope, and grass runway corrections.">
+  <meta name="application-name" content="Takeoff and Landing Distance Correction Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Takeoff and Landing Distance Correction Calculator",
+            "url": "https://aviatorcalcs.com/takeoff-landing-distance/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free takeoff and landing distance correction calculator. Adjust a POH baseline for wind, weight, density altitude, runway slope, and surface using PHAK (V−Vw)² and W² factors, a 1/σ density factor, and published grass and slope planning factors."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Why does a 10% headwind only save 19%, not 10%?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Ground roll scales with the square of groundspeed. Cutting the groundspeed at liftoff by 10% cuts distance by 1 − 0.9² = 19%. A 10% tailwind works the other way: 1.1² = 1.21, a 21% increase. Those are the PHAK memory items."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Should I use the 10% per 1,000 ft DA rule or 1/σ?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The 1/σ factor is the first-order constant-thrust physics and is usually milder (about +9% at 3,000 ft DA). The 10%-per-thousand-feet rule is a conservative training memory item. Neither replaces the POH chart, and a propeller airplane in thin air can be worse than 1/σ."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Can I use this instead of the POH takeoff chart?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. Start from a POH baseline only when you already have one, and treat the result as a cross-check. Flap setting, runway slope as published, mixture, and technique all live in the airplane’s charts, not in a generic multiplier."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Takeoff / landing distance</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../density-altitude/">Density altitude</a>
+        <a href="../hydroplaning-speed/">Hydroplaning</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Takeoff and Landing Distance Correction Calculator</h1>
+        <p class="lede">Start from a POH or AFM baseline distance and apply the handbook factors for wind, weight, density altitude, slope, and surface. A headwind of 10% of liftoff speed reduces ground roll by 19%; a 10% tailwind increases it by 21%, matching the Pilot’s Handbook of Aeronautical Knowledge. These are planning estimates — the airplane’s charts always win.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div class="field-block"><div class="field-label-row"><span class="sublabel">I want to correct</span>
+<div class="seg wrap-seg" role="group" aria-label="kind"><button type="button" class="seg-btn is-active" data-unit-group="kind" data-unit="takeoff" aria-pressed="true">Takeoff</button><button type="button" class="seg-btn" data-unit-group="kind" data-unit="landing" aria-pressed="false">Landing</button></div></div>
+<div class="field-label-row" style="margin-top:0.7rem"><label for="distance">Baseline distance (POH/AFM)</label>
+<div class="seg wrap-seg" role="group" aria-label="distance unit"><button type="button" class="seg-btn is-active" data-unit-group="du" data-unit="ft" aria-pressed="true">ft</button><button type="button" class="seg-btn" data-unit-group="du" data-unit="m" aria-pressed="false">m</button></div></div>
+<input id="distance" class="input" type="number" inputmode="decimal" min="0" step="any" value="1500" autocomplete="off"></div>
+<div class="field-block"><div class="field-label-row"><label for="weight">Actual weight (optional)</label></div>
+<input id="weight" class="input" type="number" inputmode="decimal" min="0" step="any" value="" placeholder="leave blank to skip" autocomplete="off">
+<div class="field-label-row" style="margin-top:0.7rem"><label for="weightRef">Baseline weight</label></div>
+<input id="weightRef" class="input" type="number" inputmode="decimal" min="0" step="any" value="" placeholder="POH chart weight" autocomplete="off">
+<p class="hint">Distance is scaled by (W / W<sub>ref</sub>)², the PHAK square-of-weight rule for ground roll.</p></div>
+<div class="field-block"><div class="field-label-row"><label for="speed">Liftoff or threshold speed (optional)</label><span class="sublabel">same units as the wind, typically kt</span></div>
+<input id="speed" class="input" type="number" inputmode="decimal" min="0" step="any" value="60" autocomplete="off">
+<div class="field-label-row" style="margin-top:0.7rem"><label for="headwind">Headwind component</label><span class="sublabel">negative for a tailwind</span></div>
+<input id="headwind" class="input" type="number" inputmode="decimal" step="any" value="0" autocomplete="off">
+<p class="hint">The factor is ((V − V<sub>w</sub>) / V)². Use the <a href="../runway-selection/">runway selection</a> or <a href="../crosswind/">crosswind</a> calculator if you have a wind direction instead of a component.</p></div>
+<div class="field-block"><div class="field-label-row"><label for="da">Density altitude (optional)</label><span class="sublabel">ft</span></div>
+<input id="da" class="input" type="number" inputmode="decimal" step="any" value="" placeholder="leave blank to skip" autocomplete="off">
+<div class="field-label-row" style="margin-top:0.7rem"><label for="daRef">Baseline density altitude</label><span class="sublabel">ft, often 0</span></div>
+<input id="daRef" class="input" type="number" inputmode="decimal" step="any" value="0" autocomplete="off">
+<p class="hint">The primary density factor is 1/σ (constant-thrust, first-order). The training rule of “+10% per 1,000 ft DA” is also shown; it is usually more conservative. Get DA from the <a href="../density-altitude/">density altitude calculator</a>.</p></div>
+<div class="field-block"><div class="field-label-row"><label for="slope">Runway slope</label><span class="sublabel">percent, positive uphill in the direction of the roll</span></div>
+<input id="slope" class="input" type="number" inputmode="decimal" step="any" value="0" autocomplete="off">
+<div class="field-label-row" style="margin-top:0.7rem"><label for="surface">Surface</label></div>
+<select id="surface" class="input select"><option value="paved-dry" selected>Dry paved</option><option value="paved-wet">Wet paved</option><option value="grass-dry">Dry grass (firm)</option><option value="grass-wet">Wet grass</option><option value="soft">Soft or contaminated — no multiplier</option></select>
+<p class="hint">Slope uses a 5% distance change per 1% slope (takeoff lengthens uphill; landing lengthens downhill). Grass factors are typical CAA / training planning figures, not a POH chart.</p></div>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-wind">Load PHAK 10% headwind example</button>
+<button type="button" class="btn btn-ghost" id="btn-da">Load 3,000 ft DA, dry grass</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Corrected distance <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>These factors are handbook and training estimates, not a substitute for the takeoff and landing charts in the POH or AFM for the airplane, weight, flap setting, and runway you actually have. Surface and slope multipliers are typical published planning factors (CAA Safety Sense / training syllabi) and are not FAA-certified. Soft or contaminated surfaces are deliberately left without a single multiplier. When in doubt, use more runway.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>Wind and weight (PHAK)</h2>
+      <p>Takeoff and landing ground roll scale, to first order, with the square of the groundspeed at liftoff or touchdown. With a runway-component wind V<sub>w</sub> (positive headwind):</p>
+      <p><code>f<sub>wind</sub> = ((V − V<sub>w</sub>) / V)²</code></p>
+      <p>A headwind of 10% of V therefore cuts distance by 19% (0.9² = 0.81). A 10% tailwind increases it by 21% (1.1² = 1.21). Those are the figures in FAA-H-8083-25, Chapter 11. Weight enters the same way, because stall and liftoff speed grow with √W:</p>
+      <p><code>f<sub>weight</sub> = (W / W<sub>ref</sub>)²</code></p>
+      <h2>Density altitude</h2>
+      <p>Liftoff TAS for a given indicated speed grows as 1/√σ, so distance grows at least as 1/σ if thrust is constant. That is the primary density factor on this page, using the U.S. Standard Atmosphere 1976 density ratio at the density altitudes you enter. Propeller airplanes are often worse, because thrust also falls with density; treat 1/σ as a lower bound and prefer the POH chart. A common training rule of thumb — about +10% distance per 1,000 ft of density altitude — is shown alongside and is usually more conservative.</p>
+      <h2>Slope and surface</h2>
+      <p>A widely used planning factor (UK CAA Safety Sense and many training syllabi) is a 5% distance change per 1% of runway slope: takeoff lengthens on an upslope, landing lengthens on a downslope. Typical firm-dry-grass factors are about ×1.20 on takeoff and ×1.15 on landing; wet grass is about ×1.30 and ×1.35; wet pavement is often taken as ×1.15 on landing and unchanged on takeoff. Soft, snow, or otherwise contaminated surfaces do not have a single reliable multiplier, so this page will not invent one.</p>
+      <p>The factors multiply:</p>
+      <p><code>D = D<sub>ref</sub> × f<sub>weight</sub> × f<sub>wind</sub> × f<sub>density</sub> × f<sub>slope</sub> × f<sub>surface</sub></code></p>
+      <h2>Sources</h2>
+      <p>FAA-H-8083-25 Pilot’s Handbook of Aeronautical Knowledge, Chapter 11, Aircraft Performance (wind and weight); FAA Airplane Flying Handbook (takeoff, landing, density altitude); UK CAA Safety Sense / aeroplane performance planning factors (slope and grass); U.S. Standard Atmosphere 1976 for σ. For density altitude itself, use the <a href="../density-altitude/">density altitude calculator</a>. For a wet-runway speed check, see <a href="../hydroplaning-speed/">hydroplaning speed</a>.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>Why does a 10% headwind only save 19%, not 10%?</h3>
+      <p>Ground roll scales with the square of groundspeed. Cutting the groundspeed at liftoff by 10% cuts distance by 1 − 0.9² = 19%. A 10% tailwind works the other way: 1.1² = 1.21, a 21% increase. Those are the PHAK memory items.</p>
+      <h3>Should I use the 10% per 1,000 ft DA rule or 1/σ?</h3>
+      <p>The 1/σ factor is the first-order constant-thrust physics and is usually milder (about +9% at 3,000 ft DA). The 10%-per-thousand-feet rule is a conservative training memory item. Neither replaces the POH chart, and a propeller airplane in thin air can be worse than 1/σ.</p>
+      <h3>Can I use this instead of the POH takeoff chart?</h3>
+      <p>No. Start from a POH baseline only when you already have one, and treat the result as a cross-check. Flap setting, runway slope as published, mixture, and technique all live in the airplane’s charts, not in a generic multiplier.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Takeoff and landing distance correction calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+  <script src="../standard-atmosphere/calc.js"></script>
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

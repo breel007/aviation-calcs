@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Hydroplaning Speed Calculator — 9√P Dynamic and Locked-Wheel Speeds</title>
+  <meta name="description" content="Free hydroplaning speed calculator for pilots. Find the dynamic (rotating-tire) speed 9√P and the locked-wheel speed 7.7√P from tire pressure in psi, bar, or kPa, in knots and mph.">
+  <meta name="keywords" content="hydroplaning speed calculator, 9 square root psi, dynamic hydroplaning, locked wheel hydroplaning, tire pressure, wet runway, NASA Horne">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/hydroplaning-speed/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/hydroplaning-speed/">
+  <meta property="og:title" content="Hydroplaning Speed Calculator — 9√P and 7.7√P">
+  <meta property="og:description" content="Dynamic hydroplaning speed 9√P and locked-wheel speed 7.7√P from tire inflation pressure, in knots and mph.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Hydroplaning Speed Calculator">
+  <meta name="twitter:description" content="9√P rotating and 7.7√P locked-wheel hydroplaning speeds from tire pressure.">
+  <meta name="application-name" content="Hydroplaning Speed Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Hydroplaning Speed Calculator",
+            "url": "https://aviatorcalcs.com/hydroplaning-speed/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free hydroplaning speed calculator for pilots. Find the dynamic (rotating-tire) speed 9√P and the locked-wheel speed 7.7√P from tire pressure in psi, bar, or kPa, in knots and mph."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Is 9√P in knots or miles per hour?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The coefficient 9 is for pressure in psi and speed in knots. In mph the same relation is 10.35√P. This page reports both."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Why is the locked-wheel speed lower?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Once the tire has stopped rotating, the mechanism is different and the speed at which a water film can support the wheel is lower. The usual planning figure is 7.7√P knots. A skid after touchdown can put you into that regime."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Can I land faster than 9√P on a wet runway?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The figure is an estimate, not a hard limit, but landing well above it on standing water raises the chance of dynamic hydroplaning. Use the POH wet-runway data, a firm on-speed landing, and the runway length you actually have."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Hydroplaning speed</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../takeoff-landing-distance/">Takeoff / landing distance</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Hydroplaning Speed Calculator</h1>
+        <p class="lede">Enter a tire inflation pressure to get the NASA / Horne dynamic hydroplaning speed, 9√P knots, and the lower 7.7√P locked-wheel figure. These are planning estimates of the speed at which a standing water film can lift the tire — not a guarantee of grip above or below that speed.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div class="field-block"><div class="field-label-row"><label for="pressure">Tire inflation pressure</label>
+<div class="seg wrap-seg" role="group" aria-label="pressure unit"><button type="button" class="seg-btn is-active" data-unit-group="pu" data-unit="psi" aria-pressed="true">psi</button><button type="button" class="seg-btn" data-unit-group="pu" data-unit="bar" aria-pressed="false">bar</button><button type="button" class="seg-btn" data-unit-group="pu" data-unit="kpa" aria-pressed="false">kPa</button></div>
+</div><input id="pressure" class="input" type="number" inputmode="decimal" min="0" step="any" value="32" autocomplete="off">
+<p class="hint">Use the actual inflated pressure, not the sidewall maximum. A typical light-airplane main tire is around 30–40 psi; many transport tires run 150–200 psi or more.</p></div>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-ga">Load 32 psi (light airplane)</button>
+<button type="button" class="btn btn-ghost" id="btn-jet">Load 200 psi (transport)</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Dynamic hydroplaning speed <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>The 9√P and 7.7√P rules are published estimates of dynamic and locked-wheel hydroplaning speed. They ignore tread depth, water depth, surface texture, and tire wear. They are not a substitute for the wet-runway performance data in the POH or AFM, or for a conservative landing technique on a contaminated runway.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>The 9√P rule</h2>
+      <p>Walter Horne’s NASA work in the early 1960s showed that a rotating pneumatic tire can ride up on a water film at a speed that scales with the square root of inflation pressure:</p>
+      <p><code>V<sub>dynamic</sub> (kt) = 9 × √P &nbsp;&nbsp; with P in psi</code></p>
+      <p>That is the same statement as <code>10.35 × √P</code> in miles per hour. For a locked or non-rotating tire the coefficient is lower, typically written</p>
+      <p><code>V<sub>locked</sub> (kt) = 7.7 × √P</code></p>
+      <p>A 32 psi light-airplane tire therefore has a dynamic hydroplaning speed of about 51 kt, and a locked-wheel speed of about 44 kt. A 200 psi transport tire is around 127 kt rotating.</p>
+      <h2>Assumptions</h2>
+      <p>The formula is for a standing water film deep enough to lift the footprint. It does not model viscous hydroplaning in a thin film, reverted-rubber hydroplaning from a skid, groove or tread drainage, or a crowned, textured runway. Touching down at or above the rotating-tire speed, then braking so the wheel stops, can put you into the lower locked-wheel regime. FAA material on wet and contaminated runways emphasizes a firm, on-speed landing and avoiding a late flare that keeps the airplane in the hydroplaning band.</p>
+      <h2>Sources</h2>
+      <p>NASA TN D-2056 (Horne &amp; Dreher, 1963) and later NASA hydroplaning reports; FAA <a href="https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/phak">Pilot’s Handbook of Aeronautical Knowledge</a> (tires, hydroplaning); FAA Airplane Flying Handbook (wet-runway landing); AC 91-79A, Mitigating the Risks of a Runway Overrun Upon Landing. For takeoff and landing distance corrections, see the <a href="../takeoff-landing-distance/">takeoff / landing distance calculator</a>.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>Is 9√P in knots or miles per hour?</h3>
+      <p>The coefficient 9 is for pressure in psi and speed in knots. In mph the same relation is 10.35√P. This page reports both.</p>
+      <h3>Why is the locked-wheel speed lower?</h3>
+      <p>Once the tire has stopped rotating, the mechanism is different and the speed at which a water film can support the wheel is lower. The usual planning figure is 7.7√P knots. A skid after touchdown can put you into that regime.</p>
+      <h3>Can I land faster than 9√P on a wet runway?</h3>
+      <p>The figure is an estimate, not a hard limit, but landing well above it on standing water raises the chance of dynamic hydroplaning. Use the POH wet-runway data, a firm on-speed landing, and the runway length you actually have.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Hydroplaning speed calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

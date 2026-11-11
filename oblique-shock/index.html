@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Oblique Shock Calculator — θ–β–M, Weak and Strong Solutions, NACA 1135</title>
+  <meta name="description" content="Free oblique shock calculator for a perfect gas. Solve the θ–β–M relation for weak and strong wave angles, or invert a wave angle for the turning angle, with downstream Mach and static and stagnation ratios from NACA 1135.">
+  <meta name="keywords" content="oblique shock calculator, theta beta Mach, weak shock, strong shock, wave angle, NACA 1135, compressible flow">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/oblique-shock/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/oblique-shock/">
+  <meta property="og:title" content="Oblique Shock Calculator — θ–β–M Weak and Strong Solutions">
+  <meta property="og:description" content="θ–β–M relation, weak and strong wave angles, and downstream Mach and pressure ratios (NACA 1135).">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Oblique Shock Calculator">
+  <meta name="twitter:description" content="Weak and strong oblique shocks from the θ–β–M equation, with downstream ratios.">
+  <meta name="application-name" content="Oblique Shock Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Oblique Shock Calculator",
+            "url": "https://aviatorcalcs.com/oblique-shock/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free oblique shock calculator for a perfect gas. Solve the θ–β–M relation for weak and strong wave angles, or invert a wave angle for the turning angle, with downstream Mach and static and stagnation ratios from NACA 1135."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Which solution, weak or strong, should I use?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The weak shock is the usual attached solution on a wedge or ramp in an unbounded flow. The strong solution appears when the downstream pressure is forced high, for example by a back pressure in a duct. This page reports both."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What happens if I ask for 30° of turn at Mach 2?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "That is above θ_max (about 23° at M = 2, γ = 1.4), so an attached oblique shock cannot turn the flow that far. The page flags the shock as detached rather than inventing a bow-shock stand-off distance."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How do you get pressure and temperature ratios?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The component of Mach normal to the wave, Mn1 = M1 sin β, is put through the normal-shock relations (the same ones as the normal-shock page). Tangential velocity is unchanged, which is why M2 = Mn2 / sin(β − θ)."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Oblique shock</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../normal-shock/">Normal shock</a>
+        <a href="../isentropic-flow/">Isentropic flow</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Oblique Shock Calculator</h1>
+        <p class="lede">Enter an upstream Mach number and a turning angle to get the weak and strong wave angles from the θ–β–M relation, plus downstream Mach and the static and total-pressure ratios. You can also enter a wave angle and recover the turning angle. Downstream ratios use the same normal-shock identities as this site’s normal-shock calculator, applied to M<sub>n1</sub> = M<sub>1</sub> sin β.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div class="field-block"><div class="field-label-row"><span class="sublabel">I want to enter</span>
+<div class="seg wrap-seg" role="group" aria-label="mode"><button type="button" class="seg-btn is-active" data-unit-group="mode" data-unit="theta" aria-pressed="true">Turning angle θ</button><button type="button" class="seg-btn" data-unit-group="mode" data-unit="beta" aria-pressed="false">Wave angle β</button></div></div>
+<div class="field-label-row" style="margin-top:0.7rem"><label for="M1">Upstream Mach, M<sub>1</sub></label></div>
+<input id="M1" class="input" type="number" inputmode="decimal" min="1" step="any" value="2" autocomplete="off">
+<div class="field-label-row" style="margin-top:0.7rem"><label for="gamma">Ratio of specific heats, γ</label></div>
+<input id="gamma" class="input" type="number" inputmode="decimal" min="1" step="any" value="1.4" autocomplete="off"></div>
+<div class="field-block" id="block-th"><div class="field-label-row"><label for="theta">Turning angle, θ</label><span class="sublabel">degrees</span></div>
+<input id="theta" class="input" type="number" inputmode="decimal" min="0" step="any" value="10" autocomplete="off">
+<p class="hint">For a given M<sub>1</sub> there is a maximum deflection θ<sub>max</sub>. Above it the shock is detached. At θ = 0 the two solutions are the Mach wave and a normal shock.</p></div>
+<div class="field-block" id="block-be" hidden><div class="field-label-row"><label for="beta">Wave angle, β</label><span class="sublabel">degrees from the upstream flow</span></div>
+<input id="beta" class="input" type="number" inputmode="decimal" min="0" step="any" value="39.31" autocomplete="off"></div>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-ex">Load M1 = 2, θ = 10°</button>
+<button type="button" class="btn btn-ghost" id="btn-n">Load M1 = 2, θ = 0° (Mach wave / normal)</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Weak-shock wave angle <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This is an ideal perfect-gas oblique shock with a constant γ (default 1.4), no viscosity, and no tunnel-wall or bluntness effects. The weak solution is the usual attached-shock result; the strong solution is typically seen only when downstream pressure is forced high. A turning angle above θ_max is flagged as detached rather than solved as a bow shock.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>The θ–β–M relation</h2>
+      <p><code>tan θ = 2 cot β (M<sub>1</sub>² sin²β − 1) / (M<sub>1</sub>² (γ + cos 2β) + 2)</code></p>
+      <p>The wave angle β lies between the Mach angle μ = arcsin(1/M<sub>1</sub>) and 90°. For a turning angle below the maximum deflection there are two solutions: a <strong>weak</strong> shock (smaller β, usually still supersonic behind the wave) and a <strong>strong</strong> shock (β closer to 90°, usually subsonic behind). At M<sub>1</sub> = 2, θ = 10°, γ = 1.4, the weak wave is at β ≈ 39.31° and the strong wave at β ≈ 83.70°. Downstream conditions come from a normal shock at M<sub>n1</sub> = M<sub>1</sub> sin β, then M<sub>2</sub> = M<sub>n2</sub> / sin(β − θ), using the same identities as the <a href="../normal-shock/">normal shock calculator</a>.</p>
+      <h2>Sources</h2>
+      <p>NACA Report 1135 (oblique-shock charts and the θ–β–M equation); NASA Glenn compressible-flow notes; Anderson, Modern Compressible Flow. For a centered expansion, see the <a href="../prandtl-meyer/">Prandtl–Meyer calculator</a>. For isentropic stagnation relations, see <a href="../isentropic-flow/">isentropic flow</a>.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>Which solution, weak or strong, should I use?</h3>
+      <p>The weak shock is the usual attached solution on a wedge or ramp in an unbounded flow. The strong solution appears when the downstream pressure is forced high, for example by a back pressure in a duct. This page reports both.</p>
+      <h3>What happens if I ask for 30° of turn at Mach 2?</h3>
+      <p>That is above θ<sub>max</sub> (about 23° at M = 2, γ = 1.4), so an attached oblique shock cannot turn the flow that far. The page flags the shock as detached rather than inventing a bow-shock stand-off distance.</p>
+      <h3>How do you get pressure and temperature ratios?</h3>
+      <p>The component of Mach normal to the wave, M<sub>n1</sub> = M<sub>1</sub> sin β, is put through the normal-shock relations (the same ones as the <a href="../normal-shock/">normal-shock page</a>). Tangential velocity is unchanged, which is why M<sub>2</sub> = M<sub>n2</sub> / sin(β − θ).</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Oblique shock calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+  <script src="../normal-shock/calc.js"></script>
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

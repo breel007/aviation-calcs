@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Runway Selection Calculator — Headwind, Crosswind, and Best Runway</title>
+  <meta name="description" content="Free runway selection calculator. Compare headwind, tailwind, and crosswind on every runway, convert a true wind to magnetic with variation, and pick the best into-wind runway within your crosswind limit.">
+  <meta name="keywords" content="runway selection calculator, best runway, headwind tailwind crosswind, magnetic variation, runway heading, which runway to use">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/runway-selection/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/runway-selection/">
+  <meta property="og:title" content="Runway Selection Calculator — Best Runway for the Wind">
+  <meta property="og:description" content="Headwind and crosswind on each runway, with magnetic variation and a recommended runway within your crosswind limit.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Runway Selection Calculator">
+  <meta name="twitter:description" content="Compare wind components on every runway and pick the best into-wind heading.">
+  <meta name="application-name" content="Runway Selection Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Runway Selection Calculator",
+            "url": "https://aviatorcalcs.com/runway-selection/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free runway selection calculator. Compare headwind, tailwind, and crosswind on every runway, convert a true wind to magnetic with variation, and pick the best into-wind runway within your crosswind limit."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Is a METAR wind magnetic or true?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Magnetic, at a land airport in the United States, and runway numbers are magnetic as well, so you can usually compare them directly. Winds aloft are true. If you mix a true wind with magnetic runways, enter the variation."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What if every runway is over my crosswind limit?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The page still names the into-wind runway with the greatest headwind (and a warning). That is not a recommendation to go. Consider another airport, a longer wait, or a different airplane."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How is this different from the crosswind calculator?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The crosswind page is built around one runway, both ends, and a wind diagram. This page takes a list of runways, optional true-to-magnetic conversion, and a crosswind limit, and highlights a preferred heading."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Runway selection</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../crosswind/">Crosswind</a>
+        <a href="../e6b-wind/">E6B wind</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Runway Selection Calculator</h1>
+        <p class="lede">Enter the wind and a list of runways to see the headwind and crosswind on each heading, including the reciprocal. The recommended runway is the one with the greatest headwind among those whose gust (or steady) crosswind is within the limit you set. If the wind is true and the runways are magnetic, enter the variation — east is least, west is best.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div class="field-block"><div class="field-label-row"><label for="windDir">Wind direction (from)</label>
+<div class="seg wrap-seg" role="group" aria-label="wind reference"><button type="button" class="seg-btn is-active" data-unit-group="wr" data-unit="magnetic" aria-pressed="true">Magnetic</button><button type="button" class="seg-btn" data-unit-group="wr" data-unit="true" aria-pressed="false">True</button></div></div>
+<input id="windDir" class="input" type="number" inputmode="decimal" min="0" max="360" step="any" value="270" autocomplete="off">
+<div class="field-label-row" style="margin-top:0.7rem"><label for="windSpeed">Wind speed</label><span class="sublabel">kt</span></div>
+<input id="windSpeed" class="input" type="number" inputmode="decimal" min="0" step="any" value="20" autocomplete="off">
+<div class="field-label-row" style="margin-top:0.7rem"><label for="gust">Gust (optional)</label><span class="sublabel">kt</span></div>
+<input id="gust" class="input" type="number" inputmode="decimal" min="0" step="any" value="" placeholder="leave blank if no gust" autocomplete="off">
+<div class="field-label-row" style="margin-top:0.7rem" id="var-row"><label for="variation">Magnetic variation</label>
+<div class="seg wrap-seg" role="group" aria-label="variation direction"><button type="button" class="seg-btn is-active" data-unit-group="vd" data-unit="E" aria-pressed="true">East</button><button type="button" class="seg-btn" data-unit-group="vd" data-unit="W" aria-pressed="false">West</button></div></div>
+<input id="variation" class="input" type="number" inputmode="decimal" min="0" step="any" value="0" autocomplete="off">
+<p class="hint">Needed only when the wind is true and the runways are numbered magnetically. Magnetic direction = true direction − east variation.</p></div>
+<div class="field-block"><div class="field-label-row"><label for="runways">Runways</label></div>
+<input id="runways" class="input" type="text" value="09/27, 13/31" autocomplete="off" spellcheck="false">
+<p class="hint">Numbers from 01 to 36, separated by spaces, commas, or slashes. Reciprocal headings are added automatically unless you uncheck the box.</p>
+<label class="check-row"><input type="checkbox" id="recip" checked> Include reciprocal runways</label>
+<div class="field-label-row" style="margin-top:0.7rem"><label for="limit">Maximum crosswind</label><span class="sublabel">kt</span></div>
+<input id="limit" class="input" type="number" inputmode="decimal" min="0" step="any" value="15" autocomplete="off">
+<p class="hint">Your personal limit or the airplane’s demonstrated crosswind. Gust crosswind is used for the check when a gust is entered.</p></div>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-ex">Load 270/20, runways 09/27 and 13/31</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Recommended runway <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>Runway numbers are magnetic; a METAR wind is also magnetic, but winds aloft and some ATIS remarks may be true. This does not replace ATC runway assignment, NOTAMs, slope or length limits, or the demonstrated crosswind in the POH/AFM. A recommended runway that exceeds your limit is the least-bad into-wind end, not an invitation to use it.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>Wind components</h2>
+      <p>For a runway heading <em>h</em> and a wind from direction <em>d</em> at speed <em>V</em>:</p>
+      <p><code>headwind = V cos(d − h)</code><br>
+         <code>crosswind = V sin(d − h)</code></p>
+      <p>A negative headwind is a tailwind. The reciprocal runway simply flips both signs. These are the same identities as the <a href="../crosswind/">crosswind calculator</a>, which is built for one runway and a wind diagram; this page compares a list of runways and names a preferred heading.</p>
+      <h2>Magnetic and true</h2>
+      <p>Runway numbers are magnetic. A METAR wind is magnetic. Winds aloft, and some charted or true-north sources, are true. When the references differ, convert the wind with variation: <strong>east is least, west is best</strong> — magnetic direction = true direction − east variation. This page will do that conversion when you mark the wind as true.</p>
+      <h2>Sources</h2>
+      <p>FAA Pilot’s Handbook of Aeronautical Knowledge (wind components, runway selection); AIM (runway numbering, magnetic variation). For a single-runway diagram including both ends and gusts, use the <a href="../crosswind/">crosswind calculator</a>. For a wind-correction angle and groundspeed, use the <a href="../e6b-wind/">E6B wind triangle</a>.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>Is a METAR wind magnetic or true?</h3>
+      <p>Magnetic, at a land airport in the United States, and runway numbers are magnetic as well, so you can usually compare them directly. Winds aloft are true. If you mix a true wind with magnetic runways, enter the variation.</p>
+      <h3>What if every runway is over my crosswind limit?</h3>
+      <p>The page still names the into-wind runway with the greatest headwind (and a warning). That is not a recommendation to go. Consider another airport, a longer wait, or a different airplane.</p>
+      <h3>How is this different from the crosswind calculator?</h3>
+      <p>The <a href="../crosswind/">crosswind page</a> is built around one runway, both ends, and a wind diagram. This page takes a list of runways, optional true-to-magnetic conversion, and a crosswind limit, and highlights a preferred heading.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Runway selection calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

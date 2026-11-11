@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Descent Rate Calculator — 3° Glideslope VSI, GS × 5, and ft/NM</title>
+  <meta name="description" content="Free descent rate calculator for a 3° ILS or LPV glideslope or a custom path angle. Converts groundspeed to feet per minute and feet per nautical mile, and compares the exact rate with the GS × 5 rule of thumb.">
+  <meta name="keywords" content="descent rate calculator, 3 degree glideslope, VSI, groundspeed times 5, feet per nautical mile, ILS descent rate, fpm">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/descent-rate/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/descent-rate/">
+  <meta property="og:title" content="Descent Rate Calculator — 3° Glideslope VSI">
+  <meta property="og:description" content="Required VSI for a 3° or custom glideslope from groundspeed, with ft/NM and the GS × 5 rule of thumb.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Descent Rate Calculator">
+  <meta name="twitter:description" content="3° glideslope VSI from groundspeed, exact and GS × 5.">
+  <meta name="application-name" content="Descent Rate Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Descent Rate Calculator",
+            "url": "https://aviatorcalcs.com/descent-rate/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free descent rate calculator for a 3° ILS or LPV glideslope or a custom path angle. Converts groundspeed to feet per minute and feet per nautical mile, and compares the exact rate with the GS × 5 rule of thumb."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "What descent rate do I need for a 3° glideslope at 120 kt?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "About 637 feet per minute. The GS × 5 rule gives 600 fpm, which is about 37 fpm shallow of a true 3° path. Use 5.3 times groundspeed if you want a closer mental check."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Is this the same math as top of descent?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes — the same tan(angle) geometry. The top-of-descent page starts from altitude to lose and tells you when to start down. This page is the glideslope / VSI form: given the groundspeed and angle you are flying now, what rate to set."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Should I use indicated airspeed or groundspeed?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Groundspeed. The path angle is a geometry over the ground. A headwind reduces the required fpm; a tailwind increases it. Use the groundspeed you actually have, including from GPS."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Descent rate</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../top-of-descent/">Top of descent</a>
+        <a href="../visual-descent-point/">VDP</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Descent Rate / Glideslope VSI Calculator</h1>
+        <p class="lede">Enter a groundspeed and a path angle — 3° for a typical ILS or LPV glideslope, or a custom angle — and get the vertical speed to fly, in feet per minute, plus the gradient in feet per nautical mile. The familiar “groundspeed × 5” rule is shown next to the exact 3° figure, which is closer to groundspeed × 5.3.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div class="field-block"><div class="field-label-row"><span class="sublabel">I want to enter</span>
+<div class="seg wrap-seg" role="group" aria-label="mode"><button type="button" class="seg-btn is-active" data-unit-group="mode" data-unit="angle" aria-pressed="true">Path angle</button><button type="button" class="seg-btn" data-unit-group="mode" data-unit="rate" aria-pressed="false">Descent rate</button><button type="button" class="seg-btn" data-unit-group="mode" data-unit="ft-per-nm" aria-pressed="false">ft/NM</button></div></div></div>
+<div class="field-block"><div class="field-label-row"><label for="groundspeed">Groundspeed</label><span class="sublabel">kt</span></div>
+<input id="groundspeed" class="input" type="number" inputmode="decimal" min="0" step="any" value="120" autocomplete="off"></div>
+<div class="field-block" id="block-angle"><div class="field-label-row"><label for="angle">Glide-path angle</label><span class="sublabel">degrees</span></div>
+<input id="angle" class="input" type="number" inputmode="decimal" min="0" step="any" value="3" autocomplete="off">
+<p class="hint">A standard ILS or LPV glideslope is 3°. Some approaches are published at 3.1° or 3.25°. The site’s <a href="../top-of-descent/">top of descent</a> and <a href="../visual-descent-point/">VDP</a> calculators use the same geometry.</p></div>
+<div class="field-block" id="block-rate" hidden><div class="field-label-row"><label for="fpm">Descent rate</label><span class="sublabel">ft/min</span></div>
+<input id="fpm" class="input" type="number" inputmode="decimal" min="0" step="any" value="600" autocomplete="off">
+<p class="hint">Solves for the path angle and the gradient in ft/NM at your groundspeed.</p></div>
+<div class="field-block" id="block-ftnm" hidden><div class="field-label-row"><label for="ftnm">Gradient</label><span class="sublabel">ft per NM</span></div>
+<input id="ftnm" class="input" type="number" inputmode="decimal" min="0" step="any" value="318" autocomplete="off"></div>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-120">Load 120 kt, 3°</button>
+<button type="button" class="btn btn-ghost" id="btn-90">Load 90 kt, 3.25°</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Required descent rate <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This is the geometry of a constant flight-path angle. It is not a substitute for the glideslope or vertical guidance on the approach, or for the descent planning and go-around criteria in the AFM, the approach chart, and ATC instructions. “Groundspeed × 5” is a slightly shallow 3° target; the exact 3° rate is closer to groundspeed × 5.3.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>Exact rate and the times-five rule</h2>
+      <p>For a constant path angle γ:</p>
+      <p><code>ft per NM = tan(γ) × 6,076.12 ft/NM</code><br>
+         <code>descent rate (fpm) = groundspeed (kt) × (ft per NM) / 60</code></p>
+      <p>A 3° path is 318.4 ft per nautical mile, so the exact rate is about <strong>5.31 × groundspeed</strong>. At 120 kt that is 637 fpm. The memory item “GS × 5” gives 600 fpm — a convenient, slightly shallow target that will not quite hold a 3° slope. This page shows both, and the same identity used on the <a href="../top-of-descent/">top of descent</a> calculator.</p>
+      <h2>Other gradients</h2>
+      <p>Some charts and training material use 300 ft/NM (the HAT/300 cousin of a 3° VDP) as a round number; that is a 2.83° path, shallower than a 3° ILS. You can enter a published angle, a chosen vertical speed, or a gradient in ft/NM and convert among them.</p>
+      <h2>Sources</h2>
+      <p>FAA Instrument Flying Handbook (ILS glideslope, descent planning); FAA Instrument Procedures Handbook; AIM instrument approach procedures; standard 3° glide-path geometry (1 NM = 1,852 m). For starting the descent from cruise, use the <a href="../top-of-descent/">top of descent calculator</a>. For a non-precision VDP, use the <a href="../visual-descent-point/">visual descent point calculator</a>.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>What descent rate do I need for a 3° glideslope at 120 kt?</h3>
+      <p>About 637 feet per minute. The GS × 5 rule gives 600 fpm, which is about 37 fpm shallow of a true 3° path. Use 5.3 times groundspeed if you want a closer mental check.</p>
+      <h3>Is this the same math as top of descent?</h3>
+      <p>Yes — the same tan(angle) geometry. The <a href="../top-of-descent/">top-of-descent page</a> starts from altitude to lose and tells you when to start down. This page is the glideslope / VSI form: given the groundspeed and angle you are flying now, what rate to set.</p>
+      <h3>Should I use indicated airspeed or groundspeed?</h3>
+      <p>Groundspeed. The path angle is a geometry over the ground. A headwind reduces the required fpm; a tailwind increases it. Use the groundspeed you actually have, including from GPS.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Descent rate calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Cold Temperature Altitude Correction Calculator — ICAO Formula and AIM Table 7-3-1</title>
+  <meta name="description" content="Free cold temperature altitude correction calculator for pilots. Apply the ICAO Doc 8168 formula and FAA AIM Table 7-3-1 to a published approach altitude, and compare the 4% rule of thumb. Shows the indicated altitude to fly so true height matches the chart.">
+  <meta name="keywords" content="cold temperature correction calculator, AIM table 7-3-1, ICAO Doc 8168, cold temperature airport, altimeter error, look out below, approach altitude correction">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/cold-temperature-correction/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/cold-temperature-correction/">
+  <meta property="og:title" content="Cold Temperature Altitude Correction — ICAO and AIM 7-3-1">
+  <meta property="og:description" content="Correct a published altitude for a cold airport with the ICAO Doc 8168 formula, AIM Table 7-3-1, and the 4% rule.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Cold Temperature Correction Calculator">
+  <meta name="twitter:description" content="ICAO formula, AIM Table 7-3-1, and the 4% rule for cold-weather approach altitudes.">
+  <meta name="application-name" content="Cold Temperature Altitude Correction Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Cold Temperature Altitude Correction Calculator",
+            "url": "https://aviatorcalcs.com/cold-temperature-correction/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free cold temperature altitude correction calculator for pilots. Apply the ICAO Doc 8168 formula and FAA AIM Table 7-3-1 to a published approach altitude, and compare the 4% rule of thumb. Shows the indicated altitude to fly so true height matches the chart."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "At a 1,000 ft airport, −25 °C, and a 3,000 ft FAF, how much do I add?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The ICAO formula gives about 308 ft, so you would fly about 3,308 ft indicated, or 3,310 ft if you round the correction up to the next 10 ft. Uncorrected, your true altitude at a 3,000 ft indication would be a few hundred feet below the charted FAF."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Should I change the altimeter setting to make the correction?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. Leave the official QNH in the Kollsman window and fly a higher indicated altitude by the correction. Changing the setting would move every subsequent assignment and is not the approved method."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How is this different from the true altitude calculator?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "True altitude answers “if I am indicating this, what is my true height?” This page answers the operational inverse: “what indicated altitude should I fly so that my true height matches the published value?” It also reports AIM Table 7-3-1 and the 4% rule used in approach procedures."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Cold temperature correction</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../true-altitude/">True altitude</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Cold Temperature Altitude Correction Calculator</h1>
+        <p class="lede">In cold air a barometric altimeter reads high — you are lower than indicated. Enter the reported airport temperature and a published altitude (or a height above the field) to get the correction from the ICAO Doc 8168 formula, the AIM Table 7-3-1 value when the height and temperature fall in the table, and the 4% rule of thumb. Fly a higher indicated altitude by the correction; do not change the Kollsman-window setting.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div class="field-block"><div class="field-label-row"><label for="temperature">Reported airport temperature</label>
+<div class="seg wrap-seg" role="group" aria-label="temp unit"><button type="button" class="seg-btn is-active" data-unit-group="tu" data-unit="C" aria-pressed="true">°C</button><button type="button" class="seg-btn" data-unit-group="tu" data-unit="F" aria-pressed="false">°F</button></div></div>
+<input id="temperature" class="input" type="number" inputmode="decimal" step="any" value="-25" autocomplete="off"></div>
+<div class="field-block"><div class="field-label-row"><label for="elevation">Altimeter-source elevation (airport)</label>
+<div class="seg wrap-seg" role="group" aria-label="elev unit"><button type="button" class="seg-btn is-active" data-unit-group="eu" data-unit="ft" aria-pressed="true">ft</button><button type="button" class="seg-btn" data-unit-group="eu" data-unit="m" aria-pressed="false">m</button></div></div>
+<input id="elevation" class="input" type="number" inputmode="decimal" step="any" value="1000" autocomplete="off"></div>
+<div class="field-block"><div class="field-label-row"><span class="sublabel">Correct</span>
+<div class="seg wrap-seg" role="group" aria-label="input mode"><button type="button" class="seg-btn is-active" data-unit-group="im" data-unit="published" aria-pressed="true">Published altitude</button><button type="button" class="seg-btn" data-unit-group="im" data-unit="height" aria-pressed="false">Height above field</button></div></div>
+<div id="block-pub"><div class="field-label-row"><label for="published">Published altitude</label><span class="sublabel">MSL, same units as elevation</span></div>
+<input id="published" class="input" type="number" inputmode="decimal" step="any" value="3000" autocomplete="off">
+<p class="hint">The correction depends on height above the altimeter-setting source, not on altitude MSL. An MSA high above the field needs a much larger correction than the MDA.</p></div>
+<div id="block-h" hidden><div class="field-label-row"><label for="height">Height above the airport</label><span class="sublabel">same units as elevation</span></div>
+<input id="height" class="input" type="number" inputmode="decimal" min="0" step="any" value="2000" autocomplete="off"></div></div>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-ex">Load 1,000 ft field, −25 °C, 3,000 ft FAF</button>
+<button type="button" class="btn btn-ghost" id="btn-sl">Load sea level, 0 °C, 1,000 ft height</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Altitude to fly <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This implements the ICAO Doc 8168 approximate formula and reproduces AIM Table 7-3-1 (the ICAO cold-temperature error table) for interpolation. It is not a substitute for the FAA Cold Temperature Airports procedure, the temperatures and segments on the approach chart, or company SOP. Do not change the altimeter setting to make this correction. Do not correct altitudes ATC assigns on radar vectors. On a CTA, tell ATC when you will fly a corrected altitude in the intermediate or missed-approach segment.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>Why the altimeter reads high in the cold</h2>
+      <p>A sensitive altimeter is calibrated to the standard atmosphere. When the column of air is colder than ISA, the true height of a given pressure surface is lower than the instrument indicates — “look out below.” To fly the charted obstacle-clearance height, you must fly a higher indicated altitude by the correction. The <a href="../true-altitude/">true altitude calculator</a> shows the related E6B identity; this page is the operational correction you add to a published approach altitude.</p>
+      <h2>The ICAO formula and the AIM table</h2>
+      <p>ICAO Doc 8168 (PANS-OPS) gives the approximate correction, with heights in feet and temperatures in °C:</p>
+      <p><code>t<sub>0</sub> = t<sub>aerodrome</sub> + 0.00198 × H<sub>ss</sub></code><br>
+         <code>Δh = H × (15 − t<sub>0</sub>) / (273 + t<sub>0</sub> − 0.5 × 0.00198 × (H + H<sub>ss</sub>))</code></p>
+      <p><em>H</em> is the height of the published altitude above the altimeter-setting source; <em>H<sub>ss</sub></em> is the elevation of that source (normally the airport). The 4% rule of thumb — add 4% of the height for every 10 °C below ISA at the source — is a coarser check, described by ICAO as acceptable above about −15 °C.</p>
+      <p>AIM Table 7-3-1 is the ICAO cold-temperature error table. It assumes a sea-level airport, so it is slightly conservative at higher airports. This page interpolates between tabulated heights and temperatures, and always reports the formula as well. A common operator practice is to round the correction up to the next 10 or 100 ft; both rounded indicated altitudes are shown.</p>
+      <h2>Cold Temperature Airports</h2>
+      <p>In the United States, designated Cold Temperature Airports carry a snowflake symbol and a temperature on the approach chart. When the reported airport temperature is at or below that value, correct the segments the CTA list requires (intermediate, final, missed approach, or all). Use the reported airport temperature and the height above the airport. Never change the altimeter setting to accomplish the correction, and do not correct assigned radar-vector altitudes.</p>
+      <h2>Sources</h2>
+      <p>ICAO Doc 8168, Aircraft Operations (PANS-OPS), temperature correction of minimum altitudes; FAA Aeronautical Information Manual Table 7-3-1 (ICAO Cold Temperature Error Table); FAA Cold Temperature Airports procedure. For a generic true-altitude check, see the <a href="../true-altitude/">true altitude calculator</a>.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>At a 1,000 ft airport, −25 °C, and a 3,000 ft FAF, how much do I add?</h3>
+      <p>The ICAO formula gives about 308 ft, so you would fly about 3,308 ft indicated, or 3,310 ft if you round the correction up to the next 10 ft. Uncorrected, your true altitude at a 3,000 ft indication would be a few hundred feet below the charted FAF.</p>
+      <h3>Should I change the altimeter setting to make the correction?</h3>
+      <p>No. Leave the official QNH in the Kollsman window and fly a higher indicated altitude by the correction. Changing the setting would move every subsequent assignment and is not the approved method.</p>
+      <h3>How is this different from the true altitude calculator?</h3>
+      <p>The <a href="../true-altitude/">true altitude calculator</a> answers “if I am indicating this, what is my true height?” This page answers the operational inverse: “what indicated altitude should I fly so that my true height matches the published value?” It also reports AIM Table 7-3-1 and the 4% rule used in approach procedures.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Cold temperature altitude correction calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

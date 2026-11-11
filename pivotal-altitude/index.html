@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Pivotal Altitude Calculator — Eights-on-Pylons GS²/11.3 and GS²/15</title>
+  <meta name="description" content="Free pivotal altitude calculator for commercial and CFI maneuvers. Compute eights-on-pylons pivotal altitude from groundspeed with the Airplane Flying Handbook rules GS²/11.3 (knots) and GS²/15 (mph), plus the exact V²/g value.">
+  <meta name="keywords" content="pivotal altitude calculator, eights on pylons, commercial maneuver, GS squared over 11.3, GS squared over 15, CFI">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/pivotal-altitude/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/pivotal-altitude/">
+  <meta property="og:title" content="Pivotal Altitude Calculator — Eights-on-Pylons">
+  <meta property="og:description" content="Pivotal altitude from groundspeed: AFH GS²/11.3 (knots) and GS²/15 (mph), compared with the exact V²/g height.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Pivotal Altitude Calculator">
+  <meta name="twitter:description" content="Eights-on-pylons pivotal altitude from groundspeed, AFH and exact.">
+  <meta name="application-name" content="Pivotal Altitude Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Pivotal Altitude Calculator",
+            "url": "https://aviatorcalcs.com/pivotal-altitude/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free pivotal altitude calculator for commercial and CFI maneuvers. Compute eights-on-pylons pivotal altitude from groundspeed with the Airplane Flying Handbook rules GS²/11.3 (knots) and GS²/15 (mph), plus the exact V²/g value."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Is it knots squared over 11.3 or 15?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Use 11.3 when groundspeed is in knots, and 15 when it is in miles per hour. They are the same height to within the rounding of the two constants. This page shows both, plus the exact V²/g value."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Should I enter TAS or groundspeed?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Groundspeed. The geometry is about the rate at which the pylon’s bearing changes over the ground. In a wind, TAS and groundspeed are not the same, and pivotal altitude changes around the figure-eight."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Why is the exact height a little higher than the handbook number?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The 11.3 and 15 constants are rounded. The exact V²/g height with standard gravity is GS(kt)² / 11.294, a few feet above the AFH figure at typical training speeds. Either is close enough for the maneuver; this page reports both so you can see the difference."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Pivotal altitude</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../turn-radius/">Turn radius</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Pivotal Altitude Calculator</h1>
+        <p class="lede">Enter a groundspeed and get the pivotal altitude for eights-on-pylons. The Airplane Flying Handbook constants are (GS in knots)² / 11.3 and (GS in mph)² / 15. This page also shows the exact V²/g height, which is a few feet higher.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div class="field-block"><div class="field-label-row"><label for="groundspeed">Groundspeed</label>
+<div class="seg wrap-seg" role="group" aria-label="speed unit"><button type="button" class="seg-btn is-active" data-unit-group="su" data-unit="kt" aria-pressed="true">kt</button><button type="button" class="seg-btn" data-unit-group="su" data-unit="mph" aria-pressed="false">mph</button></div>
+</div><input id="groundspeed" class="input" type="number" inputmode="decimal" min="0" step="any" value="90" autocomplete="off">
+<p class="hint">Use groundspeed, not TAS or indicated airspeed. In a wind, pivotal altitude is higher on the downwind side of the pylon and lower on the upwind side, so you will climb and descend as the maneuver progresses.</p></div>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-90">Load 90 kt</button>
+<button type="button" class="btn btn-ghost" id="btn-100">Load 100 mph</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Pivotal altitude (AFH) <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This is the geometry of the commercial eights-on-pylons maneuver as described in the Airplane Flying Handbook. It is not a traffic-pattern or obstacle-clearance altitude. Fly the maneuver at a height that remains clear of obstacles and in accordance with 14 CFR 91.119, and use the groundspeed you actually have.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>The handbook formulas</h2>
+      <p>The visual line to the pylon stays fixed on the wing when you are at the pivotal altitude for your present groundspeed. The Airplane Flying Handbook writes this as:</p>
+      <p><code>pivotal altitude (ft AGL) ≈ (groundspeed in mph)² / 15</code><br>
+         <code>pivotal altitude (ft AGL) ≈ (groundspeed in knots)² / 11.3</code></p>
+      <p>Those constants are rounded forms of the exact identity <code>h = V² / g</code>. With g<sub>0</sub> = 9.80665 m/s², the exact divisors are about 11.294 (knots) and 14.957 (mph), so the handbook figures are a few feet low — 717 ft instead of about 718 ft at 90 kt, for example.</p>
+      <h2>Wind</h2>
+      <p>Groundspeed changes around the pylon. You are faster, and the pivotal altitude is higher, on the downwind side; slower and lower on the upwind side. The AFH describes a slight climb and descent to keep the reference line on the pylon rather than flying a single fixed altitude.</p>
+      <h2>Sources</h2>
+      <p>FAA Airplane Flying Handbook (FAA-H-8083-3), Eights-on-Pylons; Commercial Pilot and CFI Airman Certification Standards for the maneuver. For bank and turn radius at a given TAS, see the <a href="../turn-radius/">turn radius calculator</a>.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>Is it knots squared over 11.3 or 15?</h3>
+      <p>Use 11.3 when groundspeed is in knots, and 15 when it is in miles per hour. They are the same height to within the rounding of the two constants. This page shows both, plus the exact V²/g value.</p>
+      <h3>Should I enter TAS or groundspeed?</h3>
+      <p>Groundspeed. The geometry is about the rate at which the pylon’s bearing changes over the ground. In a wind, TAS and groundspeed are not the same, and pivotal altitude changes around the figure-eight.</p>
+      <h3>Why is the exact height a little higher than the handbook number?</h3>
+      <p>The 11.3 and 15 constants are rounded. The exact V²/g height with standard gravity is GS(kt)² / 11.294, a few feet above the AFH figure at typical training speeds. Either is close enough for the maneuver; this page reports both so you can see the difference.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Pivotal altitude calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
