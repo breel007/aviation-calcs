@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Planetary Transfer Calculator — Earth–Mars Hohmann Time and Δv | Aviator Calcs</title>
+  <meta name="description" content="Compute a heliocentric Hohmann transfer between two circular planetary orbits: time of flight, both impulsive Δv values, and the synodic wait for the next window. Educational; not a patched-conic mission design.">
+  <meta name="keywords" content="undefined">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/planetary-transfer/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/planetary-transfer/">
+  <meta property="og:title" content="Planetary Transfer Calculator — Earth–Mars Hohmann Time and Δv | Aviator Calcs">
+  <meta property="og:description" content="Compute a heliocentric Hohmann transfer between two circular planetary orbits: time of flight, both impulsive Δv values, and the synodic wait for the next window. Educational; not a patched-conic mission design.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:description" content="Compute a heliocentric Hohmann transfer between two circular planetary orbits: time of flight, both impulsive Δv values, and the synodic wait for the next window. Educational; not a patched-conic mission design.">
+  <meta name="application-name" content="undefined">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Planetary Transfer Calculator — Earth–Mars Hohmann Time and Δv | Aviator Calcs",
+            "url": "https://aviatorcalcs.com/planetary-transfer/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Compute a heliocentric Hohmann transfer between two circular planetary orbits: time of flight, both impulsive Δv values, and the synodic wait for the next window. Educational; not a patched-conic mission design."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Why is this not the Δv I would need to leave LEO?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "These impulses are heliocentric. Climbing out of low Earth orbit, or braking at Mars, requires additional Δv that depends on the parking and capture orbits. A patched-conic or an Oberth burn is a different (and usually larger) number."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How is this different from the Hohmann transfer calculator?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "That page is a coplanar transfer around a single body (Earth by default, or a μ you type). This one is a heliocentric planet-to-planet leg, with solar μ, AU radii, and a synodic wait."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Are planetary orbits really circular and coplanar?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. Mars has a noticeable eccentricity, and a real trajectory is optimized around a launch window, not a pure Hohmann. This is the textbook first estimate."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">undefined</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Planetary Transfer Calculator</h1>
+        <p class="lede">A Hohmann transfer between two circular, coplanar heliocentric orbits has a time of flight of half the transfer-ellipse period and two impulsive Δv’s, one at each circular orbit. Enter a departure and an arrival planet — Earth and Mars are the default — and this page returns that time of flight, both heliocentric Δv’s, and the synodic wait until the next similar window. It is not a patched-conic departure from low Earth orbit, and it is not the single-body Hohmann calculator already on this site.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<p class="hint">Radii default to mean semi-major axes (Earth 1 AU, Mars 1.523679 AU). The solar gravitational parameter is 1.32712440018×10²⁰ m³/s². You may also type two radii in AU.</p>
+<div class="pair">
+  <div class="field"><label for="body1">Departure</label>
+    <select id="body1">
+      <option value="earth" selected>Earth (1 AU)</option>
+      <option value="venus">Venus (0.723 AU)</option>
+      <option value="mars">Mars (1.524 AU)</option>
+      <option value="jupiter">Jupiter (5.203 AU)</option>
+      <option value="mercury">Mercury (0.387 AU)</option>
+      <option value="saturn">Saturn (9.537 AU)</option>
+      <option value="custom">Custom radius…</option>
+    </select></div>
+  <div class="field"><label for="body2">Arrival</label>
+    <select id="body2">
+      <option value="mars" selected>Mars (1.524 AU)</option>
+      <option value="earth">Earth (1 AU)</option>
+      <option value="venus">Venus (0.723 AU)</option>
+      <option value="jupiter">Jupiter (5.203 AU)</option>
+      <option value="mercury">Mercury (0.387 AU)</option>
+      <option value="saturn">Saturn (9.537 AU)</option>
+      <option value="custom">Custom radius…</option>
+    </select></div>
+</div>
+<div class="pair">
+  <div class="field"><label for="r1">Custom radius 1 (AU)</label><input id="r1" type="text" inputmode="decimal" value=""></div>
+  <div class="field"><label for="r2">Custom radius 2 (AU)</label><input id="r2" type="text" inputmode="decimal" value=""></div>
+</div>
+<button type="button" class="btn" id="calcBtn">Calculate transfer</button>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="exEM">Example: Earth–Mars</button>
+<button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Result <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>undefined</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+<h2>Half an ellipse around the Sun, plus two impulsive Δv’s</h2>
+<p>The transfer semi-major axis is a_t = (r1 + r2) / 2, and the time of flight is the half-period π √(a_t³ / μ_sun). Vis-viva on that ellipse, compared with each circular speed √(μ / r), gives the two heliocentric impulses. For Earth to Mars the flight is about 259 days, with roughly 2.94 km/s at Earth’s orbit and 2.65 km/s at Mars’s, totaling about 5.59 km/s — and the next geometrically similar window is one synodic period later, about 780 days. Those Δv figures are changes of heliocentric velocity. Leaving low Earth orbit, or capturing into a Mars orbit, still has to deal with each planet’s gravity well (a patched conic or an Oberth burn this page does not compute).</p>
+<p>The single-body <a href="/hohmann-transfer/">Hohmann transfer</a> calculator is the same geometry around one primary you name (Earth, or a μ you type). The <a href="/synodic-period/">synodic period</a> page is the wait-time identity on its own, including tabulated planetary periods that differ slightly from the Keplerian periods implied by these mean radii. For a mission Δv budget you can add atmospheric or capture legs on the <a href="/delta-v-budget/">delta-v budget</a> tool.</p>
+<h2>Sources</h2>
+<ul>
+<li>Hohmann, “Die Erreichbarkeit der Himmelskörper,” 1925; standard Hohmann transfer.</li>
+<li>Vallado, <cite>Fundamentals of Astrodynamics and Applications</cite>; Prussing and Conway, <cite>Orbital Mechanics</cite>.</li>
+<li>IAU solar gravitational parameter and astronomical unit.</li>
+</ul>
+      <h2>Frequently asked questions</h2>
+      <h3>Why is this not the Δv I would need to leave LEO?</h3>
+      <p>These impulses are heliocentric. Climbing out of low Earth orbit, or braking at Mars, requires additional Δv that depends on the parking and capture orbits. A patched-conic or an Oberth burn is a different (and usually larger) number.</p>
+      <h3>How is this different from the Hohmann transfer calculator?</h3>
+      <p>That page is a coplanar transfer around a single body (Earth by default, or a μ you type). This one is a heliocentric planet-to-planet leg, with solar μ, AU radii, and a synodic wait.</p>
+      <h3>Are planetary orbits really circular and coplanar?</h3>
+      <p>No. Mars has a noticeable eccentricity, and a real trajectory is optimized around a launch window, not a pure Hohmann. This is the textbook first estimate.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Planetary Transfer Calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

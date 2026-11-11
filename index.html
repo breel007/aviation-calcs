@@ -49,7 +49,7 @@
         "@type": "ItemList",
         "@id": "https://aviatorcalcs.com/#tools",
         "name": "Aviation and aerospace calculators",
-        "numberOfItems": 97,
+        "numberOfItems": 100,
         "itemListOrder": "https://schema.org/ItemListOrderAscending",
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "Time, Speed and Distance Calculator", "url": "https://aviatorcalcs.com/time-speed-distance/" },
@@ -148,7 +148,10 @@
           { "@type": "ListItem", "position": 94, "name": "Rotor Tip Speed Calculator", "url": "https://aviatorcalcs.com/rotor-tip-speed/" },
           { "@type": "ListItem", "position": 95, "name": "Orbital Velocity and Period Calculator", "url": "https://aviatorcalcs.com/orbital-velocity-period/" },
           { "@type": "ListItem", "position": 96, "name": "Satellite Footprint and Field-of-View Calculator", "url": "https://aviatorcalcs.com/satellite-fov/" },
-          { "@type": "ListItem", "position": 97, "name": "Hohmann Transfer Calculator", "url": "https://aviatorcalcs.com/hohmann-transfer/" }
+          { "@type": "ListItem", "position": 97, "name": "Sun-Synchronous Orbit Calculator", "url": "https://aviatorcalcs.com/sun-synchronous/" },
+          { "@type": "ListItem", "position": 98, "name": "Hohmann Transfer Calculator", "url": "https://aviatorcalcs.com/hohmann-transfer/" },
+          { "@type": "ListItem", "position": 99, "name": "Planetary Transfer Calculator", "url": "https://aviatorcalcs.com/planetary-transfer/" },
+          { "@type": "ListItem", "position": 100, "name": "Synodic Period Calculator", "url": "https://aviatorcalcs.com/synodic-period/" }
         ]
       },
       {
@@ -960,11 +963,29 @@
           <p>Geometric horizon, swath for a nadir half-angle, and circular-orbit period and subsatellite speed from altitude on a spherical Earth.</p>
           <span class="go">Open satellite footprint / FOV →</span>
         </a>
+<a class="tool-card" href="sun-synchronous/" data-keywords="sun synchronous orbit inclination j2 nodal precession sso local time ascending node">
+          <h3>Sun-synchronous inclination</h3>
+          <p>J2 nodal-precession inclination that makes an Earth orbit sun-synchronous. Does not redo geostationary radius.</p>
+          <span class="go">Open sun-synchronous inclination →</span>
+        </a>
+
 <a class="tool-card" href="hohmann-transfer/" data-keywords="hohmann transfer leo geo delta-v time of flight coplanar circular orbit apogee perigee space">
           <h3>Hohmann transfer</h3>
           <p>The two impulsive Δv values and the time of flight between coplanar circular orbits, including a 300 km LEO to GEO example.</p>
           <span class="go">Open Hohmann transfer →</span>
         </a>
+<a class="tool-card" href="planetary-transfer/" data-keywords="planetary transfer hohmann earth mars time of flight delta-v heliocentric synodic">
+          <h3>Planetary Hohmann transfer</h3>
+          <p>Heliocentric Hohmann time of flight, both impulsive Δv’s, and the synodic wait, defaulting to Earth–Mars.</p>
+          <span class="go">Open planetary transfer →</span>
+        </a>
+<a class="tool-card" href="synodic-period/" data-keywords="synodic period launch window opposition earth mars alignment planets">
+          <h3>Synodic period</h3>
+          <p>Time between successive alignments or Hohmann windows, 1/S = |1/T1 − 1/T2|, including Earth–Mars at about 780 days.</p>
+          <span class="go">Open synodic period →</span>
+        </a>
+
+
 <a class="tool-card" href="delta-v-budget/" data-keywords="delta-v budget mission dv mass ratio isp plane change 2 V sin theta/2 gravity losses drag losses">
           <h3>Delta-v budget</h3>
           <p>Sum named mission Δv items, convert the total to an ideal rocket-equation mass ratio, and compute a pure plane-change Δv = 2 V sin(θ/2).</p>

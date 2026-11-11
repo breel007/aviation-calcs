@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Synodic Period Calculator — Launch Windows and Planetary Alignments | Aviator Calcs</title>
+  <meta name="description" content="Compute the synodic period of two orbits or planets from 1/S = |1/T1 − 1/T2|, including a preset Earth–Mars window of about 780 days. Educational; circular coplanar model.">
+  <meta name="keywords" content="undefined">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/synodic-period/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/synodic-period/">
+  <meta property="og:title" content="Synodic Period Calculator — Launch Windows and Planetary Alignments | Aviator Calcs">
+  <meta property="og:description" content="Compute the synodic period of two orbits or planets from 1/S = |1/T1 − 1/T2|, including a preset Earth–Mars window of about 780 days. Educational; circular coplanar model.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:description" content="Compute the synodic period of two orbits or planets from 1/S = |1/T1 − 1/T2|, including a preset Earth–Mars window of about 780 days. Educational; circular coplanar model.">
+  <meta name="application-name" content="undefined">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Synodic Period Calculator — Launch Windows and Planetary Alignments | Aviator Calcs",
+            "url": "https://aviatorcalcs.com/synodic-period/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Compute the synodic period of two orbits or planets from 1/S = |1/T1 − 1/T2|, including a preset Earth–Mars window of about 780 days. Educational; circular coplanar model."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Is 780 days the only Earth–Mars launch opportunity?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "It is the mean spacing of geometrically similar Hohmann windows in a circular coplanar model. Real trajectories use a broader window around that date, and a fast or slow transfer has a different geometry."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What if the two periods are equal?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "There is no synodic period — the relative geometry never repeats because it never changes. The page returns nothing."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Can I use this for two satellites around Earth?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes. Enter their periods as custom values. The same identity is the time between successive close approaches if the orbits are coplanar and circular."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">undefined</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Synodic Period Calculator</h1>
+        <p class="lede">The synodic period is the time between successive similar alignments of two bodies that orbit the same primary — successive oppositions, or successive Hohmann-transfer windows, in the usual circular coplanar model. It is just 1/S = |1/T1 − 1/T2|. Pick two planets, or type two periods, and this page returns S. For Earth and Mars that interval is about 780 days.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<p class="hint">Presets use mean sidereal periods (Earth 365.256 days, Mars 686.980 days, and a few others). Custom periods may be in days, hours, or years.</p>
+<div class="pair">
+  <div class="field"><label for="body1">First body or custom period</label>
+    <select id="body1">
+      <option value="earth" selected>Earth (365.256 d)</option>
+      <option value="venus">Venus (224.701 d)</option>
+      <option value="mars">Mars (686.980 d)</option>
+      <option value="jupiter">Jupiter (4,332.59 d)</option>
+      <option value="mercury">Mercury (87.969 d)</option>
+      <option value="saturn">Saturn (10,759.22 d)</option>
+      <option value="custom">Custom period…</option>
+    </select></div>
+  <div class="field"><label for="body2">Second body or custom period</label>
+    <select id="body2">
+      <option value="mars" selected>Mars (686.980 d)</option>
+      <option value="earth">Earth (365.256 d)</option>
+      <option value="venus">Venus (224.701 d)</option>
+      <option value="jupiter">Jupiter (4,332.59 d)</option>
+      <option value="mercury">Mercury (87.969 d)</option>
+      <option value="saturn">Saturn (10,759.22 d)</option>
+      <option value="custom">Custom period…</option>
+    </select></div>
+</div>
+<div class="pair" id="rowCustom">
+  <div class="field"><label for="p1">Custom period 1</label><input id="p1" type="text" inputmode="decimal" value=""></div>
+  <div class="field"><label for="p2">Custom period 2</label><input id="p2" type="text" inputmode="decimal" value=""></div>
+</div>
+<div class="field"><label for="unit">Custom period unit</label>
+  <select id="unit"><option value="day" selected>days</option><option value="h">hours</option><option value="yr">years (365.25 d)</option></select></div>
+<button type="button" class="btn" id="calcBtn">Calculate synodic period</button>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="exEM">Example: Earth–Mars</button>
+<button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Result <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>undefined</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+<h2>One over S is the difference of the two mean motions</h2>
+<p>If two bodies go around the same primary in coplanar circular orbits with sidereal periods T1 and T2, the time between successive similar alignments is 1/S = |1/T1 − 1/T2|. Earth (365.256 days) and Mars (686.980 days) therefore have S ≈ 779.9 days, a little over 26 months — the familiar spacing of Mars launch windows in this idealized model. Two custom periods of 10 and 15 days meet every 30 days, the same identity in a tighter orbit pair.</p>
+<p>Eccentricity, inclination, and phasing all move a real window off this mean interval. For the Earth–Mars Hohmann time of flight and heliocentric Δv, see the <a href="/planetary-transfer/">planetary transfer</a> calculator; for a Hohmann transfer around a single body, see <a href="/hohmann-transfer/">Hohmann transfer</a>.</p>
+<h2>Sources</h2>
+<ul>
+<li>The synodic-period identity 1/S = |1/T1 − 1/T2| (Danby, <cite>Fundamentals of Celestial Mechanics</cite>; Vallado, <cite>Fundamentals of Astrodynamics and Applications</cite>).</li>
+<li>Mean sidereal periods from standard astronomical constants (approximate).</li>
+</ul>
+      <h2>Frequently asked questions</h2>
+      <h3>Is 780 days the only Earth–Mars launch opportunity?</h3>
+      <p>It is the mean spacing of geometrically similar Hohmann windows in a circular coplanar model. Real trajectories use a broader window around that date, and a fast or slow transfer has a different geometry.</p>
+      <h3>What if the two periods are equal?</h3>
+      <p>There is no synodic period — the relative geometry never repeats because it never changes. The page returns nothing.</p>
+      <h3>Can I use this for two satellites around Earth?</h3>
+      <p>Yes. Enter their periods as custom values. The same identity is the time between successive close approaches if the orbits are coplanar and circular.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Synodic Period Calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

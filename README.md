@@ -152,7 +152,10 @@ The tools are grouped in two sides. Some calculators appear in both.
 
 - [Orbital velocity and period](orbital-velocity-period/) — circular speed, period, escape speed, and vis-viva speeds on an ellipse.
 - [Satellite footprint and FOV](satellite-fov/) — geometric horizon, swath for a nadir half-angle, and circular period from altitude.
+- [Sun-synchronous inclination](sun-synchronous/) — J2 nodal-precession inclination that makes an Earth orbit sun-synchronous (does not redo geostationary radius).
 - [Hohmann transfer](hohmann-transfer/) — two-impulse Δv and time of flight between coplanar circular orbits, including LEO to GEO.
+- [Planetary Hohmann transfer](planetary-transfer/) — heliocentric time of flight, both impulsive Δv’s, and the synodic wait, defaulting to Earth–Mars.
+- [Synodic period](synodic-period/) — time between successive alignments or Hohmann windows, 1/S = |1/T1 − 1/T2|.
 - [Delta-v budget](delta-v-budget/) — sum named mission Δv items, convert the total to an ideal mass ratio, and compute a pure plane-change Δv (also listed under Propulsion).
 - [Rocket equation](rocket-equation/) — ideal Δv from Isp and mass ratio (also listed under Propulsion).
 - [Specific impulse](specific-impulse/) — Isp, exhaust velocity, thrust, and mass flow (also listed under Propulsion).

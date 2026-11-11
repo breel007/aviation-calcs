@@ -113,6 +113,9 @@
       { path: "/rayleigh-flow/", title: "Rayleigh flow calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/jet-engine-thrust/", title: "Jet engine thrust calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/brayton-cycle/", title: "Brayton cycle efficiency calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/sun-synchronous/", title: "Sun-synchronous orbit inclination calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/synodic-period/", title: "Synodic period calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/planetary-transfer/", title: "Planetary Hohmann transfer calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/about.html", title: "About", changefreq: "yearly", priority: "0.4" },
       { path: "/privacy.html", title: "Privacy policy", changefreq: "yearly", priority: "0.3" }
     ]
