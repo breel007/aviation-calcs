@@ -21,6 +21,7 @@ The tools are grouped in two sides. Some calculators appear in both.
 - [Glide distance](glide-distance/) — best-glide range from altitude and glide ratio, with wind.
 - [Turn radius](turn-radius/) — standard-rate bank, turn radius, load factor, and stall speed in a bank.
 - [Visual descent point](visual-descent-point/) — VDP distance from HAT and path angle (exact and the HAT/300 rule), optional DME, and descent rate.
+- [RVR to visibility](rvr-visibility/) — comparable RVR and statute-mile visibility from 14 CFR 91.175(h) (also listed under Weather & time).
 - [VOR / DME and the 1-in-60 rule](vor-dme-1-in-60/) — course-error offset, time and distance to a station, DME slant-range correction, and lead radial.
 - [Point of no return and ETP](point-of-no-return/) — PNR and equal-time point from groundspeeds or TAS and wind.
 - [True altitude](true-altitude/) — temperature correction of pressure altitude (also listed under Weather & time).
@@ -42,12 +43,14 @@ The tools are grouped in two sides. Some calculators appear in both.
 - [Pivotal altitude](pivotal-altitude/) — eights-on-pylons pivotal altitude from groundspeed (AFH GS²/11.3 and GS²/15, plus exact V²/g).
 - [Aviation fuel weight](fuel-weight/) — gallons, litres, pounds, and kilograms for 100LL, Jet-A, Jet-B, JP-5, and JP-8, with an optional temperature correction.
 - [Drag polar and L/D max](drag-polar/) — quadratic polar, (L/D)max, and propeller / jet range and endurance lift coefficients (also listed under Aerodynamics).
+- [Thrust and power required](thrust-power-required/) — level-flight T_req and P_req from a drag polar, with (L/D)max and minimum-power speeds (also listed under Aerodynamics and Propulsion).
 - [Breguet range and endurance](breguet-range-endurance/) — jet and propeller range and endurance from L/D, speed, and fuel fraction (also listed under Propulsion).
 
 ### Weather & time
 
 - [METAR decoder](metar-decoder/) — raw METAR or SPECI in plain English, with FAA flight category.
 - [TAF decoder](taf-decoder/) — FM / TEMPO / BECMG / PROB groups in plain English, with flight category.
+- [RVR to visibility](rvr-visibility/) — 14 CFR 91.175(h) comparable values of RVR and ground visibility; no interpolation.
 - [Pressure altitude](pressure-altitude/) — from altimeter setting (QNH), with QFE and QNE, and the 1,000 ft per inHg rule of thumb.
 - [Cloud base](cloud-base/) — convective cloud base from the temperature–dewpoint spread, plus freezing level.
 - [Zulu time converter](zulu-time-converter/) — local ↔ UTC, a live Zulu clock, and flight-plan ETAs.
@@ -83,6 +86,7 @@ The tools are grouped in two sides. Some calculators appear in both.
 - [Lift and drag coefficients](lift-drag-coefficient/) — CL, CD, and L/D from force, speed, density, and reference area.
 - [Wing loading and aspect ratio](wing-loading-aspect-ratio/) — W/S, AR, tapered-wing chords and MAC, and a stall-speed estimate from CLmax.
 - [Drag polar and L/D max](drag-polar/) — CD = CD0 + k CL², (L/D)max, and the classic propeller and jet range and endurance lift coefficients.
+- [Thrust and power required](thrust-power-required/) — drag, L/D, thrust required, and power required in level flight (also listed under Performance and Propulsion).
 - [CG percent MAC](cg-percent-mac/) — CG as a percent of mean aerodynamic chord, with a tapered-wing MAC helper (also listed under Performance).
 - [Isentropic flow](isentropic-flow/) — Mach, T/T0, P/P0, ρ/ρ0, and A/A* (NACA Report 1135), including stagnation temperature and pressure.
 - [Normal shock](normal-shock/) — M2, static ratios, and total-pressure loss P02/P01 (NACA Report 1135).
@@ -97,6 +101,7 @@ The tools are grouped in two sides. Some calculators appear in both.
 - [Specific impulse](specific-impulse/) — Isp, effective exhaust velocity, thrust, and mass flow, with an optional ideal Δv (also listed under Space).
 - [Rocket equation](rocket-equation/) — Tsiolkovsky Δv, Isp, mass ratio, and multi-stage burns (also listed under Space).
 - [Breguet range and endurance](breguet-range-endurance/) — jet and propeller range and endurance (also listed under Performance).
+- [Thrust and power required](thrust-power-required/) — T_req, P_req, and optional propeller shaft power (also listed under Performance).
 - [Propeller advance ratio and tip Mach](propeller-advance-ratio/) — J = V/(nD), rotational and helical tip speed, and tip Mach.
 - [Isentropic flow](isentropic-flow/) — nozzle and stagnation relations (also listed under Aerodynamics).
 

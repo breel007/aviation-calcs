@@ -73,6 +73,8 @@
       { path: "/specific-impulse/", title: "Specific impulse calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/oblique-shock/", title: "Oblique shock calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/prandtl-meyer/", title: "Prandtl–Meyer expansion calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/rvr-visibility/", title: "RVR to visibility calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/thrust-power-required/", title: "Thrust and power required calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/about.html", title: "About", changefreq: "yearly", priority: "0.4" },
       { path: "/privacy.html", title: "Privacy policy", changefreq: "yearly", priority: "0.3" }
     ]
