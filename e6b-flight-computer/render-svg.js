@@ -595,9 +595,10 @@
   // ---------- Wind side -------------------------------------------------
   // Polar sliding card: speed arcs are concentric about a zero-speed
   // origin far above the window; drift lines radiate from the same point.
-  // Distance down the centerline is a uniform speed scale. The card is
-  // clipped by the circular frosted disc and extends above and below the
-  // circular frame, as on a metal E6B.
+  // Distance down the centerline is a uniform speed scale. The card rides
+  // in a vertical slot through an opaque aluminum case: it shows through
+  // the circular plotting window and protrudes from the top and bottom
+  // slot mouths only (side edges tucked under the rails).
 
   var WX = 420;
   var GROMMET_Y = 400;
@@ -606,11 +607,196 @@
   var PX_PER_KT = 2.35;
   var CARD_SPEED0 = 30;
   var CARD_SPEED1 = 260;
-  var CARD_W = 520;
+  var SLOT_W = 430;
+  var CARD_W = 422;
   var CARD_ORIGIN_Y = 70; // zero-speed point in card-local coordinates
   var CARD_FOOTER = 36;
   var BODY_W = 800;
   var BODY_H = 860;
+  var FRAME_W = 552;
+  var FRAME_TOP = 88;
+  var FRAME_BOTTOM = 690;
+  var FRAME_RX = 16;
+  var MOUTH_DEPTH_TOP = 13;
+  var MOUTH_DEPTH_BOT = 16;
+
+  function frameLeft() { return WX - FRAME_W / 2; }
+  function slotLeft() { return WX - SLOT_W / 2; }
+
+  function roundedRectPath(x, y, w, h, r) {
+    return [
+      "M", (x + r).toFixed(2), y.toFixed(2),
+      "H", (x + w - r).toFixed(2),
+      "A", r, r, "0 0 1", (x + w).toFixed(2), (y + r).toFixed(2),
+      "V", (y + h - r).toFixed(2),
+      "A", r, r, "0 0 1", (x + w - r).toFixed(2), (y + h).toFixed(2),
+      "H", (x + r).toFixed(2),
+      "A", r, r, "0 0 1", x.toFixed(2), (y + h - r).toFixed(2),
+      "V", (y + r).toFixed(2),
+      "A", r, r, "0 0 1", (x + r).toFixed(2), y.toFixed(2),
+      "Z"
+    ].join(" ");
+  }
+
+  function slotRectPath(y0, y1) {
+    var x = slotLeft();
+    return [
+      "M", x.toFixed(2), y0.toFixed(2),
+      "H", (x + SLOT_W).toFixed(2),
+      "V", y1.toFixed(2),
+      "H", x.toFixed(2),
+      "Z"
+    ].join(" ");
+  }
+
+  function windowHolePath() {
+    var r = ROSE_INNER;
+    return [
+      "M", WX.toFixed(2), (GROMMET_Y - r).toFixed(2),
+      "A", r, r, "0 1 1", WX.toFixed(2), (GROMMET_Y + r).toFixed(2),
+      "A", r, r, "0 1 1", WX.toFixed(2), (GROMMET_Y - r).toFixed(2),
+      "Z"
+    ].join(" ");
+  }
+
+  // Opaque case face: rounded plate minus the circular window and the
+  // shallow rectangular mouths at the top and bottom of the slot.
+  function frameFacePath() {
+    var x = frameLeft();
+    var topMouthBottom = FRAME_TOP + MOUTH_DEPTH_TOP;
+    var botMouthTop = FRAME_BOTTOM - MOUTH_DEPTH_BOT;
+    return [
+      roundedRectPath(x, FRAME_TOP, FRAME_W, FRAME_BOTTOM - FRAME_TOP, FRAME_RX),
+      windowHolePath(),
+      slotRectPath(FRAME_TOP - 2, topMouthBottom),
+      slotRectPath(botMouthTop, FRAME_BOTTOM + 2)
+    ].join(" ");
+  }
+
+  function slotWell() {
+    // Dark channel behind the card, running the length of the case and
+    // a short way out of each mouth so the gaps beside the card read as
+    // the inside of the slot.
+    var pad = 6;
+    return el("rect", {
+      x: slotLeft(),
+      y: FRAME_TOP - pad,
+      width: SLOT_W,
+      height: (FRAME_BOTTOM - FRAME_TOP) + pad * 2,
+      rx: 2,
+      fill: "#2a2d33"
+    });
+  }
+
+  function instrumentFrame() {
+    var x = frameLeft();
+    var parts = [];
+    var face = frameFacePath();
+    parts.push(el("path", {
+      d: face,
+      fill: "url(#e6b-case)",
+      "fill-rule": "evenodd",
+      stroke: "none"
+    }));
+    // Outer bevel
+    parts.push(el("rect", {
+      x: x, y: FRAME_TOP, width: FRAME_W, height: FRAME_BOTTOM - FRAME_TOP,
+      rx: FRAME_RX,
+      fill: "none",
+      stroke: "#4a5058",
+      "stroke-width": 1.6
+    }));
+    parts.push(el("rect", {
+      x: x + 1.4, y: FRAME_TOP + 1.4,
+      width: FRAME_W - 2.8, height: FRAME_BOTTOM - FRAME_TOP - 2.8,
+      rx: FRAME_RX - 1,
+      fill: "none",
+      stroke: "rgba(255,255,255,0.28)",
+      "stroke-width": 1
+    }));
+    var sL = slotLeft();
+    var sR = sL + SLOT_W;
+    var topLintel = FRAME_TOP + MOUTH_DEPTH_TOP;
+    var botLintel = FRAME_BOTTOM - MOUTH_DEPTH_BOT;
+    var foreheadBottom = GROMMET_Y - ROSE_INNER;
+    var chinTop = GROMMET_Y + ROSE_INNER;
+    // Subtle recessed channel on the forehead and chin (opaque — the card
+    // stays hidden under the face here). Reads as the slot running through
+    // the body without the four long "post" rails.
+    function recess(y0, y1) {
+      if (y1 - y0 < 2) return "";
+      return [
+        el("rect", {
+          x: sL, y: y0, width: SLOT_W, height: y1 - y0,
+          fill: "#b0b5bc"
+        }),
+        el("line", {
+          x1: sL, y1: y0, x2: sL, y2: y1,
+          stroke: "#5a6068", "stroke-width": 1.1
+        }),
+        el("line", {
+          x1: sR, y1: y0, x2: sR, y2: y1,
+          stroke: "#5a6068", "stroke-width": 1.1
+        })
+      ].join("");
+    }
+    parts.push(recess(topLintel, foreheadBottom));
+    parts.push(recess(chinTop, botLintel));
+    // Short rail lips at each mouth, like the ends of the channel
+    var lipW = 6;
+    var lipH = 13;
+    function lip(rx, y) {
+      return el("rect", {
+        x: rx, y: y, width: lipW, height: lipH,
+        rx: 1,
+        fill: "url(#e6b-rail)",
+        stroke: "#3a4046",
+        "stroke-width": 0.6
+      });
+    }
+    parts.push(lip(sL - lipW, topLintel - 2));
+    parts.push(lip(sR, topLintel - 2));
+    parts.push(lip(sL - lipW, botLintel - lipH + 2));
+    parts.push(lip(sR, botLintel - lipH + 2));
+    // Lintel edges at the slot mouths
+    parts.push(el("line", {
+      x1: sL, y1: topLintel, x2: sR, y2: topLintel,
+      stroke: "#2c3036", "stroke-width": 1.5
+    }));
+    parts.push(el("line", {
+      x1: sL, y1: botLintel, x2: sR, y2: botLintel,
+      stroke: "#2c3036", "stroke-width": 1.5
+    }));
+    // Case corner screws
+    [[x + 16, FRAME_TOP + 16], [x + FRAME_W - 16, FRAME_TOP + 16],
+     [x + 16, FRAME_BOTTOM - 16], [x + FRAME_W - 16, FRAME_BOTTOM - 16]].forEach(function (p) {
+      parts.push(el("circle", {
+        cx: p[0], cy: p[1], r: 4.4,
+        fill: "url(#e6b-bezel)", stroke: "#2c3036", "stroke-width": 0.7
+      }));
+      parts.push(el("circle", { cx: p[0], cy: p[1], r: 1.2, fill: "#2c3036" }));
+    });
+    return el("g", { id: "e6b-wind-frame" }, parts);
+  }
+
+  function mouthShadows() {
+    var sL = slotLeft();
+    var topLintel = FRAME_TOP + MOUTH_DEPTH_TOP;
+    var botLintel = FRAME_BOTTOM - MOUTH_DEPTH_BOT;
+    var h = 11;
+    return el("g", { id: "e6b-slot-mouths" }, [
+      // Shadow just above the top lintel, fading up onto the card
+      el("rect", {
+        x: sL, y: topLintel - h, width: SLOT_W, height: h,
+        fill: "url(#e6b-mouth-up)"
+      }),
+      // Shadow just below the bottom lintel, fading down onto the card
+      el("rect", {
+        x: sL, y: botLintel, width: SLOT_W, height: h,
+        fill: "url(#e6b-mouth-down)"
+      })
+    ]);
+  }
 
   function windCardLocalY(speed) {
     return CARD_ORIGIN_Y + speed * PX_PER_KT;
@@ -986,6 +1172,7 @@
     var card = buildWindCard();
 
     var clipId = "e6b-wind-disc-clip";
+    var slotClipId = "e6b-wind-slot-clip";
     var defs = el("defs", null, [
       el("radialGradient", { id: "e6b-bezel", cx: "35%", cy: "30%", r: "80%" }, [
         el("stop", { offset: "0%", "stop-color": "#d8dce2" }),
@@ -998,12 +1185,44 @@
         el("stop", { offset: "55%", "stop-color": "#c4a35a" }),
         el("stop", { offset: "100%", "stop-color": "#6e5220" })
       ]),
+      el("linearGradient", { id: "e6b-case", x1: "0", y1: "0", x2: "0", y2: "1" }, [
+        el("stop", { offset: "0%", "stop-color": "#d8dbe1" }),
+        el("stop", { offset: "38%", "stop-color": "#b7bcc4" }),
+        el("stop", { offset: "100%", "stop-color": "#8e939c" })
+      ]),
+      el("linearGradient", { id: "e6b-rail", x1: "0", y1: "0", x2: "1", y2: "0" }, [
+        el("stop", { offset: "0%", "stop-color": "#9aa0a8" }),
+        el("stop", { offset: "45%", "stop-color": "#c5c9d0" }),
+        el("stop", { offset: "100%", "stop-color": "#7a8088" })
+      ]),
+      el("linearGradient", { id: "e6b-mouth-up", x1: "0", y1: "1", x2: "0", y2: "0" }, [
+        el("stop", { offset: "0%", "stop-color": "#000", "stop-opacity": "0.42" }),
+        el("stop", { offset: "55%", "stop-color": "#000", "stop-opacity": "0.12" }),
+        el("stop", { offset: "100%", "stop-color": "#000", "stop-opacity": "0" })
+      ]),
+      el("linearGradient", { id: "e6b-mouth-down", x1: "0", y1: "0", x2: "0", y2: "1" }, [
+        el("stop", { offset: "0%", "stop-color": "#000", "stop-opacity": "0.42" }),
+        el("stop", { offset: "55%", "stop-color": "#000", "stop-opacity": "0.12" }),
+        el("stop", { offset: "100%", "stop-color": "#000", "stop-opacity": "0" })
+      ]),
       el("filter", { id: "e6b-glow", x: "-50%", y: "-50%", width: "200%", height: "200%" }, [
         el("feGaussianBlur", { "stdDeviation": "2.2", result: "b" }),
         el("feMerge", null, [el("feMergeNode", { in: "b" }), el("feMergeNode", { in: "SourceGraphic" })])
       ]),
+      el("filter", { id: "e6b-case-shadow", x: "-8%", y: "-4%", width: "116%", height: "112%" }, [
+        el("feDropShadow", {
+          dx: "0", dy: "3", stdDeviation: "3.2",
+          "flood-color": "#000", "flood-opacity": "0.38"
+        })
+      ]),
       el("clipPath", { id: clipId }, [
         el("circle", { cx: WX, cy: GROMMET_Y, r: ROSE_INNER - 0.5 })
+      ]),
+      el("clipPath", { id: slotClipId }, [
+        el("rect", {
+          x: slotLeft(), y: -240,
+          width: SLOT_W, height: BODY_H + 480
+        })
       ])
     ].join(""));
 
@@ -1011,10 +1230,14 @@
       bg && bg !== "none" ? el("rect", { x: 0, y: 0, width: BODY_W, height: BODY_H, fill: bg }) : ""
     ].join("");
 
-    var cardGroup = el("g", {
-      id: "e6b-wind-card",
-      transform: cardTransform(grommetSpeed)
-    }, card.svg);
+    // Clip is on a wrapper, not on the transformed card (SVG clip+transform
+    // on the same element is unreliable).
+    var cardGroup = el("g", { "clip-path": "url(#" + slotClipId + ")" }, [
+      el("g", {
+        id: "e6b-wind-card",
+        transform: cardTransform(grommetSpeed)
+      }, card.svg)
+    ]);
 
     var roseRot = -((roseHeading === 360) ? 0 : roseHeading);
     var rose = el("g", {
@@ -1148,9 +1371,21 @@
     if (opts.width) svgAttrs.width = opts.width;
     if (opts.height) svgAttrs.height = opts.height;
 
+    var caseShadow = el("rect", {
+      x: frameLeft(), y: FRAME_TOP,
+      width: FRAME_W, height: FRAME_BOTTOM - FRAME_TOP,
+      rx: FRAME_RX,
+      fill: "#8e939c",
+      filter: "url(#e6b-case-shadow)"
+    });
+
     var content = [
       defs, frameBg,
+      caseShadow,
+      slotWell(),
       cardGroup,
+      instrumentFrame(),
+      mouthShadows(),
       rose,
       windDot,
       grommet,
@@ -1175,6 +1410,7 @@
     R_DA_OUT: R_DA_OUT,
     DA_POINTER: DA_POINTER,
     CARD_W: CARD_W,
+    SLOT_W: SLOT_W,
     cardOffsetForTas: cardOffsetForTas,
     cardTransform: cardTransform,
     windCardLocalY: windCardLocalY,
