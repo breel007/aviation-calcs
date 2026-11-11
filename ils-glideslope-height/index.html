@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>ILS Glideslope Height Calculator — Height Above Threshold and TCH | Aviator Calcs</title>
+  <meta name="description" content="Find height on a straight ILS glideslope from distance to the threshold, path angle, and threshold crossing height, or invert for distance. Educational; not a procedure design tool.">
+  <meta name="keywords" content="undefined">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/ils-glideslope-height/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/ils-glideslope-height/">
+  <meta property="og:title" content="ILS Glideslope Height Calculator — Height Above Threshold and TCH | Aviator Calcs">
+  <meta property="og:description" content="Find height on a straight ILS glideslope from distance to the threshold, path angle, and threshold crossing height, or invert for distance. Educational; not a procedure design tool.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:description" content="Find height on a straight ILS glideslope from distance to the threshold, path angle, and threshold crossing height, or invert for distance. Educational; not a procedure design tool.">
+  <meta name="application-name" content="undefined">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "ILS Glideslope Height Calculator — Height Above Threshold and TCH | Aviator Calcs",
+            "url": "https://aviatorcalcs.com/ils-glideslope-height/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Find height on a straight ILS glideslope from distance to the threshold, path angle, and threshold crossing height, or invert for distance. Educational; not a procedure design tool."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Why is a 3° slope 318.4 ft per NM, not 300?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "A 3° angle is a 5.24 percent grade, and one nautical mile is 6,076.12 feet, so the rise is 6,076.12 × tan 3° ≈ 318.4 ft. The “300 ft/NM” memory item is a rough 3-percent stand-in, not the ILS figure."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Should I use DME or distance to the threshold?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The formula uses distance to the landing threshold. If you only have a DME that sits past the threshold, enter the published antenna offset and check “Distance is DME” so the page subtracts it."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Is this a DA or a visual descent point?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. Decision altitude comes from the approach chart. A VDP is a plan-view point for the missed-approach point; this page only converts a straight path into a height."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">undefined</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">ILS Glideslope Height Calculator</h1>
+        <p class="lede">On a straight 3° ILS, height above the runway is threshold crossing height plus the distance to the threshold times the tangent of the path angle. This page does that conversion in both directions, optionally corrects a DME that sits past the threshold, and, if you enter a groundspeed, shows the descent rate that stays on the path. It is a geometric check, not a substitute for the published approach procedure or a barometric altimeter.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<p class="hint">Default path is 3.00° with a 50 ft threshold crossing height, the common U.S. ILS figures. Distance is to the landing threshold unless you mark it as DME and enter an antenna offset.</p>
+<div class="field"><label for="mode">Solve for</label>
+  <select id="mode"><option value="distance" selected>Height from distance</option><option value="height">Distance from height</option></select></div>
+<div class="pair" id="rowDist">
+  <div class="field"><label for="distance">Distance</label><input id="distance" type="text" inputmode="decimal" value="1"></div>
+  <div class="field"><label for="distUnit">Distance unit</label>
+    <select id="distUnit"><option value="nm" selected>NM</option><option value="sm">SM</option><option value="ft">feet</option><option value="m">metres</option></select></div>
+</div>
+<div class="pair" id="rowHeight" hidden>
+  <div class="field"><label for="height">Height above threshold</label><input id="height" type="text" inputmode="decimal" value="368"></div>
+  <div class="field"><label for="heightUnit">Height unit</label>
+    <select id="heightUnit"><option value="ft" selected>feet</option><option value="m">metres</option></select></div>
+</div>
+<div class="pair">
+  <div class="field"><label for="angle">Glideslope angle (degrees)</label><input id="angle" type="text" inputmode="decimal" value="3"></div>
+  <div class="field"><label for="tch">Threshold crossing height</label><input id="tch" type="text" inputmode="decimal" value="50"></div>
+</div>
+<div class="pair">
+  <div class="field"><label for="antennaOffset">DME / GS antenna past threshold (optional)</label><input id="antennaOffset" type="text" inputmode="decimal" value="" placeholder="usually left blank"></div>
+  <div class="field"><label for="offsetUnit">Offset unit</label>
+    <select id="offsetUnit"><option value="ft" selected>feet</option><option value="nm">NM</option><option value="m">metres</option></select></div>
+</div>
+<label class="check-row"><input type="checkbox" id="distanceIsDme"> Distance is DME (subtract the offset above)</label>
+<div class="field"><label for="groundspeed">Groundspeed, knots (optional, for descent rate)</label><input id="groundspeed" type="text" inputmode="decimal" value=""></div>
+<button type="button" class="btn" id="calcBtn">Calculate glideslope height</button>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="exOneNm">Example: 1 NM, 3°, 50 ft TCH</button>
+<button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Result <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>undefined</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+<h2>Height equals TCH plus distance times tan θ</h2>
+<p>A published ILS glideslope is a straight line in space that crosses the landing threshold at the threshold crossing height (TCH) printed on the approach chart, typically about 50 or 55 feet for a 3.00° path in the United States. If <i>x</i> is the distance to the threshold and θ is the path angle,</p>
+<p><i>h</i> = TCH + <i>x</i> tan θ.</p>
+<p>At 3.00°, tan θ is 318.4 feet per nautical mile (using 1 NM = 1,852 / 0.3048 ft), so one mile from the threshold on a 50-foot TCH you are about 368 feet above the runway. The same identity inverted is the distance for a given height. A DME located past the threshold reads a slightly larger range than <i>x</i>; entering that offset subtracts it before the tangent is applied. Descent rate on a constant path is groundspeed times feet per nautical mile, divided by 60 — the same identity used on this site’s <a href="/descent-rate/">descent-rate</a> calculator. A visual descent point, by contrast, is a plan-view fix, covered separately on the <a href="/visual-descent-point/">VDP</a> page.</p>
+<h2>What the geometry does not capture</h2>
+<p>The real beam is a hyperbolic locus of a constant-difference signal, approximated as a straight line only near the runway. Terrain, a displaced threshold, and a non-standard TCH all change the number you should fly. Use the published glide path, TCH, and minima; this page does not replace a DA, an RA, or a PAPI. A 3° path at 90 knots is about 478 fpm, a little steeper than the familiar “groundspeed × 5” rule of 450 fpm, which assumes a slightly shallower angle.</p>
+<h2>Sources</h2>
+<ul>
+<li>ICAO Annex 10 and Doc 8168 (PANS-OPS), ILS glide-path angle and threshold crossing height.</li>
+<li>FAA <cite>Instrument Flying Handbook</cite> and Aeronautical Information Manual (ILS, TCH, and descent rates).</li>
+<li>FAA Order 8260.3 (United States Standard for Terminal Instrument Procedures, TERPS), straight-in approach geometry.</li>
+</ul>
+      <h2>Frequently asked questions</h2>
+      <h3>Why is a 3° slope 318.4 ft per NM, not 300?</h3>
+      <p>A 3° angle is a 5.24 percent grade, and one nautical mile is 6,076.12 feet, so the rise is 6,076.12 × tan 3° ≈ 318.4 ft. The “300 ft/NM” memory item is a rough 3-percent stand-in, not the ILS figure.</p>
+      <h3>Should I use DME or distance to the threshold?</h3>
+      <p>The formula uses distance to the landing threshold. If you only have a DME that sits past the threshold, enter the published antenna offset and check “Distance is DME” so the page subtracts it.</p>
+      <h3>Is this a DA or a visual descent point?</h3>
+      <p>No. Decision altitude comes from the approach chart. A VDP is a plan-view point for the missed-approach point; this page only converts a straight path into a height.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — ILS Glideslope Height Calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

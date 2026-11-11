@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Wind Chill Calculator — NWS Wind-Chill Temperature | Aviator Calcs</title>
+  <meta name="description" content="Compute the North American wind-chill temperature from air temperature and wind speed using the NWS 2001 formula. Educational; not a medical or operational weather product.">
+  <meta name="keywords" content="undefined">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/wind-chill/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/wind-chill/">
+  <meta property="og:title" content="Wind Chill Calculator — NWS Wind-Chill Temperature | Aviator Calcs">
+  <meta property="og:description" content="Compute the North American wind-chill temperature from air temperature and wind speed using the NWS 2001 formula. Educational; not a medical or operational weather product.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:description" content="Compute the North American wind-chill temperature from air temperature and wind speed using the NWS 2001 formula. Educational; not a medical or operational weather product.">
+  <meta name="application-name" content="undefined">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Wind Chill Calculator — NWS Wind-Chill Temperature | Aviator Calcs",
+            "url": "https://aviatorcalcs.com/wind-chill/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Compute the North American wind-chill temperature from air temperature and wind speed using the NWS 2001 formula. Educational; not a medical or operational weather product."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Why does a light wind leave the wind chill equal to the air temperature?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The official NWS index is defined only for winds of 3 mph or more at the 10-meter anemometer height. Below that, the service reports the air temperature, and so does this page."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Does wind chill change takeoff performance or density altitude?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. Performance and density altitude use the actual outside air temperature, pressure, and humidity. Wind chill is a skin-heat-loss index for people."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Is this the same as a frostbite timer?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. The NWS publishes separate frostbite-time guidance that depends on the wind-chill value. This page reports only the index."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">undefined</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Wind Chill Calculator</h1>
+        <p class="lede">Wind on bare skin makes a cold day feel colder. This page uses the U.S. National Weather Service’s 2001 wind-chill temperature (WCT) to convert an air temperature and a wind speed into that “feels like” value, in Fahrenheit or Celsius. It is a published meteorological index, not a frostbite forecast or a substitute for a current METAR or area forecast.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<p class="hint">The official NWS formula is defined for air temperatures at or below 50 °F (10 °C) and winds of 3 mph (4.8 km/h) or more, as measured at the standard 10 m anemometer height. Below that wind the page reports the air temperature instead of inventing a number.</p>
+<div class="pair">
+  <div class="field"><label for="temp">Air temperature</label><input id="temp" type="text" inputmode="decimal" value="0"></div>
+  <div class="field"><label for="tempUnit">Temperature unit</label>
+    <select id="tempUnit"><option value="F" selected>°F</option><option value="C">°C</option></select></div>
+</div>
+<div class="pair">
+  <div class="field"><label for="wind">Wind speed</label><input id="wind" type="text" inputmode="decimal" value="10"></div>
+  <div class="field"><label for="windUnit">Wind unit</label>
+    <select id="windUnit"><option value="mph" selected>mph</option><option value="kt">knots</option><option value="kmh">km/h</option><option value="mps">m/s</option></select></div>
+</div>
+<button type="button" class="btn" id="calcBtn">Calculate wind chill</button>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="exCold">Example: 0 °F, 10 mph</button>
+<button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Result <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>undefined</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+<h2>The NWS 2001 wind-chill formula</h2>
+<p>In English units, with air temperature <i>T</i> in °F and wind <i>V</i> in mph,</p>
+<p>WCT = 35.74 + 0.6215 <i>T</i> − 35.75 <i>V</i><sup>0.16</sup> + 0.4275 <i>T V</i><sup>0.16</sup>.</p>
+<p>The SI form, with <i>T</i> in °C and <i>V</i> in km/h, is</p>
+<p>WCT = 13.12 + 0.6215 <i>T</i> − 11.37 <i>V</i><sup>0.16</sup> + 0.3965 <i>T V</i><sup>0.16</sup>.</p>
+<p>The two expressions are official equivalents of the same fit. They replaced the 1945 Siple–Passel index in November 2001 after a joint U.S.–Canadian review, and they assume a walking face in clear weather, not a wet-bulb or a solar-load correction. The NWS publishes the index only for <i>T</i> ≤ 50 °F and <i>V</i> ≥ 3 mph; this page follows that domain rather than extrapolating. A 0 °F air temperature in a 10 mph wind gives a wind chill of about −16 °F, matching the NWS chart.</p>
+<h2>How pilots usually use it</h2>
+<p>On a preflight or a ramp walk, wind chill is a personal-exposure number, not an aircraft-performance correction. Airframe icing, density altitude, and engine inlet temperature still come from the true OAT. For a heat-stress counterpart on a hot day, use the <a href="/heat-index/">heat-index</a> calculator. Current observations belong on a METAR — see the <a href="/metar-decoder/">METAR decoder</a>.</p>
+<h2>Sources</h2>
+<ul>
+<li>NOAA / National Weather Service, “Wind Chill Temperature Index” (2001 formula, English and metric, official thresholds).</li>
+<li>Osczevski and Bluestein, “The New Wind Chill Equivalent Temperature Chart,” <cite>Bulletin of the American Meteorological Society</cite>, 2005.</li>
+<li>Environment and Climate Change Canada, wind-chill program (joint U.S.–Canadian index).</li>
+</ul>
+      <h2>Frequently asked questions</h2>
+      <h3>Why does a light wind leave the wind chill equal to the air temperature?</h3>
+      <p>The official NWS index is defined only for winds of 3 mph or more at the 10-meter anemometer height. Below that, the service reports the air temperature, and so does this page.</p>
+      <h3>Does wind chill change takeoff performance or density altitude?</h3>
+      <p>No. Performance and density altitude use the actual outside air temperature, pressure, and humidity. Wind chill is a skin-heat-loss index for people.</p>
+      <h3>Is this the same as a frostbite timer?</h3>
+      <p>No. The NWS publishes separate frostbite-time guidance that depends on the wind-chill value. This page reports only the index.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Wind Chill Calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

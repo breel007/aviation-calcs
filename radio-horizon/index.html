@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Radio Horizon Calculator — VHF and Radar Line-of-Sight Range | Aviator Calcs</title>
+  <meta name="description" content="Estimate VHF, radar, and geometric line-of-sight range from antenna or aircraft height with the 4/3-Earth radio horizon and the 1.23√h rule of thumb. Educational; not a coverage guarantee.">
+  <meta name="keywords" content="undefined">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/radio-horizon/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/radio-horizon/">
+  <meta property="og:title" content="Radio Horizon Calculator — VHF and Radar Line-of-Sight Range | Aviator Calcs">
+  <meta property="og:description" content="Estimate VHF, radar, and geometric line-of-sight range from antenna or aircraft height with the 4/3-Earth radio horizon and the 1.23√h rule of thumb. Educational; not a coverage guarantee.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:description" content="Estimate VHF, radar, and geometric line-of-sight range from antenna or aircraft height with the 4/3-Earth radio horizon and the 1.23√h rule of thumb. Educational; not a coverage guarantee.">
+  <meta name="application-name" content="undefined">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Radio Horizon Calculator — VHF and Radar Line-of-Sight Range | Aviator Calcs",
+            "url": "https://aviatorcalcs.com/radio-horizon/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Estimate VHF, radar, and geometric line-of-sight range from antenna or aircraft height with the 4/3-Earth radio horizon and the 1.23√h rule of thumb. Educational; not a coverage guarantee."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Where does the 1.23 √h rule come from?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "It is √(2 × (4/3) × R × h) converted so that h is in feet and the range is in nautical miles, dropping the small h² term. For a 1,000-foot antenna it is about 39 NM."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Should I add two aircraft heights or use the higher one?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Add the two individual horizons. A 1,000-foot tower and a 6,000-foot airplane see each other at roughly 1.23√1000 + 1.23√6000 nautical miles, not at the taller height alone."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Does this guarantee radio or radar contact?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. It is a line-of-sight geometry estimate. Power, interference, terrain, and unusual refraction can make the usable range shorter or, occasionally, longer."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">undefined</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Radio Horizon Calculator</h1>
+        <p class="lede">VHF communications, radar, and most line-of-sight radio links stop around the radio horizon, not the geometric horizon. This page computes that range from one or two antenna (or aircraft) heights, using a 4/3-Earth effective radius for radio refraction and a geometric (k = 1) comparison. The familiar 1.23 √h nautical-mile rule of thumb, with h in feet, is the 4/3 result written in aviation units.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<p class="hint">Enter a station or aircraft height, and optionally a second antenna (a ground station plus an airborne receiver, or two aircraft). Heights are above the surface, not pressure altitude.</p>
+<div class="pair">
+  <div class="field"><label for="h1">Height 1</label><input id="h1" type="text" inputmode="decimal" value="1000"></div>
+  <div class="field"><label for="h2">Height 2 (optional)</label><input id="h2" type="text" inputmode="decimal" value="" placeholder="leave blank for one antenna"></div>
+</div>
+<div class="field"><label for="hUnit">Height unit</label>
+  <select id="hUnit"><option value="ft" selected>feet</option><option value="m">metres</option></select></div>
+<button type="button" class="btn" id="calcBtn">Calculate radio horizon</button>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="exAtc">Example: 1,000 ft + 6,000 ft</button>
+<button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Result <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>undefined</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+<h2>The 4/3-Earth radio horizon</h2>
+<p>The geometric distance to the horizon from a height <i>h</i> above a sphere of radius <i>R</i> is √(2<i>R h</i> + <i>h</i>²). Standard radio atmosphere bends VHF and radar rays downward; the usual engineering model replaces <i>R</i> with <i>k R</i> and takes <i>k</i> = 4/3. In aviation units that simplifies, for <i>h</i> in feet and range in nautical miles, to about</p>
+<p><i>d</i><sub>NM</sub> ≈ 1.23 √<i>h</i><sub>ft</sub></p>
+<p>for the radio horizon, and about 1.06 √<i>h</i> for the geometric horizon (<i>k</i> = 1). Two antennas see each other when the sum of their individual horizons covers the distance between them, so the link range is <i>d</i><sub>1</sub> + <i>d</i><sub>2</sub>. This page uses a mean Earth radius of 6,371 km and reports both the exact square-root expression and the 1.23 √h rule.</p>
+<h2>What the model leaves out</h2>
+<p>Ducting, inversions, terrain, and bank angle can stretch or cut the path. HF skywave is a different mechanism entirely. A service volume or a radar coverage chart already folds in transmitter power, receiver sensitivity, and obstacles; this calculation is only geometry plus a standard refraction factor. Pair it with the <a href="/vor-dme-1-in-60/">VOR/DME and 1-in-60</a> tools for station-relative geometry, not as a clearance to leave a frequency.</p>
+<h2>Sources</h2>
+<ul>
+<li>ITU-R P.834 and related radio-meteorological guidance (effective Earth radius factor <i>k</i> ≈ 4/3 in a standard atmosphere).</li>
+<li>FAA Aeronautical Information Manual and <cite>Instrument Flying Handbook</cite> (VHF navigation and communication service volumes; line-of-sight character of VOR, ILS, and ATC radio).</li>
+<li>Standard geometric horizon √(2<i>R h</i> + <i>h</i>²) on a sphere of mean radius 6,371 km.</li>
+</ul>
+      <h2>Frequently asked questions</h2>
+      <h3>Where does the 1.23 √h rule come from?</h3>
+      <p>It is √(2 × (4/3) × R × h) converted so that h is in feet and the range is in nautical miles, dropping the small h² term. For a 1,000-foot antenna it is about 39 NM.</p>
+      <h3>Should I add two aircraft heights or use the higher one?</h3>
+      <p>Add the two individual horizons. A 1,000-foot tower and a 6,000-foot airplane see each other at roughly 1.23√1000 + 1.23√6000 nautical miles, not at the taller height alone.</p>
+      <h3>Does this guarantee radio or radar contact?</h3>
+      <p>No. It is a line-of-sight geometry estimate. Power, interference, terrain, and unusual refraction can make the usable range shorter or, occasionally, longer.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Radio Horizon Calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

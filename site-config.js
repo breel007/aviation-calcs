@@ -86,6 +86,14 @@
       { path: "/logbook-time/", title: "Pilot logbook time totals calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/delta-v-budget/", title: "Delta-v budget calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/terminal-velocity/", title: "Terminal velocity and ballistic re-entry calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/great-circle-distance/", title: "Great-circle distance calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/wind-chill/", title: "Wind chill calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/thunderstorm-distance/", title: "Thunderstorm flash-to-bang distance calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/radio-horizon/", title: "Radio horizon and VHF range calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/ils-glideslope-height/", title: "ILS glideslope height calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/flight-level/", title: "Flight level and transition calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/wake-turbulence-separation/", title: "Wake turbulence separation calculator", changefreq: "monthly", priority: "0.9" },
+      { path: "/inflight-fuel-eta/", title: "In-flight fuel and ETA calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/about.html", title: "About", changefreq: "yearly", priority: "0.4" },
       { path: "/privacy.html", title: "Privacy policy", changefreq: "yearly", priority: "0.3" }
     ]

@@ -11,12 +11,15 @@ The tools are grouped in two sides. Some calculators appear in both.
 ### Flight planning & navigation
 
 - [Time, speed & distance](time-speed-distance/) — solve any of time, groundspeed, or distance, plus ETA.
+- [Great-circle distance](great-circle-distance/) — haversine range and initial true course between two latitudes and longitudes.
 - [E6B wind triangle](e6b-wind/) — wind correction angle, true heading, and groundspeed, or winds aloft in reverse.
 - [Fuel planner](fuel-planning/) — trip fuel, VFR/IFR reserves, endurance, and 100LL / Jet-A weight.
+- [In-flight fuel and ETA](inflight-fuel-eta/) — remaining distance, current groundspeed and fuel flow, fuel at the destination, and a 91.151 / 91.167 reserve check.
 - [Aviation unit converter](aviation-unit-converter/) — knots, nautical miles, inHg, gallons, Celsius, fpm, and more.
 - [True / magnetic heading](true-magnetic-heading/) — convert true, magnetic, and compass heading or course with variation and optional deviation (east is least, west is best).
 - [Top of descent](top-of-descent/) — TOD distance and descent rate for a 3° path or a custom angle.
 - [Descent rate / glideslope VSI](descent-rate/) — required vertical speed for a 3° ILS or a custom path, in fpm and ft/NM, versus the GS × 5 rule.
+- [ILS glideslope height](ils-glideslope-height/) — height above the threshold from distance, path angle, and TCH, or the distance for a given height, plus an optional descent rate.
 - [Holding pattern entry](holding-pattern-entry/) — AIM-recommended direct, teardrop, or parallel entry.
 - [Climb gradient](climb-gradient/) — ft/NM, fpm, percent, and degrees, plus a departure-minimum check.
 - [Glide distance](glide-distance/) — best-glide range from altitude and glide ratio, with wind.
@@ -24,9 +27,12 @@ The tools are grouped in two sides. Some calculators appear in both.
 - [Time to turn](time-to-turn/) — time for a heading change at 3°/s, half-standard, or a rate from TAS and bank.
 - [Visual descent point](visual-descent-point/) — VDP distance from HAT and path angle (exact and the HAT/300 rule), optional DME, and descent rate.
 - [RVR to visibility](rvr-visibility/) — comparable RVR and statute-mile visibility from 14 CFR 91.175(h) (also listed under Weather & time).
+- [Wake turbulence separation](wake-turbulence-separation/) — AIM 7-4-9 wake minima by Super, Heavy, B757, Large, and Small class for radar, landing, and departure scenarios.
 - [VOR / DME and the 1-in-60 rule](vor-dme-1-in-60/) — course-error offset, time and distance to a station, DME slant-range correction, and lead radial.
+- [Radio horizon / VHF range](radio-horizon/) — line-of-sight VHF and radar range from antenna height, with the 4/3-Earth radio horizon and the 1.23√h rule.
 - [Point of no return and ETP](point-of-no-return/) — PNR and equal-time point from groundspeeds or TAS and wind.
 - [True altitude](true-altitude/) — temperature correction of pressure altitude (also listed under Weather & time).
+- [Flight level and transition](flight-level/) — pressure altitude ↔ flight level, and whether a published TA / TL puts you on QNH or 29.92 (also listed under Weather & time).
 - [Cold temperature correction](cold-temperature-correction/) — ICAO Doc 8168 formula, AIM Table 7-3-1, and the 4% rule for a published approach altitude (also listed under Weather & time).
 - [Route weather go / no-go](weather-go-no-go/) — historical ceiling, visibility, wind, and weather climatology along a route (also listed under Weather & time).
 
@@ -56,9 +62,12 @@ The tools are grouped in two sides. Some calculators appear in both.
 - [TAF decoder](taf-decoder/) — FM / TEMPO / BECMG / PROB groups in plain English, with flight category.
 - [RVR to visibility](rvr-visibility/) — 14 CFR 91.175(h) comparable values of RVR and ground visibility; no interpolation.
 - [Pressure altitude](pressure-altitude/) — from altimeter setting (QNH), with QFE and QNE, and the 1,000 ft per inHg rule of thumb.
+- [Flight level and transition](flight-level/) — pressure altitude ↔ flight level and the transition altitude / transition level switch (also listed under Flight planning).
 - [Cloud base](cloud-base/) — convective cloud base from the temperature–dewpoint spread, plus freezing level.
 - [Carburetor icing, dewpoint & frost point](carburetor-icing/) — RH, frost point, and FAA PHAK Figure 7-12 carburetor-icing zones.
+- [Thunderstorm flash-to-bang](thunderstorm-distance/) — storm range from the seconds between a lightning flash and its thunder, using the local speed of sound.
 - [Heat index](heat-index/) — NWS apparent temperature from the Rothfusz regression, humidity adjustments, and the Steadman fallback.
+- [Wind chill](wind-chill/) — North American wind-chill temperature from the NWS 2001 formula.
 - [Zulu time converter](zulu-time-converter/) — local ↔ UTC, a live Zulu clock, and flight-plan ETAs.
 - [Sunrise, sunset & FAA night](sunrise-sunset-twilight/) — sunrise, sunset, civil twilight, and FAA night definitions.
 - [Standard atmosphere](standard-atmosphere/) — ISA / U.S. Standard Atmosphere 1976 properties, and the inverse to pressure and density altitude (also listed under Atmosphere).
