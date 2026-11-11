@@ -12,7 +12,6 @@
   var MIN_REQUEST_GAP_MS = 2200; // IEM's advertised 1s IP throttle is closer to 2s in practice
   var lastRequestStart = 0;
   var fetchGen = 0;
-  var fetchTimer = null;
   var lastFetch = null; // { key, parts, windows, selected, done }
 
   function pad2(n) { return (n < 10 ? "0" : "") + n; }
@@ -410,7 +409,7 @@
     if (!selected.length || !dm) return null;
     var month = Number(dm[2]), day = Number(dm[3]);
     var tz = $("tz").value || "UTC";
-    var years = Number($("years").value) || C.DEFAULT_YEARS;
+    var years = C.DEFAULT_YEARS; // fixed 5-year history
     var radius = Number($("radius").value);
     if (!isFinite(radius)) radius = C.DEFAULT_RADIUS_DAYS;
     var windows = C.dateWindows(month, day, { years: years, radiusDays: radius, tz: tz, now: new Date() });
@@ -503,6 +502,11 @@
     applyParts(lastFetch.parts, lastFetch.plan, !lastFetch.done);
   }
 
+  function setRunBusy(busy) {
+    var btn = $("btn-run");
+    if (btn) btn.disabled = !!busy;
+  }
+
   function startFetch() {
     var plan = queryPlan();
     if (!plan) {
@@ -510,14 +514,18 @@
       else setWarnings(["Pick a calendar date so the week of the year is known."]);
       return;
     }
-    if (lastFetch && lastFetch.key === plan.key) {
+    if (lastFetch && lastFetch.key === plan.key && lastFetch.done) {
       lastFetch.plan = plan;
-      if (lastFetch.parts.length) applyParts(lastFetch.parts, plan, !lastFetch.done);
+      applyParts(lastFetch.parts, plan, false);
       return;
+    }
+    if (lastFetch && lastFetch.key === plan.key && !lastFetch.done) {
+      return; // already loading this query
     }
     fetchGen += 1;
     var gen = fetchGen;
     lastFetch = { key: plan.key, parts: [], plan: plan, done: false };
+    setRunBusy(true);
     setWarnings(plan.stubs.length ? ["No coordinates for " + plan.stubs.map(function (s) { return s.icao || s.sid; }).join(", ") + ", so they could not be auto-placed on the corridor. They will still be requested from the archive."] : []);
     setProgress("Requesting " + plan.windows.length + " year-window" + (plan.windows.length === 1 ? "" : "s") + " from the Iowa Environmental Mesonet…");
 
@@ -546,12 +554,9 @@
       if (err && err.aborted) return;
       setWarnings([err && err.message ? err.message : String(err)]);
       setProgress("");
+    }).then(function () {
+      if (gen === fetchGen) setRunBusy(false);
     });
-  }
-
-  function scheduleFetch() {
-    clearTimeout(fetchTimer);
-    fetchTimer = setTimeout(startFetch, 300);
   }
 
   function showHits(q) {
@@ -582,7 +587,6 @@
     $("add-station").value = "";
     $("search-hits").hidden = true;
     refreshStations();
-    scheduleFetch();
   }
 
   fillHourSelects();
@@ -592,7 +596,6 @@
   function onRouteChange(lockTz) {
     if (!lockTz) refreshStations._tzLocked = false;
     refreshStations();
-    scheduleFetch();
   }
   ["dep", "dest"].forEach(function (id) {
     $(id).addEventListener("input", function () {
@@ -604,9 +607,6 @@
   });
   ["corridor", "max-stations"].forEach(function (id) {
     $(id).addEventListener("change", function () { onRouteChange(true); });
-  });
-  ["date", "years", "radius"].forEach(function (id) {
-    $(id).addEventListener("change", scheduleFetch);
   });
   $("tz").addEventListener("change", function () {
     refreshStations._tzLocked = true;
@@ -624,14 +624,12 @@
     if (userRemoved.indexOf(sid) === -1) userRemoved.push(sid);
     userAdded = userAdded.filter(function (s) { return s.sid !== sid; });
     refreshStations();
-    scheduleFetch();
   });
 
   $("btn-reset-stations").addEventListener("click", function () {
     userRemoved = [];
     userAdded = [];
     refreshStations();
-    scheduleFetch();
   });
 
   var searchTimer = null;
@@ -659,8 +657,44 @@
 
   $("calc-form").addEventListener("submit", function (ev) {
     ev.preventDefault();
+    startFetch();
+  });
+  $("btn-run").addEventListener("click", function (ev) {
+    ev.preventDefault();
+    startFetch();
+  });
+
+  $("btn-clear").addEventListener("click", function () {
+    // Abort any in-flight download so it cannot refill the results.
+    fetchGen += 1;
+    lastFetch = null;
+    setRunBusy(false);
+
+    $("dep").value = "";
+    $("dest").value = "";
+    $("date").value = "";
+    $("add-station").value = "";
+    var hits = $("search-hits");
+    if (hits) { hits.hidden = true; hits.innerHTML = ""; }
+
+    userRemoved = [];
+    userAdded = [];
+    refreshStations._tzLocked = false;
+    refreshStations();
+
+    $("results-wrap").hidden = true;
+    $("out-day").innerHTML = '<span class="num">—</span> <span class="unit">%</span>';
+    $("out-sub").textContent = "";
+    $("stat-grid").innerHTML = "";
+    $("result-body").innerHTML = "";
+    $("fail-chart").innerHTML = "";
+    $("year-chart").innerHTML = "";
+    $("hour-chart").innerHTML = "";
+    var hero = $("hero");
+    if (hero) hero.removeAttribute("data-severity");
+    setWarnings([]);
+    setProgress("");
   });
 
   refreshStations();
-  scheduleFetch();
 })();

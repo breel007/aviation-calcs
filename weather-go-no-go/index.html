@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#080c16">
   <meta name="color-scheme" content="dark">
   <title>Route Weather Go / No-Go Calculator — Historical Ceiling, Visibility &amp; Convective Climatology</title>
-  <meta name="description" content="Free route weather climatology for pilots. Enter departure, destination, and personal minimums to see how often that week and time of day historically met your ceiling, visibility, wind, and weather limits at airports along the route. Built from archived METARs.">
+  <meta name="description" content="Free route weather climatology for pilots. Enter departure, destination, and personal minimums to see how often that week and time of day met your ceiling, visibility, wind, and weather limits over the last 5 years, at airports along the route. Built from archived METARs.">
   <meta name="keywords" content="route weather climatology, go no-go calculator, historical METAR probability, ceiling visibility climatology, VFR personal minimums, ASOS archive, flight planning weather odds">
   <meta name="author" content="Aviation Calcs">
   <meta name="robots" content="index, follow">
@@ -14,11 +14,11 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://aviatorcalcs.com/weather-go-no-go/">
   <meta property="og:title" content="Route Weather Go / No-Go — Historical Climatology">
-  <meta property="og:description" content="See how often a week and time of day historically met your ceiling, visibility, and weather minimums along a route, from archived METARs.">
+  <meta property="og:description" content="See how often a week and time of day met your ceiling, visibility, and weather minimums along a route over the last 5 years, from archived METARs.">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Route Weather Go / No-Go Calculator">
-  <meta name="twitter:description" content="Historical go / no-go odds from archived METARs at airports along your route.">
+  <meta name="twitter:description" content="Historical go / no-go odds from the last 5 years of archived METARs at airports along your route.">
   <meta name="application-name" content="Route Weather Go / No-Go Calculator">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -71,7 +71,7 @@
                     "name": "Where does the historical weather come from?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Routine (hourly) METARs are fetched in your browser from the Iowa Environmental Mesonet ASOS/AWOS archive at Iowa State University. Only the needed fields and the week window in each past year are requested, and responses are cached in the browser. Special observations (SPECIs) are omitted so bad weather is not over-sampled."
+                        "text": "Routine (hourly) METARs are fetched in your browser from the Iowa Environmental Mesonet ASOS/AWOS archive at Iowa State University. Only the needed fields and the week window in each of the last 5 years are requested, and responses are cached in the browser. Special observations (SPECIs) are omitted so bad weather is not over-sampled."
                     }
                 },
                 {
@@ -119,7 +119,7 @@
     <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
       <header class="panel-head">
         <h1 id="calc-title">Route Weather Go / No-Go</h1>
-        <p class="lede">See how often a week of the year and time of day historically met your personal minimums along a route. The tool pulls archived hourly METARs for the departure, destination, and ASOS/AWOS stations in a corridor along the great-circle, then reports go / no-go likelihoods — climatology, not a forecast.</p>
+        <p class="lede">See how often a week of the year and time of day historically met your personal minimums along a route, using the last 5 years of archived hourly METARs. The tool pulls observations for the departure, destination, and ASOS/AWOS stations in a corridor along the great-circle, then reports go / no-go likelihoods — climatology, not a forecast.</p>
       </header>
       <form id="calc-form" action="#" method="get" novalidate>
         <fieldset class="field-block">
@@ -138,21 +138,10 @@
         </fieldset>
 
         <fieldset class="field-block">
-          <legend>Week, time of day, and history</legend>
-          <div class="pair">
-            <div>
-              <label for="date" class="sublabel">Date (week of year)</label>
-              <input id="date" class="input" type="date" value="2026-06-15">
-            </div>
-            <div>
-              <label for="years" class="sublabel">Past years</label>
-              <select id="years" class="input select">
-                <option value="3">3 years</option>
-                <option value="5" selected>5 years (default)</option>
-                <option value="10">10 years</option>
-                <option value="15">15 years</option>
-              </select>
-            </div>
+          <legend>Week and time of day</legend>
+          <div>
+            <label for="date" class="sublabel">Date (week of year)</label>
+            <input id="date" class="input" type="date" value="2026-06-15">
           </div>
           <div class="pair">
             <div>
@@ -188,7 +177,7 @@
               </select>
             </div>
           </div>
-          <p class="hint">The end hour is exclusive: 07 to 10 means 07:00–09:59 local. Start and end equal means all day. An overnight window such as 22 to 06 is allowed. Times are applied in the zone you pick (defaulted from the departure airport), not each station’s own local clock, so a route that crosses a time zone stays on one timeline.</p>
+          <p class="hint">History is the last 5 years of that week of the year. The end hour is exclusive: 07 to 10 means 07:00–09:59 local. Start and end equal means all day. An overnight window such as 22 to 06 is allowed. Times are applied in the zone you pick (defaulted from the departure airport), not each station’s own local clock, so a route that crosses a time zone stays on one timeline.</p>
         </fieldset>
 
         <fieldset class="field-block">
@@ -278,6 +267,10 @@
           <p class="hint">Ceiling is the lowest broken, overcast, or vertical-visibility layer. Few and scattered do not make a ceiling. Thresholds are inclusive (a 3,000 ft ceiling meets a 3,000 ft minimum). The VFR / MVFR / IFR buttons are AIM flight-category starting points for personal minimums, not the legal VFR minima in 14 CFR 91.155.</p>
         </fieldset>
 
+        <div class="form-actions">
+          <button type="submit" class="btn btn-run" id="btn-run">Check historical go / no-go</button>
+          <button type="button" class="btn btn-ghost" id="btn-clear">Clear</button>
+        </div>
         <p class="progress" id="progress" role="status"></p>
       </form>
 
@@ -320,7 +313,7 @@
             <p class="hint">Built from every hour on the sampled days, averaged across selected stations. Your window is highlighted.</p>
             <div class="chart" id="hour-chart"></div>
           </div>
-          <p class="credit">Historical METARs from the <a href="https://mesonet.agron.iastate.edu/request/download.phtml" rel="noopener noreferrer">Iowa Environmental Mesonet</a> of Iowa State University. Requests run in your browser; only the week window in each year and the needed fields are downloaded, and responses are cached for this session. Routine hourly METARs only (no SPECIs).</p>
+          <p class="credit">Historical METARs from the <a href="https://mesonet.agron.iastate.edu/request/download.phtml" rel="noopener noreferrer">Iowa Environmental Mesonet</a> of Iowa State University. Requests run in your browser; only the week window in each year and the needed fields are downloaded, and responses are cached in your browser. Routine hourly METARs only (no SPECIs).</p>
         </section>
       </div>
 
@@ -343,7 +336,7 @@
       <p>Given a departure and destination, the page looks up each site in a compact U.S. ASOS/AWOS list (identifiers, coordinates, and time zones from the Iowa Environmental Mesonet state networks). It then finds other stations whose cross-track distance to the great-circle is at most the corridor width (25 NM by default) and whose along-track position sits between the endpoints. Those candidates are thinned to a capped, evenly spaced set — departure and destination first, then the largest remaining gaps along the route — so a 200 NM hop does not fire a request for every AWOS on the coast. You can remove any of them, add an alternate or a site the auto-picker skipped, and widen or narrow the corridor. A route go requires <strong>every selected station</strong> to meet the minimums in the same hour, so the table also shows each station alone — the lowest one is the historically weakest segment. Auto-picked sites with a short or patchy archive (for example a station that only came online in the last year or two) are still listed, but they are left out of that combined route score so they do not erase earlier years of data.</p>
 
       <h2>How a go hour and a go day are counted</h2>
-      <p>For the chosen month and day, the tool takes a window of ±3 days (a seven-day week; you can shorten or lengthen it) in each of the past five years by default, or 3, 10, or 15 years if you ask. Times are converted from the archive’s UTC stamps into one time zone — the departure zone unless you change it — and only observations in your local hour window are scored. The end hour is exclusive (07–10 is 07:00–09:59). A single observation is a go when:</p>
+      <p>For the chosen month and day, the tool takes a window of ±3 days (a seven-day week; you can shorten or lengthen it) in each of the last 5 years. Times are converted from the archive’s UTC stamps into one time zone — the departure zone unless you change it — and only observations in your local hour window are scored. The end hour is exclusive (07–10 is 07:00–09:59). A single observation is a go when:</p>
       <ul>
         <li>The ceiling is at least your minimum, or there is no ceiling (clear, few, or scattered only). Ceiling is the lowest <strong>BKN, OVC, or VV</strong> layer, as in AIM Chapter 7. Heights come from the archive in feet AGL.</li>
         <li>Visibility is at least your minimum, in statute miles.</li>
@@ -353,7 +346,7 @@
       <p>Observations that are missing a field you are actually checking (no sky condition, or no visibility) are dropped from the denominator rather than scored as a no-go. A <strong>route-go hour</strong> is one in which every selected station has an evaluable observation and all of them are go. The headline figure is the share of historical days in the window that had <em>at least one</em> route-go hour — “a go window existed that morning.” The page also reports the stricter share of hours that were simultaneously go, and the share of days on which every hour in the window was a go (“a solid morning”).</p>
 
       <h2>The archive, sampling, and request limits</h2>
-      <p>Data are fetched in your browser from the Iowa Environmental Mesonet ASOS/AWOS download service (<code>mesonet.agron.iastate.edu</code>), which allows cross-origin requests. The URL asks only for sky cover and height, visibility, weather codes, and wind, for the week window in each year (padded by one UTC day so local midnights are not clipped), and only for routine METARs (<code>report_type=3</code>). Special observations cluster in deteriorating weather and would bias the climatology toward no-go if they were included. Several stations are combined in one request per year. The Iowa Environmental Mesonet allows about one request every two seconds from a given IP, so the page spaces year-windows out and shows results as each year arrives. Responses are cached in <code>localStorage</code> so a repeat visit with the same stations and dates is instant. Results update automatically when you change the route, dates, or minimums. Please do not script heavy downloads against IEM from this idea — the page is intentionally light. IEM station identifiers for the lower 48 are usually the three-letter id (KSBA is <code>SBA</code> in the archive); Alaska, Hawaii, and many non-CONUS sites use the four-letter ICAO.</p>
+      <p>Data are fetched in your browser from the Iowa Environmental Mesonet ASOS/AWOS download service (<code>mesonet.agron.iastate.edu</code>), which allows cross-origin requests. The URL asks only for sky cover and height, visibility, weather codes, and wind, for the week window in each year (padded by one UTC day so local midnights are not clipped), and only for routine METARs (<code>report_type=3</code>). Special observations cluster in deteriorating weather and would bias the climatology toward no-go if they were included. Several stations are combined in one request per year. The Iowa Environmental Mesonet allows about one request every two seconds from a given IP, so the page spaces year-windows out and shows results as each year arrives. Responses are cached in <code>localStorage</code> so a repeat check with the same stations and dates is instant. Press “Check historical go / no-go” to load the archive. After the data is in, changing minimums or the time-of-day window updates the results immediately without another download. Please do not script heavy downloads against IEM from this idea — the page is intentionally light. IEM station identifiers for the lower 48 are usually the three-letter id (KSBA is <code>SBA</code> in the archive); Alaska, Hawaii, and many non-CONUS sites use the four-letter ICAO.</p>
 
       <h2>VFR minimums and flight category</h2>
       <p>The VFR preset (3,000 ft and 5 SM), MVFR-or-better preset (1,000 and 3), and IFR personal preset (500 and 1, plus freezing precipitation and severe weather excluded) follow the familiar AIM flight-category breakpoints as a starting point for personal minimums. Comparisons are inclusive. They are <strong>not</strong> a restatement of 14 CFR 91.155, whose basic VFR visibility and cloud-clearance values depend on airspace class and altitude and are sometimes lower than “flight category VFR,” sometimes not. Use the legal rule that applies to the airspace, then apply your own tighter minimums here if you wish.</p>
@@ -374,7 +367,7 @@
       <h3>How is a route go decided?</h3>
       <p>All selected stations must have an evaluable routine METAR that meets every limit in that local hour. The headline day percentage is the share of historical sessions with at least one such hour. Per-station columns show which airport is the usual weak point.</p>
       <h3>Where does the historical weather come from?</h3>
-      <p>The Iowa Environmental Mesonet ASOS/AWOS archive, requested from your browser, routine hourly METARs only, with light, cached year-window downloads that start automatically.</p>
+      <p>The Iowa Environmental Mesonet ASOS/AWOS archive, requested from your browser, routine hourly METARs only, with light, cached 5-year week-window downloads.</p>
       <h3>How is ceiling defined, and how do the VFR presets relate to 14 CFR 91.155?</h3>
       <p>Ceiling is the lowest BKN, OVC, or VV layer (AIM). The presets are AIM-style flight-category starting points for personal minimums, not a substitute for 91.155.</p>
     </article>

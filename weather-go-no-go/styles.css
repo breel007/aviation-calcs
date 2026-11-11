@@ -107,6 +107,14 @@
   cursor: pointer;
 }
 .btn-tiny:hover { color: var(--danger); border-color: var(--danger); }
+.btn-run {
+  background: var(--gold-soft);
+  border: 1px solid rgba(232, 184, 74, 0.45);
+  color: var(--gold);
+  font-weight: 600;
+}
+.btn-run:hover { background: rgba(232, 184, 74, 0.22); }
+.btn-run:disabled { opacity: 0.55; cursor: wait; }
 .progress {
   margin: 0.7rem 0 0;
   color: var(--muted);
