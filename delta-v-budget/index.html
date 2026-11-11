@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Delta-v Budget Calculator — Mission Total, Mass Ratio, Plane Change</title>
+  <meta name="description" content="Free mission delta-v budget calculator for aerospace engineering. Sum named Δv items (losses, insertion, plane change, reserve), convert the total to an ideal rocket-equation mass ratio, and compute a pure plane-change Δv = 2 V sin(θ/2).">
+  <meta name="keywords" content="delta-v budget calculator, mission dv budget, mass ratio isp, plane change delta-v, 2 V sin theta/2, gravity losses drag losses">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/delta-v-budget/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/delta-v-budget/">
+  <meta property="og:title" content="Delta-v Budget Calculator — Sum, Mass Ratio, Plane Change">
+  <meta property="og:description" content="Add mission Δv items, get a total and an ideal mass ratio from Isp, plus a pure plane-change helper.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Delta-v Budget Calculator">
+  <meta name="twitter:description" content="Sum a mission Δv budget and invert it to a rocket-equation mass ratio.">
+  <meta name="application-name" content="Delta-v Budget Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Delta-v Budget Calculator",
+            "url": "https://aviatorcalcs.com/delta-v-budget/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free mission delta-v budget calculator for aerospace engineering. Sum named Δv items (losses, insertion, plane change, reserve), convert the total to an ideal rocket-equation mass ratio, and compute a pure plane-change Δv = 2 V sin(θ/2)."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "What is a 30° plane change at 7.67 km/s?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "About 3.970 km/s. The impulsive formula is Δv = 2 V sin(θ/2) = 2 × 7.67 × sin(15°) km/s. That is a pure plane change at that speed, not a combined Hohmann-plus-plane-change burn."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What mass ratio does 9.5 km/s at 300 s Isp require?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "About 25.3, in the ideal rocket equation with ve = Isp × 9.80665 m/s². The matching propellant fraction is 1 − 1/25.3 ≈ 0.96, before structure or residuals."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Can I paste a Hohmann Δv into this budget?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes. Compute the two impulses on the Hohmann transfer page, then enter them as named items here, along with losses, a plane change, and a reserve, to get a mission total and an ideal mass ratio."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Delta-v budget</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../hohmann-transfer/">Hohmann transfer</a>
+        <a href="../rocket-equation/">Rocket equation</a>
+        <a href="../specific-impulse/">Specific impulse</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Delta-v Budget Calculator</h1>
+        <p class="lede">A mission Δv budget is the sum of the velocity changes you have to provide: gravity and drag losses, steering, insertion or circularization, plane changes, mid-course, landing, and a reserve, among others. Enter named items in m/s, km/s, or ft/s. The page totals them, optionally converts the total to an ideal Tsiolkovsky mass ratio from a specific impulse, and can compute a pure impulsive plane-change Δv = 2 V sin(θ/2). It does not fly a trajectory — for a two-impulse coplanar transfer, use the Hohmann calculator.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div id="items"></div>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-add">Add an item</button>
+<button type="button" class="btn btn-ghost" id="btn-template">Load a typical template</button>
+<button type="button" class="btn btn-ghost" id="btn-clear">Clear items</button></div>
+<div class="field-block"><div class="field-label-row"><label for="isp">Specific impulse (optional)</label><span class="sublabel">seconds, for an ideal mass ratio</span></div>
+<input id="isp" class="input" type="number" inputmode="decimal" min="0" step="any" value="" placeholder="e.g. 300" autocomplete="off">
+<p class="hint">Uses ve = Isp × 9.80665 m/s², the same convention as the rocket-equation and specific-impulse calculators. m0/mf = exp(Δv / ve).</p></div>
+<div class="card-block"><h3>Pure plane-change helper</h3>
+<div class="pair"><div class="field-block" style="margin:0"><div class="field-label-row"><label for="pcSpeed">Inertial speed V</label>
+<div class="seg wrap-seg" role="group" aria-label="speed unit"><button type="button" class="seg-btn is-active" data-unit-group="psu" data-unit="km/s" aria-pressed="true">km/s</button><button type="button" class="seg-btn" data-unit-group="psu" data-unit="m/s" aria-pressed="false">m/s</button></div></div>
+<input id="pcSpeed" class="input" type="number" inputmode="decimal" min="0" step="any" value="7.67" autocomplete="off"></div>
+<div class="field-block" style="margin:0"><div class="field-label-row"><label for="pcAngle">Plane-change angle θ</label><span class="sublabel">degrees</span></div>
+<input id="pcAngle" class="input" type="number" inputmode="decimal" step="any" value="30" autocomplete="off"></div></div>
+<p class="hint">Δv = 2 V sin(θ/2) for a single impulse that only changes inclination (or heading) at speed V. A combined Hohmann-plus-plane-change burn is smaller and is not computed here.</p>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-add-pc">Add this plane change to the budget</button></div></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Total Δv <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>This is a planning sum of the Δv items you enter, plus the ideal rocket equation and a pure plane-change identity. It does not include a trajectory, finite-burn gravity or steering models, combined maneuvers, or engine or structural constraints. Use it as a budget worksheet, and defer to a mission design or the Hohmann and rocket-equation calculators for individual maneuvers.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>Adding up a budget</h2>
+      <p>Unlike a single Hohmann transfer or a single Tsiolkovsky burn, a mission Δv budget is a list. Typical lines are gravity loss and drag loss during ascent, steering or residuals, orbital insertion or circularization, a plane change, mid-course corrections, a landing or braking burn, and a reserve. This page totals whatever you name. A low-Earth-orbit plus 30° plane-change example is in the loaded template: the plane-change term alone at 7.67 km/s is about 3.97 km/s — often larger than the Hohmann legs — which is why combined burns are used in practice.</p>
+      <p>The total is a scalar sum of non-negative items. It is not a vector, and it does not know whether two burns could have been combined. For a two-impulse coplanar transfer, use the <a href="../hohmann-transfer/">Hohmann transfer calculator</a> and paste those Δv values in as lines.</p>
+      <h2>Mass ratio and plane change</h2>
+      <p>If you enter a specific impulse, the ideal (massless-losses) rocket equation converts the budget to a mass ratio, with the same g0 = 9.80665 m/s² used on the <a href="../rocket-equation/">rocket-equation</a> and <a href="../specific-impulse/">specific-impulse</a> pages:</p>
+      <p><code>m0/mf = exp( Δv / (Isp × g0) )</code></p>
+      <p>A 9.5 km/s budget at 300 s Isp is a mass ratio of about 25.3, or a propellant fraction of about 0.96 — before any structural mass. That is a planning bound, not a vehicle design.</p>
+      <p>A pure impulsive plane change at speed V through an angle θ costs</p>
+      <p><code>Δv = 2 V sin(θ/2)</code></p>
+      <p>Doing the plane change at a slower apogee, or combining it with a Hohmann burn, reduces that cost; those combined maneuvers are not modelled here.</p>
+      <h2>Sources</h2>
+      <p>Vallado, Fundamentals of Astrodynamics and Applications (impulsive Δv, plane-change formula); Curtis, Orbital Mechanics for Engineering Students; Sutton and Biblarz, Rocket Propulsion Elements (Tsiolkovsky mass ratio). For individual burns, see this site's <a href="../hohmann-transfer/">Hohmann transfer</a> and <a href="../rocket-equation/">rocket equation</a> calculators.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>What is a 30° plane change at 7.67 km/s?</h3>
+      <p>About 3.970 km/s. The impulsive formula is Δv = 2 V sin(θ/2) = 2 × 7.67 × sin(15°) km/s. That is a pure plane change at that speed, not a combined Hohmann-plus-plane-change burn.</p>
+      <h3>What mass ratio does 9.5 km/s at 300 s Isp require?</h3>
+      <p>About 25.3, in the ideal rocket equation with ve = Isp × 9.80665 m/s². The matching propellant fraction is 1 − 1/25.3 ≈ 0.96, before structure or residuals.</p>
+      <h3>Can I paste a Hohmann Δv into this budget?</h3>
+      <p>Yes. Compute the two impulses on the Hohmann transfer page, then enter them as named items here, along with losses, a plane change, and a reserve, to get a mission total and an ideal mass ratio.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Delta-v budget calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

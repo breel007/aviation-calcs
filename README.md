@@ -73,6 +73,7 @@ The tools are grouped in two sides. Some calculators appear in both.
 - [Aircraft rental cost](rental-cost/) — Hobbs vs tach, wet vs dry, and a 61.113 pro-rata split.
 - [Aviation fuel cost](fuel-cost/) — cost per hour and per trip from fuel flow and price, or from gallons, for 100LL and Jet-A, with optional oil.
 - [Aircraft loan](aircraft-loan/) — payment, amortization, and affordability.
+- [Logbook time totals](logbook-time/) — add flights in H:MM or decimal hours, convert to aviation tenths, and subtotal PIC, night, XC, instrument time, and landings.
 - [FAA pilot currency](pilot-currency/) — 61.57 landings and IFR, 61.56 flight review, and 61.23 medical dates.
 - [Oxygen requirements](oxygen-requirements/) — 14 CFR 91.211, 135.89, and 121.329 at a cabin altitude and duration, plus FAA / CAMI time of useful consciousness.
 
@@ -90,6 +91,7 @@ The tools are grouped in two sides. Some calculators appear in both.
 - [Mach and dynamic pressure](mach-dynamic-pressure/) — Mach, q = ½ρV², speed of sound, and equivalent airspeed.
 - [Reynolds number](reynolds-number/) — Re = ρVL/μ with ISA air properties or values you enter.
 - [Lift and drag coefficients](lift-drag-coefficient/) — CL, CD, and L/D from force, speed, density, and reference area.
+- [Terminal velocity and ballistic re-entry](terminal-velocity/) — ballistic coefficient, ISA terminal speed, and the Allen–Eggers peak-deceleration pulse (also listed under Space).
 - [Wing loading and aspect ratio](wing-loading-aspect-ratio/) — W/S, AR, tapered-wing chords and MAC, and a stall-speed estimate from CLmax.
 - [Drag polar and L/D max](drag-polar/) — CD = CD0 + k CL², (L/D)max, and the classic propeller and jet range and endurance lift coefficients.
 - [Thrust and power required](thrust-power-required/) — drag, L/D, thrust required, and power required in level flight (also listed under Performance and Propulsion).
@@ -108,6 +110,7 @@ The tools are grouped in two sides. Some calculators appear in both.
 
 - [Specific impulse](specific-impulse/) — Isp, effective exhaust velocity, thrust, and mass flow, with an optional ideal Δv (also listed under Space).
 - [Rocket equation](rocket-equation/) — Tsiolkovsky Δv, Isp, mass ratio, and multi-stage burns (also listed under Space).
+- [Delta-v budget](delta-v-budget/) — sum mission Δv items, an ideal mass ratio from Isp, and a pure plane-change helper (also listed under Space).
 - [Breguet range and endurance](breguet-range-endurance/) — jet and propeller range and endurance (also listed under Performance).
 - [Thrust and power required](thrust-power-required/) — T_req, P_req, and optional propeller shaft power (also listed under Performance).
 - [Propeller advance ratio and tip Mach](propeller-advance-ratio/) — J = V/(nD), rotational and helical tip speed, and tip Mach.
@@ -119,8 +122,10 @@ The tools are grouped in two sides. Some calculators appear in both.
 - [Orbital velocity and period](orbital-velocity-period/) — circular speed, period, escape speed, and vis-viva speeds on an ellipse.
 - [Satellite footprint and FOV](satellite-fov/) — geometric horizon, swath for a nadir half-angle, and circular period from altitude.
 - [Hohmann transfer](hohmann-transfer/) — two-impulse Δv and time of flight between coplanar circular orbits, including LEO to GEO.
+- [Delta-v budget](delta-v-budget/) — sum named mission Δv items, convert the total to an ideal mass ratio, and compute a pure plane-change Δv (also listed under Propulsion).
 - [Rocket equation](rocket-equation/) — ideal Δv from Isp and mass ratio (also listed under Propulsion).
 - [Specific impulse](specific-impulse/) — Isp, exhaust velocity, thrust, and mass flow (also listed under Propulsion).
+- [Terminal velocity and ballistic re-entry](terminal-velocity/) — terminal speed from β = m/(Cd A), plus the Allen–Eggers zero-lift peak deceleration (also listed under Aerodynamics).
 
 ## Run locally
 

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <meta name="color-scheme" content="dark">
+  <title>Terminal Velocity and Ballistic Re-Entry Calculator</title>
+  <meta name="description" content="Free terminal velocity and simple ballistic re-entry calculator. Compute ballistic coefficient β = m/(Cd A) and terminal speed from ISA or entered density, plus the Allen–Eggers peak deceleration, altitude, and speed for a zero-lift atmospheric entry.">
+  <meta name="keywords" content="terminal velocity calculator, ballistic coefficient, Allen Eggers re-entry, peak deceleration, vt sqrt(2mg/rho Cd A), ballistic entry">
+  <meta name="author" content="Aviation Calcs">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://aviatorcalcs.com/terminal-velocity/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aviatorcalcs.com/terminal-velocity/">
+  <meta property="og:title" content="Terminal Velocity and Ballistic Re-Entry Calculator">
+  <meta property="og:description" content="Terminal speed from β = m/(Cd A) and ISA density, plus the Allen–Eggers peak-deceleration pulse for a zero-lift entry.">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Terminal Velocity and Ballistic Re-Entry Calculator">
+  <meta name="twitter:description" content="Ballistic coefficient, terminal velocity, and a simple Allen–Eggers re-entry pulse.">
+  <meta name="application-name" content="Terminal Velocity and Ballistic Re-Entry Calculator">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/site.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "WebApplication",
+                "SoftwareApplication"
+            ],
+            "name": "Terminal Velocity and Ballistic Re-Entry Calculator",
+            "url": "https://aviatorcalcs.com/terminal-velocity/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "description": "Free terminal velocity and simple ballistic re-entry calculator. Compute ballistic coefficient β = m/(Cd A) and terminal speed from ISA or entered density, plus the Allen–Eggers peak deceleration, altitude, and speed for a zero-lift atmospheric entry."
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "What is the sea-level terminal velocity of an 80 kg body with Cd = 1 and A = 0.5 m²?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "About 50.6 m/s, or roughly 113 mph. β = m/(Cd A) = 160 kg/m², and vt = √(2βg/ρ) with ρ = 1.225 kg/m³ and g = 9.80665 m/s²."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Why does peak re-entry deceleration not depend on ballistic coefficient?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "In the Allen–Eggers exponential-atmosphere, zero-lift, drag-dominated model, a_max = V_E² sin γ / (2 e H). β cancels at the maximum. β does set the altitude (and density) at which that peak occurs: ρ_peak = β sin γ / H."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Is this a heating or skip-entry calculator?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. It reports terminal velocity and the simple Allen–Eggers deceleration pulse only. It does not compute heat load, stagnation temperature, lift modulation, skip entry, or a rotating-Earth trajectory."
+                    }
+                }
+            ]
+        }
+    ]
+}
+  </script>
+  <meta name="google-adsense-account" content="ca-pub-4553483931481707">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4553483931481707" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="../">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.45"/>
+          <path d="M16 4.5v2.2M16 25.3v2.2M4.5 16h2.2M25.3 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M16 16 L20.2 9.8" stroke="#6fe3d0" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="1.7" fill="#e8b84a"/>
+        </svg>
+        <div>
+          <p class="brand-kicker">Aviation Calcs</p>
+          <p class="brand-name">Terminal velocity / re-entry</p>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="../">All tools</a>
+        <a href="../lift-drag-coefficient/">Lift / drag coefficient</a>
+        <a href="../standard-atmosphere/">Standard atmosphere</a>
+        <a href="../orbital-velocity-period/">Orbital velocity</a>
+        <a href="../satellite-fov/">Satellite FOV</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
+      <header class="panel-head">
+        <h1 id="calc-title">Terminal Velocity and Ballistic Re-Entry Calculator</h1>
+        <p class="lede">Terminal velocity is the speed at which drag equals weight: vt = √(2βg/ρ), with ballistic coefficient β = m/(Cd A). Enter mass, drag coefficient, and reference area, and optionally an altitude (U.S. Standard Atmosphere 1976 density) or a density of your own. If you also enter an entry speed and a flight-path angle, the page reports the Allen–Eggers zero-lift peak deceleration, the altitude of that peak, and the speed there, using an exponential atmosphere with scale height 7,162 m. The model is a simple planning estimate, not a trajectory or heating analysis.</p>
+      </header>
+      <form id="calc-form" action="#" method="get" novalidate>
+<div class="pair"><div class="field-block"><div class="field-label-row"><label for="mass">Mass</label>
+<div class="seg wrap-seg" role="group" aria-label="mass unit"><button type="button" class="seg-btn is-active" data-unit-group="mu" data-unit="kg" aria-pressed="true">kg</button><button type="button" class="seg-btn" data-unit-group="mu" data-unit="lb" aria-pressed="false">lb</button></div></div>
+<input id="mass" class="input" type="number" inputmode="decimal" min="0" step="any" value="80" autocomplete="off"></div>
+<div class="field-block"><div class="field-label-row"><label for="cd">Drag coefficient Cd</label></div>
+<input id="cd" class="input" type="number" inputmode="decimal" min="0" step="any" value="1" autocomplete="off"></div></div>
+<div class="field-block"><div class="field-label-row"><label for="area">Reference area</label>
+<div class="seg wrap-seg" role="group" aria-label="area unit"><button type="button" class="seg-btn is-active" data-unit-group="au" data-unit="m2" aria-pressed="true">m²</button><button type="button" class="seg-btn" data-unit-group="au" data-unit="ft2" aria-pressed="false">ft²</button></div></div>
+<input id="area" class="input" type="number" inputmode="decimal" min="0" step="any" value="0.5" autocomplete="off"></div>
+<div class="field-block"><div class="field-label-row"><span class="sublabel">Density from</span>
+<div class="seg wrap-seg" role="group" aria-label="density mode"><button type="button" class="seg-btn is-active" data-unit-group="dm" data-unit="alt" aria-pressed="true">Altitude (ISA)</button><button type="button" class="seg-btn" data-unit-group="dm" data-unit="rho" aria-pressed="false">Entered density</button></div></div></div>
+<div class="field-block" id="block-alt"><div class="field-label-row"><label for="altitude">Geometric altitude</label>
+<div class="seg wrap-seg" role="group" aria-label="altitude unit"><button type="button" class="seg-btn is-active" data-unit-group="hu" data-unit="m" aria-pressed="true">m</button><button type="button" class="seg-btn" data-unit-group="hu" data-unit="ft" aria-pressed="false">ft</button><button type="button" class="seg-btn" data-unit-group="hu" data-unit="km" aria-pressed="false">km</button></div></div>
+<input id="altitude" class="input" type="number" inputmode="decimal" min="0" step="any" value="0" autocomplete="off">
+<p class="hint">Leave at 0 for sea-level ISA density, 1.225 kg/m³, from the same U.S. Standard Atmosphere 1976 model as the standard-atmosphere calculator.</p></div>
+<div class="field-block" id="block-rho" hidden><div class="field-label-row"><label for="density">Air density</label><span class="sublabel">kg/m³</span></div>
+<input id="density" class="input" type="number" inputmode="decimal" min="0" step="any" value="1.225" autocomplete="off"></div>
+<div class="pair"><div class="field-block"><div class="field-label-row"><label for="entrySpeed">Entry speed (optional)</label>
+<div class="seg wrap-seg" role="group" aria-label="entry speed unit"><button type="button" class="seg-btn is-active" data-unit-group="vu" data-unit="km/s" aria-pressed="true">km/s</button><button type="button" class="seg-btn" data-unit-group="vu" data-unit="m/s" aria-pressed="false">m/s</button><button type="button" class="seg-btn" data-unit-group="vu" data-unit="kt" aria-pressed="false">kt</button></div></div>
+<input id="entrySpeed" class="input" type="number" inputmode="decimal" min="0" step="any" value="" placeholder="e.g. 7.8" autocomplete="off"></div>
+<div class="field-block"><div class="field-label-row"><label for="gamma">Flight-path angle γ</label><span class="sublabel">degrees below horizontal</span></div>
+<input id="gamma" class="input" type="number" inputmode="decimal" min="0" max="90" step="any" value="5" autocomplete="off"></div></div>
+<div class="form-actions"><button type="button" class="btn btn-ghost" id="btn-ex1">Load 80 kg, 0.5 m², sea level</button>
+<button type="button" class="btn btn-ghost" id="btn-ex2">Load that body at 7.8 km/s, 5°</button></div>
+      </form>
+      <div id="warnings" class="warnings" hidden role="status"></div>
+      <section class="results" aria-live="polite" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="visually-hidden">Results</h2>
+        <div class="hero" id="hero">
+          <p class="hero-label">Terminal velocity <span class="hero-tag" id="hero-tag"></span></p>
+          <p class="hero-value" id="out-hero"><span class="num">—</span> <span class="unit" id="out-unit"></span></p>
+          <p class="hero-sub" id="out-sub"></p>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div id="extra-results"></div>
+      </section>
+      <aside class="disclaimer" role="note">
+        <h2>Disclaimer</h2>
+        <p>Terminal velocity assumes a constant Cd, a uniform density, and no lift or thrust — drag equals weight. The re-entry figures are the Allen–Eggers zero-lift, constant-γ, drag-dominated model in a simple exponential atmosphere (H = 7,162 m, ρ0 = 1.225 kg/m³). They do not include lift, gravity in the deceleration equation, a rotating or oblate Earth, ablation, or heating, and they are not a skip-entry or guided-re-entry analysis. This is a planning estimate, not a trajectory tool.</p>
+      </aside>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placeholder">
+      <span class="ad-label">Advertisement</span>
+      <div class="ad-placeholder" id="ad-slot"><span>Ad slot — 728×90 desktop / 320×100 mobile</span></div>
+    </div>
+
+    <article class="panel explainer" id="about-calc">
+      <h2>Ballistic coefficient and terminal speed</h2>
+      <p>The ballistic coefficient β = m / (Cd A) is the mass per unit of drag area. Heavier, slimmer, or lower-drag bodies have a larger β and fall faster through a given density. When drag equals weight, the terminal speed is</p>
+      <p><code>vt = √( 2 β g / ρ )</code></p>
+      <p>with g = 9.80665 m/s². An 80 kg body with Cd = 1 and a 0.5 m² reference area has β = 160 kg/m² and a sea-level terminal speed of about 50.6 m/s (roughly 113 mph) in ISA density 1.225 kg/m³. At altitude the same body sees a lower density from the <a href="../standard-atmosphere/">U.S. Standard Atmosphere 1976</a> model used on this site, and vt rises. Cd is not really constant from a belly-to-earth parachute through hypersonic entry; treat it as the value you intend for the regime you are asking about. For the definition of Cd, see the <a href="../lift-drag-coefficient/">lift and drag coefficient calculator</a>.</p>
+      <h2>Allen–Eggers ballistic entry</h2>
+      <p>For a zero-lift entry at speed V<sub>E</sub> and a constant flight-path angle γ below the horizon, in an exponential atmosphere ρ = ρ0 e<sup>−h/H</sup>, with drag much larger than weight during the pulse, Allen and Eggers (NACA Report 1381, 1958) give</p>
+      <p><code>V = V<sub>E</sub> exp( − ρ H / (2 β sin γ) )</code></p>
+      <p>The peak deceleration is independent of β,</p>
+      <p><code>a<sub>max</sub> = V<sub>E</sub>² sin γ / (2 e H)</code></p>
+      <p>and occurs at ρ = β sin γ / H, where the speed has fallen to V<sub>E</sub> / √e. This page uses H = 7,162 m (23,500 ft) and ρ0 = 1.225 kg/m³. A 7.8 km/s entry at 5° then has a peak of about 13.9 g; the altitude of that peak does depend on β (higher β, deeper peak). If β sin γ / H is greater than ρ0, the formal peak would lie below the surface and the model is not applicable — the page flags that. Gravity is omitted from the deceleration equation, lift is zero, and heating is not computed.</p>
+      <h2>Sources</h2>
+      <p>U.S. Standard Atmosphere 1976 (NASA-TM-X-74335) for density; Allen and Eggers, NACA Report 1381 (1958); Anderson, Hypersonic and High-Temperature Gas Dynamics; Regan, Dynamics of Atmospheric Re-Entry. For circular and entry-order-of-magnitude orbital speeds, see <a href="../orbital-velocity-period/">orbital velocity and period</a>.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>What is the sea-level terminal velocity of an 80 kg body with Cd = 1 and A = 0.5 m²?</h3>
+      <p>About 50.6 m/s, or roughly 113 mph. β = m/(Cd A) = 160 kg/m², and vt = √(2βg/ρ) with ρ = 1.225 kg/m³ and g = 9.80665 m/s².</p>
+      <h3>Why does peak re-entry deceleration not depend on ballistic coefficient?</h3>
+      <p>In the Allen–Eggers exponential-atmosphere, zero-lift, drag-dominated model, a_max = V_E² sin γ / (2 e H). β cancels at the maximum. β does set the altitude (and density) at which that peak occurs: ρ_peak = β sin γ / H.</p>
+      <h3>Is this a heating or skip-entry calculator?</h3>
+      <p>No. It reports terminal velocity and the simple Allen–Eggers deceleration pulse only. It does not compute heat load, stagnation temperature, lift modulation, skip entry, or a rotating-Earth trajectory.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Aviation Calcs — Terminal velocity and ballistic re-entry calculator. All math runs locally in your browser; nothing is uploaded.</p>
+      <p class="footer-fine">Not a certified aviation or engineering tool. Always defer to the POH/AFM, official publications, and your own judgment.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+  <noscript><p class="noscript">This calculator needs JavaScript. Enable it, or use the formulas in the explainer.</p></noscript>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
