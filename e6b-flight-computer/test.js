@@ -299,5 +299,79 @@ FS.writeOutputs(ocDoc, "offcourse", E6B.solveOffCourse({ distanceFlown: 30, dist
 isTrue(ocDoc.els["oc-deg"].value === "4", "Solve writes 4° back");
 isTrue(Object.keys(FS.outputValues("tsd", { error: "x" })).length === 0, "an error result writes nothing");
 
+console.log("\nCase 14  Pinch zoom, pan, reset, and drag-vs-pinch");
+var Zm = require("./zoom.js");
+var zz = Zm.createZoom({ width: 400, height: 400 });
+nearly(zz.get().scale, 1, 0, "starts at 1×");
+zz.zoomTo(10, 200, 200);
+nearly(zz.get().scale, 4, 0, "zoom clamps to the 4× maximum");
+zz.zoomTo(0.2, 200, 200);
+nearly(zz.get().scale, 1, 0, "zoom clamps to the 1× minimum");
+nearly(zz.get().tx, 0, 0, "at 1× the view is not offset (x)");
+nearly(zz.get().ty, 0, 0, "at 1× the view is not offset (y)");
+zz.zoomTo(2, 100, 300);
+var c = zz.toContent(100, 300);
+nearly(c.x, 100, 1e-9, "zooming keeps the pinch point fixed (x)");
+nearly(c.y, 300, 1e-9, "zooming keeps the pinch point fixed (y)");
+zz.panBy(5000, -5000);
+nearly(zz.get().tx, 0, 1e-9, "pan clamps at the left edge (no empty gutter)");
+nearly(zz.get().ty, -400, 1e-9, "pan clamps at the bottom edge (400 × (1 − 2))");
+zz.reset();
+isTrue(zz.get().scale === 1 && zz.get().tx === 0 && zz.get().ty === 0, "reset returns to 1× with no offset");
+isTrue(zz.cssTransform() === "translate(0.00px, 0.00px) scale(1.0000)", "1× CSS transform is identity");
+
+function gestureRig(rotatable) {
+  var log = { start: 0, move: 0, end: [], z: Zm.createZoom({ width: 400, height: 400 }) };
+  log.g = Zm.createGestures(log.z, {
+    canRotate: function () { return rotatable; },
+    onRotateStart: function () { log.start += 1; },
+    onRotateMove: function () { log.move += 1; },
+    onRotateEnd: function (info) { log.end.push(info.cancelled); }
+  });
+  return log;
+}
+var g1 = gestureRig(true);
+g1.g.down({ id: 1, x: 100, y: 100, t: 0 });
+g1.g.move({ id: 1, x: 140, y: 120, t: 40 });
+g1.g.move({ id: 1, x: 180, y: 160, t: 80 });
+g1.g.up({ id: 1, x: 180, y: 160, t: 120 });
+isTrue(g1.start === 1 && g1.move === 2, "one-finger drag still rotates the disk (start + 2 moves)");
+isTrue(g1.end.length === 1 && g1.end[0] === false, "one-finger drag ends the rotation normally");
+nearly(g1.z.get().scale, 1, 0, "a one-finger drag does not zoom");
+
+var g2 = gestureRig(true);
+g2.g.down({ id: 1, x: 150, y: 200, t: 0 });
+g2.g.move({ id: 1, x: 152, y: 200, t: 10 });
+var movesBefore = g2.move;
+g2.g.down({ id: 2, x: 250, y: 200, t: 20 });
+isTrue(g2.g.mode() === "pinch", "a second finger switches to pinch");
+isTrue(g2.end.length === 1 && g2.end[0] === true, "the second finger cancels the rotation");
+g2.g.move({ id: 1, x: 100, y: 200, t: 40 });
+g2.g.move({ id: 2, x: 300, y: 200, t: 40 });
+isTrue(g2.move === movesBefore, "two-finger movement does not rotate the disk");
+nearly(g2.z.get().scale, 200 / 98, 1e-9, "spreading two fingers from 98 px to 200 px zooms by 200/98");
+g2.g.up({ id: 2, x: 300, y: 200, t: 60 });
+isTrue(g2.g.mode() === "pan", "lifting one finger of a zoomed pinch pans, not rotates");
+var tx0 = g2.z.get().tx;
+g2.g.move({ id: 1, x: 120, y: 200, t: 80 });
+nearly(g2.z.get().tx - tx0, 20, 1e-9, "the remaining finger pans the zoomed view");
+isTrue(g2.move === movesBefore, "and still does not rotate");
+g2.g.up({ id: 1, x: 120, y: 200, t: 100 });
+
+var g3 = gestureRig(false);
+g3.z.zoomTo(3, 200, 200);
+g3.g.down({ id: 7, x: 50, y: 50, t: 0 });
+isTrue(g3.g.mode() === "pan", "zoomed in, one finger off the disk pans");
+g3.g.up({ id: 7, x: 50, y: 50, t: 0 });
+g3.g.down({ id: 7, x: 210, y: 210, t: 1000 });
+g3.g.up({ id: 7, x: 210, y: 210, t: 1080 });
+g3.g.down({ id: 7, x: 212, y: 211, t: 1200 });
+var dt = g3.g.up({ id: 7, x: 212, y: 211, t: 1260 });
+isTrue(dt === "doubletap" && g3.z.get().scale === 1, "double-tap resets the zoom to 1×");
+isTrue(g3.g.wheel({ ctrlKey: false, deltaY: -50, x: 0, y: 0 }) === false && g3.z.get().scale === 1,
+  "plain wheel is left to the page (no zoom)");
+isTrue(g3.g.wheel({ ctrlKey: true, deltaY: -50, x: 200, y: 200 }) === true && g3.z.get().scale > 1,
+  "ctrl+wheel (trackpad pinch) zooms in");
+
 console.log("\n" + passed + " passed, " + failed + " failed");
 process.exit(failed ? 1 : 0);

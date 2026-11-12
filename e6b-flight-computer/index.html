@@ -323,14 +323,24 @@
               <button type="button" class="seg-btn is-active" data-unit-group="side" data-unit="computer" aria-pressed="true">Computer side</button>
               <button type="button" class="seg-btn" data-unit-group="side" data-unit="wind" aria-pressed="false">Wind side</button>
             </div>
+            <div class="zoom-controls" id="zoom-controls" role="group" aria-label="Zoom the instrument">
+              <button type="button" class="zoom-btn" data-zoom="out" aria-label="Zoom out">−</button>
+              <span class="zoom-level" aria-live="polite">1×</span>
+              <button type="button" class="zoom-btn" data-zoom="in" aria-label="Zoom in">+</button>
+              <button type="button" class="zoom-btn zoom-reset" data-zoom="reset">Reset zoom</button>
+            </div>
           </div>
           <div id="computer-stage">
-            <div class="computer-wrap" id="computer-mount" aria-label="Circular E6B computer"></div>
-            <p class="stage-caption">Drag the inner disk, or press Solve and watch it rotate to the answer. The red hairline is the 10-index at the top.</p>
+            <div class="computer-wrap zoom-viewport" id="computer-viewport">
+              <div class="zoom-content" id="computer-mount" aria-label="Circular E6B computer"></div>
+            </div>
+            <p class="stage-caption">Drag the inner disk, or press Solve and watch it rotate to the answer. The red hairline is the 10-index at the top. Pinch (or ctrl + scroll) to zoom; double-tap or Reset zoom to go back.</p>
             <p class="drag-readout" id="drag-readout" aria-live="polite"></p>
           </div>
           <div id="wind-stage" hidden>
-            <div class="wind-wrap" id="wind-mount" aria-label="E6B wind side illustration"></div>
+            <div class="wind-wrap zoom-viewport" id="wind-viewport">
+              <div class="zoom-content" id="wind-mount" aria-label="E6B wind side illustration"></div>
+            </div>
             <ol class="step-list" id="wind-steps">
               <li>Rotate the azimuth until the wind direction is under the true index.</li>
               <li>From the grommet, plot a pencil mark toward the true index at the wind speed.</li>
@@ -338,7 +348,7 @@
               <li>Rotate the azimuth until the true course is under the true index.</li>
               <li>Slide the card until the wind mark lies on the true-airspeed arc. Read WCA at the mark and groundspeed under the grommet. Heading = course + WCA.</li>
             </ol>
-            <p class="stage-caption">The sliding card is a polar grid (concentric speed arcs and radiating drift lines), so a reading at the wind mark matches the exact wind-triangle solution to drawing precision. The result panel prints the same trig values.</p>
+            <p class="stage-caption">The sliding card is a polar grid (concentric speed arcs and radiating drift lines), so a reading at the wind mark matches the exact wind-triangle solution to drawing precision. The result panel prints the same trig values. Pinch to zoom and drag to look around; double-tap or Reset zoom to go back.</p>
           </div>
         </div>
       </div>
@@ -459,6 +469,7 @@
   <script src="calc.js"></script>
   <script src="render-svg.js"></script>
   <script src="form-state.js"></script>
+  <script src="zoom.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

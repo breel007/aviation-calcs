@@ -8,6 +8,7 @@
   var E6B = window.E6BComputer;
   var R = window.E6BRender;
   var FS = window.E6BFormState;
+  var Z = window.E6BZoom;
   var CX = R.CX;
   var CY = R.CY;
 
@@ -174,6 +175,9 @@
     side = next;
     computerStage.hidden = side !== "computer";
     windStage.hidden = side !== "wind";
+    var zv = zoomViews[side];
+    if (zv) zv.measure();
+    syncZoomControls();
     document.querySelectorAll("[data-unit-group='side']").forEach(function (btn) {
       var on = btn.getAttribute("data-unit") === side;
       btn.classList.toggle("is-active", on);
@@ -509,54 +513,184 @@
     });
   }
 
-  function bindDrag() {
+  // Rotation and pinch-zoom are handled per instrument viewport (see
+  // setupZoom). bindDrag is kept as the hook rebuildComputer calls; the
+  // listeners live on the persistent viewport, so nothing to rebind.
+  function bindDrag() {}
+
+  function svgPoint(svg, clientX, clientY) {
+    // Uses the on-screen box, so it stays right while the view is zoomed.
+    var rect = svg.getBoundingClientRect();
+    var vb = svg.viewBox && svg.viewBox.baseVal;
+    if (!vb || !rect.width || !rect.height) return { x: CX, y: CY };
+    return {
+      x: vb.x + (clientX - rect.left) * vb.width / rect.width,
+      y: vb.y + (clientY - rect.top) * vb.height / rect.height
+    };
+  }
+
+  function pointerAngleAt(clientX, clientY) {
     var svg = computerMount.querySelector("svg");
-    if (!svg) return;
-    var inner = $("e6b-inner");
-    if (!inner) return;
+    if (!svg) return 0;
+    var p = svgPoint(svg, clientX, clientY);
+    return Math.atan2(p.x - CX, CY - p.y) * 180 / Math.PI;
+  }
 
-    function pointerAngle(ev) {
-      var pt = svg.createSVGPoint();
-      pt.x = ev.clientX;
-      pt.y = ev.clientY;
-      var ctm = svg.getScreenCTM();
-      if (!ctm) return 0;
-      var p = pt.matrixTransform(ctm.inverse());
-      return Math.atan2(p.x - CX, CY - p.y) * 180 / Math.PI;
+  function onInnerDisk(clientX, clientY) {
+    var svg = computerMount.querySelector("svg");
+    if (!svg) return false;
+    var p = svgPoint(svg, clientX, clientY);
+    return Math.hypot(p.x - CX, p.y - CY) <= R.R_INNER + 8;
+  }
+
+  var zoomViews = {};
+
+  function setupZoom(sideName, viewport, content) {
+    if (!Z || !viewport || !content) return null;
+    var zoom = Z.createZoom({ min: 1, max: 4 });
+    var vpRect = null;
+
+    function apply() {
+      content.style.transform = zoom.cssTransform();
+      viewport.classList.toggle("is-zoomed", zoom.isZoomed());
+      if (side === sideName) syncZoomControls();
+    }
+    zoom.onChange(apply);
+
+    function measure() {
+      var r = viewport.getBoundingClientRect();
+      if (r.width > 0 && r.height > 0) zoom.setSize(r.width, r.height);
     }
 
-    function onDown(ev) {
-      if (animating) return;
-      if (ev.pointerType === "mouse" && ev.button !== 0) return;
-      ev.preventDefault();
-      drag = {
-        startPointer: pointerAngle(ev),
-        startDisk: diskAngle,
-        id: ev.pointerId
-      };
-      svg.classList.add("is-dragging");
-      try { svg.setPointerCapture(ev.pointerId); } catch (e) {}
-      setHighlights([]);
-    }
-    function onMove(ev) {
-      if (!drag || ev.pointerId !== drag.id) return;
-      ev.preventDefault();
-      var a = pointerAngle(ev);
-      setDiskAngle(drag.startDisk + E6B.shortestAngleDelta(drag.startPointer, a));
-      if (dragReadout) {
-        var under = E6B.outerOppositeInner(60, diskAngle, 10);
-        dragReadout.textContent = "60-index under " + fmt(under, 1) + " (and 10× / 0.1× that tick)";
+    function ease(fn) {
+      if (!reduceMotion()) {
+        content.classList.add("is-easing");
+        setTimeout(function () { content.classList.remove("is-easing"); }, 220);
       }
+      fn();
     }
-    function onUp(ev) {
-      if (!drag || ev.pointerId !== drag.id) return;
-      drag = null;
-      svg.classList.remove("is-dragging");
+
+    var gestures = Z.createGestures(zoom, {
+      canRotate: function (p, zoomed) {
+        if (sideName !== "computer" || animating) return false;
+        if (!computerMount.querySelector("svg")) return false;
+        // At 1× any one-finger drag turns the disk (as before). Zoomed in,
+        // only a drag on the inner disk turns it; the rest pans.
+        return !zoomed || onInnerDisk(p.clientX, p.clientY);
+      },
+      onRotateStart: function (p) {
+        drag = { startPointer: pointerAngleAt(p.clientX, p.clientY), startDisk: diskAngle };
+        var svg = computerMount.querySelector("svg");
+        if (svg) svg.classList.add("is-dragging");
+        setHighlights([]);
+      },
+      onRotateMove: function (p) {
+        if (!drag) return;
+        setDiskAngle(drag.startDisk + E6B.shortestAngleDelta(drag.startPointer, pointerAngleAt(p.clientX, p.clientY)));
+        if (dragReadout) {
+          var under = E6B.outerOppositeInner(60, diskAngle, 10);
+          dragReadout.textContent = "60-index under " + fmt(under, 1) + " (and 10× / 0.1× that tick)";
+        }
+      },
+      onRotateEnd: function () {
+        drag = null;
+        var svg = computerMount.querySelector("svg");
+        if (svg) svg.classList.remove("is-dragging");
+      }
+    });
+
+    function gp(ev) {
+      var r = vpRect || viewport.getBoundingClientRect();
+      return {
+        id: ev.pointerId, x: ev.clientX - r.left, y: ev.clientY - r.top,
+        clientX: ev.clientX, clientY: ev.clientY, t: ev.timeStamp
+      };
     }
-    svg.addEventListener("pointerdown", onDown);
-    svg.addEventListener("pointermove", onMove);
-    svg.addEventListener("pointerup", onUp);
-    svg.addEventListener("pointercancel", onUp);
+    viewport.addEventListener("pointerdown", function (ev) {
+      if (ev.pointerType === "mouse" && ev.button !== 0) return;
+      vpRect = viewport.getBoundingClientRect();
+      if (zoom.get().width !== vpRect.width) measure();
+      ev.preventDefault();
+      try { viewport.setPointerCapture(ev.pointerId); } catch (e) {}
+      gestures.down(gp(ev));
+    });
+    viewport.addEventListener("pointermove", function (ev) {
+      if (!gestures.pointerCount()) return;
+      ev.preventDefault();
+      gestures.move(gp(ev));
+    });
+    viewport.addEventListener("pointerup", function (ev) {
+      var res = gestures.up(gp(ev));
+      if (res === "doubletap") ease(function () { apply(); });
+    });
+    viewport.addEventListener("pointercancel", function (ev) { gestures.cancel(gp(ev)); });
+    viewport.addEventListener("lostpointercapture", function (ev) { gestures.cancel(gp(ev)); });
+
+    // ctrl+wheel = trackpad pinch / ctrl+scroll. Plain wheel scrolls the page.
+    viewport.addEventListener("wheel", function (ev) {
+      var r = viewport.getBoundingClientRect();
+      if (gestures.wheel({ ctrlKey: ev.ctrlKey, deltaY: ev.deltaY, x: ev.clientX - r.left, y: ev.clientY - r.top })) {
+        ev.preventDefault();
+      }
+    }, { passive: false });
+
+    // iOS / macOS Safari: keep the browser from zooming the page instead.
+    viewport.addEventListener("touchmove", function (ev) {
+      if (ev.touches && ev.touches.length > 1) ev.preventDefault();
+    }, { passive: false });
+    var gScale = 1;
+    viewport.addEventListener("gesturestart", function (ev) {
+      ev.preventDefault();
+      gScale = zoom.get().scale;
+    });
+    viewport.addEventListener("gesturechange", function (ev) {
+      ev.preventDefault();
+      // Touch pinches already arrive as pointer events; this path is for
+      // macOS Safari trackpad pinch, which sends gesture events only.
+      if (gestures.pointerCount() >= 2) return;
+      var r = viewport.getBoundingClientRect();
+      zoom.zoomTo(gScale * ev.scale, ev.clientX - r.left, ev.clientY - r.top);
+    });
+    viewport.addEventListener("gestureend", function (ev) { ev.preventDefault(); });
+
+    viewport.addEventListener("dblclick", function (ev) { ev.preventDefault(); });
+
+    if (window.ResizeObserver) new ResizeObserver(measure).observe(viewport);
+    else window.addEventListener("resize", measure);
+    measure();
+    apply();
+    return { zoom: zoom, gestures: gestures, measure: measure, ease: ease };
+  }
+
+  // One set of zoom buttons in the stage toolbar drives the visible side.
+  var zoomControls = $("zoom-controls");
+  function syncZoomControls() {
+    var zv = zoomViews[side];
+    if (!zoomControls || !zv) return;
+    var s = zv.zoom.get().scale;
+    var zoomed = zv.zoom.isZoomed();
+    zoomControls.classList.toggle("is-zoomed", zoomed);
+    var level = zoomControls.querySelector(".zoom-level");
+    if (level) level.textContent = (Math.round(s * 10) / 10) + "×";
+    zoomControls.querySelector("[data-zoom='reset']").disabled = !zoomed;
+    zoomControls.querySelector("[data-zoom='out']").disabled = !zoomed;
+    zoomControls.querySelector("[data-zoom='in']").disabled = s >= zv.zoom.MAX - 1e-6;
+  }
+  if (zoomControls) {
+    zoomControls.querySelectorAll("[data-zoom]").forEach(function (btn) {
+      btn.addEventListener("click", function (ev) {
+        ev.preventDefault();
+        var zv = zoomViews[side];
+        if (!zv) return;
+        zv.measure();
+        var what = btn.getAttribute("data-zoom");
+        zv.ease(function () {
+          if (what === "in") zv.zoom.zoomBy(1.5);
+          else if (what === "out") zv.zoom.zoomBy(1 / 1.5);
+          else zv.zoom.reset();
+        });
+      });
+    });
   }
 
   function onSegClick(ev) {
@@ -674,6 +808,9 @@
     ev.preventDefault();
     solve();
   });
+
+  zoomViews.computer = setupZoom("computer", $("computer-viewport"), computerMount);
+  zoomViews.wind = setupZoom("wind", $("wind-viewport"), windMount);
 
   // Initial face, defaults already in the HTML.
   rebuildComputer([]);
