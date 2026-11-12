@@ -7,6 +7,7 @@
 
   var E6B = window.E6BComputer;
   var R = window.E6BRender;
+  var FS = window.E6BFormState;
   var CX = R.CX;
   var CY = R.CY;
 
@@ -208,6 +209,21 @@
     });
   }
 
+  function solveForOf(m) {
+    var cfg = FS && FS.SOLVE[m];
+    if (!cfg) return null;
+    return unitOf(cfg.group) || cfg.fallback;
+  }
+
+  function refreshSolvedState(m, clear) {
+    if (!FS || !FS.SOLVE[m]) return;
+    FS.applySolvedState(document, m, solveForOf(m), { clearSolved: !!clear });
+  }
+
+  function refreshAllSolvedState() {
+    ["tsd", "fuel", "offcourse"].forEach(function (m) { refreshSolvedState(m, false); });
+  }
+
   function currentSolve() {
     if (mode === "tsd") {
       var solveFor = unitOf("tsd-solve") || "distance";
@@ -313,7 +329,9 @@
         { label: "Time (hours)", value: fmt(result.timeHours, 3) + " h" }
       ]);
     } else if (mode === "fuel") {
-      setHero("Fuel", '<span class="num">' + fmt(result.fuel, 2) + '</span> <span class="unit">gal</span>', fmt(result.rate, 2) + " gph for " + fmtTime(result.time));
+      if (result.solveFor === "speed") setHero("Burn rate", '<span class="num">' + fmt(result.rate, 2) + '</span> <span class="unit">gph</span>', fmt(result.fuel, 2) + " gal in " + fmtTime(result.time));
+      else if (result.solveFor === "time") setHero("Time", '<span class="num">' + fmtTime(result.time) + "</span>", fmt(result.fuel, 2) + " gal at " + fmt(result.rate, 2) + " gph");
+      else setHero("Fuel", '<span class="num">' + fmt(result.fuel, 2) + '</span> <span class="unit">gal</span>', fmt(result.rate, 2) + " gph for " + fmtTime(result.time));
       setStats([
         { label: "Fuel", value: fmt(result.fuel, 2) + " gal" },
         { label: "Burn rate", value: fmt(result.rate, 2) + " gph" },
@@ -349,7 +367,10 @@
         { label: "Kilometres", value: fmt(result.km, 3) + " km" }
       ]);
     } else if (mode === "offcourse") {
-      setHero("Distance off course", '<span class="num">' + fmt(result.distanceOff, 2) + '</span> <span class="unit">NM</span>', "1-in-60 rule: 1° off for 60 NM flown is 1 NM off course");
+      var ocNote = "1-in-60 rule: 1° off for 60 NM flown is 1 NM off course";
+      if (result.solveFor === "degreesOff") setHero("Degrees off course", '<span class="num">' + fmt(result.degreesOff, 1) + '</span> <span class="unit">°</span>', ocNote);
+      else if (result.solveFor === "distanceFlown") setHero("Distance flown", '<span class="num">' + fmt(result.distanceFlown, 2) + '</span> <span class="unit">NM</span>', ocNote);
+      else setHero("Distance off course", '<span class="num">' + fmt(result.distanceOff, 2) + '</span> <span class="unit">NM</span>', ocNote);
       setStats([
         { label: "Degrees off", value: fmt(result.degreesOff, 1) + "°" },
         { label: "Distance flown", value: fmt(result.distanceFlown, 2) + " NM" },
@@ -469,6 +490,7 @@
       return;
     }
     renderResult(result);
+    if (FS) FS.writeOutputs(document, mode, result);
     if (mode === "wind") {
       setSide("wind");
       animating = true;
@@ -545,7 +567,14 @@
     var unit = btn.getAttribute("data-unit");
     if (group === "mode") setMode(unit);
     else if (group === "side") setSide(unit);
-    else setUnit(group, unit);
+    else {
+      setUnit(group, unit);
+      if (FS) {
+        Object.keys(FS.SOLVE).forEach(function (m) {
+          if (FS.SOLVE[m].group === group) refreshSolvedState(m, true);
+        });
+      }
+    }
   }
 
   function loadExample() {
@@ -584,6 +613,7 @@
       $("wind-from").value = "360";
       $("wind-speed").value = "20";
     }
+    refreshAllSolvedState();
     solve();
   }
 
@@ -613,6 +643,7 @@
     $("wind-tas").value = "120";
     $("wind-from").value = "360";
     $("wind-speed").value = "20";
+    refreshAllSolvedState();
     clearWarnings();
     setHighlights([]);
     setDiskAngle(0);
@@ -648,5 +679,6 @@
   rebuildComputer([]);
   rebuildWind({ roseHeading: 360, tas: 120, showDot: false });
   setMode("tsd");
+  refreshAllSolvedState();
   setHero("Result", '<span class="num">—</span>', "Enter values and press Solve to rotate the computer to the answer.");
 })();

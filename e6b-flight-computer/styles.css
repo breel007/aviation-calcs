@@ -173,3 +173,24 @@
     padding-left: 0;
   }
 }
+
+/* Solve-for field: read-only and styled as the answer (computed on Solve). */
+.input[readonly],
+.input.is-solved {
+  cursor: default;
+}
+.input.is-solved {
+  background: var(--gold-soft);
+  border-color: var(--gold-dim);
+  color: var(--gold);
+  font-weight: 600;
+}
+.input.is-solved::placeholder {
+  color: var(--gold-dim);
+  font-weight: 400;
+  opacity: 1;
+}
+.input.is-solved:focus {
+  outline: 2px solid var(--gold-dim);
+  outline-offset: 1px;
+}

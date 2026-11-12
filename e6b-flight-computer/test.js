@@ -227,5 +227,77 @@ nearly(E6B.tempAngle(288.15), 180, 1e-9, "15 °C is at the bottom of the disk");
 nearly(E6B.paAngle(0), 180, 1e-9, "0 ft PA is at the bottom of the plate");
 nearly(E6B.NM_PER_SM, 1852 / 1609.344, 0, "NM/SM ratio is exact");
 
+console.log("\nCase 13  Solve-for field is read-only and receives the answer");
+var FS = require("./form-state.js");
+function fakeDoc(ids) {
+  var els = {};
+  ids.forEach(function (id) {
+    var cls = {};
+    els[id] = {
+      id: id, value: "", readOnly: false, placeholder: "", attrs: {},
+      classList: {
+        toggle: function (c, on) { if (on) cls[c] = true; else delete cls[c]; },
+        contains: function (c) { return !!cls[c]; }
+      },
+      setAttribute: function (k, v) { this.attrs[k] = v; },
+      removeAttribute: function (k) { delete this.attrs[k]; }
+    };
+  });
+  return { els: els, getElementById: function (id) { return els[id] || null; } };
+}
+var tsdDoc = fakeDoc(FS.allIds("tsd"));
+FS.applySolvedState(tsdDoc, "tsd", "distance");
+isTrue(tsdDoc.els["tsd-distance"].readOnly, "TSD solve for distance: Distance (NM) is read-only");
+isTrue(tsdDoc.els["tsd-distance"].classList.contains("is-solved"), "TSD distance box is styled as the answer (.is-solved)");
+isTrue(!tsdDoc.els["tsd-speed"].readOnly && !tsdDoc.els["tsd-hours"].readOnly && !tsdDoc.els["tsd-minutes"].readOnly,
+  "TSD speed and time stay editable");
+tsdDoc.els["tsd-speed"].value = "120"; tsdDoc.els["tsd-hours"].value = "0"; tsdDoc.els["tsd-minutes"].value = "45";
+tsdDoc.els["tsd-distance"].value = "999";
+var tsdRes = E6B.solveTsd({ speed: 120, timeHours: 0, timeMinutes: 45, distance: 999, solveFor: "distance" });
+FS.writeOutputs(tsdDoc, "tsd", tsdRes);
+isTrue(tsdDoc.els["tsd-distance"].value === "90", "Solve writes 90 NM back into the Distance box (typed 999 ignored)");
+
+// Switch to Speed: distance becomes an input, speed is cleared and locked
+tsdDoc.els["tsd-distance"].value = "180";
+FS.applySolvedState(tsdDoc, "tsd", "speed", { clearSolved: true });
+isTrue(!tsdDoc.els["tsd-distance"].readOnly && !tsdDoc.els["tsd-distance"].classList.contains("is-solved"),
+  "switching Solve for → Speed frees the Distance box immediately");
+isTrue(tsdDoc.els["tsd-speed"].readOnly && tsdDoc.els["tsd-speed"].value === "", "the Speed box is locked and cleared");
+var tsdSpd = E6B.solveTsd({ distance: 180, timeHours: 1, timeMinutes: 30, solveFor: "speed" });
+FS.writeOutputs(tsdDoc, "tsd", tsdSpd);
+isTrue(tsdDoc.els["tsd-speed"].value === "120", "Solve writes 120 kt into the Speed box (typed distance is used)");
+
+// Switch to Time: hours and minutes both locked; answer written as h + min
+FS.applySolvedState(tsdDoc, "tsd", "time", { clearSolved: true });
+isTrue(tsdDoc.els["tsd-hours"].readOnly && tsdDoc.els["tsd-minutes"].readOnly, "Solve for time locks hours and minutes");
+var tsdTime = E6B.solveTsd({ speed: 120, distance: 150, solveFor: "time" });
+FS.writeOutputs(tsdDoc, "tsd", tsdTime);
+isTrue(tsdDoc.els["tsd-hours"].value === "1" && tsdDoc.els["tsd-minutes"].value === "15",
+  "150 NM at 120 kt writes 1 h 15 min back");
+
+var fuelDoc = fakeDoc(FS.allIds("fuel"));
+FS.applySolvedState(fuelDoc, "fuel", "fuel");
+isTrue(fuelDoc.els["fuel-qty"].readOnly && fuelDoc.els["fuel-qty"].classList.contains("is-solved"),
+  "Fuel solve for fuel: quantity box is read-only answer");
+FS.writeOutputs(fuelDoc, "fuel", E6B.solveFuel({ rate: 8.5, timeHours: 2, timeMinutes: 30, solveFor: "fuel" }));
+isTrue(fuelDoc.els["fuel-qty"].value === "21.25", "Solve writes 21.25 gal into the quantity box");
+FS.applySolvedState(fuelDoc, "fuel", "rate", { clearSolved: true });
+isTrue(!fuelDoc.els["fuel-qty"].readOnly && fuelDoc.els["fuel-rate"].readOnly, "switching to Rate frees quantity and locks rate");
+FS.writeOutputs(fuelDoc, "fuel", E6B.solveFuel({ fuel: 21.25, timeHours: 2, timeMinutes: 30, solveFor: "rate" }));
+isTrue(fuelDoc.els["fuel-rate"].value === "8.5", "Solve writes 8.5 gph into the rate box");
+
+var ocDoc = fakeDoc(FS.allIds("offcourse"));
+FS.applySolvedState(ocDoc, "offcourse", "distanceOff");
+isTrue(ocDoc.els["oc-off"].readOnly && !ocDoc.els["oc-deg"].readOnly && !ocDoc.els["oc-flown"].readOnly,
+  "Off course solve for distance off: only that box is read-only");
+FS.writeOutputs(ocDoc, "offcourse", E6B.solveOffCourse({ distanceFlown: 60, degreesOff: 6, solveFor: "distanceOff" }));
+isTrue(ocDoc.els["oc-off"].value === "6", "Solve writes 6 NM off course back");
+FS.applySolvedState(ocDoc, "offcourse", "degreesOff", { clearSolved: true });
+isTrue(ocDoc.els["oc-deg"].readOnly && ocDoc.els["oc-deg"].value === "" && !ocDoc.els["oc-off"].readOnly,
+  "switching to Degrees off locks/clears degrees and frees distance off");
+FS.writeOutputs(ocDoc, "offcourse", E6B.solveOffCourse({ distanceFlown: 30, distanceOff: 2, solveFor: "degreesOff" }));
+isTrue(ocDoc.els["oc-deg"].value === "4", "Solve writes 4° back");
+isTrue(Object.keys(FS.outputValues("tsd", { error: "x" })).length === 0, "an error result writes nothing");
+
 console.log("\n" + passed + " passed, " + failed + " failed");
 process.exit(failed ? 1 : 0);
