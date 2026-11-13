@@ -250,7 +250,12 @@ eq(rl.error, "rate-limited", "a rate-limit body is flagged rather than parsed as
 
 console.log("\nCase 10  Hand-counted go / no-go percentages (single station)");
 /*
- * Three mornings, 07/08/09 UTC, min 1000 ft / 3 SM, no wx exclusions.
+ * Three mornings, hours 07/08/09 UTC, min 1000 ft / 3 SM, no wx exclusions.
+ * Each hour is scored at its top (hh:00) from the closest report within
+ * ±30 min, so the routine hh:53 report counts for the next hour: the
+ * 06:53, 07:53 and 08:53 reports below are the 07, 08 and 09 hours.
+ * (Before the ±30-minute rule these fixtures used 07:53/08:53/09:53,
+ * bucketed by clock hour; the counts below are unchanged.)
  *   12 Jun: 07,08,09 all CLR/10SM          → 3 go
  *   13 Jun: 07,08 CLR/10SM; 09 BKN008      → 2 go, 1 ceiling fail
  *   14 Jun: 07,08,09 all BKN005            → 0 go, 3 ceiling fails
@@ -277,21 +282,21 @@ function nObs(station, stamp, ceil, vis, wx, wind) {
 var windows = [{ year: 2024, start: { year: 2024, month: 6, day: 12 }, end: { year: 2024, month: 6, day: 18 }, center: { year: 2024, month: 6, day: 15 } }];
 var mins = { minCeilingFt: 1000, minVisibilitySm: 3 };
 var rowsA = [
+  nObs("AAA", "2024-06-12 06:53", null, 10),
   nObs("AAA", "2024-06-12 07:53", null, 10),
   nObs("AAA", "2024-06-12 08:53", null, 10),
-  nObs("AAA", "2024-06-12 09:53", null, 10),
+  nObs("AAA", "2024-06-13 06:53", null, 10),
   nObs("AAA", "2024-06-13 07:53", null, 10),
-  nObs("AAA", "2024-06-13 08:53", null, 10),
-  nObs("AAA", "2024-06-13 09:53", 800, 10),
+  nObs("AAA", "2024-06-13 08:53", 800, 10),
+  nObs("AAA", "2024-06-14 06:53", 500, 10),
   nObs("AAA", "2024-06-14 07:53", 500, 10),
   nObs("AAA", "2024-06-14 08:53", 500, 10),
-  nObs("AAA", "2024-06-14 09:53", 500, 10),
-  nObs("AAA", "2024-06-12 10:53", 200, 0.5) // 10:00 is outside 07–10; must be ignored
+  nObs("AAA", "2024-06-12 09:53", 200, 0.5) // nearest hour is 10:00, outside 07–10; must be ignored
 ];
 var one = C.computeClimatology([{ sid: "AAA", name: "Alpha", rows: rowsA }], {
   tz: "UTC", hourStart: 7, hourEnd: 10, mins: mins, windows: windows
 });
-eq(one.stations[0].hours.n, 9, "9 in-window evaluable hours (the 10:53 row is excluded)");
+eq(one.stations[0].hours.n, 9, "9 in-window evaluable hours (the 09:53 report belongs to 10:00 and is excluded)");
 eq(one.stations[0].hours.go, 5, "5 of those 9 hours meet 1000 / 3");
 nearly(one.stations[0].hourPct, 100 * 5 / 9, 1e-12, "hour go rate = 5/9 ≈ 55.556%");
 eq(one.stations[0].dayCount, 3, "3 mornings in the sample");
@@ -314,15 +319,15 @@ console.log("\nCase 11  Route (all stations simultaneously) percentages");
  * Route all-go days: none (every morning has at least one no-go hour)
  */
 var rowsB = [
-  nObs("BBB", "2024-06-12 07:53", null, 10),
-  nObs("BBB", "2024-06-12 08:53", null, 2),
-  nObs("BBB", "2024-06-12 09:53", null, 10),
+  nObs("BBB", "2024-06-12 06:53", null, 10),
+  nObs("BBB", "2024-06-12 07:53", null, 2),
+  nObs("BBB", "2024-06-12 08:53", null, 10),
+  nObs("BBB", "2024-06-13 06:53", null, 10),
   nObs("BBB", "2024-06-13 07:53", null, 10),
   nObs("BBB", "2024-06-13 08:53", null, 10),
-  nObs("BBB", "2024-06-13 09:53", null, 10),
+  nObs("BBB", "2024-06-14 06:53", null, 10),
   nObs("BBB", "2024-06-14 07:53", null, 10),
-  nObs("BBB", "2024-06-14 08:53", null, 10),
-  nObs("BBB", "2024-06-14 09:53", null, 10)
+  nObs("BBB", "2024-06-14 08:53", null, 10)
 ];
 var both = C.computeClimatology(
   [{ sid: "AAA", name: "Alpha", rows: rowsA }, { sid: "BBB", name: "Bravo", rows: rowsB }],
@@ -355,15 +360,16 @@ eq(C.DEFAULT_MAX_STATIONS, 10, "default cap is 10 stations");
 
 console.log("\nCase 13  Short-archive stations are dropped from the route conjunction");
 /*
- * CCC has observations only on 14 Jun (the last of the three mornings).
- * With dropSparse and keepInRoute [AAA, BBB], CCC is still reported
- * per-station but does not shrink the route sample to that one day.
+ * CCC has observations only on 14 Jun (the last of the three mornings),
+ * 3 of the 9 hours other stations cover (33% < the 80% coverage bar).
+ * With dropSparse, CCC is still reported per-station but does not
+ * shrink the route sample to that one day.
  * Route hours should remain 4 go of 9, as in Case 11.
  */
 var rowsC = [
+  nObs("CCC", "2024-06-14 06:53", null, 10),
   nObs("CCC", "2024-06-14 07:53", null, 10),
-  nObs("CCC", "2024-06-14 08:53", null, 10),
-  nObs("CCC", "2024-06-14 09:53", null, 10)
+  nObs("CCC", "2024-06-14 08:53", null, 10)
 ];
 var sparse = C.computeClimatology(
   [
@@ -387,6 +393,124 @@ var kept = C.computeClimatology(
   { tz: "UTC", hourStart: 7, hourEnd: 10, mins: mins, windows: windows }
 );
 eq(kept.route.hours.n, 3, "without dropSparse, the route sample shrinks to the 3 hours all three stations share");
+
+console.log("\nCase 13b  ±30-minute report matching to the top of the hour");
+/*
+ * Slot 08:00 UTC on 12 Jun. Reports at 07:53 (7 min early) and 08:18
+ * (18 min late) are inside ±30 min; 08:35 is 35 min late (it belongs
+ * to 09:00 instead). Exactly 30 min counts (inclusive).
+ */
+var slotWin = [{ year: 2024, start: { year: 2024, month: 6, day: 12 }, end: { year: 2024, month: 6, day: 12 }, center: { year: 2024, month: 6, day: 12 } }];
+function clim1(rows, extra) {
+  var o = { tz: "UTC", hourStart: 8, hourEnd: 9, mins: mins, windows: slotWin };
+  Object.keys(extra || {}).forEach(function (k) { o[k] = extra[k]; });
+  return C.computeClimatology([{ sid: "MMM", rows: rows }], o).stations[0];
+}
+eq(clim1([nObs("MMM", "2024-06-12 07:53", null, 10)]).hours.n, 1, "a report at 07:53 is used for the 08:00 hour");
+eq(clim1([nObs("MMM", "2024-06-12 08:18", null, 10)]).hours.n, 1, "a report at 08:18 is used for the 08:00 hour");
+eq(clim1([nObs("MMM", "2024-06-12 08:35", null, 10)]).hours.n, 0, "a report at 08:35 is NOT used for 08:00 (35 min away)");
+eq(clim1([nObs("MMM", "2024-06-12 07:25", null, 10)]).hours.n, 0, "a report at 07:25 is NOT used for 08:00 (35 min away)");
+eq(clim1([nObs("MMM", "2024-06-12 08:30", null, 10)]).hours.n, 1, "exactly 30 min away still counts (inclusive)");
+eq(clim1([nObs("MMM", "2024-06-12 07:53", 500, 10), nObs("MMM", "2024-06-12 08:05", null, 10)]).hours.go, 1,
+  "the closest report wins: 08:05 go beats 07:53 no-go");
+eq(clim1([nObs("MMM", "2024-06-12 07:40", null, 10), nObs("MMM", "2024-06-12 08:12", 500, 10)]).hours.go, 0,
+  "the closest report wins even when it is the no-go (08:12 beats 07:40)");
+var ceilOnly = { minCeilingFt: 1000, minVisibilitySm: 3 };
+var noSky = nObs("MMM", "2024-06-12 08:00", null, null);
+eq(clim1([noSky, nObs("MMM", "2024-06-12 08:20", null, 10)], { mins: ceilOnly }).hours.n, 1,
+  "an unevaluable report (no visibility) is skipped in favour of the closest evaluable one");
+
+console.log("\nCase 13c  Conservative tie rule");
+eq(clim1([nObs("MMM", "2024-06-12 07:30", null, 10), nObs("MMM", "2024-06-12 08:30", 500, 10)]).hours.go, 0,
+  "07:30 go vs 08:30 no-go, both 30 min away: the no-go is used");
+eq(clim1([nObs("MMM", "2024-06-12 07:30", 500, 10), nObs("MMM", "2024-06-12 08:30", null, 10)]).hours.go, 0,
+  "order does not matter: the no-go is still used");
+var tieTwo = clim1([nObs("MMM", "2024-06-12 07:45", 500, 10), nObs("MMM", "2024-06-12 08:15", 500, 2)]);
+eq(tieTwo.failCounts.ceiling + tieTwo.failCounts.visibility, 2,
+  "between two no-gos at the same distance, the one failing more limits (ceiling and visibility) is used");
+var u = [{ t: 0, ev: { go: true, reasons: [] } }, { t: 60, ev: { go: false, reasons: ["ceiling"] } }];
+isTrue(C.matchReport(u, 30) === u[1], "matchReport: tie at ±30 picks the worse report");
+isTrue(C.matchReport(u, 29) === u[0], "matchReport: otherwise the closer report");
+isTrue(C.matchReport(u, 95) === null, "matchReport: nothing within ±30 min gives no match");
+eq(C.MATCH_WINDOW_MIN, 30, "matching window is ±30 minutes");
+eq(C.ROUTE_COVERAGE_MIN, 0.8, "route coverage bar is 80%");
+
+console.log("\nCase 13d  Coverage-based exclusion (endpoints follow the same rule)");
+/*
+ * 7 mornings × hours 07–09 = 21 possible hours.
+ * GOOD1, GOOD2: every hour (100%). PATCHY: 16 of 21 (76%) → dropped.
+ * EDGE: 17 of 21 (81%) → kept. DEST (destination): 9 of 21 (43%) → dropped
+ * and flagged as an endpoint.
+ */
+var wk = [{ year: 2024, start: { year: 2024, month: 6, day: 12 }, end: { year: 2024, month: 6, day: 18 }, center: { year: 2024, month: 6, day: 15 } }];
+function weekRows(sid, keepFn) {
+  var out = [];
+  for (var d = 12; d <= 18; d++) {
+    for (var h = 7; h <= 9; h++) {
+      var idx = (d - 12) * 3 + (h - 7);
+      if (keepFn && !keepFn(idx)) continue;
+      out.push(nObs(sid, "2024-06-" + d + " " + String(h - 1).padStart(2, "0") + ":53", null, 10));
+    }
+  }
+  return out;
+}
+var cov = C.computeClimatology([
+  { sid: "GOOD1", rows: weekRows("GOOD1") },
+  { sid: "GOOD2", rows: weekRows("GOOD2") },
+  { sid: "PATCHY", rows: weekRows("PATCHY", function (i) { return i < 16; }) },
+  { sid: "EDGE", rows: weekRows("EDGE", function (i) { return i < 17; }) },
+  { sid: "DEST", rows: weekRows("DEST", function (i) { return i < 9; }) }
+], { tz: "UTC", hourStart: 7, hourEnd: 10, mins: mins, windows: wk, dropSparse: true, endpoints: { GOOD1: "departure", DEST: "destination" } });
+eq(cov.possibleHours, 21, "21 possible hours (7 days × 3)");
+eq(cov.possibleDays, 7, "7 possible days");
+eq(cov.droppedFromRoute.map(function (d) { return d.sid; }).join(","), "PATCHY,DEST", "PATCHY (76%) and DEST (43%) leave the route score");
+var destDrop = cov.droppedFromRoute.filter(function (d) { return d.sid === "DEST"; })[0];
+eq(destDrop.role, "destination", "the dropped destination is flagged as an endpoint");
+nearly(destDrop.coverage, 9 / 21, 1e-12, "DEST coverage is 9 of 21 hours");
+eq(cov.routeStationSids.join(","), "GOOD1,GOOD2,EDGE", "EDGE at 81% stays in the route");
+eq(cov.route.hours.n, 17, "17 complete hours: EDGE's 4 missing hours stay incomplete");
+eq(cov.route.incompleteHours, 4, "4 incomplete hours");
+eq(cov.stations.length, 5, "every station is still reported on its own");
+
+console.log("\nCase 13e  7-day × 5-year 3-hour window with one patchy station: ~35 days, not ~17");
+/*
+ * Four stations report every hour at hh:53 (the normal ASOS routine time).
+ * A fifth reports only on alternating days (like a part-time field).
+ * Old behaviour: the patchy station knocks out every hour it misses.
+ * New: matched at ±30 min, the patchy one falls below 80% coverage and
+ * is left out of the route score, so all 35 days / 105 hours are scored.
+ */
+var fiveYears = C.dateWindows(6, 15, { years: 5, radiusDays: 3, endYear: 2025, tz: "UTC" });
+function synthRows(sid, onDay) {
+  var out = [];
+  fiveYears.forEach(function (w) {
+    for (var k = 0; k < 7; k++) {
+      var dd = C.addDaysYmd(w.start.year, w.start.month, w.start.day, k);
+      if (onDay && !onDay(k, w.year)) continue;
+      for (var h = 6; h <= 8; h++) {
+        out.push(nObs(sid, dd.year + "-" + String(dd.month).padStart(2, "0") + "-" + String(dd.day).padStart(2, "0") + " " + String(h).padStart(2, "0") + ":53", null, 10));
+      }
+    }
+  });
+  return out;
+}
+var synth = C.computeClimatology([
+  { sid: "DEP", rows: synthRows("DEP") },
+  { sid: "W1", rows: synthRows("W1") },
+  { sid: "W2", rows: synthRows("W2") },
+  { sid: "PART", rows: synthRows("PART", function (k) { return k % 2 === 0; }) },
+  { sid: "ARR", rows: synthRows("ARR") }
+], { tz: "UTC", hourStart: 7, hourEnd: 10, mins: mins, windows: fiveYears, dropSparse: true });
+eq(synth.possibleDays, 35, "35 possible days (7 × 5 years)");
+eq(synth.possibleHours, 105, "105 possible hours");
+eq(synth.route.dayCount, 35, "all 35 days are scored");
+eq(synth.route.hours.n, 105, "all 105 hours are scored");
+eq(synth.droppedFromRoute.map(function (d) { return d.sid; }).join(","), "PART", "the part-time station is left out of the route score");
+var synthNoDrop = C.computeClimatology([
+  { sid: "DEP", rows: synthRows("DEP") },
+  { sid: "PART", rows: synthRows("PART", function (k) { return k % 2 === 0; }) }
+], { tz: "UTC", hourStart: 7, hourEnd: 10, mins: mins, windows: fiveYears });
+eq(synthNoDrop.route.dayCount, 20, "for contrast, keeping it shrinks the sample to its 20 days");
 
 console.log("\nCase 14  Route-token parsing and two-point polyline equivalence");
 eq(C.parseRouteTokens("PRB SNS").join(","), "PRB,SNS", "space-separated waypoints");

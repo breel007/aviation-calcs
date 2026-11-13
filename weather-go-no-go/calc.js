@@ -968,16 +968,69 @@
     return 100 * go / n;
   }
 
+  // ---- ±30-minute report matching ------------------------------------
+  var MATCH_WINDOW_MIN = 30;     // a report counts for an hour if within ±30 min of hh:00
+  var ROUTE_COVERAGE_MIN = 0.8;  // stations below 80% hour coverage leave the route score
+
+  function ymdNum(d) { return d.year * 10000 + d.month * 100 + d.day; }
+  function ymdFromKey(k) {
+    return { year: Number(k.slice(0, 4)), month: Number(k.slice(5, 7)), day: Number(k.slice(8, 10)) };
+  }
+  // Local wall-clock minutes (time zone already applied), so hh:00 slots
+  // and reports compare in the pilot's clock.
+  function wallMinutes(p) {
+    return Date.UTC(p.year, p.month - 1, p.day, p.hour, p.minute || 0) / 60000;
+  }
+  function severityOf(ev) {
+    if (!ev) return -1;
+    return ev.go ? 0 : 1 + ev.reasons.length;
+  }
+
+  /**
+   * Pick the report for an hour slot at wall-clock minute t from
+   * `usable` (evaluable reports sorted by .t). Rule:
+   *   1. only reports within ±30 minutes of the top of the hour count
+   *      (inclusive: hh-1:30 … hh:30);
+   *   2. the closest report wins;
+   *   3. on an exact tie (e.g. one at :30 before and one at :30 after,
+   *      or two reports at the same minute) the more conservative one
+   *      wins: a no-go beats a go, and more failed limits beat fewer.
+   *      Only routine METARs are requested, so ties are never a SPECI
+   *      chosen over a routine report.
+   */
+  function matchReport(usable, t) {
+    var lo = 0, hi = usable.length;
+    while (lo < hi) {
+      var mid = (lo + hi) >> 1;
+      if (usable[mid].t < t - MATCH_WINDOW_MIN) lo = mid + 1; else hi = mid;
+    }
+    var best = null, bestD = Infinity;
+    for (var i = lo; i < usable.length && usable[i].t <= t + MATCH_WINDOW_MIN; i++) {
+      var d = Math.abs(usable[i].t - t);
+      if (d < bestD || (d === bestD && severityOf(usable[i].ev) > severityOf(best.ev))) {
+        best = usable[i];
+        bestD = d;
+      }
+    }
+    return best;
+  }
+
   /**
    * Aggregate go / no-go statistics for one or more stations.
    *
    * series: [{ sid, name, rows: [raw IEM objects or pre-normalized] }]
    * opts: { tz, mins, hourStart, hourEnd, windows  OR  month, day, years, radiusDays, now }
    *
-   * A route-hour is go only when every selected station with a slot
-   * in that local hour is evaluable and go. Hours where any station
-   * lacks an evaluable observation are omitted from the route
-   * denominator (and counted as incomplete).
+   * Each in-window local hour is a slot at the top of the hour (hh:00).
+   * Every station is matched to its closest evaluable report within
+   * ±30 minutes of that time (see matchReport). With opts.dropSparse,
+   * a station that covers fewer than 80% of the in-window hours that
+   * any station covers is left out of the combined route score
+   * (droppedFromRoute; still reported per station). A route-hour is go
+   * only when every remaining station is matched and go; an hour where
+   * a remaining station has no match is incomplete and left out.
+   * route.possibleHours / possibleDays give the full sample size.
+   * opts.endpoints: { sid: "departure" | "destination" } marks endpoints.
    */
   function computeClimatology(series, opts) {
     opts = opts || {};
@@ -998,7 +1051,48 @@
     if (!windows) windows = [];
 
     var stationStats = [];
-    var routeHours = {}; // key -> { stations: {sid: eval}, year, hour, dateKey }
+
+    // ---- Hour slots -------------------------------------------------
+    // One slot per local calendar date and clock hour (top of the hour)
+    // across the date windows, padded a day each side so overnight
+    // windows can reach the next morning. In-window slots whose session
+    // date is inside a window are the "possible" route hours.
+    var slots = [];
+    var possibleDayKeys = {};
+    var seenCal = {};
+    windows.forEach(function (w) {
+      var d = addDaysYmd(w.start.year, w.start.month, w.start.day, -1);
+      var endNum = ymdNum(addDaysYmd(w.end.year, w.end.month, w.end.day, 1));
+      while (ymdNum(d) <= endNum) {
+        var calKey = d.year + "-" + pad2(d.month) + "-" + pad2(d.day);
+        if (!seenCal[calKey]) {
+          seenCal[calKey] = true;
+          for (var h = 0; h < 24; h++) {
+            var parts = { year: d.year, month: d.month, day: d.day, hour: h, minute: 0 };
+            var calIn = inDateWindows(parts, windows);
+            var dateKey = sessionDateKey(parts, hourStart, hourEnd);
+            var inWin = hourInWindow(h, hourStart, hourEnd) && inDateWindows(ymdFromKey(dateKey), windows);
+            if (!calIn && !inWin) continue;
+            if (inWin) possibleDayKeys[dateKey] = true;
+            slots.push({
+              t: wallMinutes(parts),
+              hour: h,
+              dateKey: dateKey,
+              year: Number(dateKey.slice(0, 4)),
+              calIn: calIn,
+              inWin: inWin,
+              key: dateKey + "T" + pad2(h)
+            });
+          }
+        }
+        d = addDaysYmd(d.year, d.month, d.day, 1);
+      }
+    });
+    var possibleSlots = slots.filter(function (sl) { return sl.inWin; });
+    var routeHours = {}; // key -> { dateKey, year, hour, evs: {sid: eval} }
+    possibleSlots.forEach(function (sl) {
+      routeHours[sl.key] = { dateKey: sl.dateKey, year: sl.year, hour: sl.hour, evs: {} };
+    });
 
     for (var s = 0; s < (series || []).length; s++) {
       var src = series[s];
@@ -1015,59 +1109,54 @@
         skipped: 0,
         missingSky: 0,
         totalRows: 0,
-        windowRows: 0
+        windowRows: 0,
+        possibleHours: possibleSlots.length,
+        coverage: null
       };
 
+      // Evaluable reports, sorted by local wall-clock time.
       var rows = src.rows || [];
-      // Keep the latest evaluable-or-not obs per local hour
-      var byLocalHour = {};
+      var usable = [];
       for (var i = 0; i < rows.length; i++) {
         st.totalRows += 1;
         var obs = rows[i] && rows[i].valid && rows[i].local ? rows[i] : normalizeObs(rows[i], tz);
         if (!obs) { st.skipped += 1; continue; }
         if (obs.skyMissing) st.missingSky += 1;
         if (!obs.local) { st.skipped += 1; continue; }
-        if (windows.length && !inDateWindows(obs.local, windows)) continue;
         st.windowRows += 1;
-        var key = sessionDateKey(obs.local, 0, 0); // calendar date first
-        var hourKey = key + "T" + pad2(obs.local.hour);
-        var prev = byLocalHour[hourKey];
-        if (!prev || obs.local.minute >= prev.local.minute) byLocalHour[hourKey] = obs;
+        var ev0 = evaluateObs(obs, mins);
+        if (!ev0.evaluable) { st.skipped += 1; continue; }
+        usable.push({ t: wallMinutes(obs.local), ev: ev0, obs: obs });
       }
+      usable.sort(function (a, b) { return a.t - b.t; });
 
-      Object.keys(byLocalHour).forEach(function (hourKey) {
-        var obs = byLocalHour[hourKey];
-        var ev = evaluateObs(obs, mins);
-        var inWin = hourInWindow(obs.local.hour, hourStart, hourEnd);
-        var dateKey = sessionDateKey(obs.local, hourStart, hourEnd);
-        var year = Number(dateKey.slice(0, 4));
-        if (!st.byYear[year]) st.byYear[year] = { n: 0, go: 0, days: {} };
-        st.byHour[obs.local.hour].n += ev.evaluable ? 1 : 0;
-        if (ev.evaluable && ev.go) st.byHour[obs.local.hour].go += 1;
-
-        if (!inWin) return;
-        if (!ev.evaluable) { st.skipped += 1; return; }
+      for (var k = 0; k < slots.length; k++) {
+        var sl = slots[k];
+        var m = matchReport(usable, sl.t);
+        if (!m) continue;
+        var ev = m.ev;
+        if (sl.calIn) {
+          st.byHour[sl.hour].n += 1;
+          if (ev.go) st.byHour[sl.hour].go += 1;
+        }
+        if (!sl.inWin) continue;
         st.hours.n += 1;
         if (ev.go) st.hours.go += 1;
         else bumpFail(st.failCounts, ev.fail);
-        if (!st.days[dateKey]) st.days[dateKey] = { n: 0, go: 0 };
-        st.days[dateKey].n += 1;
-        if (ev.go) st.days[dateKey].go += 1;
-        st.byYear[year].n += 1;
-        if (ev.go) st.byYear[year].go += 1;
-
-        var rk = dateKey + "T" + pad2(obs.local.hour);
-        if (!routeHours[rk]) {
-          routeHours[rk] = { dateKey: dateKey, year: year, hour: obs.local.hour, evs: {} };
-        }
-        routeHours[rk].evs[sid] = ev;
-      });
+        if (!st.days[sl.dateKey]) st.days[sl.dateKey] = { n: 0, go: 0 };
+        st.days[sl.dateKey].n += 1;
+        if (ev.go) st.days[sl.dateKey].go += 1;
+        if (!st.byYear[sl.year]) st.byYear[sl.year] = { n: 0, go: 0 };
+        st.byYear[sl.year].n += 1;
+        if (ev.go) st.byYear[sl.year].go += 1;
+        routeHours[sl.key].evs[sid] = ev;
+      }
 
       var dayKeys = Object.keys(st.days);
       var daysAny = 0, daysAll = 0;
-      dayKeys.forEach(function (k) {
-        if (st.days[k].go > 0) daysAny += 1;
-        if (st.days[k].go === st.days[k].n && st.days[k].n > 0) daysAll += 1;
+      dayKeys.forEach(function (k2) {
+        if (st.days[k2].go > 0) daysAny += 1;
+        if (st.days[k2].go === st.days[k2].n && st.days[k2].n > 0) daysAll += 1;
       });
       st.dayCount = dayKeys.length;
       st.daysAnyGo = daysAny;
@@ -1078,34 +1167,43 @@
       stationStats.push(st);
     }
 
-    var expectedAll = stationStats.map(function (s) { return s.sid; });
-    var keep = {};
-    (opts.keepInRoute || []).forEach(function (id) { keep[normId(id)] = true; });
+    // ---- Adaptive exclusion ------------------------------------------
+    // Reference = in-window hours where at least one station has a
+    // matched report. A station that covers less than
+    // ROUTE_COVERAGE_MIN of those hours is left out of the combined
+    // route score (still shown per station). Departure and destination
+    // follow the same rule; callers flag them via opts.endpoints.
+    var refKeys = Object.keys(routeHours).filter(function (rk) {
+      return Object.keys(routeHours[rk].evs).length > 0;
+    });
+    var refHours = refKeys.length;
+    var roles = {};
+    var endpointsOpt = opts.endpoints || {};
+    Object.keys(endpointsOpt).forEach(function (id) { roles[normId(id)] = endpointsOpt[id]; });
+    stationStats.forEach(function (st2) {
+      st2.coverage = refHours ? st2.hours.n / refHours : 0;
+      st2.role = roles[st2.sid] || null;
+    });
+    var expectedAll = stationStats.map(function (st2) { return st2.sid; });
     var droppedFromRoute = [];
     if (opts.dropSparse) {
-      var refYears = 0;
-      var refHours = 0;
-      var refPool = stationStats.filter(function (s) { return keep[s.sid]; });
-      if (!refPool.length) refPool = stationStats.slice();
-      refPool.forEach(function (s) {
-        var y = Object.keys(s.byYear).length;
-        if (y > refYears) refYears = y;
-        if (s.hours.n > refHours) refHours = s.hours.n;
-      });
-      stationStats.forEach(function (s) {
-        if (keep[s.sid]) return;
-        var y = Object.keys(s.byYear).length;
-        var sparseYears = refYears >= 2 && y < refYears * 0.7;
-        var sparseHours = refHours > 0 && s.hours.n < refHours * 0.65 && (refHours - s.hours.n) >= 4;
-        if (sparseYears || sparseHours) {
+      var minCov = opts.coverageMin == null ? ROUTE_COVERAGE_MIN : Number(opts.coverageMin);
+      var anyPass = stationStats.some(function (st2) { return st2.coverage >= minCov; });
+      var maxCov = 0;
+      stationStats.forEach(function (st2) { if (st2.coverage > maxCov) maxCov = st2.coverage; });
+      var cut = anyPass ? minCov : maxCov * minCov; // nobody reaches the bar: keep the best-covered
+      stationStats.forEach(function (st2) {
+        if (st2.coverage < cut) {
           droppedFromRoute.push({
-            sid: s.sid,
-            icao: s.icao,
-            name: s.name,
-            years: y,
-            refYears: refYears,
-            hours: s.hours.n,
-            refHours: refHours
+            sid: st2.sid,
+            icao: st2.icao,
+            name: st2.name,
+            role: st2.role,
+            hours: st2.hours.n,
+            refHours: refHours,
+            coverage: st2.coverage,
+            years: Object.keys(st2.byYear).length,
+            refYears: windows.length
           });
         }
       });
@@ -1121,7 +1219,9 @@
       byHour: emptyHourMap(),
       byYear: {},
       failCounts: emptyFailCounts(),
-      incompleteHours: 0
+      incompleteHours: 0,
+      possibleHours: possibleSlots.length,
+      possibleDays: Object.keys(possibleDayKeys).length
     };
 
     Object.keys(routeHours).forEach(function (rk) {
@@ -1150,11 +1250,9 @@
       if (!route.byYear[slot.year]) route.byYear[slot.year] = { n: 0, go: 0 };
       route.byYear[slot.year].n += 1;
       if (allGo) route.byYear[slot.year].go += 1;
-      // byHour for the route uses only in-window complete hours (same set)
       route.byHour[slot.hour].n += 1;
       if (allGo) route.byHour[slot.hour].go += 1;
     });
-
     var rDayKeys = Object.keys(route.days);
     var rAny = 0, rAll = 0;
     rDayKeys.forEach(function (k) {
@@ -1182,6 +1280,9 @@
       stations: stationStats,
       route: route,
       routeStationSids: expected,
+      possibleHours: route.possibleHours,
+      possibleDays: route.possibleDays,
+      refHours: refHours,
       droppedFromRoute: droppedFromRoute,
       worstStation: worst,
       stationCount: stationStats.length
@@ -1289,7 +1390,10 @@
     computeClimatology: computeClimatology,
     buildAsosUrl: buildAsosUrl,
     paddedFetchWindows: paddedFetchWindows,
-    leadingFailure: leadingFailure
+    leadingFailure: leadingFailure,
+    matchReport: matchReport,
+    MATCH_WINDOW_MIN: MATCH_WINDOW_MIN,
+    ROUTE_COVERAGE_MIN: ROUTE_COVERAGE_MIN
   };
 
   root.WeatherGoNoGo = api;

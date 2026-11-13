@@ -477,8 +477,12 @@
     var yearList = (result.windows || []).map(function (w) { return w.year; });
     var yearPhrase = yearList.length ? yearList[0] + "–" + yearList[yearList.length - 1] : "";
     var sub = [];
+    if (route.possibleDays) {
+      sub.push("Sample: " + route.dayCount + " of " + route.possibleDays + " days, " +
+        route.hours.n + " of " + route.possibleHours + " hours scored");
+    }
     if (route.dayCount) {
-      sub.push(route.daysAnyGo + " of " + route.dayCount + " sampled days had at least one route-go hour");
+      sub.push(route.daysAnyGo + " of " + route.dayCount + " scored days had at least one route-go hour");
     }
     if (route.hourPct != null) sub.push(fmtPct(route.hourPct) + " of hours were a simultaneous go");
     if (route.dayAllPct != null) sub.push(fmtPct(route.dayAllPct) + " were solid (every hour in the window)");
@@ -494,9 +498,10 @@
       stats += "<div class=\"stat\"><p class=\"stat-label\">" + label + "</p><p class=\"stat-value\">" + value + "</p>" +
         (note ? "<p class=\"stat-sub\">" + note + "</p>" : "") + "</div>";
     }
-    stat("Route hours go", fmtPct(route.hourPct), route.hours.n ? (route.hours.go + " of " + route.hours.n + " complete hours") : "no complete hours");
+    stat("Route hours go", fmtPct(route.hourPct), route.hours.n ? (route.hours.go + " of " + route.hours.n + " scored hours") : "no scored hours");
+    stat("Days scored", route.dayCount + " of " + (route.possibleDays || 0), route.hours.n + " of " + (route.possibleHours || 0) + " hours in the window");
     stat("Solid go days", fmtPct(route.dayAllPct), "every in-window hour was a route go");
-    stat("Incomplete hours", String(route.incompleteHours || 0), "a station was missing an evaluable METAR");
+    stat("Incomplete hours", String(route.incompleteHours || 0), "a route station had no usable METAR within ±30 min");
     stat("Most common fail", lead.reason ? failLabel(lead.reason) : "—", lead.reason ? (lead.count + " route-hour no-gos") : "no scored failures");
     $("stat-grid").innerHTML = stats;
 
@@ -513,7 +518,7 @@
         "</tr>";
     }).join("");
     rowsHtml += "<tr>" +
-      "<td><span class=\"sid\">ROUTE</span> all stations simultaneously</td>" +
+      "<td><span class=\"sid\">ROUTE</span> route-score stations simultaneously</td>" +
       "<td class=\"" + pctClass(route.hourPct) + "\">" + fmtPct(route.hourPct) + "</td>" +
       "<td class=\"" + pctClass(route.dayAnyPct) + "\">" + fmtPct(route.dayAnyPct) + "</td>" +
       "<td>" + fmtPct(route.dayAllPct) + "</td>" +
@@ -615,9 +620,10 @@
       mins: readMins(),
       windows: usedWindows,
       dropSparse: true,
-      keepInRoute: plan.selected.filter(function (s) {
-        return s.role === "departure" || s.role === "destination";
-      }).map(function (s) { return s.sid; })
+      endpoints: plan.selected.reduce(function (acc, s) {
+        if (s.role === "departure" || s.role === "destination") acc[s.sid] = s.role;
+        return acc;
+      }, {})
     });
     var notes = [];
     if (plan.stubs.length) {
@@ -627,12 +633,20 @@
       notes.push("Showing " + loadedYears[0] + (loadedYears.length > 1 ? "–" + loadedYears[loadedYears.length - 1] : "") + " so far (" + parts.length + " of " + plan.padded.length + " years). Later years will fill in as they arrive.");
     }
     if (emptyYears.length) notes.push("No rows came back for " + emptyYears.join(", ") + " (the window may pre-date a station, or the archive had a gap).");
-    if (missing.length) notes.push("No observations for " + missing.join(", ") + " in this sample. They are omitted from route-hour denominators when missing.");
+    if (missing.length) notes.push("No observations for " + missing.join(", ") + " in this sample.");
     if (result.droppedFromRoute && result.droppedFromRoute.length) {
-      notes.push("Left out of the combined route score because of a short or patchy archive (still shown per station): " +
+      notes.push("Left out of the combined route score because they had a usable report for under " +
+        Math.round(C.ROUTE_COVERAGE_MIN * 100) + "% of the window hours (still shown per station): " +
         result.droppedFromRoute.map(function (d) {
-          return (d.icao || d.sid) + " (" + d.years + " of " + d.refYears + " years, " + d.hours + " of " + d.refHours + " hours)";
+          return (d.icao || d.sid) + (d.role ? " — the " + d.role + " airport" : "") +
+            " (" + d.hours + " of " + d.refHours + " hours, " + Math.round(100 * (d.coverage || 0)) + "%)";
         }).join("; ") + ".");
+      var endpointsOut = result.droppedFromRoute.filter(function (d) { return d.role; });
+      if (endpointsOut.length) {
+        notes.push("Heads up: the route score does not include your " +
+          endpointsOut.map(function (d) { return d.role + " (" + (d.icao || d.sid) + ")"; }).join(" or ") +
+          ", because its archive is too patchy for this window. Check its own row below.");
+      }
     }
     if (!partial && result.route.hours.n === 0) {
       notes.push("No complete route-hours were scored. Try widening the time window, dropping a station with a short archive, or loosening the minimums’ required fields.");
