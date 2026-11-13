@@ -32,6 +32,7 @@
   function setHero(num, unit, sub) {
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
+    $("hero").hidden = false;
   }
   function clearOut(msg) {
     $("warnings").hidden = !msg;
@@ -48,7 +49,7 @@ function run() {
   var r = FannoFlowCalcs.compute({ mach: num('mach'), gamma: num('gamma') });
   if (!r) { clearOut('Enter a Mach number greater than zero and a γ greater than 1 (and less than 2).'); return; }
   setHero('4fL*/D  ' + fmt(r.fourFLStarOverD, 4), 'M = ' + fmt(r.mach, 3));
-  $('out').innerHTML = [
+  $("stat-grid").innerHTML = [
     { label: '4fL* / D to sonic', value: fmt(r.fourFLStarOverD, 4) },
     { label: 'T / T*', value: fmt(r.T_Tstar, 4) },
     { label: 'P / P*', value: fmt(r.P_Pstar, 4) },
@@ -58,13 +59,13 @@ function run() {
 }
 $('calcBtn').addEventListener('click', run);
 $('ex05').addEventListener('click', function () { $('mach').value = '0.5'; $('gamma').value = '1.4'; run(); });
-$('resetBtn').addEventListener('click', function () { $('mach').value = '0.5'; $('gamma').value = '1.4'; clearOut(); $('hero').hidden = true; });
+$('resetBtn').addEventListener('click', function () { $('mach').value = '0.5'; $('gamma').value = '1.4'; clearOut(); run(); });
 ['mach','gamma'].forEach(function (id) { $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') run(); }); });
   var form = $("calc-form");
   if (form) {
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    form.addEventListener("change", run);
   }
   if (typeof show === "function") show();
-  render();
+  run();
 })();

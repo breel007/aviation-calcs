@@ -32,6 +32,7 @@
   function setHero(num, unit, sub) {
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
+    $("hero").hidden = false;
   }
   function clearOut(msg) {
     $("warnings").hidden = !msg;
@@ -60,17 +61,17 @@ function run() {
   if (r.enduranceMin != null) items.unshift({ label: 'Hover endurance', value: fmt(r.enduranceMin, 1) + ' min  from  ' + fmt(r.usableWh, 1) + ' Wh usable' });
   if (r.thrustToWeight != null) items.push({ label: 'Thrust-to-weight', value: fmt(r.thrustToWeight, 2) + '  (max thrust ' + fmt(r.maxThrustN, 0) + ' N)' });
   setHero(r.enduranceMin != null ? fmt(r.enduranceMin, 1) + ' min' : fmt(r.hoverPowerW, 0) + ' W', r.enduranceMin != null ? 'hover endurance' : 'hover power');
-  $('out').innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(stat).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('exQuad').addEventListener('click', function () { $('mass').value = '2'; $('rotors').value = '4'; $('diameter').value = '0.25'; $('fm').value = '0.6'; $('energyWh').value = '100'; $('usable').value = '0.8'; $('mah').value = ''; $('volt').value = ''; $('avionics').value = '0'; $('maxThrust').value = ''; run(); });
-$('resetBtn').addEventListener('click', function () { $('mass').value = '2'; $('rotors').value = '4'; $('diameter').value = '0.25'; $('fm').value = '0.6'; $('energyWh').value = '100'; $('usable').value = '0.8'; $('mah').value = ''; $('volt').value = ''; $('avionics').value = '0'; $('maxThrust').value = ''; clearOut(); $('hero').hidden = true; });
+$('resetBtn').addEventListener('click', function () { $('mass').value = '2'; $('rotors').value = '4'; $('diameter').value = '0.25'; $('fm').value = '0.6'; $('energyWh').value = '100'; $('usable').value = '0.8'; $('mah').value = ''; $('volt').value = ''; $('avionics').value = '0'; $('maxThrust').value = ''; clearOut(); run(); });
 ['mass','rotors','diameter','fm','energyWh','usable','mah','volt','avionics','maxThrust'].forEach(function (id) { $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') run(); }); });
   var form = $("calc-form");
   if (form) {
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    form.addEventListener("change", run);
   }
   if (typeof show === "function") show();
-  render();
+  run();
 })();

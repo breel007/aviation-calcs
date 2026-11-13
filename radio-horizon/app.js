@@ -32,6 +32,7 @@
   function setHero(num, unit, sub) {
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
+    $("hero").hidden = false;
   }
   function clearOut(msg) {
     $("warnings").hidden = !msg;
@@ -57,17 +58,17 @@ function run() {
     items.push({ label: 'Horizon from height 2 alone', value: fmt(r.radio2Nm, 1) + ' NM' });
   }
   setHero(fmt(r.radioNm, 1) + ' NM', 'radio line-of-sight');
-  $('out').innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(stat).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('exAtc').addEventListener('click', function () { $('h1').value = '1000'; $('h2').value = '6000'; $('hUnit').value = 'ft'; run(); });
-$('resetBtn').addEventListener('click', function () { $('h1').value = '1000'; $('h2').value = ''; $('hUnit').value = 'ft'; clearOut(); $('hero').hidden = true; });
+$('resetBtn').addEventListener('click', function () { $('h1').value = '1000'; $('h2').value = ''; $('hUnit').value = 'ft'; clearOut(); run(); });
 ['h1','h2'].forEach(function (id) { $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') run(); }); });
   var form = $("calc-form");
   if (form) {
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    form.addEventListener("change", run);
   }
   if (typeof show === "function") show();
-  render();
+  run();
 })();

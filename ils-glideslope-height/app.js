@@ -32,6 +32,7 @@
   function setHero(num, unit, sub) {
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
+    $("hero").hidden = false;
   }
   function clearOut(msg) {
     $("warnings").hidden = !msg;
@@ -75,19 +76,19 @@ function run() {
   if (r.descentFpm != null) items.push({ label: 'Descent rate on path', value: fmt(r.descentFpm, 0) + ' ft/min  at  ' + fmt(r.groundspeedKt, 0) + ' kt' });
   if (r.pastThreshold) items.push({ label: 'Note', value: 'The computed point is past the landing threshold.' });
   setHero(fmt(r.heightFt, 0) + ' ft', 'above the threshold');
-  $('out').innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(stat).join('');
 }
 $('mode').addEventListener('change', syncMode);
 $('calcBtn').addEventListener('click', run);
 $('exOneNm').addEventListener('click', function () { $('mode').value = 'distance'; syncMode(); $('distance').value = '1'; $('distUnit').value = 'nm'; $('angle').value = '3'; $('tch').value = '50'; $('antennaOffset').value = ''; $('distanceIsDme').checked = false; $('groundspeed').value = '90'; run(); });
-$('resetBtn').addEventListener('click', function () { $('mode').value = 'distance'; syncMode(); $('distance').value = '1'; $('distUnit').value = 'nm'; $('height').value = '368'; $('angle').value = '3'; $('tch').value = '50'; $('antennaOffset').value = ''; $('distanceIsDme').checked = false; $('groundspeed').value = ''; clearOut(); $('hero').hidden = true; });
+$('resetBtn').addEventListener('click', function () { $('mode').value = 'distance'; syncMode(); $('distance').value = '1'; $('distUnit').value = 'nm'; $('height').value = '368'; $('angle').value = '3'; $('tch').value = '50'; $('antennaOffset').value = ''; $('distanceIsDme').checked = false; $('groundspeed').value = ''; clearOut(); run(); });
 ['distance','height','angle','tch','antennaOffset','groundspeed'].forEach(function (id) { $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') run(); }); });
 syncMode();
   var form = $("calc-form");
   if (form) {
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    form.addEventListener("change", run);
   }
   if (typeof show === "function") show();
-  render();
+  run();
 })();

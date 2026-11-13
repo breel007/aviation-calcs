@@ -32,6 +32,7 @@
   function setHero(num, unit, sub) {
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
+    $("hero").hidden = false;
   }
   function clearOut(msg) {
     $("warnings").hidden = !msg;
@@ -49,7 +50,7 @@ function run() {
   var r = LiftSlopeArCalcs.compute({ aspectRatio: num('ar'), oswald: num('oswald'), a0: opt('a0') });
   if (!r) { clearOut('Enter a positive aspect ratio, a positive Oswald efficiency, and an optional positive section slope.'); return; }
   setHero(fmt(r.prandtlPerDeg, 4) + ' /deg', 'Prandtl slope');
-  $('out').innerHTML = [
+  $("stat-grid").innerHTML = [
     { label: 'Prandtl slope', value: fmt(r.prandtlPerRad, 3) + ' per rad  ·  ' + fmt(r.prandtlPerDeg, 4) + ' per degree' },
     { label: 'Helmbold slope', value: fmt(r.helmboldPerRad, 3) + ' per rad  ·  ' + fmt(r.helmboldPerDeg, 4) + ' per degree' },
     { label: 'Section slope a0', value: fmt(r.a0PerRad, 3) + ' per rad  ·  ' + fmt(r.a0PerDeg, 4) + ' per degree' },
@@ -58,13 +59,13 @@ function run() {
 }
 $('calcBtn').addEventListener('click', run);
 $('ex6').addEventListener('click', function () { $('ar').value = '6'; $('oswald').value = '1'; $('a0').value = ''; run(); });
-$('resetBtn').addEventListener('click', function () { $('ar').value = '6'; $('oswald').value = '1'; $('a0').value = ''; clearOut(); $('hero').hidden = true; });
+$('resetBtn').addEventListener('click', function () { $('ar').value = '6'; $('oswald').value = '1'; $('a0').value = ''; clearOut(); run(); });
 ['ar','oswald','a0'].forEach(function (id) { $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') run(); }); });
   var form = $("calc-form");
   if (form) {
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    form.addEventListener("change", run);
   }
   if (typeof show === "function") show();
-  render();
+  run();
 })();

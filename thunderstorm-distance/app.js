@@ -32,6 +32,7 @@
   function setHero(num, unit, sub) {
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
+    $("hero").hidden = false;
   }
   function clearOut(msg) {
     $("warnings").hidden = !msg;
@@ -49,7 +50,7 @@ function run() {
   var r = ThunderstormDistanceCalcs.compute({ seconds: num('seconds'), temperature: tIn === '' ? undefined : num('temp'), tempUnit: $('tempUnit').value });
   if (!r) { clearOut('Enter a flash-to-bang time of zero seconds or more, and an optional finite temperature.'); return; }
   setHero(fmt(r.distanceSm, 1) + ' SM', 'estimated range');
-  $('out').innerHTML = [
+  $("stat-grid").innerHTML = [
     { label: 'Estimated distance', value: fmt(r.distanceSm, 1) + ' SM  ·  ' + fmt(r.distanceNm, 1) + ' NM  ·  ' + fmt(r.distanceM / 1000, 1) + ' km' },
     { label: 'Speed of sound used', value: fmt(r.speedOfSoundMps, 1) + ' m/s  ·  ' + fmt(r.secondsPerSm, 2) + ' s/SM' },
     { label: 'Five-seconds-per-mile rule', value: fmt(r.rule5SecPerSm, 1) + ' SM  (t / 5)' },
@@ -58,13 +59,13 @@ function run() {
 }
 $('calcBtn').addEventListener('click', run);
 $('ex15').addEventListener('click', function () { $('seconds').value = '15'; $('temp').value = '15'; $('tempUnit').value = 'C'; run(); });
-$('resetBtn').addEventListener('click', function () { $('seconds').value = '15'; $('temp').value = '15'; $('tempUnit').value = 'C'; clearOut(); $('hero').hidden = true; });
+$('resetBtn').addEventListener('click', function () { $('seconds').value = '15'; $('temp').value = '15'; $('tempUnit').value = 'C'; clearOut(); run(); });
 ['seconds','temp'].forEach(function (id) { $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') run(); }); });
   var form = $("calc-form");
   if (form) {
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    form.addEventListener("change", run);
   }
   if (typeof show === "function") show();
-  render();
+  run();
 })();

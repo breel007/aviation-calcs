@@ -32,6 +32,7 @@
   function setHero(num, unit, sub) {
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
+    $("hero").hidden = false;
   }
   function clearOut(msg) {
     $("warnings").hidden = !msg;
@@ -61,17 +62,17 @@ function run() {
   ];
   if (r.inferred) items.push({ label: 'Caution', value: 'This landing-threshold Super figure is inferred from the in-trail table; confirm with ATC.' });
   setHero(sep, 'AIM 7-4-9  ·  ' + LABELS[r.follower] + ' behind ' + LABELS[r.leader]);
-  $('out').innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(stat).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('exDep').addEventListener('click', function () { $('leader').value = 'heavy'; $('follower').value = 'small'; $('scenario').value = 'same-threshold-departure'; $('leaderWeight').value = ''; $('followerWeight').value = ''; run(); });
 $('exRadar').addEventListener('click', function () { $('leader').value = 'super'; $('follower').value = 'small'; $('scenario').value = 'radar-in-trail'; $('leaderWeight').value = ''; $('followerWeight').value = ''; run(); });
-$('resetBtn').addEventListener('click', function () { $('leader').value = 'heavy'; $('follower').value = 'small'; $('scenario').value = 'same-threshold-departure'; $('leaderWeight').value = ''; $('followerWeight').value = ''; clearOut(); $('hero').hidden = true; });
+$('resetBtn').addEventListener('click', function () { $('leader').value = 'heavy'; $('follower').value = 'small'; $('scenario').value = 'same-threshold-departure'; $('leaderWeight').value = ''; $('followerWeight').value = ''; clearOut(); run(); });
   var form = $("calc-form");
   if (form) {
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    form.addEventListener("change", run);
   }
   if (typeof show === "function") show();
-  render();
+  run();
 })();

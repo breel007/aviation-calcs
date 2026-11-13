@@ -32,6 +32,7 @@
   function setHero(num, unit, sub) {
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
+    $("hero").hidden = false;
   }
   function clearOut(msg) {
     $("warnings").hidden = !msg;
@@ -54,7 +55,7 @@ function run() {
   var r = AccelerateStopCalcs.compute(input);
   if (!r) { clearOut('Enter a decision speed greater than zero, positive acceleration and deceleration, and a recognition time of zero or more.'); return; }
   setHero(fmt(r.totalFt, 0) + ' ft', 'educational accelerate-stop distance');
-  $('out').innerHTML = [
+  $("stat-grid").innerHTML = [
     { label: 'Total distance', value: fmt(r.totalFt, 0) + ' ft  ·  ' + fmt(r.totalM, 0) + ' m  ·  ' + fmt(r.totalSec, 1) + ' s' },
     { label: 'Accelerate to the decision speed', value: fmt(r.accelFt, 0) + ' ft  in  ' + fmt(r.accelSec, 1) + ' s' },
     { label: 'Recognition / reaction', value: fmt(r.reactionFt, 0) + ' ft  in  ' + fmt(r.reactionSec, 1) + ' s' },
@@ -63,13 +64,13 @@ function run() {
 }
 $('calcBtn').addEventListener('click', run);
 $('ex80').addEventListener('click', function () { $('v1').value = '80'; $('v1Unit').value = 'kt'; $('accelKind').value = 'kts-per-s'; $('accelVal').value = '4'; $('decelKind').value = 'kts-per-s'; $('decelVal').value = '8'; $('react').value = '1'; run(); });
-$('resetBtn').addEventListener('click', function () { $('v1').value = '80'; $('accelKind').value = 'kts-per-s'; $('accelVal').value = '4'; $('decelKind').value = 'kts-per-s'; $('decelVal').value = '8'; $('react').value = '1'; clearOut(); $('hero').hidden = true; });
+$('resetBtn').addEventListener('click', function () { $('v1').value = '80'; $('accelKind').value = 'kts-per-s'; $('accelVal').value = '4'; $('decelKind').value = 'kts-per-s'; $('decelVal').value = '8'; $('react').value = '1'; clearOut(); run(); });
 ['v1','accelVal','decelVal','react'].forEach(function (id) { $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') run(); }); });
   var form = $("calc-form");
   if (form) {
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    form.addEventListener("change", run);
   }
   if (typeof show === "function") show();
-  render();
+  run();
 })();

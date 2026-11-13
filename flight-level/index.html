@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <title>Flight Level Calculator — Pressure Altitude, Transition Altitude, and TL | Aviator Calcs</title>
   <meta name="description" content="Convert pressure altitude to a flight level and back, and see whether you would be on QNH or 29.92 given a published transition altitude and transition level. Educational; not an ATC clearance.">
-  <meta name="keywords" content="undefined">
+  <meta name="keywords" content="flight level calculator, flight level calculator, flight level formula, pilot calculator, aviation calculator">
   <meta name="author" content="Aviation Calcs">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://aviatorcalcs.com/flight-level/">
@@ -18,10 +18,10 @@
   <meta property="og:description" content="Convert pressure altitude to a flight level and back, and see whether you would be on QNH or 29.92 given a published transition altitude and transition level. Educational; not an ATC clearance.">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:title" content="Flight Level Calculator">
   <meta name="twitter:description" content="Convert pressure altitude to a flight level and back, and see whether you would be on QNH or 29.92 given a published transition altitude and transition level. Educational; not an ATC clearance.">
   <meta name="twitter:image" content="https://aviatorcalcs.com/shared/og-image.png">
-  <meta name="application-name" content="undefined">
+  <meta name="application-name" content="Flight Level">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,12 +97,14 @@
         </svg>
         <div>
           <p class="brand-kicker">Aviation Calcs</p>
-          <p class="brand-name">undefined</p>
+          <p class="brand-name">Flight Level</p>
         </div>
       </a>
       <nav class="site-nav" aria-label="Site">
         <a href="../">All tools</a>
-
+        <a href="../true-altitude/">True altitude</a>
+        <a href="../cold-temperature-correction/">Cold temperature correction</a>
+        <a href="../point-of-no-return/">PNR &amp; ETP</a>
         <a href="../about.html">About</a>
       </nav>
     </div>
@@ -117,19 +119,19 @@
       <form id="calc-form" action="#" method="get" novalidate>
 <p class="hint">Enter either a pressure altitude in feet or a flight level (180 and 18000 are both accepted for FL180). Transition altitude is in feet; transition level may be entered as 70 or 7000.</p>
 <div class="field"><label for="mode">Convert from</label>
-  <select id="mode"><option value="pa" selected>Pressure altitude</option><option value="fl">Flight level</option></select></div>
-<div class="field" id="rowPa"><label for="pa">Pressure altitude (ft)</label><input id="pa" type="text" inputmode="decimal" value="18000"></div>
-<div class="field" id="rowFl" hidden><label for="fl">Flight level</label><input id="fl" type="text" inputmode="decimal" value="180"></div>
+  <select class="input" id="mode"><option value="pa" selected>Pressure altitude</option><option value="fl">Flight level</option></select></div>
+<div class="field" id="rowPa"><label for="pa">Pressure altitude (ft)</label><input class="input" id="pa" type="text" inputmode="decimal" value="18000"></div>
+<div class="field" id="rowFl" hidden><label for="fl">Flight level</label><input class="input" id="fl" type="text" inputmode="decimal" value="180"></div>
 <div class="pair">
-  <div class="field"><label for="ta">Transition altitude (ft)</label><input id="ta" type="text" inputmode="decimal" value="18000"></div>
-  <div class="field"><label for="tl">Transition level</label><input id="tl" type="text" inputmode="decimal" value="180"></div>
+  <div class="field"><label for="ta">Transition altitude (ft)</label><input class="input" id="ta" type="text" inputmode="decimal" value="18000"></div>
+  <div class="field"><label for="tl">Transition level</label><input class="input" id="tl" type="text" inputmode="decimal" value="180"></div>
 </div>
 <div class="pair">
-  <div class="field"><label for="qnh">QNH (optional, for the PA ↔ altitude offset)</label><input id="qnh" type="text" inputmode="decimal" value="" placeholder="leave blank"></div>
+  <div class="field"><label for="qnh">QNH (optional, for the PA ↔ altitude offset)</label><input class="input" id="qnh" type="text" inputmode="decimal" value="" placeholder="leave blank"></div>
   <div class="field"><label for="qnhUnit">QNH unit</label>
-    <select id="qnhUnit"><option value="inhg" selected>inHg</option><option value="hpa">hPa</option></select></div>
+    <select class="input" id="qnhUnit"><option value="inhg" selected>inHg</option><option value="hpa">hPa</option></select></div>
 </div>
-<button type="button" class="btn" id="calcBtn">Convert flight level</button>
+<button type="button" class="btn btn-primary" id="calcBtn">Convert flight level</button>
 <div class="form-actions"><button type="button" class="btn btn-ghost" id="exUs">Example: 18,000 ft, U.S. transition</button>
 <button type="button" class="btn btn-ghost" id="exEur">Example: FL60, TA 5,000 / TL 70</button>
 <button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
@@ -147,7 +149,7 @@
       </section>
       <aside class="disclaimer" role="note">
         <h2>Disclaimer</h2>
-        <p>undefined</p>
+        <p>This calculator is an educational and planning aid only. It is <strong>not</strong> a substitute for the POH/AFM, official FAA publications and charts, ATC instructions, or your judgment as pilot in command. Results come from simplified models and the values you enter; check them against the aircraft’s published data before relying on them.</p>
       </aside>
     </section>
 

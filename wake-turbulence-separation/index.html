@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <title>Wake Turbulence Separation Calculator — AIM 7-4-9 Minima | Aviator Calcs</title>
   <meta name="description" content="Look up FAA AIM 7-4-9 wake-turbulence separation by leading and following weight class for radar in-trail, landing, and departure scenarios. Educational; not a substitute for ATC.">
-  <meta name="keywords" content="undefined">
+  <meta name="keywords" content="wake turbulence separation calculator, wake turbulence separation calculator, wake turbulence separation formula, pilot calculator, aviation calculator">
   <meta name="author" content="Aviation Calcs">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://aviatorcalcs.com/wake-turbulence-separation/">
@@ -18,10 +18,10 @@
   <meta property="og:description" content="Look up FAA AIM 7-4-9 wake-turbulence separation by leading and following weight class for radar in-trail, landing, and departure scenarios. Educational; not a substitute for ATC.">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:title" content="Wake Turbulence Separation Calculator">
   <meta name="twitter:description" content="Look up FAA AIM 7-4-9 wake-turbulence separation by leading and following weight class for radar in-trail, landing, and departure scenarios. Educational; not a substitute for ATC.">
   <meta name="twitter:image" content="https://aviatorcalcs.com/shared/og-image.png">
-  <meta name="application-name" content="undefined">
+  <meta name="application-name" content="Wake Turbulence Separation">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,12 +97,14 @@
         </svg>
         <div>
           <p class="brand-kicker">Aviation Calcs</p>
-          <p class="brand-name">undefined</p>
+          <p class="brand-name">Wake Turbulence Separation</p>
         </div>
       </a>
       <nav class="site-nav" aria-label="Site">
         <a href="../">All tools</a>
-
+        <a href="../rvr-visibility/">RVR / visibility</a>
+        <a href="../vor-dme-1-in-60/">VOR / DME &amp; 1-in-60</a>
+        <a href="../visual-descent-point/">Visual descent point</a>
         <a href="../about.html">About</a>
       </nav>
     </div>
@@ -118,12 +120,12 @@
 <p class="hint">Small is 41,000 lb MTOW or less, Large is more than 41,000 and less than 300,000, Heavy is 300,000 or more, Super is the A380 / An-225 type, and the B757 has its own rows. You can type a takeoff weight instead of picking the class.</p>
 <div class="pair">
   <div class="field"><label for="leader">Leading aircraft</label>
-    <select id="leader"><option value="super">Super (A380 / An-225)</option><option value="heavy" selected>Heavy (≥ 300,000 lb)</option><option value="b757">Boeing 757</option><option value="large">Large (more than 41,000 lb)</option><option value="small">Small (≤ 41,000 lb)</option></select></div>
+    <select class="input" id="leader"><option value="super">Super (A380 / An-225)</option><option value="heavy" selected>Heavy (≥ 300,000 lb)</option><option value="b757">Boeing 757</option><option value="large">Large (more than 41,000 lb)</option><option value="small">Small (≤ 41,000 lb)</option></select></div>
   <div class="field"><label for="follower">Following aircraft</label>
-    <select id="follower"><option value="super">Super (A380 / An-225)</option><option value="heavy">Heavy (≥ 300,000 lb)</option><option value="b757">Boeing 757</option><option value="large">Large (more than 41,000 lb)</option><option value="small" selected>Small (≤ 41,000 lb)</option></select></div>
+    <select class="input" id="follower"><option value="super">Super (A380 / An-225)</option><option value="heavy">Heavy (≥ 300,000 lb)</option><option value="b757">Boeing 757</option><option value="large">Large (more than 41,000 lb)</option><option value="small" selected>Small (≤ 41,000 lb)</option></select></div>
 </div>
 <div class="field"><label for="scenario">Scenario</label>
-  <select id="scenario">
+  <select class="input" id="scenario">
     <option value="same-threshold-departure" selected>Same-threshold departure (AIM 7-4-9 b)</option>
     <option value="intersection-departure">Intersection departure (AIM 7-4-9 c–e)</option>
     <option value="opposite-direction">Opposite-direction / behind a low approach (c–e)</option>
@@ -131,10 +133,10 @@
     <option value="landing-threshold">Landing, leader over the threshold (a2)</option>
   </select></div>
 <div class="pair">
-  <div class="field"><label for="leaderWeight">Leader weight, lb (optional; overrides the menu if you clear the class)</label><input id="leaderWeight" type="text" inputmode="decimal" value="" placeholder=""></div>
-  <div class="field"><label for="followerWeight">Follower weight, lb (optional)</label><input id="followerWeight" type="text" inputmode="decimal" value=""></div>
+  <div class="field"><label for="leaderWeight">Leader weight, lb (optional; overrides the menu if you clear the class)</label><input class="input" id="leaderWeight" type="text" inputmode="decimal" value="" placeholder=""></div>
+  <div class="field"><label for="followerWeight">Follower weight, lb (optional)</label><input class="input" id="followerWeight" type="text" inputmode="decimal" value=""></div>
 </div>
-<button type="button" class="btn" id="calcBtn">Look up separation</button>
+<button type="button" class="btn btn-primary" id="calcBtn">Look up separation</button>
 <div class="form-actions"><button type="button" class="btn btn-ghost" id="exDep">Example: Small behind Heavy, same threshold</button>
 <button type="button" class="btn btn-ghost" id="exRadar">Example: Small behind Super, in-trail</button>
 <button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
@@ -152,7 +154,7 @@
       </section>
       <aside class="disclaimer" role="note">
         <h2>Disclaimer</h2>
-        <p>undefined</p>
+        <p>This calculator is an educational and planning aid only. It is <strong>not</strong> a substitute for the POH/AFM, official FAA publications and charts, ATC instructions, or your judgment as pilot in command. Results come from simplified models and the values you enter; check them against the aircraft’s published data before relying on them.</p>
       </aside>
     </section>
 

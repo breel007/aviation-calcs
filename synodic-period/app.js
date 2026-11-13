@@ -32,6 +32,7 @@
   function setHero(num, unit, sub) {
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
+    $("hero").hidden = false;
   }
   function clearOut(msg) {
     $("warnings").hidden = !msg;
@@ -51,7 +52,7 @@ function run() {
   var r = SynodicPeriodCalcs.compute(input);
   if (!r) { clearOut('Pick two different bodies, or enter two different positive periods.'); return; }
   setHero(fmt(r.synodicDays, 1) + ' days', 'synodic period  ·  ' + fmt(r.synodicYears, 2) + ' yr');
-  $('out').innerHTML = [
+  $("stat-grid").innerHTML = [
     { label: 'Synodic period', value: fmt(r.synodicDays, 2) + ' days  ·  ' + fmt(r.synodicYears, 3) + ' years' },
     { label: 'Sidereal period 1', value: fmt(r.period1Days, 3) + ' days' },
     { label: 'Sidereal period 2', value: fmt(r.period2Days, 3) + ' days' },
@@ -60,12 +61,12 @@ function run() {
 }
 $('calcBtn').addEventListener('click', run);
 $('exEM').addEventListener('click', function () { $('body1').value = 'earth'; $('body2').value = 'mars'; run(); });
-$('resetBtn').addEventListener('click', function () { $('body1').value = 'earth'; $('body2').value = 'mars'; $('p1').value = ''; $('p2').value = ''; clearOut(); $('hero').hidden = true; });
+$('resetBtn').addEventListener('click', function () { $('body1').value = 'earth'; $('body2').value = 'mars'; $('p1').value = ''; $('p2').value = ''; clearOut(); run(); });
   var form = $("calc-form");
   if (form) {
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    form.addEventListener("change", run);
   }
   if (typeof show === "function") show();
-  render();
+  run();
 })();

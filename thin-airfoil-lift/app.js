@@ -32,6 +32,7 @@
   function setHero(num, unit, sub) {
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
+    $("hero").hidden = false;
   }
   function clearOut(msg) {
     $("warnings").hidden = !msg;
@@ -55,17 +56,17 @@ function run() {
   ];
   if (r.liftN != null) items.unshift({ label: 'Lift', value: fmt(r.liftN, 1) + ' N' });
   setHero('cl ' + fmt(r.cl, 3), 'thin-airfoil theory');
-  $('out').innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(stat).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('ex5').addEventListener('click', function () { $('alpha').value = '5'; $('aL0').value = '0'; $('angleUnit').value = 'deg'; $('speed').value = ''; $('area').value = ''; run(); });
-$('resetBtn').addEventListener('click', function () { $('alpha').value = '5'; $('aL0').value = '0'; $('speed').value = ''; $('area').value = ''; $('density').value = ''; clearOut(); $('hero').hidden = true; });
+$('resetBtn').addEventListener('click', function () { $('alpha').value = '5'; $('aL0').value = '0'; $('speed').value = ''; $('area').value = ''; $('density').value = ''; clearOut(); run(); });
 ['alpha','aL0','speed','area','density'].forEach(function (id) { $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') run(); }); });
   var form = $("calc-form");
   if (form) {
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    form.addEventListener("change", run);
   }
   if (typeof show === "function") show();
-  render();
+  run();
 })();

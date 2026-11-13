@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <title>MacCready Speed-to-Fly Calculator — Glider Polar | Aviator Calcs</title>
   <meta name="description" content="Find MacCready speed-to-fly, still-air best glide, and minimum sink from a quadratic glider polar and a next-thermal climb rate. Educational; not a flight computer.">
-  <meta name="keywords" content="undefined">
+  <meta name="keywords" content="maccready speed-to-fly calculator, maccready speed-to-fly calculator, maccready speed-to-fly formula, pilot calculator, aviation calculator">
   <meta name="author" content="Aviation Calcs">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://aviatorcalcs.com/maccready/">
@@ -18,10 +18,10 @@
   <meta property="og:description" content="Find MacCready speed-to-fly, still-air best glide, and minimum sink from a quadratic glider polar and a next-thermal climb rate. Educational; not a flight computer.">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:title" content="MacCready Speed-to-Fly Calculator">
   <meta name="twitter:description" content="Find MacCready speed-to-fly, still-air best glide, and minimum sink from a quadratic glider polar and a next-thermal climb rate. Educational; not a flight computer.">
   <meta name="twitter:image" content="https://aviatorcalcs.com/shared/og-image.png">
-  <meta name="application-name" content="undefined">
+  <meta name="application-name" content="MacCready Speed-to-Fly">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,12 +97,14 @@
         </svg>
         <div>
           <p class="brand-kicker">Aviation Calcs</p>
-          <p class="brand-name">undefined</p>
+          <p class="brand-name">MacCready Speed-to-Fly</p>
         </div>
       </a>
       <nav class="site-nav" aria-label="Site">
         <a href="../">All tools</a>
-
+        <a href="../glide-distance/">Glide distance</a>
+        <a href="../turn-radius/">Turn Radius</a>
+        <a href="../climb-gradient/">Climb gradient</a>
         <a href="../about.html">About</a>
       </nav>
     </div>
@@ -117,25 +119,25 @@
       <form id="calc-form" action="#" method="get" novalidate>
 <p class="hint">Sink and the MacCready climb are positive numbers in the same unit (knots of vertical speed, or ft/min). Two polar points fit w = a + c V². A third point adds a linear term. Airspeeds are true, in still air.</p>
 <div class="pair">
-  <div class="field"><label for="v1">Polar point 1 — airspeed</label><input id="v1" type="text" inputmode="decimal" value="20"></div>
-  <div class="field"><label for="w1">Point 1 — sink</label><input id="w1" type="text" inputmode="decimal" value="2"></div>
+  <div class="field"><label for="v1">Polar point 1 — airspeed</label><input class="input" id="v1" type="text" inputmode="decimal" value="20"></div>
+  <div class="field"><label for="w1">Point 1 — sink</label><input class="input" id="w1" type="text" inputmode="decimal" value="2"></div>
 </div>
 <div class="pair">
-  <div class="field"><label for="v2">Polar point 2 — airspeed</label><input id="v2" type="text" inputmode="decimal" value="40"></div>
-  <div class="field"><label for="w2">Point 2 — sink</label><input id="w2" type="text" inputmode="decimal" value="5"></div>
+  <div class="field"><label for="v2">Polar point 2 — airspeed</label><input class="input" id="v2" type="text" inputmode="decimal" value="40"></div>
+  <div class="field"><label for="w2">Point 2 — sink</label><input class="input" id="w2" type="text" inputmode="decimal" value="5"></div>
 </div>
 <div class="pair">
-  <div class="field"><label for="v3">Optional point 3 — airspeed</label><input id="v3" type="text" inputmode="decimal" value=""></div>
-  <div class="field"><label for="w3">Optional point 3 — sink</label><input id="w3" type="text" inputmode="decimal" value=""></div>
+  <div class="field"><label for="v3">Optional point 3 — airspeed</label><input class="input" id="v3" type="text" inputmode="decimal" value=""></div>
+  <div class="field"><label for="w3">Optional point 3 — sink</label><input class="input" id="w3" type="text" inputmode="decimal" value=""></div>
 </div>
 <div class="pair">
-  <div class="field"><label for="mc">MacCready climb (next thermal)</label><input id="mc" type="text" inputmode="decimal" value="3"></div>
+  <div class="field"><label for="mc">MacCready climb (next thermal)</label><input class="input" id="mc" type="text" inputmode="decimal" value="3"></div>
   <div class="field"><label for="sinkUnit">Sink and Mc unit</label>
-    <select id="sinkUnit"><option value="kt" selected>knots</option><option value="fpm">ft/min</option></select></div>
+    <select class="input" id="sinkUnit"><option value="kt" selected>knots</option><option value="fpm">ft/min</option></select></div>
 </div>
 <div class="field"><label for="speedUnit">Airspeed unit</label>
-  <select id="speedUnit"><option value="kt" selected>knots</option><option value="mph">mph</option><option value="kph">km/h</option></select></div>
-<button type="button" class="btn" id="calcBtn">Calculate speed to fly</button>
+  <select class="input" id="speedUnit"><option value="kt" selected>knots</option><option value="mph">mph</option><option value="kph">km/h</option></select></div>
+<button type="button" class="btn btn-primary" id="calcBtn">Calculate speed to fly</button>
 <div class="form-actions"><button type="button" class="btn btn-ghost" id="ex40">Example: 40 kt speed to fly, Mc = 3 kt</button>
 <button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
       </form>
@@ -152,7 +154,7 @@
       </section>
       <aside class="disclaimer" role="note">
         <h2>Disclaimer</h2>
-        <p>undefined</p>
+        <p>This calculator is an educational and planning aid only. It is <strong>not</strong> a substitute for the POH/AFM, official FAA publications and charts, ATC instructions, or your judgment as pilot in command. Results come from simplified models and the values you enter; check them against the aircraft’s published data before relying on them.</p>
       </aside>
     </section>
 

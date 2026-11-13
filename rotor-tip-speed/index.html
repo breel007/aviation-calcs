@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <title>Rotor Tip Speed Calculator — Advance Ratio and Tip Mach | Aviator Calcs</title>
   <meta name="description" content="Compute helicopter rotor tip speed ΩR, advance ratio μ = V/(ΩR), and tip Mach, including a helical advancing-tip Mach. Educational; not a rotor limit.">
-  <meta name="keywords" content="undefined">
+  <meta name="keywords" content="rotor tip speed calculator, rotor tip speed calculator, rotor tip speed formula, aerospace engineering calculator, aviation calculator">
   <meta name="author" content="Aviation Calcs">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://aviatorcalcs.com/rotor-tip-speed/">
@@ -18,10 +18,10 @@
   <meta property="og:description" content="Compute helicopter rotor tip speed ΩR, advance ratio μ = V/(ΩR), and tip Mach, including a helical advancing-tip Mach. Educational; not a rotor limit.">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:title" content="Rotor Tip Speed Calculator">
   <meta name="twitter:description" content="Compute helicopter rotor tip speed ΩR, advance ratio μ = V/(ΩR), and tip Mach, including a helical advancing-tip Mach. Educational; not a rotor limit.">
   <meta name="twitter:image" content="https://aviatorcalcs.com/shared/og-image.png">
-  <meta name="application-name" content="undefined">
+  <meta name="application-name" content="Rotor Tip Speed">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,12 +97,14 @@
         </svg>
         <div>
           <p class="brand-kicker">Aviation Calcs</p>
-          <p class="brand-name">undefined</p>
+          <p class="brand-name">Rotor Tip Speed</p>
         </div>
       </a>
       <nav class="site-nav" aria-label="Site">
         <a href="../">All tools</a>
-
+        <a href="../hover-power/">Hover Power</a>
+        <a href="../isentropic-flow/">Isentropic flow</a>
+        <a href="../propeller-static-thrust/">Propeller Static Thrust</a>
         <a href="../about.html">About</a>
       </nav>
     </div>
@@ -117,26 +119,26 @@
       <form id="calc-form" action="#" method="get" novalidate>
 <p class="hint">RPM is rotor speed, not engine RPM, unless they are geared 1:1. Temperature defaults to 15 °C (a = 340.294 m/s). You may enter a pressure altitude instead of an OAT to use ISA temperature.</p>
 <div class="pair">
-  <div class="field"><label for="rpm">Rotor speed</label><input id="rpm" type="text" inputmode="decimal" value="400"></div>
+  <div class="field"><label for="rpm">Rotor speed</label><input class="input" id="rpm" type="text" inputmode="decimal" value="400"></div>
   <div class="field"><label for="omegaUnit">Speed unit</label>
-    <select id="omegaUnit"><option value="rpm" selected>rpm</option><option value="rps">rps</option><option value="rad/s">rad/s</option></select></div>
+    <select class="input" id="omegaUnit"><option value="rpm" selected>rpm</option><option value="rps">rps</option><option value="rad/s">rad/s</option></select></div>
 </div>
 <div class="pair">
-  <div class="field"><label for="radius">Blade radius</label><input id="radius" type="text" inputmode="decimal" value="5.5"></div>
+  <div class="field"><label for="radius">Blade radius</label><input class="input" id="radius" type="text" inputmode="decimal" value="5.5"></div>
   <div class="field"><label for="radUnit">Radius unit</label>
-    <select id="radUnit"><option value="m" selected>metres</option><option value="ft">feet</option></select></div>
+    <select class="input" id="radUnit"><option value="m" selected>metres</option><option value="ft">feet</option></select></div>
 </div>
 <div class="pair">
-  <div class="field"><label for="speed">Flight speed (optional)</label><input id="speed" type="text" inputmode="decimal" value="120"></div>
+  <div class="field"><label for="speed">Flight speed (optional)</label><input class="input" id="speed" type="text" inputmode="decimal" value="120"></div>
   <div class="field"><label for="speedUnit">Flight-speed unit</label>
-    <select id="speedUnit"><option value="kt" selected>knots</option><option value="mph">mph</option><option value="kph">km/h</option></select></div>
+    <select class="input" id="speedUnit"><option value="kt" selected>knots</option><option value="mph">mph</option><option value="kph">km/h</option></select></div>
 </div>
 <div class="pair">
-  <div class="field"><label for="oat">Outside air temperature (optional)</label><input id="oat" type="text" inputmode="decimal" value="15"></div>
+  <div class="field"><label for="oat">Outside air temperature (optional)</label><input class="input" id="oat" type="text" inputmode="decimal" value="15"></div>
   <div class="field"><label for="tempUnit">Temperature unit</label>
-    <select id="tempUnit"><option value="C" selected>°C</option><option value="F">°F</option></select></div>
+    <select class="input" id="tempUnit"><option value="C" selected>°C</option><option value="F">°F</option></select></div>
 </div>
-<button type="button" class="btn" id="calcBtn">Calculate tip speed</button>
+<button type="button" class="btn btn-primary" id="calcBtn">Calculate tip speed</button>
 <div class="form-actions"><button type="button" class="btn btn-ghost" id="ex400">Example: 400 rpm, 5.5 m, 120 kt</button>
 <button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
       </form>
@@ -153,7 +155,7 @@
       </section>
       <aside class="disclaimer" role="note">
         <h2>Disclaimer</h2>
-        <p>undefined</p>
+        <p>This calculator is an educational aid only. It uses simplified textbook models and the values you enter, and it is <strong>not</strong> a substitute for engineering analysis, manufacturer data, official publications, or the POH/AFM for any aircraft. Verify results independently before relying on them.</p>
       </aside>
     </section>
 

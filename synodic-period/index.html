@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <title>Synodic Period Calculator — Launch Windows and Planetary Alignments | Aviator Calcs</title>
   <meta name="description" content="Compute the synodic period of two orbits or planets from 1/S = |1/T1 − 1/T2|, including a preset Earth–Mars window of about 780 days. Educational; circular coplanar model.">
-  <meta name="keywords" content="undefined">
+  <meta name="keywords" content="synodic period calculator, synodic period calculator, synodic period formula, aerospace engineering calculator, aviation calculator">
   <meta name="author" content="Aviation Calcs">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://aviatorcalcs.com/synodic-period/">
@@ -18,10 +18,10 @@
   <meta property="og:description" content="Compute the synodic period of two orbits or planets from 1/S = |1/T1 − 1/T2|, including a preset Earth–Mars window of about 780 days. Educational; circular coplanar model.">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:title" content="Synodic Period Calculator">
   <meta name="twitter:description" content="Compute the synodic period of two orbits or planets from 1/S = |1/T1 − 1/T2|, including a preset Earth–Mars window of about 780 days. Educational; circular coplanar model.">
   <meta name="twitter:image" content="https://aviatorcalcs.com/shared/og-image.png">
-  <meta name="application-name" content="undefined">
+  <meta name="application-name" content="Synodic Period">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,12 +97,14 @@
         </svg>
         <div>
           <p class="brand-kicker">Aviation Calcs</p>
-          <p class="brand-name">undefined</p>
+          <p class="brand-name">Synodic Period</p>
         </div>
       </a>
       <nav class="site-nav" aria-label="Site">
         <a href="../">All tools</a>
-
+        <a href="../planetary-transfer/">Planetary Transfer</a>
+        <a href="../delta-v-budget/">Delta-v budget</a>
+        <a href="../hohmann-transfer/">Hohmann transfer</a>
         <a href="../about.html">About</a>
       </nav>
     </div>
@@ -118,7 +120,7 @@
 <p class="hint">Presets use mean sidereal periods (Earth 365.256 days, Mars 686.980 days, and a few others). Custom periods may be in days, hours, or years.</p>
 <div class="pair">
   <div class="field"><label for="body1">First body or custom period</label>
-    <select id="body1">
+    <select class="input" id="body1">
       <option value="earth" selected>Earth (365.256 d)</option>
       <option value="venus">Venus (224.701 d)</option>
       <option value="mars">Mars (686.980 d)</option>
@@ -128,7 +130,7 @@
       <option value="custom">Custom period…</option>
     </select></div>
   <div class="field"><label for="body2">Second body or custom period</label>
-    <select id="body2">
+    <select class="input" id="body2">
       <option value="mars" selected>Mars (686.980 d)</option>
       <option value="earth">Earth (365.256 d)</option>
       <option value="venus">Venus (224.701 d)</option>
@@ -139,12 +141,12 @@
     </select></div>
 </div>
 <div class="pair" id="rowCustom">
-  <div class="field"><label for="p1">Custom period 1</label><input id="p1" type="text" inputmode="decimal" value=""></div>
-  <div class="field"><label for="p2">Custom period 2</label><input id="p2" type="text" inputmode="decimal" value=""></div>
+  <div class="field"><label for="p1">Custom period 1</label><input class="input" id="p1" type="text" inputmode="decimal" value=""></div>
+  <div class="field"><label for="p2">Custom period 2</label><input class="input" id="p2" type="text" inputmode="decimal" value=""></div>
 </div>
 <div class="field"><label for="unit">Custom period unit</label>
-  <select id="unit"><option value="day" selected>days</option><option value="h">hours</option><option value="yr">years (365.25 d)</option></select></div>
-<button type="button" class="btn" id="calcBtn">Calculate synodic period</button>
+  <select class="input" id="unit"><option value="day" selected>days</option><option value="h">hours</option><option value="yr">years (365.25 d)</option></select></div>
+<button type="button" class="btn btn-primary" id="calcBtn">Calculate synodic period</button>
 <div class="form-actions"><button type="button" class="btn btn-ghost" id="exEM">Example: Earth–Mars</button>
 <button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
       </form>
@@ -161,7 +163,7 @@
       </section>
       <aside class="disclaimer" role="note">
         <h2>Disclaimer</h2>
-        <p>undefined</p>
+        <p>This calculator is an educational aid only. It uses simplified textbook models and the values you enter, and it is <strong>not</strong> a substitute for engineering analysis, manufacturer data, official publications, or the POH/AFM for any aircraft. Verify results independently before relying on them.</p>
       </aside>
     </section>
 

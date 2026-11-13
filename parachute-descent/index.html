@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <title>Parachute Descent Calculator — Time to Ground and Wind Drift | Aviator Calcs</title>
   <meta name="description" content="Estimate parachute time-to-ground and wind drift from descent rate or from mass, Cd, and area, including a from-rest quadratic-drag time. Educational; not a canopy manual.">
-  <meta name="keywords" content="undefined">
+  <meta name="keywords" content="parachute descent calculator, parachute descent calculator, parachute descent formula, pilot calculator, aviation calculator">
   <meta name="author" content="Aviation Calcs">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://aviatorcalcs.com/parachute-descent/">
@@ -18,10 +18,10 @@
   <meta property="og:description" content="Estimate parachute time-to-ground and wind drift from descent rate or from mass, Cd, and area, including a from-rest quadratic-drag time. Educational; not a canopy manual.">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:title" content="Parachute Descent Calculator">
   <meta name="twitter:description" content="Estimate parachute time-to-ground and wind drift from descent rate or from mass, Cd, and area, including a from-rest quadratic-drag time. Educational; not a canopy manual.">
   <meta name="twitter:image" content="https://aviatorcalcs.com/shared/og-image.png">
-  <meta name="application-name" content="undefined">
+  <meta name="application-name" content="Parachute Descent">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,12 +97,14 @@
         </svg>
         <div>
           <p class="brand-kicker">Aviation Calcs</p>
-          <p class="brand-name">undefined</p>
+          <p class="brand-name">Parachute Descent</p>
         </div>
       </a>
       <nav class="site-nav" aria-label="Site">
         <a href="../">All tools</a>
-
+        <a href="../maccready/">MacCready Speed-to-Fly</a>
+        <a href="../balloon-lift/">Hot-Air Balloon Lift</a>
+        <a href="../drag-polar/">Drag polar / L/D max</a>
         <a href="../about.html">About</a>
       </nav>
     </div>
@@ -117,33 +119,33 @@
       <form id="calc-form" action="#" method="get" novalidate>
 <p class="hint">Enter a descent rate directly, or leave it blank and fill in mass, Cd, and reference area. Height defaults to feet; descent rate defaults to feet per minute. Wind is an assumed constant horizontal wind.</p>
 <div class="pair">
-  <div class="field"><label for="height">Height AGL</label><input id="height" type="text" inputmode="decimal" value="1000"></div>
+  <div class="field"><label for="height">Height AGL</label><input class="input" id="height" type="text" inputmode="decimal" value="1000"></div>
   <div class="field"><label for="altUnit">Height unit</label>
-    <select id="altUnit"><option value="ft" selected>feet</option><option value="m">metres</option></select></div>
+    <select class="input" id="altUnit"><option value="ft" selected>feet</option><option value="m">metres</option></select></div>
 </div>
 <div class="pair">
-  <div class="field"><label for="vt">Descent rate (optional if you enter mass and area)</label><input id="vt" type="text" inputmode="decimal" value="1000"></div>
+  <div class="field"><label for="vt">Descent rate (optional if you enter mass and area)</label><input class="input" id="vt" type="text" inputmode="decimal" value="1000"></div>
   <div class="field"><label for="vtUnit">Descent-rate unit</label>
-    <select id="vtUnit"><option value="fpm" selected>ft/min</option><option value="kt">knots</option><option value="mps">m/s</option></select></div>
+    <select class="input" id="vtUnit"><option value="fpm" selected>ft/min</option><option value="kt">knots</option><option value="mps">m/s</option></select></div>
 </div>
 <div class="pair">
-  <div class="field"><label for="wind">Wind (optional)</label><input id="wind" type="text" inputmode="decimal" value="10"></div>
+  <div class="field"><label for="wind">Wind (optional)</label><input class="input" id="wind" type="text" inputmode="decimal" value="10"></div>
   <div class="field"><label for="windUnit">Wind unit</label>
-    <select id="windUnit"><option value="kt" selected>knots</option><option value="mph">mph</option><option value="mps">m/s</option></select></div>
+    <select class="input" id="windUnit"><option value="kt" selected>knots</option><option value="mph">mph</option><option value="mps">m/s</option></select></div>
 </div>
 <p class="hint">Optional terminal-speed inputs, used only when descent rate is left blank:</p>
 <div class="pair">
-  <div class="field"><label for="mass">Mass</label><input id="mass" type="text" inputmode="decimal" value=""></div>
+  <div class="field"><label for="mass">Mass</label><input class="input" id="mass" type="text" inputmode="decimal" value=""></div>
   <div class="field"><label for="massUnit">Mass unit</label>
-    <select id="massUnit"><option value="kg" selected>kg</option><option value="lb">lb</option></select></div>
+    <select class="input" id="massUnit"><option value="kg" selected>kg</option><option value="lb">lb</option></select></div>
 </div>
 <div class="pair">
-  <div class="field"><label for="cd">Drag coefficient Cd</label><input id="cd" type="text" inputmode="decimal" value=""></div>
-  <div class="field"><label for="area">Reference area</label><input id="area" type="text" inputmode="decimal" value=""></div>
+  <div class="field"><label for="cd">Drag coefficient Cd</label><input class="input" id="cd" type="text" inputmode="decimal" value=""></div>
+  <div class="field"><label for="area">Reference area</label><input class="input" id="area" type="text" inputmode="decimal" value=""></div>
 </div>
 <div class="field"><label for="areaUnit">Area unit</label>
-  <select id="areaUnit"><option value="m2" selected>m²</option><option value="ft2">ft²</option></select></div>
-<button type="button" class="btn" id="calcBtn">Calculate descent and drift</button>
+  <select class="input" id="areaUnit"><option value="m2" selected>m²</option><option value="ft2">ft²</option></select></div>
+<button type="button" class="btn btn-primary" id="calcBtn">Calculate descent and drift</button>
 <div class="form-actions"><button type="button" class="btn btn-ghost" id="ex1000">Example: 1,000 ft, 1,000 fpm, 10 kt</button>
 <button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
       </form>
@@ -160,7 +162,7 @@
       </section>
       <aside class="disclaimer" role="note">
         <h2>Disclaimer</h2>
-        <p>undefined</p>
+        <p>This calculator is an educational and planning aid only. It is <strong>not</strong> a substitute for the POH/AFM, official FAA publications and charts, ATC instructions, or your judgment as pilot in command. Results come from simplified models and the values you enter; check them against the aircraft’s published data before relying on them.</p>
       </aside>
     </section>
 

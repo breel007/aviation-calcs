@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <title>Wind Shear and Gradient Calculator — Power-Law and kt/100 ft Profiles | Aviator Calcs</title>
   <meta name="description" content="Estimate wind at a second height from a 1/7-power-law profile or a linear shear in knots per 100 feet. Educational; not a microburst or LLWS alert.">
-  <meta name="keywords" content="undefined">
+  <meta name="keywords" content="wind shear and gradient calculator, wind shear and gradient calculator, wind shear and gradient formula, pilot calculator, aviation calculator">
   <meta name="author" content="Aviation Calcs">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://aviatorcalcs.com/wind-shear-gradient/">
@@ -18,10 +18,10 @@
   <meta property="og:description" content="Estimate wind at a second height from a 1/7-power-law profile or a linear shear in knots per 100 feet. Educational; not a microburst or LLWS alert.">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:title" content="Wind Shear and Gradient Calculator">
   <meta name="twitter:description" content="Estimate wind at a second height from a 1/7-power-law profile or a linear shear in knots per 100 feet. Educational; not a microburst or LLWS alert.">
   <meta name="twitter:image" content="https://aviatorcalcs.com/shared/og-image.png">
-  <meta name="application-name" content="undefined">
+  <meta name="application-name" content="Wind Shear and Gradient">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,12 +97,14 @@
         </svg>
         <div>
           <p class="brand-kicker">Aviation Calcs</p>
-          <p class="brand-name">undefined</p>
+          <p class="brand-name">Wind Shear and Gradient</p>
         </div>
       </a>
       <nav class="site-nav" aria-label="Site">
         <a href="../">All tools</a>
-
+        <a href="../wind-chill/">Wind Chill</a>
+        <a href="../zulu-time-converter/">Zulu time</a>
+        <a href="../heat-index/">Heat index</a>
         <a href="../about.html">About</a>
       </nav>
     </div>
@@ -117,23 +119,23 @@
       <form id="calc-form" action="#" method="get" novalidate>
 <p class="hint">Reference height must be greater than zero (a common surface-wind height is 30 or 33 ft). The 1/7 exponent is a neutral-stability rule of thumb over relatively smooth terrain; over water α is often nearer 0.11, and over rougher or more stable conditions it can be 0.25–0.40.</p>
 <div class="field"><label for="mode">Profile</label>
-  <select id="mode"><option value="power" selected>Power law</option><option value="linear">Linear shear (kt / 100 ft)</option></select></div>
+  <select class="input" id="mode"><option value="power" selected>Power law</option><option value="linear">Linear shear (kt / 100 ft)</option></select></div>
 <div class="pair">
-  <div class="field"><label for="vref">Wind at the reference height</label><input id="vref" type="text" inputmode="decimal" value="20"></div>
-  <div class="field"><label for="href">Reference height</label><input id="href" type="text" inputmode="decimal" value="30"></div>
+  <div class="field"><label for="vref">Wind at the reference height</label><input class="input" id="vref" type="text" inputmode="decimal" value="20"></div>
+  <div class="field"><label for="href">Reference height</label><input class="input" id="href" type="text" inputmode="decimal" value="30"></div>
 </div>
 <div class="pair">
-  <div class="field"><label for="height">Height of interest</label><input id="height" type="text" inputmode="decimal" value="1000"></div>
+  <div class="field"><label for="height">Height of interest</label><input class="input" id="height" type="text" inputmode="decimal" value="1000"></div>
   <div class="field"><label for="altUnit">Height unit</label>
-    <select id="altUnit"><option value="ft" selected>feet</option><option value="m">metres</option></select></div>
+    <select class="input" id="altUnit"><option value="ft" selected>feet</option><option value="m">metres</option></select></div>
 </div>
 <div class="pair">
   <div class="field"><label for="speedUnit">Wind unit</label>
-    <select id="speedUnit"><option value="kt" selected>knots</option><option value="mph">mph</option><option value="mps">m/s</option></select></div>
-  <div class="field" id="rowAlpha"><label for="alpha">Power-law exponent α (blank = 1/7)</label><input id="alpha" type="text" inputmode="decimal" value="" placeholder="1/7 ≈ 0.143"></div>
-  <div class="field" id="rowShear" hidden><label for="shear">Linear shear (kt / 100 ft)</label><input id="shear" type="text" inputmode="decimal" value="3"></div>
+    <select class="input" id="speedUnit"><option value="kt" selected>knots</option><option value="mph">mph</option><option value="mps">m/s</option></select></div>
+  <div class="field" id="rowAlpha"><label for="alpha">Power-law exponent α (blank = 1/7)</label><input class="input" id="alpha" type="text" inputmode="decimal" value="" placeholder="1/7 ≈ 0.143"></div>
+  <div class="field" id="rowShear" hidden><label for="shear">Linear shear (kt / 100 ft)</label><input class="input" id="shear" type="text" inputmode="decimal" value="3"></div>
 </div>
-<button type="button" class="btn" id="calcBtn">Calculate wind at height</button>
+<button type="button" class="btn btn-primary" id="calcBtn">Calculate wind at height</button>
 <div class="form-actions"><button type="button" class="btn btn-ghost" id="exPower">Example: 20 kt at 30 ft, 1,000 ft, 1/7 law</button>
 <button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
       </form>
@@ -150,7 +152,7 @@
       </section>
       <aside class="disclaimer" role="note">
         <h2>Disclaimer</h2>
-        <p>undefined</p>
+        <p>This calculator is an educational and planning aid only. It is <strong>not</strong> a substitute for the POH/AFM, official FAA publications and charts, ATC instructions, or your judgment as pilot in command. Results come from simplified models and the values you enter; check them against the aircraft’s published data before relying on them.</p>
       </aside>
     </section>
 

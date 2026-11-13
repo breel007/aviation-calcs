@@ -32,6 +32,7 @@
   function setHero(num, unit, sub) {
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
+    $("hero").hidden = false;
   }
   function clearOut(msg) {
     $("warnings").hidden = !msg;
@@ -63,20 +64,20 @@ function run() {
     items.push({ label: 'PA − QNH offset', value: fmt(r.qnhOffsetFt, 0) + ' ft' });
   }
   setHero(r.flightLevelLabel, 'from ' + fmt(r.pressureAltitudeFt, 0) + ' ft PA');
-  $('out').innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(stat).join('');
 }
 $('mode').addEventListener('change', syncMode);
 $('calcBtn').addEventListener('click', run);
 $('exUs').addEventListener('click', function () { $('mode').value = 'pa'; syncMode(); $('pa').value = '18000'; $('ta').value = '18000'; $('tl').value = '180'; $('qnh').value = ''; run(); });
 $('exEur').addEventListener('click', function () { $('mode').value = 'fl'; syncMode(); $('fl').value = '60'; $('ta').value = '5000'; $('tl').value = '70'; $('qnh').value = ''; run(); });
-$('resetBtn').addEventListener('click', function () { $('mode').value = 'pa'; syncMode(); $('pa').value = '18000'; $('fl').value = '180'; $('ta').value = '18000'; $('tl').value = '180'; $('qnh').value = ''; $('qnhUnit').value = 'inhg'; clearOut(); $('hero').hidden = true; });
+$('resetBtn').addEventListener('click', function () { $('mode').value = 'pa'; syncMode(); $('pa').value = '18000'; $('fl').value = '180'; $('ta').value = '18000'; $('tl').value = '180'; $('qnh').value = ''; $('qnhUnit').value = 'inhg'; clearOut(); run(); });
 ['pa','fl','ta','tl','qnh'].forEach(function (id) { $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') run(); }); });
 syncMode();
   var form = $("calc-form");
   if (form) {
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    form.addEventListener("change", run);
   }
   if (typeof show === "function") show();
-  render();
+  run();
 })();

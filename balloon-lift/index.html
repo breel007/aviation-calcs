@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <title>Hot-Air Balloon Lift Calculator — Buoyancy from Envelope Temperature | Aviator Calcs</title>
   <meta name="description" content="Compute hot-air balloon gross and useful lift from envelope volume and the temperature difference between the air inside and outside. Educational; not a weight schedule.">
-  <meta name="keywords" content="undefined">
+  <meta name="keywords" content="hot-air balloon lift calculator, hot-air balloon lift calculator, hot-air balloon lift formula, pilot calculator, aviation calculator">
   <meta name="author" content="Aviation Calcs">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://aviatorcalcs.com/balloon-lift/">
@@ -18,10 +18,10 @@
   <meta property="og:description" content="Compute hot-air balloon gross and useful lift from envelope volume and the temperature difference between the air inside and outside. Educational; not a weight schedule.">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:title" content="Hot-Air Balloon Lift Calculator">
   <meta name="twitter:description" content="Compute hot-air balloon gross and useful lift from envelope volume and the temperature difference between the air inside and outside. Educational; not a weight schedule.">
   <meta name="twitter:image" content="https://aviatorcalcs.com/shared/og-image.png">
-  <meta name="application-name" content="undefined">
+  <meta name="application-name" content="Hot-Air Balloon Lift">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,12 +97,14 @@
         </svg>
         <div>
           <p class="brand-kicker">Aviation Calcs</p>
-          <p class="brand-name">undefined</p>
+          <p class="brand-name">Hot-Air Balloon Lift</p>
         </div>
       </a>
       <nav class="site-nav" aria-label="Site">
         <a href="../">All tools</a>
-
+        <a href="../parachute-descent/">Parachute Descent</a>
+        <a href="../thrust-power-required/">Thrust / power required</a>
+        <a href="../maccready/">MacCready Speed-to-Fly</a>
         <a href="../about.html">About</a>
       </nav>
     </div>
@@ -117,27 +119,27 @@
       <form id="calc-form" action="#" method="get" novalidate>
 <p class="hint">Temperatures may be in °C or °F; the math uses absolute temperature. Pressure defaults to ISA sea-level 101,325 Pa. A typical training-balloon envelope is a few thousand cubic metres (around 77,000–105,000 ft³).</p>
 <div class="pair">
-  <div class="field"><label for="volume">Envelope volume</label><input id="volume" type="text" inputmode="decimal" value="2800"></div>
+  <div class="field"><label for="volume">Envelope volume</label><input class="input" id="volume" type="text" inputmode="decimal" value="2800"></div>
   <div class="field"><label for="volUnit">Volume unit</label>
-    <select id="volUnit"><option value="m3" selected>m³</option><option value="ft3">ft³</option></select></div>
+    <select class="input" id="volUnit"><option value="m3" selected>m³</option><option value="ft3">ft³</option></select></div>
 </div>
 <div class="pair">
-  <div class="field"><label for="tAir">Outside air temperature</label><input id="tAir" type="text" inputmode="decimal" value="15"></div>
-  <div class="field"><label for="tHot">Envelope (hot) temperature</label><input id="tHot" type="text" inputmode="decimal" value="100"></div>
+  <div class="field"><label for="tAir">Outside air temperature</label><input class="input" id="tAir" type="text" inputmode="decimal" value="15"></div>
+  <div class="field"><label for="tHot">Envelope (hot) temperature</label><input class="input" id="tHot" type="text" inputmode="decimal" value="100"></div>
 </div>
 <div class="pair">
   <div class="field"><label for="tempUnit">Temperature unit</label>
-    <select id="tempUnit"><option value="C" selected>°C</option><option value="F">°F</option></select></div>
-  <div class="field"><label for="pressure">Air pressure (optional)</label><input id="pressure" type="text" inputmode="decimal" value="101325"></div>
+    <select class="input" id="tempUnit"><option value="C" selected>°C</option><option value="F">°F</option></select></div>
+  <div class="field"><label for="pressure">Air pressure (optional)</label><input class="input" id="pressure" type="text" inputmode="decimal" value="101325"></div>
 </div>
 <div class="pair">
   <div class="field"><label for="pressureUnit">Pressure unit</label>
-    <select id="pressureUnit"><option value="pa" selected>Pa</option><option value="hpa">hPa</option><option value="inhg">inHg</option></select></div>
-  <div class="field"><label for="empty">Empty weight (optional)</label><input id="empty" type="text" inputmode="decimal" value="400"></div>
+    <select class="input" id="pressureUnit"><option value="pa" selected>Pa</option><option value="hpa">hPa</option><option value="inhg">inHg</option></select></div>
+  <div class="field"><label for="empty">Empty weight (optional)</label><input class="input" id="empty" type="text" inputmode="decimal" value="400"></div>
 </div>
 <div class="field"><label for="weightUnit">Weight unit</label>
-  <select id="weightUnit"><option value="kg" selected>kg</option><option value="lb">lb</option></select></div>
-<button type="button" class="btn" id="calcBtn">Calculate balloon lift</button>
+  <select class="input" id="weightUnit"><option value="kg" selected>kg</option><option value="lb">lb</option></select></div>
+<button type="button" class="btn btn-primary" id="calcBtn">Calculate balloon lift</button>
 <div class="form-actions"><button type="button" class="btn btn-ghost" id="ex2800">Example: 2,800 m³, 15 °C / 100 °C, 400 kg empty</button>
 <button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
       </form>
@@ -154,7 +156,7 @@
       </section>
       <aside class="disclaimer" role="note">
         <h2>Disclaimer</h2>
-        <p>undefined</p>
+        <p>This calculator is an educational and planning aid only. It is <strong>not</strong> a substitute for the POH/AFM, official FAA publications and charts, ATC instructions, or your judgment as pilot in command. Results come from simplified models and the values you enter; check them against the aircraft’s published data before relying on them.</p>
       </aside>
     </section>
 

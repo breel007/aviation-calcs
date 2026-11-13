@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <title>Thin-Airfoil Lift Calculator — cl = 2π(α − αL0) | Aviator Calcs</title>
   <meta name="description" content="Compute section lift coefficient from thin-airfoil theory, cl = 2π(α − αL0), with an optional dimensional lift. Educational; does not predict stall.">
-  <meta name="keywords" content="undefined">
+  <meta name="keywords" content="thin-airfoil lift calculator, thin-airfoil lift calculator, thin-airfoil lift formula, aerospace engineering calculator, aviation calculator">
   <meta name="author" content="Aviation Calcs">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://aviatorcalcs.com/thin-airfoil-lift/">
@@ -18,10 +18,10 @@
   <meta property="og:description" content="Compute section lift coefficient from thin-airfoil theory, cl = 2π(α − αL0), with an optional dimensional lift. Educational; does not predict stall.">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:title" content="Thin-Airfoil Lift Calculator">
   <meta name="twitter:description" content="Compute section lift coefficient from thin-airfoil theory, cl = 2π(α − αL0), with an optional dimensional lift. Educational; does not predict stall.">
   <meta name="twitter:image" content="https://aviatorcalcs.com/shared/og-image.png">
-  <meta name="application-name" content="undefined">
+  <meta name="application-name" content="Thin-Airfoil Lift">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,12 +97,14 @@
         </svg>
         <div>
           <p class="brand-kicker">Aviation Calcs</p>
-          <p class="brand-name">undefined</p>
+          <p class="brand-name">Thin-Airfoil Lift</p>
         </div>
       </a>
       <nav class="site-nav" aria-label="Site">
         <a href="../">All tools</a>
-
+        <a href="../lift-drag-coefficient/">Lift &amp; drag coefficients</a>
+        <a href="../terminal-velocity/">Terminal velocity / re-entry</a>
+        <a href="../reynolds-number/">Reynolds number</a>
         <a href="../about.html">About</a>
       </nav>
     </div>
@@ -117,22 +119,22 @@
       <form id="calc-form" action="#" method="get" novalidate>
 <p class="hint">A symmetric section or a flat plate has α_L0 = 0. A cambered airfoil has a negative zero-lift angle (it still makes lift at zero geometric angle). The default slope is the theoretical 2π per radian (about 0.1097 per degree).</p>
 <div class="pair">
-  <div class="field"><label for="alpha">Angle of attack</label><input id="alpha" type="text" inputmode="decimal" value="5"></div>
-  <div class="field"><label for="aL0">Zero-lift angle α_L0</label><input id="aL0" type="text" inputmode="decimal" value="0"></div>
+  <div class="field"><label for="alpha">Angle of attack</label><input class="input" id="alpha" type="text" inputmode="decimal" value="5"></div>
+  <div class="field"><label for="aL0">Zero-lift angle α_L0</label><input class="input" id="aL0" type="text" inputmode="decimal" value="0"></div>
 </div>
 <div class="field"><label for="angleUnit">Angle unit</label>
-  <select id="angleUnit"><option value="deg" selected>degrees</option><option value="rad">radians</option></select></div>
+  <select class="input" id="angleUnit"><option value="deg" selected>degrees</option><option value="rad">radians</option></select></div>
 <p class="hint">Optional dimensional lift (leave blank to skip):</p>
 <div class="pair">
-  <div class="field"><label for="speed">True airspeed</label><input id="speed" type="text" inputmode="decimal" value=""></div>
+  <div class="field"><label for="speed">True airspeed</label><input class="input" id="speed" type="text" inputmode="decimal" value=""></div>
   <div class="field"><label for="speedUnit">Speed unit</label>
-    <select id="speedUnit"><option value="mps" selected>m/s</option><option value="kt">knots</option><option value="fps">ft/s</option></select></div>
+    <select class="input" id="speedUnit"><option value="mps" selected>m/s</option><option value="kt">knots</option><option value="fps">ft/s</option></select></div>
 </div>
 <div class="pair">
-  <div class="field"><label for="area">Reference area</label><input id="area" type="text" inputmode="decimal" value=""></div>
-  <div class="field"><label for="density">Density (kg/m³, blank = 1.225)</label><input id="density" type="text" inputmode="decimal" value=""></div>
+  <div class="field"><label for="area">Reference area</label><input class="input" id="area" type="text" inputmode="decimal" value=""></div>
+  <div class="field"><label for="density">Density (kg/m³, blank = 1.225)</label><input class="input" id="density" type="text" inputmode="decimal" value=""></div>
 </div>
-<button type="button" class="btn" id="calcBtn">Calculate section lift</button>
+<button type="button" class="btn btn-primary" id="calcBtn">Calculate section lift</button>
 <div class="form-actions"><button type="button" class="btn btn-ghost" id="ex5">Example: flat plate at 5°</button>
 <button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
       </form>
@@ -149,7 +151,7 @@
       </section>
       <aside class="disclaimer" role="note">
         <h2>Disclaimer</h2>
-        <p>undefined</p>
+        <p>This calculator is an educational aid only. It uses simplified textbook models and the values you enter, and it is <strong>not</strong> a substitute for engineering analysis, manufacturer data, official publications, or the POH/AFM for any aircraft. Verify results independently before relying on them.</p>
       </aside>
     </section>
 

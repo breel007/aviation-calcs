@@ -32,6 +32,7 @@
   function setHero(num, unit, sub) {
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
+    $("hero").hidden = false;
   }
   function clearOut(msg) {
     $("warnings").hidden = !msg;
@@ -54,7 +55,7 @@ function run() {
   });
   if (!r) { clearOut('Enter a reference height greater than zero, a wind of zero or more, and a height of interest of zero or more.'); return; }
   setHero(fmt(r.windKt, 1) + ' kt', 'at ' + fmt(r.heightFt, 0) + ' ft');
-  $('out').innerHTML = [
+  $("stat-grid").innerHTML = [
     { label: 'Wind at the height of interest', value: fmt(r.windKt, 1) + ' kt' },
     { label: 'Change from the reference', value: (r.deltaKt >= 0 ? '+' : '') + fmt(r.deltaKt, 1) + ' kt' },
     { label: 'Mean shear', value: fmt(r.shearKtPer100ft, 2) + ' kt / 100 ft' },
@@ -64,14 +65,14 @@ function run() {
 $('mode').addEventListener('change', syncMode);
 $('calcBtn').addEventListener('click', run);
 $('exPower').addEventListener('click', function () { $('mode').value = 'power'; syncMode(); $('vref').value = '20'; $('href').value = '30'; $('height').value = '1000'; $('altUnit').value = 'ft'; $('speedUnit').value = 'kt'; $('alpha').value = ''; run(); });
-$('resetBtn').addEventListener('click', function () { $('mode').value = 'power'; syncMode(); $('vref').value = '20'; $('href').value = '30'; $('height').value = '1000'; $('alpha').value = ''; $('shear').value = '3'; clearOut(); $('hero').hidden = true; });
+$('resetBtn').addEventListener('click', function () { $('mode').value = 'power'; syncMode(); $('vref').value = '20'; $('href').value = '30'; $('height').value = '1000'; $('alpha').value = ''; $('shear').value = '3'; clearOut(); run(); });
 ['vref','href','height','alpha','shear'].forEach(function (id) { $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') run(); }); });
 syncMode();
   var form = $("calc-form");
   if (form) {
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    form.addEventListener("change", run);
   }
   if (typeof show === "function") show();
-  render();
+  run();
 })();

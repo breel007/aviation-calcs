@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <title>Jet Engine Thrust Calculator — Momentum, Pressure Term, and TSFC | Aviator Calcs</title>
   <meta name="description" content="Compute turbojet net thrust from air and fuel mass flow, flight and exit velocity, and an optional (pe−p0)Ae term, plus TSFC. Educational; not a cycle deck.">
-  <meta name="keywords" content="undefined">
+  <meta name="keywords" content="jet engine thrust calculator, jet engine thrust calculator, jet engine thrust formula, aerospace engineering calculator, aviation calculator">
   <meta name="author" content="Aviation Calcs">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://aviatorcalcs.com/jet-engine-thrust/">
@@ -18,10 +18,10 @@
   <meta property="og:description" content="Compute turbojet net thrust from air and fuel mass flow, flight and exit velocity, and an optional (pe−p0)Ae term, plus TSFC. Educational; not a cycle deck.">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:title" content="Jet Engine Thrust Calculator">
   <meta name="twitter:description" content="Compute turbojet net thrust from air and fuel mass flow, flight and exit velocity, and an optional (pe−p0)Ae term, plus TSFC. Educational; not a cycle deck.">
   <meta name="twitter:image" content="https://aviatorcalcs.com/shared/og-image.png">
-  <meta name="application-name" content="undefined">
+  <meta name="application-name" content="Jet Engine Thrust">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,12 +97,14 @@
         </svg>
         <div>
           <p class="brand-kicker">Aviation Calcs</p>
-          <p class="brand-name">undefined</p>
+          <p class="brand-name">Jet Engine Thrust</p>
         </div>
       </a>
       <nav class="site-nav" aria-label="Site">
         <a href="../">All tools</a>
-
+        <a href="../specific-impulse/">Specific impulse</a>
+        <a href="../brayton-cycle/">Brayton Cycle</a>
+        <a href="../rocket-equation/">Rocket equation</a>
         <a href="../about.html">About</a>
       </nav>
     </div>
@@ -117,30 +119,30 @@
       <form id="calc-form" action="#" method="get" novalidate>
 <p class="hint">Fuel/air ratio f defaults to zero if you leave both f and fuel flow blank (a cold jet). A perfectly expanded nozzle has no pressure term — leave those boxes blank. Speeds default to metres per second.</p>
 <div class="pair">
-  <div class="field"><label for="air">Inlet air mass flow</label><input id="air" type="text" inputmode="decimal" value="50"></div>
+  <div class="field"><label for="air">Inlet air mass flow</label><input class="input" id="air" type="text" inputmode="decimal" value="50"></div>
   <div class="field"><label for="airUnit">Airflow unit</label>
-    <select id="airUnit"><option value="kg/s" selected>kg/s</option><option value="lb/s">lb/s</option></select></div>
+    <select class="input" id="airUnit"><option value="kg/s" selected>kg/s</option><option value="lb/s">lb/s</option></select></div>
 </div>
 <div class="pair">
-  <div class="field"><label for="ue">Exit velocity u_e</label><input id="ue" type="text" inputmode="decimal" value="600"></div>
-  <div class="field"><label for="u0">Flight speed u_0</label><input id="u0" type="text" inputmode="decimal" value="0"></div>
+  <div class="field"><label for="ue">Exit velocity u_e</label><input class="input" id="ue" type="text" inputmode="decimal" value="600"></div>
+  <div class="field"><label for="u0">Flight speed u_0</label><input class="input" id="u0" type="text" inputmode="decimal" value="0"></div>
 </div>
 <div class="field"><label for="speedUnit">Speed unit</label>
-  <select id="speedUnit"><option value="mps" selected>m/s</option><option value="kt">knots</option><option value="fps">ft/s</option></select></div>
+  <select class="input" id="speedUnit"><option value="mps" selected>m/s</option><option value="kt">knots</option><option value="fps">ft/s</option></select></div>
 <div class="pair">
-  <div class="field"><label for="far">Fuel/air ratio f (optional)</label><input id="far" type="text" inputmode="decimal" value="0.02"></div>
-  <div class="field"><label for="fuel">Fuel mass flow (optional, instead of f)</label><input id="fuel" type="text" inputmode="decimal" value=""></div>
+  <div class="field"><label for="far">Fuel/air ratio f (optional)</label><input class="input" id="far" type="text" inputmode="decimal" value="0.02"></div>
+  <div class="field"><label for="fuel">Fuel mass flow (optional, instead of f)</label><input class="input" id="fuel" type="text" inputmode="decimal" value=""></div>
 </div>
 <div class="pair">
-  <div class="field"><label for="pe">Exit pressure p_e (optional)</label><input id="pe" type="text" inputmode="decimal" value=""></div>
-  <div class="field"><label for="p0">Ambient pressure p_0</label><input id="p0" type="text" inputmode="decimal" value=""></div>
+  <div class="field"><label for="pe">Exit pressure p_e (optional)</label><input class="input" id="pe" type="text" inputmode="decimal" value=""></div>
+  <div class="field"><label for="p0">Ambient pressure p_0</label><input class="input" id="p0" type="text" inputmode="decimal" value=""></div>
 </div>
 <div class="pair">
-  <div class="field"><label for="ae">Exit area A_e (m², with pressures)</label><input id="ae" type="text" inputmode="decimal" value=""></div>
+  <div class="field"><label for="ae">Exit area A_e (m², with pressures)</label><input class="input" id="ae" type="text" inputmode="decimal" value=""></div>
   <div class="field"><label for="pressureUnit">Pressure unit</label>
-    <select id="pressureUnit"><option value="pa" selected>Pa</option><option value="kpa">kPa</option></select></div>
+    <select class="input" id="pressureUnit"><option value="pa" selected>Pa</option><option value="kpa">kPa</option></select></div>
 </div>
-<button type="button" class="btn" id="calcBtn">Calculate thrust and TSFC</button>
+<button type="button" class="btn btn-primary" id="calcBtn">Calculate thrust and TSFC</button>
 <div class="form-actions"><button type="button" class="btn btn-ghost" id="ex50">Example: 50 kg/s, 600 m/s exit, f = 0.02, static</button>
 <button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
       </form>
@@ -157,7 +159,7 @@
       </section>
       <aside class="disclaimer" role="note">
         <h2>Disclaimer</h2>
-        <p>undefined</p>
+        <p>This calculator is an educational aid only. It uses simplified textbook models and the values you enter, and it is <strong>not</strong> a substitute for engineering analysis, manufacturer data, official publications, or the POH/AFM for any aircraft. Verify results independently before relying on them.</p>
       </aside>
     </section>
 

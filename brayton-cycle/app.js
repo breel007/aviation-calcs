@@ -32,6 +32,7 @@
   function setHero(num, unit, sub) {
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
+    $("hero").hidden = false;
   }
   function clearOut(msg) {
     $("warnings").hidden = !msg;
@@ -58,17 +59,17 @@ function run() {
     items.push({ label: 'Heat input', value: fmt(r.heatInJPerKg / 1000, 1) + ' kJ/kg' });
   }
   setHero(fmt(r.efficiency * 100, 1) + ' %', 'ideal Brayton efficiency');
-  $('out').innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(stat).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('ex10').addEventListener('click', function () { $('rp').value = '10'; $('gamma').value = '1.4'; $('t1').value = '300'; $('t3').value = '1400'; $('tempUnit').value = 'K'; run(); });
-$('resetBtn').addEventListener('click', function () { $('rp').value = '10'; $('gamma').value = '1.4'; $('t1').value = '300'; $('t3').value = '1400'; clearOut(); $('hero').hidden = true; });
+$('resetBtn').addEventListener('click', function () { $('rp').value = '10'; $('gamma').value = '1.4'; $('t1').value = '300'; $('t3').value = '1400'; clearOut(); run(); });
 ['rp','gamma','t1','t3'].forEach(function (id) { $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') run(); }); });
   var form = $("calc-form");
   if (form) {
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    form.addEventListener("change", run);
   }
   if (typeof show === "function") show();
-  render();
+  run();
 })();

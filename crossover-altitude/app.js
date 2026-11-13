@@ -32,6 +32,7 @@
   function setHero(num, unit, sub) {
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
+    $("hero").hidden = false;
   }
   function clearOut(msg) {
     $("warnings").hidden = !msg;
@@ -48,7 +49,7 @@ function run() {
   var r = CrossoverAltitudeCalcs.compute({ vmo: num('vmo'), vmoUnit: $('vmoUnit').value, mmo: num('mmo') });
   if (!r) { clearOut('Enter a positive Vmo and a subsonic Mmo (greater than 0 and less than 1) that have a crossover in the standard atmosphere.'); return; }
   setHero(fmt(r.crossoverFt, 0) + ' ft', 'pressure altitude  ·  FL' + fmt(r.crossoverFL, 0));
-  $('out').innerHTML = [
+  $("stat-grid").innerHTML = [
     { label: 'Crossover pressure altitude', value: fmt(r.crossoverFt, 0) + ' ft  ·  FL' + fmt(r.crossoverFL, 0) },
     { label: 'Ambient pressure', value: fmt(r.ambientPa / 100, 1) + ' hPa' },
     { label: 'Vmo', value: fmt(r.vmoKt, 1) + ' KCAS' },
@@ -59,13 +60,13 @@ function run() {
 }
 $('calcBtn').addEventListener('click', run);
 $('ex350').addEventListener('click', function () { $('vmo').value = '350'; $('vmoUnit').value = 'kt'; $('mmo').value = '0.80'; run(); });
-$('resetBtn').addEventListener('click', function () { $('vmo').value = '350'; $('mmo').value = '0.80'; clearOut(); $('hero').hidden = true; });
+$('resetBtn').addEventListener('click', function () { $('vmo').value = '350'; $('mmo').value = '0.80'; clearOut(); run(); });
 ['vmo','mmo'].forEach(function (id) { $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') run(); }); });
   var form = $("calc-form");
   if (form) {
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    form.addEventListener("change", run);
   }
   if (typeof show === "function") show();
-  render();
+  run();
 })();

@@ -32,6 +32,7 @@
   function setHero(num, unit, sub) {
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
+    $("hero").hidden = false;
   }
   function clearOut(msg) {
     $("warnings").hidden = !msg;
@@ -59,17 +60,17 @@ function run() {
     { label: 'MacCready setting', value: fmt(r.maccreadyKt, 2) + ' kt  ·  ' + fmt(r.maccreadyFpm, 0) + ' ft/min' }
   ];
   setHero(fmt(r.speedToFlyKt, 1) + ' kt', 'MacCready speed to fly');
-  $('out').innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(stat).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('ex40').addEventListener('click', function () { $('v1').value = '20'; $('w1').value = '2'; $('v2').value = '40'; $('w2').value = '5'; $('v3').value = ''; $('w3').value = ''; $('mc').value = '3'; $('sinkUnit').value = 'kt'; $('speedUnit').value = 'kt'; run(); });
-$('resetBtn').addEventListener('click', function () { $('v1').value = '20'; $('w1').value = '2'; $('v2').value = '40'; $('w2').value = '5'; $('v3').value = ''; $('w3').value = ''; $('mc').value = '3'; clearOut(); $('hero').hidden = true; });
+$('resetBtn').addEventListener('click', function () { $('v1').value = '20'; $('w1').value = '2'; $('v2').value = '40'; $('w2').value = '5'; $('v3').value = ''; $('w3').value = ''; $('mc').value = '3'; clearOut(); run(); });
 ['v1','w1','v2','w2','v3','w3','mc'].forEach(function (id) { $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') run(); }); });
   var form = $("calc-form");
   if (form) {
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    form.addEventListener("change", run);
   }
   if (typeof show === "function") show();
-  render();
+  run();
 })();

@@ -32,6 +32,7 @@
   function setHero(num, unit, sub) {
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
+    $("hero").hidden = false;
   }
   function clearOut(msg) {
     $("warnings").hidden = !msg;
@@ -61,17 +62,17 @@ function run() {
   ];
   if (r.hoverCeilingFt != null) items.unshift({ label: 'Induced-power hover ceiling', value: fmt(r.hoverCeilingFt, 0) + ' ft  ·  ' + fmt(r.hoverCeilingM, 0) + ' m' });
   setHero(fmt(r.shaftPowerW / 1000, 1) + ' kW', 'shaft power to hover');
-  $('out').innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(stat).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('ex20').addEventListener('click', function () { $('thrust').value = '20000'; $('thrustUnit').value = 'n'; $('diameter').value = '20'; $('diaUnit').value = 'm'; $('fm').value = '0.7'; $('alt').value = '0'; $('altUnit').value = 'ft'; $('power').value = ''; run(); });
-$('resetBtn').addEventListener('click', function () { $('thrust').value = '20000'; $('diameter').value = '20'; $('fm').value = '0.7'; $('alt').value = '0'; $('power').value = ''; clearOut(); $('hero').hidden = true; });
+$('resetBtn').addEventListener('click', function () { $('thrust').value = '20000'; $('diameter').value = '20'; $('fm').value = '0.7'; $('alt').value = '0'; $('power').value = ''; clearOut(); run(); });
 ['thrust','diameter','fm','alt','power'].forEach(function (id) { $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') run(); }); });
   var form = $("calc-form");
   if (form) {
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    form.addEventListener("change", run);
   }
   if (typeof show === "function") show();
-  render();
+  run();
 })();

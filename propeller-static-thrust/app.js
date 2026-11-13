@@ -32,6 +32,7 @@
   function setHero(num, unit, sub) {
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
+    $("hero").hidden = false;
   }
   function clearOut(msg) {
     $("warnings").hidden = !msg;
@@ -49,7 +50,7 @@ function run() {
   var r = PropellerStaticThrustCalcs.compute({ power: num('power'), powerUnit: $('powerUnit').value, diameter: num('diameter'), diaUnit: $('diaUnit').value, eta: opt('eta'), density: opt('density') });
   if (!r) { clearOut('Enter a positive shaft power and diameter, and an efficiency in (0, 1] if you use one.'); return; }
   setHero(fmt(r.thrustN, 0) + ' N', 'static thrust  ·  ' + fmt(r.thrustLbf, 0) + ' lbf');
-  $('out').innerHTML = [
+  $("stat-grid").innerHTML = [
     { label: 'Static thrust', value: fmt(r.thrustN, 0) + ' N  ·  ' + fmt(r.thrustLbf, 0) + ' lbf' },
     { label: 'Induced velocity', value: fmt(r.inducedMps, 2) + ' m/s' },
     { label: 'Disk area', value: fmt(r.areaM2, 3) + ' m²  ·  loading ' + fmt(r.diskLoadingPa, 1) + ' Pa' },
@@ -58,13 +59,13 @@ function run() {
 }
 $('calcBtn').addEventListener('click', run);
 $('ex100').addEventListener('click', function () { $('power').value = '100'; $('powerUnit').value = 'kw'; $('diameter').value = '2'; $('diaUnit').value = 'm'; $('eta').value = '1'; $('density').value = ''; run(); });
-$('resetBtn').addEventListener('click', function () { $('power').value = '100'; $('diameter').value = '2'; $('eta').value = '1'; $('density').value = ''; clearOut(); $('hero').hidden = true; });
+$('resetBtn').addEventListener('click', function () { $('power').value = '100'; $('diameter').value = '2'; $('eta').value = '1'; $('density').value = ''; clearOut(); run(); });
 ['power','diameter','eta','density'].forEach(function (id) { $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') run(); }); });
   var form = $("calc-form");
   if (form) {
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    form.addEventListener("change", run);
   }
   if (typeof show === "function") show();
-  render();
+  run();
 })();

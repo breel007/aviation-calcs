@@ -32,6 +32,7 @@
   function setHero(num, unit, sub) {
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
+    $("hero").hidden = false;
   }
   function clearOut(msg) {
     $("warnings").hidden = !msg;
@@ -54,17 +55,17 @@ function run() {
   ];
   if (!r.applicable) items.push({ label: 'Domain', value: 'NWS publishes wind chill only for air temperatures at or below 50 °F and winds of 3 mph or more. Below that wind, this page reports the air temperature.' });
   setHero(fmt(r.windChillF, 0) + ' °F', 'wind-chill temperature');
-  $('out').innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(stat).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('exCold').addEventListener('click', function () { $('temp').value = '0'; $('tempUnit').value = 'F'; $('wind').value = '10'; $('windUnit').value = 'mph'; run(); });
-$('resetBtn').addEventListener('click', function () { $('temp').value = '0'; $('tempUnit').value = 'F'; $('wind').value = '10'; $('windUnit').value = 'mph'; clearOut(); $('hero').hidden = true; });
+$('resetBtn').addEventListener('click', function () { $('temp').value = '0'; $('tempUnit').value = 'F'; $('wind').value = '10'; $('windUnit').value = 'mph'; clearOut(); run(); });
 ['temp','wind'].forEach(function (id) { $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') run(); }); });
   var form = $("calc-form");
   if (form) {
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    form.addEventListener("change", run);
   }
   if (typeof show === "function") show();
-  render();
+  run();
 })();

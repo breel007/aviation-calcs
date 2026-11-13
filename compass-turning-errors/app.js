@@ -32,6 +32,7 @@
   function setHero(num, unit, sub) {
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
+    $("hero").hidden = false;
   }
   function clearOut(msg) {
     $("warnings").hidden = !msg;
@@ -57,18 +58,18 @@ function run() {
   if (r.rollout) items.push({ label: 'Roll-out on this heading', value: r.rollout.action + ' — ' + r.rollout.reason });
   if (r.acceleration) items.push({ label: 'Acceleration error on this heading', value: r.acceleration.effect + ' — ' + r.acceleration.reason });
   setHero(fmt(r.dipDeg, 1) + '° dip', r.turnRule === 'none' ? 'no turning error at the equator' : r.turnRule + ' / ' + r.accelerationRule);
-  $('out').innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(stat).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('exN').addEventListener('click', function () { $('lat').value = '40'; $('heading').value = '0'; run(); });
 $('exS').addEventListener('click', function () { $('lat').value = '-40'; $('heading').value = '90'; run(); });
-$('resetBtn').addEventListener('click', function () { $('lat').value = '40'; $('heading').value = '0'; clearOut(); $('hero').hidden = true; });
+$('resetBtn').addEventListener('click', function () { $('lat').value = '40'; $('heading').value = '0'; clearOut(); run(); });
 ['lat','heading'].forEach(function (id) { $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') run(); }); });
   var form = $("calc-form");
   if (form) {
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    form.addEventListener("change", run);
   }
   if (typeof show === "function") show();
-  render();
+  run();
 })();

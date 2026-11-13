@@ -32,6 +32,7 @@
   function setHero(num, unit, sub) {
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
+    $("hero").hidden = false;
   }
   function clearOut(msg) {
     $("warnings").hidden = !msg;
@@ -59,19 +60,19 @@ function run() {
   ];
   if (r.rocAtQueryFpm != null) items.push({ label: 'ROC at ' + fmt(r.queryAltitudeFt, 0) + ' ft DA', value: fmt(r.rocAtQueryFpm, 0) + ' ft/min' });
   setHero(fmt(r.serviceCeilingFt, 0) + ' ft', 'service ceiling (linear model)');
-  $('out').innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(stat).join('');
 }
 $('mode').addEventListener('change', syncMode);
 $('calcBtn').addEventListener('click', run);
 $('ex1200').addEventListener('click', function () { $('mode').value = 'ceiling'; syncMode(); $('roc0').value = '1200'; $('hAbs').value = '12000'; $('svc').value = '100'; $('hQuery').value = '6000'; run(); });
-$('resetBtn').addEventListener('click', function () { $('mode').value = 'ceiling'; syncMode(); $('roc0').value = '1200'; $('hAbs').value = '12000'; $('svc').value = '100'; $('hQuery').value = '6000'; clearOut(); $('hero').hidden = true; });
+$('resetBtn').addEventListener('click', function () { $('mode').value = 'ceiling'; syncMode(); $('roc0').value = '1200'; $('hAbs').value = '12000'; $('svc').value = '100'; $('hQuery').value = '6000'; clearOut(); run(); });
 ['roc0','hAbs','h1','roc1','h2','roc2','svc','hQuery'].forEach(function (id) { $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') run(); }); });
 syncMode();
   var form = $("calc-form");
   if (form) {
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    form.addEventListener("change", run);
   }
   if (typeof show === "function") show();
-  render();
+  run();
 })();

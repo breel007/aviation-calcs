@@ -32,6 +32,7 @@
   function setHero(num, unit, sub) {
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
+    $("hero").hidden = false;
   }
   function clearOut(msg) {
     $("warnings").hidden = !msg;
@@ -61,17 +62,17 @@ function run() {
   }
   if (r.pressureTermN) items.push({ label: 'Pressure term', value: fmt(r.pressureTermN, 0) + ' N' });
   setHero(fmt(r.thrustN, 0) + ' N', 'net thrust');
-  $('out').innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(stat).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('ex50').addEventListener('click', function () { $('air').value = '50'; $('ue').value = '600'; $('u0').value = '0'; $('far').value = '0.02'; $('fuel').value = ''; $('pe').value = ''; $('p0').value = ''; $('ae').value = ''; run(); });
-$('resetBtn').addEventListener('click', function () { $('air').value = '50'; $('ue').value = '600'; $('u0').value = '0'; $('far').value = '0.02'; $('fuel').value = ''; $('pe').value = ''; $('p0').value = ''; $('ae').value = ''; clearOut(); $('hero').hidden = true; });
+$('resetBtn').addEventListener('click', function () { $('air').value = '50'; $('ue').value = '600'; $('u0').value = '0'; $('far').value = '0.02'; $('fuel').value = ''; $('pe').value = ''; $('p0').value = ''; $('ae').value = ''; clearOut(); run(); });
 ['air','ue','u0','far','fuel','pe','p0','ae'].forEach(function (id) { $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') run(); }); });
   var form = $("calc-form");
   if (form) {
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    form.addEventListener("change", run);
   }
   if (typeof show === "function") show();
-  render();
+  run();
 })();

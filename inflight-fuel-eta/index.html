@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <title>In-Flight Fuel and ETA Calculator — Fuel at Destination and Reserve | Aviator Calcs</title>
   <meta name="description" content="From remaining distance, current groundspeed, fuel flow, and fuel on board, estimate ETE, fuel at the destination, and whether a 91.151 / 91.167 reserve remains. Educational; not a fuel-planning system.">
-  <meta name="keywords" content="undefined">
+  <meta name="keywords" content="in-flight fuel and eta calculator, in-flight fuel and eta calculator, in-flight fuel and eta formula, pilot calculator, aviation calculator">
   <meta name="author" content="Aviation Calcs">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://aviatorcalcs.com/inflight-fuel-eta/">
@@ -18,10 +18,10 @@
   <meta property="og:description" content="From remaining distance, current groundspeed, fuel flow, and fuel on board, estimate ETE, fuel at the destination, and whether a 91.151 / 91.167 reserve remains. Educational; not a fuel-planning system.">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:title" content="In-Flight Fuel and ETA Calculator">
   <meta name="twitter:description" content="From remaining distance, current groundspeed, fuel flow, and fuel on board, estimate ETE, fuel at the destination, and whether a 91.151 / 91.167 reserve remains. Educational; not a fuel-planning system.">
   <meta name="twitter:image" content="https://aviatorcalcs.com/shared/og-image.png">
-  <meta name="application-name" content="undefined">
+  <meta name="application-name" content="In-Flight Fuel and ETA">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,7 +64,7 @@
                     "name": "Do I have to use gallons?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "No. Use any consistent volume unit for on-board fuel and fuel flow (gallons and gph, pounds and pph, litres and L/h). The surplus is in that same unit."
+                        "text": "No. Pick US gallons, litres, pounds, or kilograms in the Fuel unit menu and enter fuel flow and fuel on board in that unit (gph, L/h, pph, or kg/h). Every fuel result is printed in the same unit."
                     }
                 },
                 {
@@ -97,12 +97,14 @@
         </svg>
         <div>
           <p class="brand-kicker">Aviation Calcs</p>
-          <p class="brand-name">undefined</p>
+          <p class="brand-name">In-Flight Fuel and ETA</p>
         </div>
       </a>
       <nav class="site-nav" aria-label="Site">
         <a href="../">All tools</a>
-
+        <a href="../fuel-planning/">Fuel Planner</a>
+        <a href="../aviation-unit-converter/">Unit Converter</a>
+        <a href="../e6b-wind/">E6B Wind</a>
         <a href="../about.html">About</a>
       </nav>
     </div>
@@ -115,37 +117,41 @@
         <p class="lede">Once you are airborne, the useful question is no longer the preflight trip plan — it is whether the fuel now on board will get you to the destination with the reserve you still intend to keep. Enter remaining distance, current groundspeed, current fuel flow, and fuel on board, and this page returns ETE, burn, fuel at the destination, and a surplus or shortfall against the 14 CFR 91.151 / 91.167 planning times (or a reserve you type). It is an in-flight arithmetic check, not a substitute for a calibrated fuel gauge or a go-around plan.</p>
       </header>
       <form id="calc-form" action="#" method="get" novalidate>
-<p class="hint">Use the same volume unit for fuel on board and fuel flow (gallons and gph, or litres and L/h). Distance and speed default to nautical miles and knots. The default reserve is the VFR-day 30 minutes of 91.151.</p>
+<p class="hint">Fuel flow and fuel on board use the fuel unit you pick. Distance and speed default to nautical miles and knots. The default reserve is the VFR-day 30 minutes of 91.151.</p>
 <div class="pair">
-  <div class="field"><label for="distance">Remaining distance</label><input id="distance" type="text" inputmode="decimal" value="60"></div>
+  <div class="field"><label for="distance">Remaining distance</label><input class="input" id="distance" type="text" inputmode="decimal" value="60" autocomplete="off"></div>
   <div class="field"><label for="distUnit">Distance unit</label>
-    <select id="distUnit"><option value="nm" selected>NM</option><option value="sm">SM</option><option value="km">km</option></select></div>
+    <select class="input" id="distUnit"><option value="nm" selected>NM</option><option value="sm">SM</option><option value="km">km</option></select></div>
 </div>
 <div class="pair">
-  <div class="field"><label for="gs">Current groundspeed</label><input id="gs" type="text" inputmode="decimal" value="120"></div>
+  <div class="field"><label for="gs">Groundspeed</label><input class="input" id="gs" type="text" inputmode="decimal" value="120" autocomplete="off"></div>
   <div class="field"><label for="speedUnit">Speed unit</label>
-    <select id="speedUnit"><option value="kt" selected>knots</option><option value="mph">mph</option><option value="kph">km/h</option></select></div>
+    <select class="input" id="speedUnit"><option value="kt" selected>kt</option><option value="mph">mph</option><option value="kph">km/h</option></select></div>
 </div>
+<div class="field"><label for="fuelUnit">Fuel unit</label>
+  <select class="input" id="fuelUnit">
+    <option value="gal" selected>US gallons (gal, gph)</option>
+    <option value="L">Litres (L, L/h)</option>
+    <option value="lb">Pounds (lb, pph)</option>
+    <option value="kg">Kilograms (kg, kg/h)</option>
+  </select></div>
 <div class="pair">
-  <div class="field"><label for="flow">Fuel flow (per hour)</label><input id="flow" type="text" inputmode="decimal" value="10"></div>
-  <div class="field"><label for="onboard">Fuel on board</label><input id="onboard" type="text" inputmode="decimal" value="15"></div>
+  <div class="field"><label for="flow">Fuel flow (<span class="js-flow-unit">gph</span>)</label><input class="input" id="flow" type="text" inputmode="decimal" value="10" autocomplete="off"></div>
+  <div class="field"><label for="onboard">Fuel on board (<span class="js-fuel-unit">gal</span>)</label><input class="input" id="onboard" type="text" inputmode="decimal" value="15" autocomplete="off"></div>
 </div>
+<div class="field"><label for="reserveKind">Reserve to compare</label>
+  <select class="input" id="reserveKind">
+    <option value="vfr-day" selected>VFR day — 30 min (91.151)</option>
+    <option value="vfr-night">VFR night — 45 min (91.151)</option>
+    <option value="ifr">IFR — 45 min + alternate (91.167)</option>
+    <option value="custom">Custom reserve</option>
+  </select></div>
+<div class="field" id="rowCustom" hidden><label for="reserveHours">Custom reserve (hours)</label><input class="input" id="reserveHours" type="text" inputmode="decimal" value="0.5" autocomplete="off"></div>
 <div class="pair">
-  <div class="field"><label for="reserveKind">Reserve to compare</label>
-    <select id="reserveKind">
-      <option value="vfr-day" selected>VFR day — 30 min (91.151)</option>
-      <option value="vfr-night">VFR night — 45 min (91.151)</option>
-      <option value="ifr">IFR — 45 min plus optional alternate (91.167)</option>
-      <option value="custom">Custom reserve</option>
-    </select></div>
-  <div class="field"><label for="altNm">IFR alternate distance (optional)</label><input id="altNm" type="text" inputmode="decimal" value="" placeholder="NM, same unit as distance"></div>
+  <div class="field"><label for="altNm">IFR alternate (<span class="js-dist-unit">NM</span>, optional)</label><input class="input" id="altNm" type="text" inputmode="decimal" value="" placeholder="e.g. 30" autocomplete="off"></div>
+  <div class="field"><label for="now">Clock time (optional)</label><input class="input" id="now" type="text" inputmode="numeric" value="" placeholder="HH:MM, e.g. 14:00" autocomplete="off"></div>
 </div>
-<div class="pair" id="rowCustom" hidden>
-  <div class="field"><label for="reserveHours">Custom reserve (hours)</label><input id="reserveHours" type="text" inputmode="decimal" value="0.5"></div>
-  <div class="field"><label for="now">Current clock time (optional, HH:MM)</label><input id="now" type="text" value="" placeholder="e.g. 14:00"></div>
-</div>
-<div class="field" id="rowNow"><label for="now2">Current clock time (optional, HH:MM, for an ETA)</label><input id="now2" type="text" value="" placeholder="e.g. 14:00"></div>
-<button type="button" class="btn" id="calcBtn">Calculate fuel and ETA</button>
+<button type="submit" class="btn btn-primary" id="calcBtn">Calculate fuel and ETA</button>
 <div class="form-actions"><button type="button" class="btn btn-ghost" id="exVfr">Example: 60 NM, 15 gal, VFR day</button>
 <button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
       </form>
@@ -162,7 +168,7 @@
       </section>
       <aside class="disclaimer" role="note">
         <h2>Disclaimer</h2>
-        <p>undefined</p>
+        <p>This calculator is an educational and planning aid only. It is <strong>not</strong> a substitute for the POH/AFM, official FAA publications and charts, ATC instructions, or your judgment as pilot in command. Results come from simplified models and the values you enter; check them against the aircraft’s published data before relying on them.</p>
       </aside>
     </section>
 
@@ -173,7 +179,7 @@
 
     <article class="panel explainer" id="about-calc">
 <h2>Remaining fuel is on board minus distance over groundspeed times flow</h2>
-<p>Estimated time en route is remaining distance divided by current groundspeed. Burn is that time times the current fuel flow, and fuel at the destination is fuel on board minus the burn. Endurance is on board divided by flow. Against that arrival fuel the page subtracts a reserve: 30 minutes for VFR day and 45 minutes for VFR night under 14 CFR 91.151, or, for IFR under 91.167, 45 minutes plus the time to an optional alternate at the same groundspeed. Those are the same regulatory times used on this site’s <a href="/fuel-planning/">preflight fuel planner</a>; this page is the in-flight remaining-distance check, not a second trip planner. An optional clock time is added to the ETE to print an ETA.</p>
+<p>Estimated time en route is remaining distance divided by current groundspeed. Burn is that time times the current fuel flow, and fuel at the destination is fuel on board minus the burn. Endurance is on board divided by flow. Against that arrival fuel the page subtracts a reserve: 30 minutes for VFR day and 45 minutes for VFR night under 14 CFR 91.151, or, for IFR under 91.167, 45 minutes plus the time to an optional alternate at the same groundspeed. Those are the same regulatory times used on this site’s <a href="/fuel-planning/">preflight fuel planner</a>; this page is the in-flight remaining-distance check, not a second trip planner. An optional clock time (HH:MM) is added to the ETE to print an ETA. Every result carries its unit: fuel in the unit you choose, times as hours and minutes, the ETA as HH:MM, distance in NM, and groundspeed in knots.</p>
 <h2>What you should not read into the number</h2>
 <p>Fuel flow and groundspeed change. Gauges, unusable fuel, a headwind on the last miles, a go-around, and a taxi after landing are not in the arithmetic. Part 91 reserves are planning minima, not a target to arrive with, and this check does not replace a decision to divert while you still have options. For a raw time-speed-distance conversion without fuel, use the <a href="/time-speed-distance/">TSD</a> calculator; for a point of no return, see the <a href="/point-of-no-return/">PNR</a> page.</p>
 <h2>Sources</h2>
@@ -186,7 +192,7 @@
       <h3>How is this different from the fuel-planning calculator?</h3>
       <p>The preflight planner builds a trip with taxi, climb, cruise, and reserves from a planned route. This page starts from the fuel now on board, the distance still ahead, and the groundspeed and flow you are seeing, and asks whether the destination reserve is still intact.</p>
       <h3>Do I have to use gallons?</h3>
-      <p>No. Use any consistent volume unit for on-board fuel and fuel flow (gallons and gph, pounds and pph, litres and L/h). The surplus is in that same unit.</p>
+      <p>No. Pick US gallons, litres, pounds, or kilograms in the Fuel unit menu and enter fuel flow and fuel on board in that unit (gph, L/h, pph, or kg/h). Every fuel result is printed in the same unit.</p>
       <h3>Is a 30-minute VFR reserve enough to keep flying?</h3>
       <p>91.151 is a preflight planning minimum, not a target to land with. If this page shows you arriving below that reserve, treat it as a prompt to divert or change the plan, not as a legal interpretation.</p>
     </article>

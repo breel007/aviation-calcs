@@ -32,6 +32,7 @@
   function setHero(num, unit, sub) {
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
+    $("hero").hidden = false;
   }
   function clearOut(msg) {
     $("warnings").hidden = !msg;
@@ -51,7 +52,7 @@ function run() {
   var r = PlanetaryTransferCalcs.compute(input);
   if (!r) { clearOut('Pick two different planets, or enter two different positive radii in AU.'); return; }
   setHero(fmt(r.timeOfFlightDays, 1) + ' days', 'heliocentric time of flight');
-  $('out').innerHTML = [
+  $("stat-grid").innerHTML = [
     { label: 'Time of flight', value: fmt(r.timeOfFlightDays, 1) + ' days' },
     { label: 'Departure Δv (heliocentric)', value: fmt(r.dv1Mps / 1000, 3) + ' km/s' },
     { label: 'Arrival Δv (heliocentric)', value: fmt(r.dv2Mps / 1000, 3) + ' km/s' },
@@ -61,12 +62,12 @@ function run() {
 }
 $('calcBtn').addEventListener('click', run);
 $('exEM').addEventListener('click', function () { $('body1').value = 'earth'; $('body2').value = 'mars'; $('r1').value = ''; $('r2').value = ''; run(); });
-$('resetBtn').addEventListener('click', function () { $('body1').value = 'earth'; $('body2').value = 'mars'; $('r1').value = ''; $('r2').value = ''; clearOut(); $('hero').hidden = true; });
+$('resetBtn').addEventListener('click', function () { $('body1').value = 'earth'; $('body2').value = 'mars'; $('r1').value = ''; $('r2').value = ''; clearOut(); run(); });
   var form = $("calc-form");
   if (form) {
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    form.addEventListener("change", run);
   }
   if (typeof show === "function") show();
-  render();
+  run();
 })();

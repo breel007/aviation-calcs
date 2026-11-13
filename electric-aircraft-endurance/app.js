@@ -32,6 +32,7 @@
   function setHero(num, unit, sub) {
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
+    $("hero").hidden = false;
   }
   function clearOut(msg) {
     $("warnings").hidden = !msg;
@@ -60,19 +61,19 @@ function run() {
   if (r.rangeNm != null) items.splice(1, 0, { label: 'Still-air range', value: fmt(r.rangeNm, 1) + ' NM  ·  ' + fmt(r.rangeKm, 1) + ' km' });
   if (r.requiredPowerW != null) items.push({ label: 'Aero power required', value: fmt(r.requiredPowerW / 1000, 1) + ' kW  at  η = ' + fmt(r.eta, 2) });
   setHero(fmt(r.enduranceHours, 2) + ' h', r.rangeNm != null ? fmt(r.rangeNm, 0) + ' NM still-air range' : 'electric endurance');
-  $('out').innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(stat).join('');
 }
 $('mode').addEventListener('change', syncMode);
 $('calcBtn').addEventListener('click', run);
 $('ex20').addEventListener('click', function () { $('mode').value = 'power'; syncMode(); $('energy').value = '20'; $('energyUnit').value = 'kwh'; $('usable').value = '0.9'; $('power').value = '40'; $('speed').value = '100'; run(); });
-$('resetBtn').addEventListener('click', function () { $('mode').value = 'power'; syncMode(); $('energy').value = '20'; $('usable').value = '0.9'; $('power').value = '40'; $('speed').value = '100'; clearOut(); $('hero').hidden = true; });
+$('resetBtn').addEventListener('click', function () { $('mode').value = 'power'; syncMode(); $('energy').value = '20'; $('usable').value = '0.9'; $('power').value = '40'; $('speed').value = '100'; clearOut(); run(); });
 ['energy','usable','power','mass','ld','eta','speed'].forEach(function (id) { $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') run(); }); });
 syncMode();
   var form = $("calc-form");
   if (form) {
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    form.addEventListener("change", run);
   }
   if (typeof show === "function") show();
-  render();
+  run();
 })();

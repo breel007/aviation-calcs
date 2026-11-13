@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <title>Service Ceiling Calculator — Rate of Climb vs Density Altitude | Aviator Calcs</title>
   <meta name="description" content="Estimate service and absolute ceilings from a linear rate-of-climb versus density-altitude model, or from climb rates at two altitudes. Educational; not a POH chart.">
-  <meta name="keywords" content="undefined">
+  <meta name="keywords" content="service ceiling calculator, service ceiling calculator, service ceiling formula, pilot calculator, aviation calculator">
   <meta name="author" content="Aviation Calcs">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://aviatorcalcs.com/service-ceiling/">
@@ -18,10 +18,10 @@
   <meta property="og:description" content="Estimate service and absolute ceilings from a linear rate-of-climb versus density-altitude model, or from climb rates at two altitudes. Educational; not a POH chart.">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:title" content="Service Ceiling Calculator">
   <meta name="twitter:description" content="Estimate service and absolute ceilings from a linear rate-of-climb versus density-altitude model, or from climb rates at two altitudes. Educational; not a POH chart.">
   <meta name="twitter:image" content="https://aviatorcalcs.com/shared/og-image.png">
-  <meta name="application-name" content="undefined">
+  <meta name="application-name" content="Service Ceiling">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,12 +97,14 @@
         </svg>
         <div>
           <p class="brand-kicker">Aviation Calcs</p>
-          <p class="brand-name">undefined</p>
+          <p class="brand-name">Service Ceiling</p>
         </div>
       </a>
       <nav class="site-nav" aria-label="Site">
         <a href="../">All tools</a>
-
+        <a href="../crossover-altitude/">Vmo/Mmo Crossover Altitude</a>
+        <a href="../hydroplaning-speed/">Hydroplaning speed</a>
+        <a href="../true-airspeed/">True Airspeed</a>
         <a href="../about.html">About</a>
       </nav>
     </div>
@@ -117,31 +119,31 @@
       <form id="calc-form" action="#" method="get" novalidate>
 <p class="hint">The usual light-airplane service residual is 100 ft/min; some manuals use 50 or 500. Climb must decrease as altitude increases for a two-point fit to make sense.</p>
 <div class="field"><label for="mode">Enter performance as</label>
-  <select id="mode">
+  <select class="input" id="mode">
     <option value="ceiling" selected>Sea-level ROC and absolute ceiling</option>
     <option value="two-points">Climb rates at two density altitudes</option>
   </select></div>
 <div id="rowCeil">
   <div class="pair">
-    <div class="field"><label for="roc0">Sea-level (zero-DA) rate of climb</label><input id="roc0" type="text" inputmode="decimal" value="1200"></div>
-    <div class="field"><label for="hAbs">Absolute ceiling (ft DA)</label><input id="hAbs" type="text" inputmode="decimal" value="12000"></div>
+    <div class="field"><label for="roc0">Sea-level (zero-DA) rate of climb</label><input class="input" id="roc0" type="text" inputmode="decimal" value="1200"></div>
+    <div class="field"><label for="hAbs">Absolute ceiling (ft DA)</label><input class="input" id="hAbs" type="text" inputmode="decimal" value="12000"></div>
   </div>
 </div>
 <div id="rowTwo" hidden>
   <div class="pair">
-    <div class="field"><label for="h1">Density altitude 1 (ft)</label><input id="h1" type="text" inputmode="decimal" value="0"></div>
-    <div class="field"><label for="roc1">Rate of climb 1</label><input id="roc1" type="text" inputmode="decimal" value="1000"></div>
+    <div class="field"><label for="h1">Density altitude 1 (ft)</label><input class="input" id="h1" type="text" inputmode="decimal" value="0"></div>
+    <div class="field"><label for="roc1">Rate of climb 1</label><input class="input" id="roc1" type="text" inputmode="decimal" value="1000"></div>
   </div>
   <div class="pair">
-    <div class="field"><label for="h2">Density altitude 2 (ft)</label><input id="h2" type="text" inputmode="decimal" value="8000"></div>
-    <div class="field"><label for="roc2">Rate of climb 2</label><input id="roc2" type="text" inputmode="decimal" value="400"></div>
+    <div class="field"><label for="h2">Density altitude 2 (ft)</label><input class="input" id="h2" type="text" inputmode="decimal" value="8000"></div>
+    <div class="field"><label for="roc2">Rate of climb 2</label><input class="input" id="roc2" type="text" inputmode="decimal" value="400"></div>
   </div>
 </div>
 <div class="pair">
-  <div class="field"><label for="svc">Service residual (ft/min)</label><input id="svc" type="text" inputmode="decimal" value="100"></div>
-  <div class="field"><label for="hQuery">Also show ROC at this DA (optional, ft)</label><input id="hQuery" type="text" inputmode="decimal" value="6000"></div>
+  <div class="field"><label for="svc">Service residual (ft/min)</label><input class="input" id="svc" type="text" inputmode="decimal" value="100"></div>
+  <div class="field"><label for="hQuery">Also show ROC at this DA (optional, ft)</label><input class="input" id="hQuery" type="text" inputmode="decimal" value="6000"></div>
 </div>
-<button type="button" class="btn" id="calcBtn">Calculate service ceiling</button>
+<button type="button" class="btn btn-primary" id="calcBtn">Calculate service ceiling</button>
 <div class="form-actions"><button type="button" class="btn btn-ghost" id="ex1200">Example: 1,200 fpm, 12,000 ft absolute</button>
 <button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
       </form>
@@ -158,7 +160,7 @@
       </section>
       <aside class="disclaimer" role="note">
         <h2>Disclaimer</h2>
-        <p>undefined</p>
+        <p>This calculator is an educational and planning aid only. It is <strong>not</strong> a substitute for the POH/AFM, official FAA publications and charts, ATC instructions, or your judgment as pilot in command. Results come from simplified models and the values you enter; check them against the aircraft’s published data before relying on them.</p>
       </aside>
     </section>
 

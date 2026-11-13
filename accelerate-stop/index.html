@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <title>Accelerate-Stop Distance Calculator — Educational V1 Kinematics | Aviator Calcs</title>
   <meta name="description" content="Educational accelerate-stop distance from acceleration to a decision speed, a recognition delay, and braking deceleration. Not a certified ASDR or V1.">
-  <meta name="keywords" content="undefined">
+  <meta name="keywords" content="accelerate-stop distance calculator, accelerate-stop distance calculator, accelerate-stop distance formula, pilot calculator, aviation calculator">
   <meta name="author" content="Aviation Calcs">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://aviatorcalcs.com/accelerate-stop/">
@@ -18,10 +18,10 @@
   <meta property="og:description" content="Educational accelerate-stop distance from acceleration to a decision speed, a recognition delay, and braking deceleration. Not a certified ASDR or V1.">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:title" content="Accelerate-Stop Distance Calculator">
   <meta name="twitter:description" content="Educational accelerate-stop distance from acceleration to a decision speed, a recognition delay, and braking deceleration. Not a certified ASDR or V1.">
   <meta name="twitter:image" content="https://aviatorcalcs.com/shared/og-image.png">
-  <meta name="application-name" content="undefined">
+  <meta name="application-name" content="Accelerate-Stop Distance">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,12 +97,14 @@
         </svg>
         <div>
           <p class="brand-kicker">Aviation Calcs</p>
-          <p class="brand-name">undefined</p>
+          <p class="brand-name">Accelerate-Stop Distance</p>
         </div>
       </a>
       <nav class="site-nav" aria-label="Site">
         <a href="../">All tools</a>
-
+        <a href="../takeoff-landing-distance/">Takeoff / landing distance</a>
+        <a href="../approach-speed/">Approach / landing speed</a>
+        <a href="../density-altitude/">Density Altitude</a>
         <a href="../about.html">About</a>
       </nav>
     </div>
@@ -117,22 +119,22 @@
       <form id="calc-form" action="#" method="get" novalidate>
 <p class="hint">Speeds are treated as groundspeed. Acceleration and deceleration default to knots per second; you can instead enter the distance used to reach the decision speed, or a fraction of g. The default recognition time is 1 second — a round number, not a certification value.</p>
 <div class="pair">
-  <div class="field"><label for="v1">Decision speed (educational “V1”)</label><input id="v1" type="text" inputmode="decimal" value="80"></div>
+  <div class="field"><label for="v1">Decision speed (educational “V1”)</label><input class="input" id="v1" type="text" inputmode="decimal" value="80"></div>
   <div class="field"><label for="v1Unit">Speed unit</label>
-    <select id="v1Unit"><option value="kt" selected>knots</option><option value="mph">mph</option><option value="kph">km/h</option></select></div>
+    <select class="input" id="v1Unit"><option value="kt" selected>knots</option><option value="mph">mph</option><option value="kph">km/h</option></select></div>
 </div>
 <div class="pair">
   <div class="field"><label for="accelKind">Acceleration entered as</label>
-    <select id="accelKind"><option value="kts-per-s" selected>knots per second</option><option value="distance">distance to the decision speed</option><option value="g">fraction of g</option></select></div>
-  <div class="field"><label for="accelVal">Acceleration value</label><input id="accelVal" type="text" inputmode="decimal" value="4"></div>
+    <select class="input" id="accelKind"><option value="kts-per-s" selected>knots per second</option><option value="distance">distance to the decision speed</option><option value="g">fraction of g</option></select></div>
+  <div class="field"><label for="accelVal">Acceleration value</label><input class="input" id="accelVal" type="text" inputmode="decimal" value="4"></div>
 </div>
 <div class="pair">
   <div class="field"><label for="decelKind">Deceleration entered as</label>
-    <select id="decelKind"><option value="kts-per-s" selected>knots per second</option><option value="g">fraction of g</option></select></div>
-  <div class="field"><label for="decelVal">Deceleration value</label><input id="decelVal" type="text" inputmode="decimal" value="8"></div>
+    <select class="input" id="decelKind"><option value="kts-per-s" selected>knots per second</option><option value="g">fraction of g</option></select></div>
+  <div class="field"><label for="decelVal">Deceleration value</label><input class="input" id="decelVal" type="text" inputmode="decimal" value="8"></div>
 </div>
-<div class="field"><label for="react">Recognition / reaction time (seconds)</label><input id="react" type="text" inputmode="decimal" value="1"></div>
-<button type="button" class="btn" id="calcBtn">Calculate accelerate-stop distance</button>
+<div class="field"><label for="react">Recognition / reaction time (seconds)</label><input class="input" id="react" type="text" inputmode="decimal" value="1"></div>
+<button type="button" class="btn btn-primary" id="calcBtn">Calculate accelerate-stop distance</button>
 <div class="form-actions"><button type="button" class="btn btn-ghost" id="ex80">Example: 80 kt, 4 kt/s, 8 kt/s, 1 s</button>
 <button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
       </form>
@@ -149,7 +151,7 @@
       </section>
       <aside class="disclaimer" role="note">
         <h2>Disclaimer</h2>
-        <p>undefined</p>
+        <p>This calculator is an educational and planning aid only. It is <strong>not</strong> a substitute for the POH/AFM, official FAA publications and charts, ATC instructions, or your judgment as pilot in command. Results come from simplified models and the values you enter; check them against the aircraft’s published data before relying on them.</p>
       </aside>
     </section>
 

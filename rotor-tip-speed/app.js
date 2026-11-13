@@ -32,6 +32,7 @@
   function setHero(num, unit, sub) {
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
+    $("hero").hidden = false;
   }
   function clearOut(msg) {
     $("warnings").hidden = !msg;
@@ -56,17 +57,17 @@ function run() {
     { label: 'Advance ratio μ', value: fmt(r.advanceRatio, 3) + '  at  ' + fmt(r.rpm, 1) + ' rpm' }
   ];
   setHero(fmt(r.tipMps, 0) + ' m/s', 'tip speed  ·  M ' + fmt(r.tipMach, 2));
-  $('out').innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(stat).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('ex400').addEventListener('click', function () { $('rpm').value = '400'; $('omegaUnit').value = 'rpm'; $('radius').value = '5.5'; $('radUnit').value = 'm'; $('speed').value = '120'; $('oat').value = '15'; run(); });
-$('resetBtn').addEventListener('click', function () { $('rpm').value = '400'; $('radius').value = '5.5'; $('speed').value = '120'; $('oat').value = '15'; clearOut(); $('hero').hidden = true; });
+$('resetBtn').addEventListener('click', function () { $('rpm').value = '400'; $('radius').value = '5.5'; $('speed').value = '120'; $('oat').value = '15'; clearOut(); run(); });
 ['rpm','radius','speed','oat'].forEach(function (id) { $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') run(); }); });
   var form = $("calc-form");
   if (form) {
-    form.addEventListener("input", render);
-    form.addEventListener("change", render);
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    form.addEventListener("change", run);
   }
   if (typeof show === "function") show();
-  render();
+  run();
 })();

@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <title>Drone Flight Time Calculator — Multirotor Hover Endurance and T/W | Aviator Calcs</title>
   <meta name="description" content="Estimate multirotor hover endurance and thrust-to-weight from all-up weight, rotor size, battery energy, and a hover figure of merit. Educational; not a manufacturer rating.">
-  <meta name="keywords" content="undefined">
+  <meta name="keywords" content="drone flight time calculator, drone flight time calculator, drone flight time formula, pilot calculator, aviation calculator">
   <meta name="author" content="Aviation Calcs">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://aviatorcalcs.com/drone-flight-time/">
@@ -18,10 +18,10 @@
   <meta property="og:description" content="Estimate multirotor hover endurance and thrust-to-weight from all-up weight, rotor size, battery energy, and a hover figure of merit. Educational; not a manufacturer rating.">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="undefined">
+  <meta name="twitter:title" content="Drone Flight Time Calculator">
   <meta name="twitter:description" content="Estimate multirotor hover endurance and thrust-to-weight from all-up weight, rotor size, battery energy, and a hover figure of merit. Educational; not a manufacturer rating.">
   <meta name="twitter:image" content="https://aviatorcalcs.com/shared/og-image.png">
-  <meta name="application-name" content="undefined">
+  <meta name="application-name" content="Drone Flight Time">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080c16'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e8b84a' stroke-width='2'/%3E%3Cpath d='M16 7v2M16 23v2M7 16h2M23 16h2' stroke='%23e8b84a' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%236fe3d0'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,12 +97,14 @@
         </svg>
         <div>
           <p class="brand-kicker">Aviation Calcs</p>
-          <p class="brand-name">undefined</p>
+          <p class="brand-name">Drone Flight Time</p>
         </div>
       </a>
       <nav class="site-nav" aria-label="Site">
         <a href="../">All tools</a>
-
+        <a href="../fuel-weight/">Fuel weight</a>
+        <a href="../drag-polar/">Drag polar / L/D max</a>
+        <a href="../pivotal-altitude/">Pivotal altitude</a>
         <a href="../about.html">About</a>
       </nav>
     </div>
@@ -117,32 +119,32 @@
       <form id="calc-form" action="#" method="get" novalidate>
 <p class="hint">Diameter is one rotor (not the tip-to-tip span of the frame). Figure of merit defaults to 0.60, a typical small-quad value; usable battery defaults to 80% of the nominal watt-hours. Capacity may be entered as watt-hours or as mAh and pack voltage.</p>
 <div class="pair">
-  <div class="field"><label for="mass">All-up mass</label><input id="mass" type="text" inputmode="decimal" value="2"></div>
+  <div class="field"><label for="mass">All-up mass</label><input class="input" id="mass" type="text" inputmode="decimal" value="2"></div>
   <div class="field"><label for="massUnit">Mass unit</label>
-    <select id="massUnit"><option value="kg" selected>kg</option><option value="lb">lb</option></select></div>
+    <select class="input" id="massUnit"><option value="kg" selected>kg</option><option value="lb">lb</option></select></div>
 </div>
 <div class="pair">
-  <div class="field"><label for="rotors">Number of rotors</label><input id="rotors" type="text" inputmode="numeric" value="4"></div>
-  <div class="field"><label for="diameter">Rotor diameter (each)</label><input id="diameter" type="text" inputmode="decimal" value="0.25"></div>
+  <div class="field"><label for="rotors">Number of rotors</label><input class="input" id="rotors" type="text" inputmode="numeric" value="4"></div>
+  <div class="field"><label for="diameter">Rotor diameter (each)</label><input class="input" id="diameter" type="text" inputmode="decimal" value="0.25"></div>
 </div>
 <div class="pair">
   <div class="field"><label for="diaUnit">Diameter unit</label>
-    <select id="diaUnit"><option value="m" selected>metres</option><option value="in">inches</option></select></div>
-  <div class="field"><label for="fm">Figure of merit</label><input id="fm" type="text" inputmode="decimal" value="0.6"></div>
+    <select class="input" id="diaUnit"><option value="m" selected>metres</option><option value="in">inches</option></select></div>
+  <div class="field"><label for="fm">Figure of merit</label><input class="input" id="fm" type="text" inputmode="decimal" value="0.6"></div>
 </div>
 <div class="pair">
-  <div class="field"><label for="energyWh">Battery energy (Wh), or leave blank and use mAh</label><input id="energyWh" type="text" inputmode="decimal" value="100"></div>
-  <div class="field"><label for="usable">Usable fraction</label><input id="usable" type="text" inputmode="decimal" value="0.8"></div>
+  <div class="field"><label for="energyWh">Battery energy (Wh), or leave blank and use mAh</label><input class="input" id="energyWh" type="text" inputmode="decimal" value="100"></div>
+  <div class="field"><label for="usable">Usable fraction</label><input class="input" id="usable" type="text" inputmode="decimal" value="0.8"></div>
 </div>
 <div class="pair">
-  <div class="field"><label for="mah">Capacity (mAh, optional)</label><input id="mah" type="text" inputmode="decimal" value=""></div>
-  <div class="field"><label for="volt">Pack voltage (V, with mAh)</label><input id="volt" type="text" inputmode="decimal" value=""></div>
+  <div class="field"><label for="mah">Capacity (mAh, optional)</label><input class="input" id="mah" type="text" inputmode="decimal" value=""></div>
+  <div class="field"><label for="volt">Pack voltage (V, with mAh)</label><input class="input" id="volt" type="text" inputmode="decimal" value=""></div>
 </div>
 <div class="pair">
-  <div class="field"><label for="avionics">Avionics / hotel load (W, optional)</label><input id="avionics" type="text" inputmode="decimal" value="0"></div>
-  <div class="field"><label for="maxThrust">Maximum total thrust (N, optional, for T/W)</label><input id="maxThrust" type="text" inputmode="decimal" value=""></div>
+  <div class="field"><label for="avionics">Avionics / hotel load (W, optional)</label><input class="input" id="avionics" type="text" inputmode="decimal" value="0"></div>
+  <div class="field"><label for="maxThrust">Maximum total thrust (N, optional, for T/W)</label><input class="input" id="maxThrust" type="text" inputmode="decimal" value=""></div>
 </div>
-<button type="button" class="btn" id="calcBtn">Calculate hover endurance</button>
+<button type="button" class="btn btn-primary" id="calcBtn">Calculate hover endurance</button>
 <div class="form-actions"><button type="button" class="btn btn-ghost" id="exQuad">Example: 2 kg quad, 10-inch-class props, 100 Wh</button>
 <button type="button" class="btn btn-ghost" id="resetBtn">Reset</button></div>
       </form>
@@ -159,7 +161,7 @@
       </section>
       <aside class="disclaimer" role="note">
         <h2>Disclaimer</h2>
-        <p>undefined</p>
+        <p>This calculator is an educational and planning aid only. It is <strong>not</strong> a substitute for the POH/AFM, official FAA publications and charts, ATC instructions, or your judgment as pilot in command. Results come from simplified models and the values you enter; check them against the aircraft’s published data before relying on them.</p>
       </aside>
     </section>
 

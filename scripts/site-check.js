@@ -631,6 +631,118 @@ async function checkExternalLinks(urls) {
   }
 }
 
+
+// ---------------------------------------------------------------------------
+// "undefined" / "NaN" guard. A page must never show these words: they mean a
+// template key was missing or a number failed to parse. Checked statically:
+//   1. the HTML with code stripped (visible text and attribute values),
+//   2. JSON-LD string values,
+//   3. every string literal / template-literal text in the page's own .js
+//      files (what scripts can write into the page). Legit code such as
+//      `typeof x === "undefined"` is ignored.
+// ---------------------------------------------------------------------------
+var BAD_WORD_RE = /\b(undefined|NaN)\b/;
+
+function jsStringLiterals(src) {
+  // Small tokenizer: returns [{text, line, prev}] for '..', "..", and the
+  // static parts of `..` literals; skips comments and regex literals.
+  var out = [];
+  var i = 0, n = src.length, line = 1, lastSig = "";
+  function pushLit(text, startLine, before) { out.push({ text: text, line: startLine, prev: before }); }
+  while (i < n) {
+    var ch = src[i];
+    if (ch === "\n") { line++; i++; continue; }
+    if (ch === "/" && src[i + 1] === "/") { while (i < n && src[i] !== "\n") i++; continue; }
+    if (ch === "/" && src[i + 1] === "*") {
+      i += 2;
+      while (i < n && !(src[i] === "*" && src[i + 1] === "/")) { if (src[i] === "\n") line++; i++; }
+      i += 2; continue;
+    }
+    if (ch === "'" || ch === '"') {
+      var q = ch, s = "", startLine = line, before = src.slice(Math.max(0, i - 40), i);
+      i++;
+      while (i < n && src[i] !== q && src[i] !== "\n") {
+        if (src[i] === "\\") { s += src[i + 1]; i += 2; continue; }
+        s += src[i++];
+      }
+      i++;
+      pushLit(s, startLine, before);
+      lastSig = "a"; continue;
+    }
+    if (ch === "`") {
+      var t = "", tl = line, depth = 0;
+      i++;
+      while (i < n) {
+        if (src[i] === "\\") { t += src[i + 1]; i += 2; continue; }
+        if (src[i] === "`") { i++; break; }
+        if (src[i] === "$" && src[i + 1] === "{") {
+          // skip the expression (no nested template support needed here)
+          depth = 1; i += 2; t += " ";
+          while (i < n && depth) { if (src[i] === "{") depth++; else if (src[i] === "}") depth--; if (src[i] === "\n") line++; i++; }
+          continue;
+        }
+        if (src[i] === "\n") line++;
+        t += src[i++];
+      }
+      pushLit(t, tl, "");
+      lastSig = "a"; continue;
+    }
+    if (ch === "/" && (lastSig === "" || /[(,=:\[!&|?{};+\-*%<>~^]/.test(lastSig))) {
+      // regex literal
+      i++;
+      var inClass = false;
+      while (i < n && src[i] !== "\n") {
+        if (src[i] === "\\") { i += 2; continue; }
+        if (src[i] === "[") inClass = true;
+        else if (src[i] === "]") inClass = false;
+        else if (src[i] === "/" && !inClass) { i++; break; }
+        i++;
+      }
+      while (i < n && /[a-z]/i.test(src[i])) i++;
+      lastSig = "a"; continue;
+    }
+    if (!/\s/.test(ch)) lastSig = /[A-Za-z0-9_$)\]]/.test(ch) ? "a" : ch;
+    i++;
+  }
+  return out;
+}
+
+function checkNoUndefinedText(file, html) {
+  var r = rel(file);
+  // JSON-LD values
+  var ldRe = /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi, m;
+  var bad = [];
+  while ((m = ldRe.exec(html))) {
+    if (BAD_WORD_RE.test(m[1])) bad.push("JSON-LD");
+  }
+  var stripped = html
+    .replace(/<script\b[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style\b[\s\S]*?<\/style>/gi, " ")
+    .replace(/<!--[\s\S]*?-->/g, " ");
+  var hit = stripped.match(/[^<>]{0,40}\b(undefined|NaN)\b[^<>]{0,20}/);
+  if (hit) bad.push("markup near \"" + hit[0].trim() + "\"");
+  if (bad.length) {
+    fail(r + " contains the literal text undefined/NaN (" + bad.join("; ") + ")");
+  } else {
+    pass(r + " has no undefined/NaN text");
+  }
+
+  // Page-local scripts that can build visible text.
+  var dir = path.dirname(file);
+  var srcRe = /<script\b[^>]*\bsrc=["']([^"']+\.js)(?:\?[^"']*)?["']/gi;
+  while ((m = srcRe.exec(html))) {
+    if (/^(https?:)?\/\//.test(m[1])) continue;
+    var jsFile = m[1].charAt(0) === "/" ? path.join(root, m[1]) : path.join(dir, m[1]);
+    if (!fs.existsSync(jsFile)) continue;
+    var lits = jsStringLiterals(read(jsFile));
+    lits.forEach(function (l) {
+      if (!BAD_WORD_RE.test(l.text)) return;
+      if (l.text === "undefined" && /typeof\s*\(?[\w$.\[\]"']*\)?\s*[!=]==?\s*$/.test(l.prev)) return;
+      fail(rel(jsFile) + ":" + l.line + " has a string that would print undefined/NaN: \"" + l.text.slice(0, 60) + "\"");
+    });
+  }
+}
+
 async function main() {
   console.log("Aviation Calcs site check  (base " + SITE.origin() + ")\n");
 
@@ -641,6 +753,7 @@ async function main() {
   htmlFiles.forEach(function (file) {
     var html = read(file);
     checkPageChrome(file, html);
+    checkNoUndefinedText(file, html);
     externals = externals.concat(checkLinks(file, html));
   });
   uniqueMeta(htmlFiles);
