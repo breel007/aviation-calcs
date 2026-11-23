@@ -56,7 +56,7 @@ function run() {
   ];
   if (r.liftN != null) items.unshift({ label: 'Lift', value: fmt(r.liftN, 1) + ' N' });
   setHero('cl ' + fmt(r.cl, 3), 'thin-airfoil theory');
-  $("stat-grid").innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('ex5').addEventListener('click', function () { $('alpha').value = '5'; $('aL0').value = '0'; $('angleUnit').value = 'deg'; $('speed').value = ''; $('area').value = ''; run(); });

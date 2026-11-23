@@ -62,7 +62,7 @@ function run() {
   ];
   if (r.hoverCeilingFt != null) items.unshift({ label: 'Induced-power hover ceiling', value: fmt(r.hoverCeilingFt, 0) + ' ft  ·  ' + fmt(r.hoverCeilingM, 0) + ' m' });
   setHero(fmt(r.shaftPowerW / 1000, 1) + ' kW', 'shaft power to hover');
-  $("stat-grid").innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('ex20').addEventListener('click', function () { $('thrust').value = '20000'; $('thrustUnit').value = 'n'; $('diameter').value = '20'; $('diaUnit').value = 'm'; $('fm').value = '0.7'; $('alt').value = '0'; $('altUnit').value = 'ft'; $('power').value = ''; run(); });

@@ -55,7 +55,7 @@ function run() {
     { label: 'P / P*', value: fmt(r.P_Pstar, 4) },
     { label: 'ρ / ρ*', value: fmt(r.rho_rhostar, 4) },
     { label: 'P0 / P0*', value: fmt(r.P0_P0star, 4) }
-  ].map(stat).join('');
+  ].map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('ex05').addEventListener('click', function () { $('mach').value = '0.5'; $('gamma').value = '1.4'; run(); });

@@ -60,7 +60,7 @@ function run() {
     { label: 'Change from the reference', value: (r.deltaKt >= 0 ? '+' : '') + fmt(r.deltaKt, 1) + ' kt' },
     { label: 'Mean shear', value: fmt(r.shearKtPer100ft, 2) + ' kt / 100 ft' },
     { label: 'Profile', value: r.mode === 'linear' ? 'linear' : ('power law, α = ' + fmt(r.alpha, 3)) }
-  ].map(stat).join('');
+  ].map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('mode').addEventListener('change', syncMode);
 $('calcBtn').addEventListener('click', run);

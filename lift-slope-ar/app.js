@@ -55,7 +55,7 @@ function run() {
     { label: 'Helmbold slope', value: fmt(r.helmboldPerRad, 3) + ' per rad  ·  ' + fmt(r.helmboldPerDeg, 4) + ' per degree' },
     { label: 'Section slope a0', value: fmt(r.a0PerRad, 3) + ' per rad  ·  ' + fmt(r.a0PerDeg, 4) + ' per degree' },
     { label: 'Helmbold / Prandtl', value: fmt(r.ratioHelmboldToPrandtl, 3) }
-  ].map(stat).join('');
+  ].map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('ex6').addEventListener('click', function () { $('ar').value = '6'; $('oswald').value = '1'; $('a0').value = ''; run(); });

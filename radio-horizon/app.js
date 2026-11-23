@@ -58,7 +58,7 @@ function run() {
     items.push({ label: 'Horizon from height 2 alone', value: fmt(r.radio2Nm, 1) + ' NM' });
   }
   setHero(fmt(r.radioNm, 1) + ' NM', 'radio line-of-sight');
-  $("stat-grid").innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('exAtc').addEventListener('click', function () { $('h1').value = '1000'; $('h2').value = '6000'; $('hUnit').value = 'ft'; run(); });

@@ -60,7 +60,7 @@ function run() {
     { label: 'Useful lift', value: fmt(r.usefulKg, 0) + ' kg  ·  ' + fmt(r.usefulLb, 0) + ' lb' },
     { label: 'Air density', value: fmt(r.rhoAir, 3) + ' kg/m³  outside,  ' + fmt(r.rhoHot, 3) + ' kg/m³  in the envelope' },
     { label: 'Volume', value: fmt(r.volumeM3, 0) + ' m³' }
-  ].map(stat).join('');
+  ].map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('ex2800').addEventListener('click', function () { $('volume').value = '2800'; $('volUnit').value = 'm3'; $('tAir').value = '15'; $('tHot').value = '100'; $('tempUnit').value = 'C'; $('pressure').value = '101325'; $('pressureUnit').value = 'pa'; $('empty').value = '400'; $('weightUnit').value = 'kg'; run(); });

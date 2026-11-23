@@ -58,7 +58,7 @@ function run() {
   if (r.rollout) items.push({ label: 'Roll-out on this heading', value: r.rollout.action + ' — ' + r.rollout.reason });
   if (r.acceleration) items.push({ label: 'Acceleration error on this heading', value: r.acceleration.effect + ' — ' + r.acceleration.reason });
   setHero(fmt(r.dipDeg, 1) + '° dip', r.turnRule === 'none' ? 'no turning error at the equator' : r.turnRule + ' / ' + r.accelerationRule);
-  $("stat-grid").innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('exN').addEventListener('click', function () { $('lat').value = '40'; $('heading').value = '0'; run(); });

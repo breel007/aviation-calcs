@@ -61,7 +61,7 @@ function run() {
   if (r.rangeNm != null) items.splice(1, 0, { label: 'Still-air range', value: fmt(r.rangeNm, 1) + ' NM  ·  ' + fmt(r.rangeKm, 1) + ' km' });
   if (r.requiredPowerW != null) items.push({ label: 'Aero power required', value: fmt(r.requiredPowerW / 1000, 1) + ' kW  at  η = ' + fmt(r.eta, 2) });
   setHero(fmt(r.enduranceHours, 2) + ' h', r.rangeNm != null ? fmt(r.rangeNm, 0) + ' NM still-air range' : 'electric endurance');
-  $("stat-grid").innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('mode').addEventListener('change', syncMode);
 $('calcBtn').addEventListener('click', run);

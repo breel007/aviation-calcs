@@ -62,7 +62,7 @@ function run() {
   ];
   if (r.inferred) items.push({ label: 'Caution', value: 'This landing-threshold Super figure is inferred from the in-trail table; confirm with ATC.' });
   setHero(sep, 'AIM 7-4-9  ·  ' + LABELS[r.follower] + ' behind ' + LABELS[r.leader]);
-  $("stat-grid").innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('exDep').addEventListener('click', function () { $('leader').value = 'heavy'; $('follower').value = 'small'; $('scenario').value = 'same-threshold-departure'; $('leaderWeight').value = ''; $('followerWeight').value = ''; run(); });

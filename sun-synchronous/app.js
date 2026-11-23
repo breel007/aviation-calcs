@@ -55,7 +55,7 @@ function run() {
     { label: 'Semi-major axis', value: fmt(r.smaM / 1000, 1) + ' km' },
     { label: 'Period', value: fmt(r.periodSec / 60, 2) + ' min' },
     { label: 'Target nodal rate', value: fmt(r.precessionDegPerDay, 6) + ' °/day' }
-  ].map(stat).join('');
+  ].map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('ex800').addEventListener('click', function () { $('alt').value = '800'; $('altUnit').value = 'km'; $('ecc').value = '0'; $('rate').value = ''; run(); });

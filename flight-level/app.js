@@ -64,7 +64,7 @@ function run() {
     items.push({ label: 'PA − QNH offset', value: fmt(r.qnhOffsetFt, 0) + ' ft' });
   }
   setHero(r.flightLevelLabel, 'from ' + fmt(r.pressureAltitudeFt, 0) + ' ft PA');
-  $("stat-grid").innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('mode').addEventListener('change', syncMode);
 $('calcBtn').addEventListener('click', run);

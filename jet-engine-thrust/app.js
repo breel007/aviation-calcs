@@ -62,7 +62,7 @@ function run() {
   }
   if (r.pressureTermN) items.push({ label: 'Pressure term', value: fmt(r.pressureTermN, 0) + ' N' });
   setHero(fmt(r.thrustN, 0) + ' N', 'net thrust');
-  $("stat-grid").innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('ex50').addEventListener('click', function () { $('air').value = '50'; $('ue').value = '600'; $('u0').value = '0'; $('far').value = '0.02'; $('fuel').value = ''; $('pe').value = ''; $('p0').value = ''; $('ae').value = ''; run(); });

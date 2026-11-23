@@ -55,7 +55,7 @@ function run() {
     { label: 'Speed of sound used', value: fmt(r.speedOfSoundMps, 1) + ' m/s  ·  ' + fmt(r.secondsPerSm, 2) + ' s/SM' },
     { label: 'Five-seconds-per-mile rule', value: fmt(r.rule5SecPerSm, 1) + ' SM  (t / 5)' },
     { label: 'Temperature assumed', value: fmt(r.temperatureC, 1) + ' °C' }
-  ].map(stat).join('');
+  ].map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('ex15').addEventListener('click', function () { $('seconds').value = '15'; $('temp').value = '15'; $('tempUnit').value = 'C'; run(); });

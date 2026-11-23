@@ -55,7 +55,7 @@ function run() {
   ];
   if (!r.applicable) items.push({ label: 'Domain', value: 'NWS publishes wind chill only for air temperatures at or below 50 °F and winds of 3 mph or more. Below that wind, this page reports the air temperature.' });
   setHero(fmt(r.windChillF, 0) + ' °F', 'wind-chill temperature');
-  $("stat-grid").innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('exCold').addEventListener('click', function () { $('temp').value = '0'; $('tempUnit').value = 'F'; $('wind').value = '10'; $('windUnit').value = 'mph'; run(); });

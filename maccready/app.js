@@ -60,7 +60,7 @@ function run() {
     { label: 'MacCready setting', value: fmt(r.maccreadyKt, 2) + ' kt  ·  ' + fmt(r.maccreadyFpm, 0) + ' ft/min' }
   ];
   setHero(fmt(r.speedToFlyKt, 1) + ' kt', 'MacCready speed to fly');
-  $("stat-grid").innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('ex40').addEventListener('click', function () { $('v1').value = '20'; $('w1').value = '2'; $('v2').value = '40'; $('w2').value = '5'; $('v3').value = ''; $('w3').value = ''; $('mc').value = '3'; $('sinkUnit').value = 'kt'; $('speedUnit').value = 'kt'; run(); });

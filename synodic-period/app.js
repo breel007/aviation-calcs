@@ -57,7 +57,7 @@ function run() {
     { label: 'Sidereal period 1', value: fmt(r.period1Days, 3) + ' days' },
     { label: 'Sidereal period 2', value: fmt(r.period2Days, 3) + ' days' },
     { label: 'Meetings per year', value: fmt(r.meetingsPerYear, 2) }
-  ].map(stat).join('');
+  ].map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('exEM').addEventListener('click', function () { $('body1').value = 'earth'; $('body2').value = 'mars'; run(); });

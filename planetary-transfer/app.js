@@ -58,7 +58,7 @@ function run() {
     { label: 'Arrival Δv (heliocentric)', value: fmt(r.dv2Mps / 1000, 3) + ' km/s' },
     { label: 'Total heliocentric Δv', value: fmt(r.dvTotalMps / 1000, 3) + ' km/s' },
     { label: 'Next similar window (synodic)', value: fmt(r.synodicDays, 1) + ' days' }
-  ].map(stat).join('');
+  ].map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('exEM').addEventListener('click', function () { $('body1').value = 'earth'; $('body2').value = 'mars'; $('r1').value = ''; $('r2').value = ''; run(); });

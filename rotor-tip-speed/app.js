@@ -57,7 +57,7 @@ function run() {
     { label: 'Advance ratio μ', value: fmt(r.advanceRatio, 3) + '  at  ' + fmt(r.rpm, 1) + ' rpm' }
   ];
   setHero(fmt(r.tipMps, 0) + ' m/s', 'tip speed  ·  M ' + fmt(r.tipMach, 2));
-  $("stat-grid").innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('ex400').addEventListener('click', function () { $('rpm').value = '400'; $('omegaUnit').value = 'rpm'; $('radius').value = '5.5'; $('radUnit').value = 'm'; $('speed').value = '120'; $('oat').value = '15'; run(); });

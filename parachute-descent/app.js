@@ -62,7 +62,7 @@ function run() {
     { label: 'Time at constant v_t', value: dur(r.timeConstSec) },
     { label: 'Time from rest (quadratic drag)', value: dur(r.timeFromRestSec) },
     { label: 'Wind drift (constant v_t)', value: fmt(r.driftConstFt, 0) + ' ft  ·  ' + fmt(r.driftConstNm, 2) + ' NM' }
-  ].map(stat).join('');
+  ].map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('ex1000').addEventListener('click', function () { $('height').value = '1000'; $('altUnit').value = 'ft'; $('vt').value = '1000'; $('vtUnit').value = 'fpm'; $('wind').value = '10'; $('windUnit').value = 'kt'; $('mass').value = ''; $('cd').value = ''; $('area').value = ''; run(); });

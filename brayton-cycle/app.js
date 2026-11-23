@@ -59,7 +59,7 @@ function run() {
     items.push({ label: 'Heat input', value: fmt(r.heatInJPerKg / 1000, 1) + ' kJ/kg' });
   }
   setHero(fmt(r.efficiency * 100, 1) + ' %', 'ideal Brayton efficiency');
-  $("stat-grid").innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('ex10').addEventListener('click', function () { $('rp').value = '10'; $('gamma').value = '1.4'; $('t1').value = '300'; $('t3').value = '1400'; $('tempUnit').value = 'K'; run(); });

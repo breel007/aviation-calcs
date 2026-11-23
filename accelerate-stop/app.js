@@ -60,7 +60,7 @@ function run() {
     { label: 'Accelerate to the decision speed', value: fmt(r.accelFt, 0) + ' ft  in  ' + fmt(r.accelSec, 1) + ' s' },
     { label: 'Recognition / reaction', value: fmt(r.reactionFt, 0) + ' ft  in  ' + fmt(r.reactionSec, 1) + ' s' },
     { label: 'Brake to a stop', value: fmt(r.stopFt, 0) + ' ft  in  ' + fmt(r.stopSec, 1) + ' s' }
-  ].map(stat).join('');
+  ].map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('ex80').addEventListener('click', function () { $('v1').value = '80'; $('v1Unit').value = 'kt'; $('accelKind').value = 'kts-per-s'; $('accelVal').value = '4'; $('decelKind').value = 'kts-per-s'; $('decelVal').value = '8'; $('react').value = '1'; run(); });

@@ -55,7 +55,7 @@ function run() {
     { label: 'Induced velocity', value: fmt(r.inducedMps, 2) + ' m/s' },
     { label: 'Disk area', value: fmt(r.areaM2, 3) + ' m²  ·  loading ' + fmt(r.diskLoadingPa, 1) + ' Pa' },
     { label: 'Useful power', value: fmt(r.powerIdealW / 1000, 1) + ' kW  at  η = ' + fmt(r.eta, 2) }
-  ].map(stat).join('');
+  ].map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('ex100').addEventListener('click', function () { $('power').value = '100'; $('powerUnit').value = 'kw'; $('diameter').value = '2'; $('diaUnit').value = 'm'; $('eta').value = '1'; $('density').value = ''; run(); });

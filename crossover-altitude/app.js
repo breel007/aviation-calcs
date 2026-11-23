@@ -56,7 +56,7 @@ function run() {
     { label: 'Mmo', value: fmt(r.mmo, 3) },
     { label: 'Below this altitude', value: 'The CAS limit (Vmo) is reached first.' },
     { label: 'Above this altitude', value: 'The Mach limit (Mmo) is reached first.' }
-  ].map(stat).join('');
+  ].map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('calcBtn').addEventListener('click', run);
 $('ex350').addEventListener('click', function () { $('vmo').value = '350'; $('vmoUnit').value = 'kt'; $('mmo').value = '0.80'; run(); });

@@ -60,7 +60,7 @@ function run() {
   ];
   if (r.rocAtQueryFpm != null) items.push({ label: 'ROC at ' + fmt(r.queryAltitudeFt, 0) + ' ft DA', value: fmt(r.rocAtQueryFpm, 0) + ' ft/min' });
   setHero(fmt(r.serviceCeilingFt, 0) + ' ft', 'service ceiling (linear model)');
-  $("stat-grid").innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('mode').addEventListener('change', syncMode);
 $('calcBtn').addEventListener('click', run);

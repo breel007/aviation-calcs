@@ -76,7 +76,7 @@ function run() {
   if (r.descentFpm != null) items.push({ label: 'Descent rate on path', value: fmt(r.descentFpm, 0) + ' ft/min  at  ' + fmt(r.groundspeedKt, 0) + ' kt' });
   if (r.pastThreshold) items.push({ label: 'Note', value: 'The computed point is past the landing threshold.' });
   setHero(fmt(r.heightFt, 0) + ' ft', 'above the threshold');
-  $("stat-grid").innerHTML = items.map(stat).join('');
+  $("stat-grid").innerHTML = items.map(function (it) { return stat(it.label, it.value, it.sub); }).join('');
 }
 $('mode').addEventListener('change', syncMode);
 $('calcBtn').addEventListener('click', run);
