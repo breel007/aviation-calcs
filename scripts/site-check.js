@@ -215,9 +215,11 @@ function checkPageChrome(file, html) {
     if ((attr(tag, "name") || "").toLowerCase() === "robots") robots = attr(tag, "content");
   });
   if (/noindex/i.test(robots)) {
-    fail(r + " has a noindex robots directive");
+    if (r === "404.html") pass(r + " is noindex (expected for the error page)");
+    else fail(r + " has a noindex robots directive");
   } else {
-    pass(r + " is not noindex");
+    if (r === "404.html") fail(r + " should be noindex so the error page is not indexed");
+    else pass(r + " is not noindex");
   }
 
   var hasShared = /shared\/site\.css/.test(html);
@@ -235,6 +237,20 @@ function checkPageChrome(file, html) {
 
   if (!/class=["'][^"']*site-footer/.test(html)) fail(r + " is missing the site footer");
   else pass(r + " has the site footer");
+
+  var footerNav = html.match(/<nav class="footer-nav"[^>]*>[\s\S]*?<\/nav>/);
+  var requiredFooter = (SITE.footerLinks || []).map(function (l) { return l.label; });
+  if (!requiredFooter.length) requiredFooter = ["Home", "About", "Privacy", "Terms"];
+  if (!footerNav) {
+    fail(r + " is missing nav.footer-nav");
+  } else {
+    var missing = requiredFooter.filter(function (label) {
+      var re = new RegExp(">" + label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "<");
+      return !re.test(footerNav[0]);
+    });
+    if (missing.length) fail(r + " footer is missing: " + missing.join(", "));
+    else pass(r + " footer links include " + requiredFooter.join(", "));
+  }
 
   if (isCalc) {
     if (!/class=["'][^"']*disclaimer/.test(html)) {

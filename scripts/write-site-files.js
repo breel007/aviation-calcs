@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 /**
  * Generate sitemap.xml and robots.txt from site-config.js,
- * and keep canonical / og:url / og:image tags in HTML in sync
- * with the configured base URL.
+ * keep canonical / og:url / og:image tags in HTML in sync
+ * with the configured base URL, and rewrite every page footer
+ * from SITE.footerLinks (so a Contact link can be added later
+ * in one place).
  *
  * Usage:  node scripts/write-site-files.js
  */
@@ -77,7 +79,8 @@ function htmlBodyChanged(file) {
   try {
     var old = execFileSync("git", ["show", "HEAD:" + rel], {
       cwd: root,
-      encoding: "utf8"
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "ignore"]
     });
     return stripHead(curr) !== stripHead(old);
   } catch (e) {
@@ -196,6 +199,49 @@ function updateHtml() {
   console.log("HTML canonical/OG base URLs: " + changed + " file(s) updated");
 }
 
+
+function hrefFrom(fromFile, targetPath) {
+  var fromDir = path.dirname(fromFile);
+  var destFile;
+  if (targetPath === "/") destFile = path.join(root, "index.html");
+  else destFile = path.join(root, targetPath.replace(/^\//, ""));
+  var rel = path.relative(fromDir, destFile).replace(/\\/g, "/");
+  if (targetPath === "/") {
+    rel = rel.replace(/index\.html$/, "");
+    if (rel === "" || rel === ".") rel = "./";
+    else if (rel.slice(-1) !== "/") rel += "/";
+  }
+  return rel;
+}
+
+function updateFooters() {
+  var links = SITE.footerLinks;
+  if (!links || !links.length) {
+    console.log("footer links: SITE.footerLinks is missing; skipped");
+    return;
+  }
+  var files = listHtmlFiles(root);
+  var changed = 0;
+  files.forEach(function (file) {
+    var orig = fs.readFileSync(file, "utf8");
+    var inner = links.map(function (l) {
+      return '        <a href="' + hrefFrom(file, l.path) + '">' + l.label + "</a>";
+    }).join("\n");
+    if (!/<nav class="footer-nav" aria-label="Footer">[\s\S]*?<\/nav>/.test(orig)) {
+      console.log("  WARN  no footer-nav to rewrite in " + path.relative(root, file));
+      return;
+    }
+    var nav = '<nav class="footer-nav" aria-label="Footer">\n' + inner + "\n      </nav>";
+    var next = orig.replace(/<nav class="footer-nav" aria-label="Footer">[\s\S]*?<\/nav>/, nav);
+    if (next !== orig) {
+      fs.writeFileSync(file, next);
+      changed += 1;
+    }
+  });
+  console.log("footer nav: " + changed + " file(s) updated from SITE.footerLinks");
+}
+
+updateHtml();
+updateFooters();
 writeSitemap();
 writeRobots();
-updateHtml();

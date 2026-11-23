@@ -118,7 +118,17 @@
       { path: "/synodic-period/", title: "Synodic period calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/planetary-transfer/", title: "Planetary Hohmann transfer calculator", changefreq: "monthly", priority: "0.9" },
       { path: "/about.html", title: "About", changefreq: "yearly", priority: "0.4" },
-      { path: "/privacy.html", title: "Privacy policy", changefreq: "yearly", priority: "0.3" }
+      { path: "/contact.html", title: "Contact", changefreq: "yearly", priority: "0.3" },
+      { path: "/privacy.html", title: "Privacy policy", changefreq: "yearly", priority: "0.3" },
+      { path: "/terms.html", title: "Terms of use", changefreq: "yearly", priority: "0.3" }
+    ],
+    // Footer labels and paths. Relative hrefs are written by scripts/write-site-files.js.
+    footerLinks: [
+      { path: "/", label: "Home" },
+      { path: "/about.html", label: "About" },
+      { path: "/contact.html", label: "Contact" },
+      { path: "/privacy.html", label: "Privacy" },
+      { path: "/terms.html", label: "Terms" }
     ],
     // Catalog order for the home page (and README). Some slugs appear in more than one group.
     groups: [
