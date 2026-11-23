@@ -19,9 +19,9 @@ var mu = C.MU_EARTH, R = C.R_EARTH_MEAN + 400000;
 nearly(r.velocity, Math.sqrt(mu / R), 1e-8, "v = √(μ/r)");
 nearly(r.period, 2 * Math.PI * Math.sqrt(R * R * R / mu), 1e-8, "T = 2π √(r³/μ)");
 nearly(r.escapeVelocity, r.velocity * Math.sqrt(2), 1e-8, "v_esc = √2 v_circ");
-// r = 6,771,000 m; v ≈ 7,669 m/s; T ≈ 92.6 min
-nearly(r.velocity, 7669, 5, "v ≈ 7.669 km/s at 400 km (mean radius)");
-nearly(r.period / 60, 92.6, 0.2, "period ≈ 92.6 min");
+// r = 6,771,000 m; v ≈ 7,673 m/s; T ≈ 92.4 min (article worked numbers)
+nearly(r.velocity, 7673, 1, "v ≈ 7.673 km/s at 400 km (mean radius)");
+nearly(r.period / 60, 92.4, 0.05, "period ≈ 92.4 min");
 
 console.log("\nCase 2  GEO radius from the sidereal day");
 var geoR = C.geoRadius(mu);

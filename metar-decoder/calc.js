@@ -86,7 +86,8 @@
     if (vis.cavok) return "CAVOK (10 km or more, no significant weather or cloud below 5,000 ft)";
     if (isFiniteNumber(vis.statuteMiles)) {
       var prefix = vis.plus ? "greater than " : vis.minus ? "less than " : "";
-      return prefix + vis.text + " statute miles";
+      var vtext = prefix ? String(vis.text).replace(/^[<>PM]/, "") : vis.text;
+      return prefix + vtext + " statute miles";
     }
     if (isFiniteNumber(vis.meters)) {
       var more = vis.meters === 9999 ? " (10 km or more)" : "";
@@ -354,7 +355,7 @@
     if (cavok) return "CAVOK — no cloud below 5,000 ft, visibility 10 km or more, and no significant weather.";
     if (!layers || !layers.length) return "Sky condition missing.";
     return layers.map(function (L) {
-      if (!isFiniteNumber(L.heightFt)) return L.coverText + (L.cb ? " cumulonimbus" : L.tcu ? " towering cumulus" : "");
+      if (!isFiniteNumber(L.heightFt)) return L.coverText.charAt(0).toUpperCase() + L.coverText.slice(1) + (L.cb ? " cumulonimbus" : L.tcu ? " towering cumulus" : "");
       var h = L.heightFt.toLocaleString("en-US") + " ft";
       if (L.cover === "VV") return "Vertical visibility " + h + ".";
       return L.coverText.charAt(0).toUpperCase() + L.coverText.slice(1) + " at " + h + (L.cb ? " (cumulonimbus)" : L.tcu ? " (towering cumulus)" : "");

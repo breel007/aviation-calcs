@@ -89,6 +89,16 @@ isTrue(S.compute({ lat: 95, lon: 0, year: 2024, month: 1, day: 1 }) === null, "l
 isTrue(S.compute({ lat: 0, lon: 0, year: 2024, month: 13, day: 1 }) === null, "month 13 → null");
 isTrue(S.parseDate("07/01/2024") === null, "slash date is rejected (use ISO)");
 
+console.log("\nNight cards: Zulu labels are UTC, not local time with a Z");
+var laxN = S.compute({ lat: 33.9425, lon: -118.4081, year: 2026, month: 11, day: 23, timeZone: "America/Los_Angeles", offsetHours: -8 });
+var ssUtc = laxN.sunsetUTC.minutes;
+var curUtc = (ssUtc + 60) % 1440;
+var expZ = (function (m) { var h = Math.floor(m / 60), mm = Math.floor(m % 60 + 1e-9); return (h < 10 ? "0" : "") + h + (mm < 10 ? "0" : "") + mm + "Z"; })(curUtc);
+isTrue(laxN.positionLights.start.zulu === laxN.sunsetUTC.zulu, "position-lights start Zulu = sunset UTC (" + laxN.positionLights.start.zulu + ")");
+isTrue(laxN.nightCurrency.start.zulu === expZ, "61.57(b) start Zulu = sunset UTC + 1 h (" + laxN.nightCurrency.start.zulu + ")");
+isTrue(laxN.nightCurrency.start.zulu !== laxN.nightCurrency.start.hhmm.replace(":", "") + "Z", "Zulu label differs from the PST clock");
+isTrue(laxN.nightLogging.start.zulu === laxN.civilDuskUTC.zulu, "night-logging start Zulu = civil dusk UTC");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

@@ -29,7 +29,9 @@
     return '<div class="stat"><p class="stat-label">' + label + '</p><p class="stat-value">' + value +
       "</p>" + (sub ? '<p class="stat-sub">' + sub + "</p>" : "") + "</div>";
   }
-  function setHero(num, unit, sub) {
+  function setHero(num, unit, sub, label) {
+    var lbl = document.getElementById("hero-label-text");
+    if (lbl) lbl.textContent = label || "Horizon radius";
     $("out-hero").innerHTML = '<span class="num">' + num + '</span> <span class="unit">' + (unit || "") + "</span>";
     $("out-sub").textContent = sub || "";
   }
@@ -62,7 +64,7 @@
     if (r.belowHorizon === false) warn = "That look angle is at or past the geometric horizon, so there is no intersection with the spherical Earth. The horizon figures below still apply.";
     $("warnings").hidden = !warn; $("warnings").innerHTML = warn ? "<p>" + warn + "</p>" : "";
     if (r.groundRangeM != null) {
-      setHero(fmt(km(r.swathM), 1), "km swath", "ground range " + fmt(km(r.groundRangeM), 1) + " km · λ = " + fmt(r.lambdaDeg, 3) + "°");
+      setHero(fmt(km(r.swathM), 1), "km", "ground range " + fmt(km(r.groundRangeM), 1) + " km · λ = " + fmt(r.lambdaDeg, 3) + "°", "Swath width");
     } else {
       setHero(fmt(km(r.horizonRadiusM), 0), "km", "geometric horizon radius · η = " + fmt(r.etaHorizonDeg, 2) + "°");
     }

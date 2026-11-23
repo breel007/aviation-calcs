@@ -203,7 +203,13 @@
 
   function addMinutesToClock(clock, delta) {
     if (!clock) return null;
-    return minutesToClock(clock.minutes + delta);
+    var c = minutesToClock(clock.minutes + delta);
+    if (clock.utcMinutes != null) {
+      var z = minutesToClock(clock.utcMinutes + delta);
+      c.zulu = z.zulu;
+      c.utcMinutes = z.minutes;
+    }
+    return c;
   }
 
   /**
@@ -240,7 +246,11 @@
 
     function localize(utcMin) {
       if (!isFinite(utcMin)) return null;
-      return minutesToClock(utcMin + offsetMin);
+      var c = minutesToClock(utcMin + offsetMin);
+      var z = minutesToClock(utcMin);
+      c.zulu = z.zulu;          // a local clock's Zulu label is the UTC time, not local + "Z"
+      c.utcMinutes = z.minutes;
+      return c;
     }
 
     var sunrise = localize(sunriseUTC);

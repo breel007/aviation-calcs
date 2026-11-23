@@ -17,7 +17,9 @@
   }
   function fmt(n, d) {
     if (!isFinite(n)) return "—";
-    return n.toLocaleString("en-US", { maximumFractionDigits: d == null ? 1 : d });
+    var x = Number(n.toFixed(d == null ? 1 : d));
+    if (x === 0) x = 0; // avoid displaying "-0"
+    return x.toLocaleString("en-US", { maximumFractionDigits: d == null ? 1 : d });
   }
   function stat(label, value, sub) {
     return '<div class="stat"><p class="stat-label">' + label + '</p><p class="stat-value">' + value +

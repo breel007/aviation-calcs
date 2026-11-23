@@ -58,4 +58,4 @@
 .night-grid { display: grid; gap: 0.7rem; margin-top: 0.9rem; }
 @media (min-width: 640px) { .night-grid { grid-template-columns: 1fr 1fr 1fr; } }
 .night-card h3 { margin: 0 0 0.15rem; font-size: 0.95rem; }
-.night-card .cfr { font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.night-card .cfr { font-size: 0.72rem; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; }

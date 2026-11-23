@@ -64,7 +64,7 @@
     if (r.regime === "overexpanded") warn = "The nozzle is overexpanded (pa > pe). A strong enough overexpansion can produce shocks or separation in the diverging section that this ideal isentropic model does not include.";
     $("warnings").hidden = !warn; $("warnings").innerHTML = warn ? "<p>" + warn + "</p>" : "";
     setHero(fmt(r.exitMach, 3), "Me", "supersonic exit · Ae/At = " + fmt(r.areaRatio, 4));
-    var html = stat("Area ratio Ae/At", fmt(r.areaRatio, 4), "subsonic root Me = " + fmt(r.subsonicMach, 3) + " (converging duct)") +
+    var html = stat("Area ratio Ae/At", fmt(r.areaRatio, 4), "subsonic root Me = " + fmt(r.subsonicMach, 3) + " (subsonic, diffusing exit)") +
       stat("pe / p0", fmt(r.pe_p0, 5), "Te/T0 = " + fmt(r.Te_T0, 4) + " · γ = " + fmt(r.gamma, 3)) +
       stat("Ideal Cf (momentum)", fmt(r.CfMomentum, 4), "vacuum Cf = " + fmt(r.CfVacuum, 4));
     if (r.Cf != null) html += stat("Cf at this pa", fmt(r.Cf, 4), r.regime + (r.pa_p0 != null ? " · pa/p0 = " + fmt(r.pa_p0, 5) : ""));

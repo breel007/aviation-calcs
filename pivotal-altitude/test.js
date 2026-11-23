@@ -20,7 +20,9 @@ var v = 90 * 1852 / 3600;
 var hM = v * v / 9.80665;
 nearly(r.exactM, hM, 1e-9, "exact height is V²/g0");
 nearly(r.exactFt, hM / 0.3048, 1e-9, "exact height in feet");
-isTrue(r.exactFt > r.afhFt && r.exactFt - r.afhFt < 2, "11.3 is a few feet below exact at 90 kt");
+isTrue(r.exactFt > r.afhFt && r.exactFt - r.afhFt < 2, "11.3 is slightly below exact at 90 kt");
+nearly(r.exactFt, 717.2, 0.05, "article: exact V²/g at 90 kt ≈ 717.2 ft");
+nearly(r.exactFt - r.afhFt, 0.4, 0.05, "article: knots rule is about 0.4 ft low at 90 kt");
 
 console.log("\nCase 2  100 mph → AFH 100²/15 = 666.67 ft");
 var s = C.compute({ groundspeed: 100, speedUnit: "mph" });

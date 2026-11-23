@@ -202,6 +202,9 @@ function updateHtml() {
 
 function hrefFrom(fromFile, targetPath) {
   var fromDir = path.dirname(fromFile);
+  // GitHub Pages serves 404.html at whatever missing path was requested
+  // (for example /nope/deeper/x), so its links must be root-absolute.
+  if (path.resolve(fromFile) === path.join(root, "404.html")) return targetPath;
   var destFile;
   if (targetPath === "/") destFile = path.join(root, "index.html");
   else destFile = path.join(root, targetPath.replace(/^\//, ""));

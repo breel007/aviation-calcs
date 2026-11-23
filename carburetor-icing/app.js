@@ -69,7 +69,7 @@
     $("stat-grid").innerHTML =
       stat("Relative humidity", fmt(r.relativeHumidity, 1) + "%", "Magnus / Bolton, same as the cloud-base calculator") +
       stat("Dewpoint", tlab(r.dewpointC, r.dewpointF), "spread " + (tu === "F" ? fmt(r.spreadF, 1) + " °F" : fmt(r.spreadC, 1) + " °C")) +
-      stat("Frost point", tlab(r.frostPointC, r.frostPointF), r.dewpointC < 0 ? "slightly warmer than dewpoint below 0 °C" : "equals dewpoint at or above 0 °C when both are on the ice/water meeting point") +
+      stat("Frost point", tlab(r.frostPointC, r.frostPointF), r.dewpointC < 0 ? "slightly warmer than dewpoint below 0 °C" : "same as the dewpoint at or above 0 °C (water, not ice, condenses)") +
       stat("AC 20-113 screen", r.ac20_113Spread ? "spread ≤ 20 °F" : "spread > 20 °F", "a spread of 20 °F or less is roughly RH of 50% or more");
   }
   var form = $("calc-form");

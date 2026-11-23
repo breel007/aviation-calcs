@@ -66,6 +66,9 @@ isTrue(G.compute({ altitude: 0, glideRatio: 9 }) === null, "zero altitude → nu
 isTrue(G.compute({ altitude: 1000, glideRatio: 0 }) === null, "zero ratio → null");
 isTrue(G.ratioFromAngle(90) === null, "90° angle is invalid");
 
+console.log("\nArticle worked example: time aloft at 70 kt");
+nearly(c1.stillAirNm / 70 * 60, 7.6, 0.05, "8.89 NM at 70 kt ≈ 7.6 minutes");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

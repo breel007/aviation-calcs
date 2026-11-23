@@ -145,5 +145,11 @@ var k10 = M.parseMetar("METAR LFPG 101230Z 27010MPS 9999 FEW020CB SCT040 12/08 Q
 nearly(k10.wind.speedKt, 10 * 3600 / 1852, 1e-9, "10 m/s in knots");
 isTrue(k10.sky[0].cb, "FEW020CB flagged as cumulonimbus");
 
+console.log("\nCase 11  Plain-English wording (no doubled 'greater than', capitalized sky)");
+var k11 = M.parseMetar("METAR KSBA 101753Z 08004KT P6SM CLR 18/09 A3001");
+eq(M.formatVis(k11.visibility), "greater than 6 statute miles", "P6SM reads 'greater than 6'");
+isTrue(/Clear \(automated/.test(M.describeSky(k11.sky, false)), "CLR sentence starts with a capital");
+eq(k11.wind.gustKt, null, "no gust group leaves gustKt null (UI must not show G0)");
+
 console.log("\n" + passed + " passed, " + failed + " failed");
 process.exit(failed ? 1 : 0);

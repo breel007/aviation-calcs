@@ -156,7 +156,7 @@
 
     <article class="panel explainer" id="about-calc">
       <h2>The 1-in-60 rule</h2>
-      <p>One degree of angular offset subtends about one unit of arc in sixty units of distance (the exact factor is 1 radian ≈ 57.3°, so the rule is slightly conservative). Off-course distance is</p>
+      <p>One degree of angular offset subtends about one unit of arc in sixty units of distance (the exact factor is 1 radian ≈ 57.3°, so the rule slightly underestimates the offset). Off-course distance is</p>
       <p><code>offset ≈ distance × degrees / 60</code> &nbsp; (rule), &nbsp; <code>offset = distance × sin(degrees)</code> &nbsp; (exact).</p>
       <p>Five degrees off at 30 NM is 2.5 NM by the rule and 2.61 NM exactly. The same identity, inverted, tells you how many degrees of heading change will take out a known offset.</p>
       <h2>Time to the station</h2>
@@ -169,7 +169,7 @@
       <p>To roll out on a course, start the turn about one turn radius before the course. The lead angle from a station is atan(radius / distance). Radius comes from TAS and bank, or from a standard-rate turn (see also the <a href="../turn-radius/">turn radius calculator</a>).</p>
       
       <h2>Worked example</h2>
-      <p>Thirty nautical miles from a station, a 5° bearing error is an exact offset of 30 × tan(5°) ≈ <strong>2.61 NM</strong>. The 1-in-60 rule (offset ≈ distance × degrees / 60) gives 2.50 NM, about 0.11 NM short. A 5° heading change parallels the course; a typical intercept heading is 20° off the inbound. The rule is a small-angle aid, not a RNAV leg, and it gets worse as the angle grows.</p>
+      <p>Thirty nautical miles from a station, a 5° bearing error is an exact offset of 30 × sin(5°) ≈ <strong>2.61 NM</strong>. The 1-in-60 rule (offset ≈ distance × degrees / 60) gives 2.50 NM, about 0.11 NM short. The page suggests a 20° intercept here: twice the error, with a 20° minimum. The rule is a small-angle aid, not a RNAV leg, and it gets worse as the angle grows.</p>
       <h2>Sources</h2>
       <p>FAA <a href="https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/phak" rel="noopener noreferrer">Pilot’s Handbook of Aeronautical Knowledge</a> (1-in-60, Chapter 16); FAA Instrument Flying Handbook (VOR, DME, time to the station, lead radial); AIM navigation.</p>
       <h2>Frequently asked questions</h2>

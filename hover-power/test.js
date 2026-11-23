@@ -40,6 +40,10 @@ nearly(we.idealPowerW, 101949.95, 10, "ideal hover power ≈ 102 kW");
 nearly(we.shaftPowerW, 145642.78, 20, "worked example: FM 0.7 → ≈ 146 kW shaft");
 nearly(we.shaftPowerHp, 195.31, 0.1, "≈ 195 hp");
 
+console.log("\nArticle worked example: 20 kN, 20 m disk, FM 0.70, sea level");
+nearly(a.idealPowerW / 1000, 102, 0.5, "ideal induced power ≈ 102 kW");
+nearly(a.shaftPowerW / 1000, 146, 0.5, "shaft power ≈ 146 kW");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

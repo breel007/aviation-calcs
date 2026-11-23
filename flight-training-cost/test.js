@@ -36,6 +36,19 @@ nearly(r.total, 20267.5, 0.01, "total = $20,267.50");
 nearly(r.flightHours, 72, 1e-9, "flight hours = 45 + 25 + 2 checkride");
 nearly(r.groups.flying, 7875 + 4375 + 350, 0.01, "flying group sums aircraft lines");
 
+console.log("\nCase 1b  Article worked example (page defaults: 25 h ground, $450 materials, $175 medical)");
+var w = T.compute({
+  dualHours: 45, soloHours: 25, groundHours: 25,
+  aircraftRate: 175, instructorRate: 60,
+  groundSchool: 300, knowledgeTest: 175, checkrideFee: 900,
+  checkrideHours: 2, materials: 450, medical: 175, other: 0,
+  contingencyPercent: 10
+});
+nearly(w.lines.groundInstruction, 1500, 0.01, "ground = 25 × $60 = $1,500");
+nearly(w.subtotal, 18800, 0.01, "subtotal = $18,800");
+nearly(w.contingency, 1880, 0.01, "10% contingency = $1,880");
+nearly(w.total, 20680, 0.01, "total = $20,680");
+
 console.log("\nCase 2  FAA-minimum and average presets exist for all four certificates");
 ["private", "instrument", "commercial", "cfi"].forEach(function (c) {
   isTrue(T.preset(c, "part61") != null, c + " Part 61 preset");

@@ -55,6 +55,9 @@ nearly(we.deltaV2, 1466.82, 1, "Δv2 ≈ 1,467 m/s");
 nearly(we.deltaV, 3892.56, 1, "total ≈ 3,893 m/s");
 nearly(we.timeOfFlight, 18990.23, 5, "TOF ≈ 18,990 s");
 
+console.log("\nArticle worked example: time of flight in hours");
+nearly(r.timeOfFlight / 3600, 5.28, 0.006, "300 km LEO → GEO time of flight ≈ 5.28 h (5 h 16 min)");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

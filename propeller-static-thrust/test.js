@@ -18,8 +18,9 @@ var A = Math.PI;
 var T = Math.pow(2 * C.RHO0 * A * 100000 * 100000, 1/3);
 nearly(a.areaM2, A, 1e-12, "A = π R² = π m²");
 nearly(a.thrustN, T, 1e-8, "T = (2 ρ A P²)^{1/3}");
-// Hand check: 2*1.225*π*1e10 = 7.696e10, cbrt ≈ 4258 N
-nearly(a.thrustN, 4258, 5, "hand check ≈ 4,258 N");
+// Hand check: 2*1.225*π*1e10 = 7.697e10, cbrt ≈ 4,254 N (≈ 956 lbf), as in the article
+nearly(a.thrustN, 4254, 0.5, "hand check ≈ 4,254 N");
+nearly(a.thrustN / 4.4482216, 956, 0.5, "≈ 956 lbf");
 nearly(a.inducedMps, 100000 / a.thrustN, 1e-9, "v_i = P/T");
 nearly(a.inducedDiskMps, a.thrustN / (2 * C.RHO0 * A), 1e-9, "v_i = T/(2ρA) agrees");
 

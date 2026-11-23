@@ -56,7 +56,7 @@
                     "name": "Is a METAR wind magnetic or true?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Magnetic, at a land airport in the United States, and runway numbers are magnetic as well, so you can usually compare them directly. Winds aloft are true. If you mix a true wind with magnetic runways, enter the variation."
+                        "text": "True. METAR and TAF winds are referenced to true north; the wind on the ATIS or from the tower is magnetic, like the runway numbers. Winds aloft are true as well. If you start from a METAR wind, mark it as true and enter the variation."
                     }
                 },
                 {
@@ -149,7 +149,7 @@
       </section>
       <aside class="disclaimer" role="note">
         <h2>Disclaimer</h2>
-        <p>Runway numbers are magnetic; a METAR wind is also magnetic, but winds aloft and some ATIS remarks may be true. This does not replace ATC runway assignment, NOTAMs, slope or length limits, or the demonstrated crosswind in the POH/AFM. A recommended runway that exceeds your limit is the least-bad into-wind end, not an invitation to use it.</p>
+        <p>Runway numbers are magnetic, as are ATIS and tower winds; METAR, TAF, and winds-aloft winds are true. This does not replace ATC runway assignment, NOTAMs, slope or length limits, or the demonstrated crosswind in the POH/AFM. A recommended runway that exceeds your limit is the least-bad into-wind end, not an invitation to use it.</p>
       </aside>
     </section>
 
@@ -165,7 +165,7 @@
          <code>crosswind = V sin(d − h)</code></p>
       <p>A negative headwind is a tailwind. The reciprocal runway simply flips both signs. These are the same identities as the <a href="../crosswind/">crosswind calculator</a>, which is built for one runway and a wind diagram; this page compares a list of runways and names a preferred heading.</p>
       <h2>Magnetic and true</h2>
-      <p>Runway numbers are magnetic. A METAR wind is magnetic. Winds aloft, and some charted or true-north sources, are true. When the references differ, convert the wind with variation: <strong>east is least, west is best</strong> — magnetic direction = true direction − east variation. This page will do that conversion when you mark the wind as true.</p>
+      <p>Runway numbers are magnetic, and so is the wind on the ATIS or from the tower. METAR and TAF winds, winds aloft, and other true-north sources are true. When the references differ, convert the wind with variation: <strong>east is least, west is best</strong> — magnetic direction = true direction − east variation. This page will do that conversion when you mark the wind as true.</p>
       
       <h2>Wind components, then a recommended end</h2>
       <p>The calculator scores each runway end by headwind and crosswind and picks the end that is into the wind, subject to any crosswind limit you type. Use it to compare ends or a set of runways at one field. Gusts, a wet surface, and a tailwind limit in the POH are still your problem. Enter wind and runway headings in the same reference (magnetic or true); mixing them is the usual error, and a single-digit runway should be typed as 9 or 09, not 90.</p>
@@ -175,7 +175,7 @@
       <p>FAA <a href="https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/phak" rel="noopener noreferrer">Pilot’s Handbook of Aeronautical Knowledge</a> (wind components, runway selection); AIM (runway numbering, magnetic variation). For a single-runway diagram including both ends and gusts, use the <a href="../crosswind/">crosswind calculator</a>. For a wind-correction angle and groundspeed, use the <a href="../e6b-wind/">E6B wind triangle</a>.</p>
       <h2>Frequently asked questions</h2>
       <h3>Is a METAR wind magnetic or true?</h3>
-      <p>Magnetic, at a land airport in the United States, and runway numbers are magnetic as well, so you can usually compare them directly. Winds aloft are true. If you mix a true wind with magnetic runways, enter the variation.</p>
+      <p>True. METAR and TAF winds are referenced to true north; the wind on the ATIS or from the tower is magnetic, like the runway numbers. Winds aloft are true as well. If you start from a METAR wind, mark it as true and enter the variation.</p>
       <h3>What if every runway is over my crosswind limit?</h3>
       <p>The page still names the into-wind runway with the greatest headwind (and a warning). That is not a recommendation to go. Consider another airport, a longer wait, or a different airplane.</p>
       <h3>How is this different from the crosswind calculator?</h3>

@@ -76,7 +76,7 @@
     if (r.wind) {
       var w = r.wind.calm ? "Calm" : (r.wind.variable ? "VRB " : fmtHdg(r.wind.direction) + " ") +
         (isFinite(r.wind.speedKt) ? Math.round(r.wind.speedKt) + " kt" : "") +
-        (isFinite(r.wind.gustKt) ? " G" + Math.round(r.wind.gustKt) : "");
+        (typeof r.wind.gustKt === "number" && isFinite(r.wind.gustKt) ? " G" + Math.round(r.wind.gustKt) : "");
       var wsub = r.wind.variableDirection ? "Varying " + fmtHdg(r.wind.variableDirection.from) + "–" + fmtHdg(r.wind.variableDirection.to) : M.describeWind(r.wind);
       html += stat("Wind", w, wsub);
     }

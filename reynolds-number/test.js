@@ -49,6 +49,10 @@ console.log("\nWorked example (as published on the page)");
 var we = C.compute({ source: "isa", altitudeM: 0, velocity: 50, velocityUnit: "m/s", length: 1, lengthUnit: "m" });
 nearly(we.reynolds, 3.4234e6, 2e3, "worked example: SL ISA, 50 m/s, 1 m → Re ≈ 3.42×10⁶");
 
+console.log("\nArticle worked example: 5 ft chord at 100 kt, sea-level ISA");
+var ex5 = C.compute({ source: "isa", altitudeM: 0, velocity: 100, velocityUnit: "kt", length: 5, lengthUnit: "ft" });
+nearly(ex5.reynolds / 1e6, 5.4, 0.05, "Re ≈ 5.4 × 10⁶");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

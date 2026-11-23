@@ -103,5 +103,11 @@ var p24 = T.parsePeriodToken("0918/1024");
 eq(p24.toHour, 24, "valid to 24Z (end of the 10th)");
 isTrue(/24:00/.test(T.formatPeriod(p24)), "formatted period shows 24:00");
 
+console.log("\nCase 6  Plain-English wording");
+var t6 = T.parseTaf("TAF KSBA 101720Z 1018/1118 26010KT P6SM SKC");
+var pe6 = t6.plainEnglish || "";
+isTrue(pe6.indexOf("greater than >") < 0 && /greater than 6 statute miles/.test(pe6), "P6SM reads 'greater than 6 statute miles' once");
+isTrue(/Sky clear/.test(pe6) && !/\. sky clear/.test(pe6), "SKC sentence starts with a capital");
+
 console.log("\n" + passed + " passed, " + failed + " failed");
 process.exit(failed ? 1 : 0);

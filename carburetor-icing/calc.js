@@ -64,6 +64,10 @@
   }
 
   function frostPointC(tdC) {
+    // At or above 0 °C, water condenses as liquid; the frost point is
+    // reported as the dewpoint itself (an ice-saturation temperature
+    // above freezing is not physical).
+    if (isFiniteNumber(tdC) && tdC >= 0) return tdC;
     // Vapor pressure from the dewpoint (saturation over liquid).
     var e = satWaterHpa(tdC);
     return invertMagnus(e, A_I, B_I);

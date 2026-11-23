@@ -52,7 +52,7 @@
       $("stat-grid").innerHTML =
         stat("Exact offset", fmt(r.offsetNm, 2) + " NM", fmt(r.offsetFt, 0) + " ft") +
         stat("1-in-60 rule", fmt(r.offsetRuleNm, 2) + " NM", fmt(r.offsetRuleFt, 0) + " ft") +
-        stat("Suggested intercept", fmt(r.interceptSuggestion, 0) + "°", "a common 2×-error intercept, capped at 90°");
+        stat("Suggested intercept", fmt(r.interceptSuggestion, 0) + "°", "twice the error, at least 20° and at most 90°");
     } else if (mode === "time-to-station") {
       $("out-hero").innerHTML = '<span class="num">' + fmt(r.timeToStationMin, 1) + '</span> <span class="unit">min</span>';
       $("out-sub").textContent = r.distanceNm != null ? fmt(r.distanceNm, 1) + " NM at " + fmt(r.groundspeedKt, 0) + " kt" : "add a groundspeed for distance";

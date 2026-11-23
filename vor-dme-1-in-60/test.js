@@ -44,6 +44,11 @@ nearly(we.offsetNm, 2.6147, 0.001, "worked example: 30 NM, 5° → 2.61 NM exact
 nearly(we.offsetRuleNm, 2.5, 1e-12, "1-in-60 rule = 2.5 NM");
 nearly(we.headingChangeToParallel, 5, 1e-12, "5° heading change to parallel");
 
+console.log("\nArticle worked example: suggested intercept");
+var ex = C.compute({ mode: "offset", distanceNm: 30, degrees: 5 });
+nearly(ex.interceptSuggestion, 20, 0, "5° error → 20° intercept (twice the error, 20° minimum)");
+nearly(C.compute({ mode: "offset", distanceNm: 30, degrees: 15 }).interceptSuggestion, 30, 0, "15° error → 30° (twice the error)");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

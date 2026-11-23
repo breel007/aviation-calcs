@@ -45,6 +45,10 @@ nearly(we.ruleOfThumbFt, 1000, 1e-12, "rule of thumb is 1,000 ft");
 var weStd = C.compute({ mode: "qnh-elevation", altimeter: 29.92, altimeterUnit: "inhg", elevation: 5000, elevationUnit: "ft" });
 nearly(weStd.pressureAltitudeFt, 5000, 0.5, "29.92 inHg at a 5,000 ft field → PA ≈ 5,000 ft");
 
+console.log("\nCase 9  Article worked example: 28.92 inHg at sea level");
+nearly(s.pressureAltitudeFt, 939, 0.5, "exact PA ≈ 939 ft");
+nearly(s.ruleOfThumbFt - s.pressureAltitudeFt, 61, 0.5, "the 1,000 ft/inHg rule reads about 61 ft high");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

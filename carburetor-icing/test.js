@@ -35,6 +35,8 @@ console.log("\nCase 4  Frost point vs dewpoint at −10 °C dewpoint");
 var fp = C.frostPointC(-10);
 isTrue(fp > -10 && fp < 0, "frost point is warmer than a sub-freezing dewpoint");
 nearly(C.frostPointC(0), 0, 0.05, "frost point ≈ dewpoint at 0 °C");
+nearly(C.frostPointC(15), 15, 1e-9, "dewpoint 15 °C: frost point reported as the dewpoint, never below it");
+isTrue(C.frostPointC(-0.5) >= -0.5, "just below 0 °C the frost point is not colder than the dewpoint");
 var d = C.compute({ temperature: -5, dewpoint: -10, tempUnit: "C" });
 nearly(d.frostPointC, fp, 1e-9, "compute() reports the same frost point");
 nearly(d.spreadC, 5, 1e-12, "spread 5 °C");

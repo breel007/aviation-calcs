@@ -72,7 +72,7 @@
                     "name": "Why is the exact height a little higher than the handbook number?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "The 11.3 and 15 constants are rounded. The exact V²/g height with standard gravity is GS(kt)² / 11.294, a few feet above the AFH figure at typical training speeds. Either is close enough for the maneuver; this page reports both so you can see the difference."
+                        "text": "The 11.3 and 15 constants are rounded. The exact V²/g height with standard gravity is GS(kt)² / 11.294 or GS(mph)² / 14.957. At 90 kt that is 717.2 ft, versus 716.8 ft from GS²/11.3 and about 715 ft from GS²/15. Either is close enough for the maneuver; this page reports both so you can see the difference."
                     }
                 }
             ]
@@ -112,7 +112,7 @@
     <section id="calculator" class="panel calc-panel" aria-labelledby="calc-title">
       <header class="panel-head">
         <h1 id="calc-title">Pivotal Altitude Calculator</h1>
-        <p class="lede">Enter a groundspeed and get the pivotal altitude for eights-on-pylons. The Airplane Flying Handbook constants are (GS in knots)² / 11.3 and (GS in mph)² / 15. This page also shows the exact V²/g height, which is a few feet higher.</p>
+        <p class="lede">Enter a groundspeed and get the pivotal altitude for eights-on-pylons. The Airplane Flying Handbook constants are (GS in knots)² / 11.3 and (GS in mph)² / 15. This page also shows the exact V²/g height, which is a fraction of a foot to a couple of feet higher.</p>
       </header>
       <form id="calc-form" action="#" method="get" novalidate>
 <div class="field-block"><div class="field-label-row"><label for="groundspeed">Groundspeed</label>
@@ -149,14 +149,14 @@
       <p>The visual line to the pylon stays fixed on the wing when you are at the pivotal altitude for your present groundspeed. The Airplane Flying Handbook writes this as:</p>
       <p><code>pivotal altitude (ft AGL) ≈ (groundspeed in mph)² / 15</code><br>
          <code>pivotal altitude (ft AGL) ≈ (groundspeed in knots)² / 11.3</code></p>
-      <p>Those constants are rounded forms of the exact identity <code>h = V² / g</code>. With g<sub>0</sub> = 9.80665 m/s², the exact divisors are about 11.294 (knots) and 14.957 (mph), so the handbook figures are a few feet low — 717 ft instead of about 718 ft at 90 kt, for example.</p>
+      <p>Those constants are rounded forms of the exact identity <code>h = V² / g</code>. With g<sub>0</sub> = 9.80665 m/s², the exact divisors are about 11.294 (knots) and 14.957 (mph), so the handbook figures are slightly low — at 90 kt, 716.8 ft (knots rule) and about 715 ft (mph rule) instead of 717.2 ft.</p>
       <h2>Wind</h2>
       <p>Groundspeed changes around the pylon. You are faster, and the pivotal altitude is higher, on the downwind side; slower and lower on the upwind side. The AFH describes a slight climb and descent to keep the reference line on the pylon rather than flying a single fixed altitude.</p>
       
       <h2>Eights-on-pylons, not a traffic-pattern altitude</h2>
       <p>Pivotal altitude is the height at which the line of sight to the pylon stays on a point on the wing during a constant-radius turn at a given groundspeed. The Airplane Flying Handbook teaches the maneuver and the GS²/15 (mph) rule; this page also shows the exact V²/g result. Wind changes groundspeed around the pylon, so the exact height changes in the turn. Do not fly a pivotal altitude as a traffic-pattern or obstacle-clearance altitude.</p>
       <h2>Worked example</h2>
-      <p>At 90 kt groundspeed the exact pivotal altitude, GS²/11.3 (with GS in knots and the result in feet, from V²/g in consistent units), is about <strong>717 ft</strong> AGL. The AFH “GS²/15” form, when GS is in mph (90 kt = 103.6 mph), gives about 715 ft — practically the same for flying the maneuver. Those are heights above the ground, not MSL, and they assume a constant groundspeed around the pylon.</p>
+      <p>At 90 kt groundspeed the AFH rule GS²/11.3 (GS in knots, result in feet) gives about <strong>717 ft</strong> AGL; the exact V²/g height is 717.2 ft. The AFH “GS²/15” form, when GS is in mph (90 kt = 103.6 mph), gives about 715 ft — practically the same for flying the maneuver. Those are heights above the ground, not MSL, and they assume a constant groundspeed around the pylon.</p>
       <h2>Sources</h2>
       <p>FAA <a href="https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/airplane_handbook" rel="noopener noreferrer">Airplane Flying Handbook</a> (FAA-H-8083-3), Eights-on-Pylons; Commercial Pilot and CFI Airman Certification Standards for the maneuver. For bank and turn radius at a given TAS, see the <a href="../turn-radius/">turn radius calculator</a>.</p>
       <h2>Frequently asked questions</h2>
@@ -165,7 +165,7 @@
       <h3>Should I enter TAS or groundspeed?</h3>
       <p>Groundspeed. The geometry is about the rate at which the pylon’s bearing changes over the ground. In a wind, TAS and groundspeed are not the same, and pivotal altitude changes around the figure-eight.</p>
       <h3>Why is the exact height a little higher than the handbook number?</h3>
-      <p>The 11.3 and 15 constants are rounded. The exact V²/g height with standard gravity is GS(kt)² / 11.294, a few feet above the AFH figure at typical training speeds. Either is close enough for the maneuver; this page reports both so you can see the difference.</p>
+      <p>The 11.3 and 15 constants are rounded. The exact V²/g height with standard gravity is GS(kt)² / 11.294 or GS(mph)² / 14.957. At 90 kt that is 717.2 ft, versus 716.8 ft from GS²/11.3 and about 715 ft from GS²/15. Either is close enough for the maneuver; this page reports both so you can see the difference.</p>
     </article>
   </main>
 

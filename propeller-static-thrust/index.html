@@ -53,10 +53,10 @@
             "mainEntity": [
                 {
                     "@type": "Question",
-                    "name": "Why is this less than a static-thrust stand measurement?",
+                    "name": "Why does a static-thrust stand measure less than this?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Or more, depending on η. The ideal disk ignores swirl, tip losses, and a nacelle. A measured static thrust will not match η = 1."
+                        "text": "With η = 1 the ideal actuator disk is an upper bound: it ignores swirl, tip losses, profile drag, and a nacelle, so a real propeller makes less. Enter a static figure of merit η below 1 to bring the estimate toward a measured value."
                     }
                 },
                 {
@@ -160,7 +160,7 @@
 
     <article class="panel explainer" id="about-calc">
 <h2>T = (2 ρ A P²)¹/³ at zero flight speed</h2>
-<p>The actuator disk at rest has an induced velocity v<sub>i</sub> = √(T / (2 ρ A)) and a power P = T v<sub>i</sub>. Solving for thrust gives T = (2 ρ A P²)¹/³. A 100 kW engine on a 2-metre propeller, in ISA sea-level air and with ideal efficiency, produces about 4,260 N (around 960 lbf) of static thrust, with v<sub>i</sub> = P/T. If you enter an efficiency or static figure of merit η, the page uses η P<sub>shaft</sub> as the useful power, and thrust scales as η<sup>2/3</sup>.</p>
+<p>The actuator disk at rest has an induced velocity v<sub>i</sub> = √(T / (2 ρ A)) and a power P = T v<sub>i</sub>. Solving for thrust gives T = (2 ρ A P²)¹/³. A 100 kW engine on a 2-metre propeller, in ISA sea-level air and with ideal efficiency, produces about 4,254 N (around 956 lbf) of static thrust, with v<sub>i</sub> = P/T. If you enter an efficiency or static figure of merit η, the page uses η P<sub>shaft</sub> as the useful power, and thrust scales as η<sup>2/3</sup>.</p>
 <p>As soon as the airplane starts to move, the inflow changes and this static formula no longer holds. For advance ratio, rotational tip speed, and helical tip Mach in forward flight, use the <a href="/propeller-advance-ratio/">propeller advance ratio</a> calculator. For a hovering helicopter rotor and a hover ceiling, use <a href="/hover-power/">hover power</a>.</p>
 
       <h2>Hovering / static disk, not a cruise map</h2>
@@ -173,8 +173,8 @@
 <li>Static identity T = (2 ρ A P²)<sup>1/3</sup> at zero flight speed.</li>
 </ul>
       <h2>Frequently asked questions</h2>
-      <h3>Why is this less than a static-thrust stand measurement?</h3>
-      <p>Or more, depending on η. The ideal disk ignores swirl, tip losses, and a nacelle. A measured static thrust will not match η = 1.</p>
+      <h3>Why does a static-thrust stand measure less than this?</h3>
+      <p>With η = 1 the ideal actuator disk is an upper bound: it ignores swirl, tip losses, profile drag, and a nacelle, so a real propeller makes less. Enter a static figure of merit η below 1 to bring the estimate toward a measured value.</p>
       <h3>Can I use this at cruise?</h3>
       <p>No. It is a V = 0 formula. Cruise thrust needs an advance ratio and a propeller map or a blade-element model.</p>
       <h3>How is this different from the advance-ratio calculator?</h3>

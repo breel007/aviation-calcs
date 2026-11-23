@@ -45,7 +45,7 @@
     warnings.hidden = true;
     $("out-hero").innerHTML = '<span class="num" style="font-size:clamp(1.4rem,4vw,2.1rem)">' + r.tuc.label + '</span> <span class="unit"></span>';
     $("hero-tag").textContent = r.tuc.nearestAlt ? "FAA TUC near " + r.tuc.nearestAlt.toLocaleString("en-US") + " ft" : "below the published TUC table";
-    $("out-sub").textContent = r.tuc.between || (r.tuc.belowTable ? r.tuc.label : "Published FAA / CAMI range for a sudden exposure. Not a precise prediction.");
+    $("out-sub").textContent = r.tuc.between || (r.tuc.belowTable ? "The FAA / CAMI time-of-useful-consciousness table starts at 18,000 ft, so there is no published value at this cabin altitude." : "Published FAA / CAMI range for a sudden exposure. Not a precise prediction.");
     function pill(on, label) {
       return '<span class="status-pill ' + (on ? "status-expired" : "status-current") + '">' + label + "</span>";
     }

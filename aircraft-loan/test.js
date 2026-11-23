@@ -92,6 +92,10 @@ isTrue(L.payment(100000, 6, 60, 150000) === null, "balloon larger than principal
 isTrue(L.compute({ price: 0, downPayment: 0, apr: 6, termYears: 10 }) === null, "zero price → null");
 isTrue(L.compute({ price: 100000, downPayment: 100000, downType: "dollars", apr: 6, termYears: 10 }) === null, "100% down → null");
 
+console.log("\nCase 7  Article worked example: $200,000 at 7.25% for 20 years");
+nearly(c.monthlyPayment, 1580.75, 0.01, "payment ≈ $1,580.75 (article: about $1,581)");
+nearly(c.monthlyPayment * 240 - 200000, 179380, 5, "total interest ≈ $179,000");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

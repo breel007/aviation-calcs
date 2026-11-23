@@ -26,8 +26,8 @@ nearly(r.dynamicPressurePa, 0.5 * 1.4 * 101325 * r.mach * r.mach, 0.2, "q = ½ �
 nearly(r.dynamicPressurePsf, r.dynamicPressurePa / C.PA_PER_PSF, 1e-12, "q in psf = q/47.88");
 // 100 kt at SL is essentially 100 kt EAS
 nearly(r.easKt, 100, 0.05, "EAS ≈ TAS at sea-level density");
-// Hand-checked: q ≈ 1621.6 Pa ≈ 33.87 psf; 100²/33.87 ≈ 295
-nearly(r.dynamicPressurePsf, 33.87, 0.05, "q ≈ 33.87 psf at 100 kt SL (hand-checked)");
+// Hand-checked: q ≈ 1621.0 Pa ≈ 33.86 psf; 100²/33.86 ≈ 295
+nearly(r.dynamicPressurePsf, 33.86, 0.006, "q ≈ 33.86 psf at 100 kt SL (hand-checked)");
 
 console.log("\nCase 2  Mach 0.8 at sea-level ISA");
 var m = C.compute({ atmosphere: "isa", altitudeM: 0, speedMode: "mach", mach: 0.8 });
@@ -47,7 +47,7 @@ isTrue(C.compute({ atmosphere: "isa", altitudeM: -1, speedMode: "mach", mach: 0.
 console.log("\nWorked example (as published on the page)");
 require("../standard-atmosphere/calc.js");
 var we = C.compute({ atmosphere: "isa", altitudeM: 0, speedMode: "velocity", velocity: 100, velocityUnit: "kt" });
-nearly(we.dynamicPressurePsf, 33.87, 0.05, "worked example: 100 kt SL → q ≈ 33.87 psf");
+nearly(we.dynamicPressurePsf, 33.86, 0.006, "worked example: 100 kt SL → q ≈ 33.86 psf");
 nearly(we.easKt, 100, 0.05, "EAS ≈ TAS at sea-level density");
 
 console.log("\n----------------------------------------");

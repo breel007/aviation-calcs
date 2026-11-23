@@ -10,8 +10,8 @@
  *   P0/P0*   = ((1+γ)/(1+γ M²)) [ (2+(γ−1)M²)/(γ+1) ]^{γ/(γ−1)}
  *   T0/T0*   = [ 2(γ+1) M² (1 + (γ−1)/2 M²) ] / (1 + γ M²)²
  *
- * Heat addition drives a subsonic flow toward Mach 1 and a supersonic
- * flow toward Mach 1; T0/T0* = 1 is the thermal choke. γ defaults to
+ * Heat addition drives both subsonic and supersonic flow toward
+ * Mach 1; T0/T0* = 1 is the thermal choke. γ defaults to
  * 1.4.
  *
  * Sources: Rayleigh-line relations, e.g. John and Keith, Gas Dynamics;
