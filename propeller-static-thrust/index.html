@@ -162,7 +162,12 @@
 <h2>T = (2 ρ A P²)¹/³ at zero flight speed</h2>
 <p>The actuator disk at rest has an induced velocity v<sub>i</sub> = √(T / (2 ρ A)) and a power P = T v<sub>i</sub>. Solving for thrust gives T = (2 ρ A P²)¹/³. A 100 kW engine on a 2-metre propeller, in ISA sea-level air and with ideal efficiency, produces about 4,260 N (around 960 lbf) of static thrust, with v<sub>i</sub> = P/T. If you enter an efficiency or static figure of merit η, the page uses η P<sub>shaft</sub> as the useful power, and thrust scales as η<sup>2/3</sup>.</p>
 <p>As soon as the airplane starts to move, the inflow changes and this static formula no longer holds. For advance ratio, rotational tip speed, and helical tip Mach in forward flight, use the <a href="/propeller-advance-ratio/">propeller advance ratio</a> calculator. For a hovering helicopter rotor and a hover ceiling, use <a href="/hover-power/">hover power</a>.</p>
-<h2>Sources</h2>
+
+      <h2>Hovering / static disk, not a cruise map</h2>
+      <p>This is momentum theory for a static or hovering rotor/propeller: power and disk area set an ideal thrust, and an efficiency or figure of merit scales that down. It is a useful bound for a static run-up or a hover estimate, not a J-versus-C_T propeller chart and not a takeoff performance calculation. Do not enter cruise TAS into this page and expect a cruise thrust; use a propeller map or the <a href="../propeller-advance-ratio/">advance-ratio</a> tool for the forward-flight side of the same machine.</p>
+      <h2>Worked example</h2>
+      <p>An ideal (actuator-disk) propeller with 100 kW of shaft power, a 2 m diameter, and figure of merit / efficiency of 1 in sea-level ISA air (ρ = 1.225 kg/m³) produces about <strong>4,254 N</strong> of static thrust, or <strong>956 lbf</strong>. The induced velocity through the disk is about 23.5 m/s and the disk loading is about 1,354 Pa. A real propeller at the same power and diameter will fall short of this because the efficiency is less than one and the disk is not uniform.</p>
+      <h2>Sources</h2>
 <ul>
 <li>Momentum / actuator-disk theory (Glauert; McCormick, <cite>Aerodynamics of V/STOL Flight</cite>; Leishman).</li>
 <li>Static identity T = (2 ρ A P²)<sup>1/3</sup> at zero flight speed.</li>
@@ -184,7 +189,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

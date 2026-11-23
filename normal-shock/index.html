@@ -159,8 +159,13 @@
       <p>Stagnation temperature is continuous across the shock (T02 = T01). Stagnation pressure falls: the flow is adiabatic but not isentropic. At M1 = 2, γ = 1.4, the NACA 1135 values are M2 = 0.57735, P2/P1 = 4.5000, T2/T1 = 1.6875, ρ2/ρ1 = 2.6667, and P02/P01 = 0.72087.</p>
       <h2>Rayleigh pitot</h2>
       <p>A pitot tube in a supersonic stream measures the stagnation pressure <em>behind</em> a normal shock, P02. The Rayleigh-pitot formula gives P02/P1 directly. Combined with a static-pressure measurement, it is the classical way to obtain supersonic Mach number.</p>
+      
+      <h2>A normal shock is a strong, sudden compression</h2>
+      <p>Use the relations to check an inlet, a pitot tube at supersonic speed, or a one-dimensional duct with a standing shock. The model is a perfect gas with constant γ, no viscosity, and a shock that is perpendicular to the flow. An oblique shock (a ramp or cone) is weaker for the same incoming Mach — see the <a href="../oblique-shock/">oblique-shock calculator</a>. Do not apply these ratios to a subsonic M₁, and do not treat P₀₂/P₀₁ as a static-pressure recovery.</p>
+      <h2>Worked example</h2>
+      <p>A normal shock in a γ = 1.4 gas at <strong>M₁ = 2</strong> leaves a subsonic Mach number <strong>M₂ ≈ 0.577</strong>. The static-pressure jump is exact in this model: <strong>P₂/P₁ = 4.5</strong>. Density rises by 8/3 ≈ 2.667, temperature by 1.6875, and the stagnation-pressure ratio — the loss that matters for inlet recovery — is <strong>P₀₂/P₀₁ ≈ 0.721</strong>. Total temperature is unchanged (T₀₂/T₀₁ = 1). These are the NACA 1135 / textbook Rankine–Hugoniot values for M = 2, not a measured inlet.</p>
       <h2>Sources</h2>
-      <p>NACA Report 1135, normal-shock tables; NASA Glenn Beginner’s Guide; Anderson, <em>Modern Compressible Flow</em>. Upstream isentropic stagnation quantities are the same identities used on the <a href="../isentropic-flow/">isentropic flow calculator</a>.</p>
+      <p>NACA Report 1135, normal-shock tables; NASA Glenn <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/wing-geometry/" rel="noopener noreferrer">Beginner’s Guide</a>; Anderson, <em>Modern Compressible Flow</em>. Upstream isentropic stagnation quantities are the same identities used on the <a href="../isentropic-flow/">isentropic flow calculator</a>.</p>
       <h2>Frequently asked questions</h2>
       <h3>Can a normal shock occur at Mach 0.9?</h3>
       <p>No. A normal shock requires M1 ≥ 1. At M1 = 1 the shock has zero strength: all ratios are 1 and M2 = 1.</p>
@@ -178,7 +183,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

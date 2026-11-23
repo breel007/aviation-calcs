@@ -27,6 +27,12 @@ nearly(b.thrustN, 50 * (1.02 * 600 - 200) + b.pressureTermN, 1e-9, "momentum plu
 console.log("\nCase 3  Invalid");
 isTrue(C.compute({ airflow: 0, exitSpeed: 600 }) === null, "zero airflow → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ airflow: 50, exitSpeed: 600, flightSpeed: 0, far: 0.02 });
+nearly(we.fuelMassFlow, 1, 1e-12, "FAR 0.02 × 50 kg/s = 1 kg/s fuel");
+nearly(we.thrustN, 30600, 1e-6, "worked example: static thrust = 30,600 N");
+nearly(we.thrustLbf, 6879.15, 0.1, "≈ 6,879 lbf");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

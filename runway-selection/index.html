@@ -166,8 +166,13 @@
       <p>A negative headwind is a tailwind. The reciprocal runway simply flips both signs. These are the same identities as the <a href="../crosswind/">crosswind calculator</a>, which is built for one runway and a wind diagram; this page compares a list of runways and names a preferred heading.</p>
       <h2>Magnetic and true</h2>
       <p>Runway numbers are magnetic. A METAR wind is magnetic. Winds aloft, and some charted or true-north sources, are true. When the references differ, convert the wind with variation: <strong>east is least, west is best</strong> — magnetic direction = true direction − east variation. This page will do that conversion when you mark the wind as true.</p>
+      
+      <h2>Wind components, then a recommended end</h2>
+      <p>The calculator scores each runway end by headwind and crosswind and picks the end that is into the wind, subject to any crosswind limit you type. Use it to compare ends or a set of runways at one field. Gusts, a wet surface, and a tailwind limit in the POH are still your problem. Enter wind and runway headings in the same reference (magnetic or true); mixing them is the usual error, and a single-digit runway should be typed as 9 or 09, not 90.</p>
+      <h2>Worked example</h2>
+      <p>A 20-knot wind from 270° magnetic, and a single 09/27 runway, is a straight headwind on runway 27 and a straight tailwind on runway 9. The recommended end is <strong>runway 27</strong>, with 20 kt of headwind and essentially zero crosswind — well inside a 15 kt crosswind limit. The opposite end is a 20 kt tailwind. If a second runway were closer to the wind but over the crosswind limit, the page would still flag that limit rather than silently recommend it.</p>
       <h2>Sources</h2>
-      <p>FAA Pilot’s Handbook of Aeronautical Knowledge (wind components, runway selection); AIM (runway numbering, magnetic variation). For a single-runway diagram including both ends and gusts, use the <a href="../crosswind/">crosswind calculator</a>. For a wind-correction angle and groundspeed, use the <a href="../e6b-wind/">E6B wind triangle</a>.</p>
+      <p>FAA <a href="https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/phak" rel="noopener noreferrer">Pilot’s Handbook of Aeronautical Knowledge</a> (wind components, runway selection); AIM (runway numbering, magnetic variation). For a single-runway diagram including both ends and gusts, use the <a href="../crosswind/">crosswind calculator</a>. For a wind-correction angle and groundspeed, use the <a href="../e6b-wind/">E6B wind triangle</a>.</p>
       <h2>Frequently asked questions</h2>
       <h3>Is a METAR wind magnetic or true?</h3>
       <p>Magnetic, at a land airport in the United States, and runway numbers are magnetic as well, so you can usually compare them directly. Winds aloft are true. If you mix a true wind with magnetic runways, enter the variation.</p>
@@ -185,7 +190,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

@@ -32,6 +32,11 @@ nearly(t.va, 105, 1e-10, "scaling back to 2,550 lb recovers 105 kt");
 console.log("\nCase 4  Invalid");
 isTrue(C.compute({ vaRef: 100, weightRef: 0, weight: 2000 }) === null, "zero weight → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ vaRef: 105, weightRef: 2550, weight: 2200 });
+nearly(we.va, 97.528, 0.05, "worked example: Va 105 kt at 2,550 lb → ≈ 97.5 kt at 2,200 lb");
+isTrue(we.lighterThanRef === true, "weight is below the reference");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

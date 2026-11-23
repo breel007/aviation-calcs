@@ -46,6 +46,12 @@ nearly(e.eccentricity, (ra - rp) / (ra + rp), 1e-12, "e = (ra−rp)/(ra+rp)");
 console.log("\nCase 4  Invalid");
 isTrue(C.compute({ altitudeM: -100 }) === null, "negative altitude → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ body: "earth", earthRadius: "mean", altitudeM: 400000 });
+nearly(we.velocity, 7672.60, 1, "worked example: 400 km circular LEO ≈ 7,673 m/s");
+nearly(we.period, 5544.86, 1, "period ≈ 5,545 s");
+nearly(we.escapeVelocity, 10850.69, 1, "escape ≈ 10,851 m/s");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

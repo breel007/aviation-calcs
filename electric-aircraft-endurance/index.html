@@ -175,10 +175,15 @@
 <h2>Time is energy over power; range is speed times time</h2>
 <p>With usable energy E and a constant electric power P, endurance is E/P and still-air range is V × E/P. Twenty kilowatt-hours at 90% usable and a 40 kW cruise is 0.45 hours; at 100 knots that is 45 nautical miles. If you do not have a power number, level-flight power required is W V / (L/D), and electric power is that divided by a chain efficiency η (motor, controller, and propeller). Unlike the <a href="/breguet-range-endurance/">Breguet</a> model, mass is treated as constant — the battery does not get lighter as you fly.</p>
 <p>Climb, reserves, battery temperature, and a peukert-like rate effect are not in this budget. Use the airframe and battery manual for a dispatch range. For a hovering multirotor, the <a href="/drone-flight-time/">drone flight time</a> page is the better model.</p>
-<h2>Sources</h2>
+
+      <h2>Usable energy, not nameplate energy</h2>
+      <p>Endurance here is usable watt-hours divided by the electrical power you actually draw, then multiplied by speed for a still-air range. It is a planning bound for a constant-power cruise or loiter, not a battery thermal model and not a wind-aware flight plan. Reserve SOC, cold-soaked capacity, and climb power are on you to leave in the usable fraction or the power number. A common mistake is to use pack nameplate kWh at 100% depth of discharge, or to treat this range as a still-air number while filing a windy XC.</p>
+      <h2>Worked example</h2>
+      <p>A pack of 20 kWh with 90% usable energy (18 kWh) supplying a constant 40 kW electric power lasts <strong>18 / 40 = 0.45 hours</strong>, or <strong>27 minutes</strong>. At a steady 100 kt, the still-air range is 0.45 × 100 = <strong>45 nautical miles</strong> (about 83 km). If you instead enter a required aerodynamic power and a propulsive efficiency, the page will convert that to electrical power first; this example uses electrical power directly.</p>
+      <h2>Sources</h2>
 <ul>
 <li>Specific-energy endurance <i>t</i> = E / P.</li>
-<li>Level-flight power P = W V / (L/D) (Anderson, <cite>Introduction to Flight</cite>; FAA <cite>Pilot’s Handbook of Aeronautical Knowledge</cite>, power required).</li>
+<li>Level-flight power P = W V / (L/D) (Anderson, <cite>Introduction to Flight</cite>; FAA <cite><a href="https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/phak" rel="noopener noreferrer">Pilot’s Handbook of Aeronautical Knowledge</a></cite>, power required).</li>
 <li>This site’s <a href="/breguet-range-endurance/">Breguet range and endurance</a> calculator, for the contrasting fuel-mass-fraction model.</li>
 </ul>
       <h2>Frequently asked questions</h2>
@@ -198,7 +203,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

@@ -34,6 +34,11 @@ console.log("\nCase 3  Zero and invalid");
 nearly(C.compute({ groundspeed: 0, speedUnit: "kt" }).exactFt, 0, 0, "zero speed → 0 ft");
 isTrue(C.compute({ groundspeed: -10, speedUnit: "kt" }) === null, "negative → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ groundspeed: 90, speedUnit: "kt" });
+nearly(we.exactFt, 717.18, 0.5, "worked example: 90 kt → pivotal altitude ≈ 717 ft");
+nearly(we.afhFromMphFt, 715.12, 1, "AFH mph rule ≈ 715 ft");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

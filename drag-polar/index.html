@@ -161,6 +161,11 @@
       <p>For C<sub>D0</sub> = 0.02, e = 0.8, and AR = 8, k is about 0.0497 and (L/D)max is about 15.85, at C<sub>L</sub>* ≈ 0.634.</p>
       <h2>Range and endurance lift coefficients</h2>
       <p>On this polar, the same C<sub>L</sub>* is the condition for <strong>propeller maximum range</strong> and for <strong>jet maximum endurance</strong> (maximum L/D). Propeller maximum endurance is at max C<sub>L</sub><sup>3/2</sup>/C<sub>D</sub>, or C<sub>L</sub> = √(3 C<sub>D0</sub>/k) = √3 C<sub>L</sub>*. Jet maximum range is at max C<sub>L</sub><sup>1/2</sup>/C<sub>D</sub>, or C<sub>L</sub> = C<sub>L</sub>* / √3. Feed L/D and speed into the <a href="../breguet-range-endurance/">Breguet range and endurance calculator</a> for a distance or time.</p>
+      
+      <h2>CD = CD0 + k CL²</h2>
+      <p>The parabolic drag polar is the standard first model for induced plus profile drag. Use it to find L/Dmax and the classic jet and propeller range or endurance speeds in coefficient form. It does not include a Mach drag rise, a flap change, or a compressibility correction. A common mistake is to use Oswald e = 1 for a low-aspect-ratio or highly swept wing, or to treat L/Dmax as a cruise-speed recommendation without converting CL into a TAS at your weight and altitude.</p>
+      <h2>Worked example</h2>
+      <p>With CD0 = 0.02, e = 0.8, and AR = 8, the induced-drag factor is k = 1/(π e AR) ≈ 0.0497. Maximum L/D is 1/(2√(k CD0)) ≈ <strong>15.85</strong>, at CL = √(CD0/k) ≈ <strong>0.634</strong> (and CD = 0.04). For a propeller airplane, the best-endurance (minimum-power) CL is higher, about 1.098, with L/D ≈ 13.73; a jet’s best-range CL is lower, about 0.366, at the same L/D of 13.73. Those are polar identities, not a particular airplane’s flight-test polar.</p>
       <h2>Sources</h2>
       <p>Anderson, Introduction to Flight and Aircraft Performance and Design; Raymer, Aircraft Design: A Conceptual Approach; the induced-drag factor k = 1/(π e AR) as used in NACA / NASA and standard design texts; FAA PHAK (L/D, induced drag). For C<sub>L</sub> and C<sub>D</sub> from a measured force, see the <a href="../lift-drag-coefficient/">lift and drag coefficient calculator</a>. For wing AR, see <a href="../wing-loading-aspect-ratio/">wing loading and aspect ratio</a>.</p>
       <h2>Frequently asked questions</h2>
@@ -180,7 +185,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

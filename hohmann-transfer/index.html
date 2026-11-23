@@ -158,6 +158,11 @@
       <p>Time of flight is half the transfer period: <code>t = π √(a<sub>t</sub>³ / μ)</code>.</p>
       <h2>LEO to GEO, about 3.9 km/s</h2>
       <p>From a 300 km circular orbit about the WGS-84 equator to a geosynchronous circular orbit (period = one sidereal day), the ideal two-burn total is about 3.9 km/s. A 200 km starting orbit is a little more; a 400 km starting orbit is a little less. This is the classic first estimate before plane-change and finite-burn penalties are added.</p>
+      
+      <h2>Two impulsive burns, coplanar circles</h2>
+      <p>The Hohmann transfer is the minimum-Δv two-impulse transfer between coplanar circular orbits in a two-body gravity field. Use it as a baseline for LEO-to-GEO, or between two altitudes around the same body. It does not include gravity losses, a plane change, or a third-body capture. A common mistake is to enter a GEO altitude as 35,786 km without adding the body radius, or to add the two circular speeds instead of the two burn residuals.</p>
+      <h2>Worked example</h2>
+      <p>A Hohmann transfer from a 300 km circular LEO (radius 6,678 km about the equatorial Earth) to geostationary radius (42,164 km) needs about <strong>2,426 m/s</strong> at departure and <strong>1,467 m/s</strong> at arrival, for a total of about <strong>3,893 m/s</strong>. The transfer ellipse has a period whose half is the time of flight, about <strong>18,990 s</strong> (5.27 hours). Those are ideal impulsive, coplanar, two-body burns; a real GTO has finite burns, launch-site inclination, and plane-change Δv on top.</p>
       <h2>Sources</h2>
       <p>Hohmann (1925); Vallado, <em>Fundamentals of Astrodynamics and Applications</em>; Curtis, <em>Orbital Mechanics for Engineering Students</em>; Bate, Mueller and White, <em>Fundamentals of Astrodynamics</em>. Circular speeds themselves are on the <a href="../orbital-velocity-period/">orbital velocity calculator</a>.</p>
       <h2>Frequently asked questions</h2>
@@ -177,7 +182,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

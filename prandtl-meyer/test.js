@@ -38,6 +38,13 @@ var v = C.compute({ M1: 2, theta: 120, gamma: 1.4 });
 isTrue(v.vacuum === true, "turning past ν_max is flagged");
 isTrue(C.compute({ M1: 0.8, theta: 5 }) === null, "subsonic M1 → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ mode: "expand", M1: 2, theta: 10, gamma: 1.4 });
+nearly(we.nu1Deg, 26.379761, 0.01, "worked example: ν(2) ≈ 26.38°");
+nearly(we.M2, 2.384887, 0.001, "worked example: M2 ≈ 2.385 after a 10° expansion");
+nearly(we.P2_P1, 0.547969, 0.001, "worked example: P2/P1 ≈ 0.548");
+nearly(we.P02_P01, 1, 1e-12, "expansion is isentropic: P02/P01 = 1");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

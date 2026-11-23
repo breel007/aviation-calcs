@@ -163,8 +163,13 @@
       <h2>Compass deviation</h2>
       <p>The magnetic compass in the airplane has its own error, called deviation, plotted on the compass correction card as a function of heading. East deviation is subtracted from magnetic heading to get compass heading, west deviation is added — the same “east is least, west is best” memory item. If you leave deviation blank, compass heading equals magnetic heading.</p>
       <p>You can enter a true, magnetic, or compass value and the other two are filled in. Variation comes from the isogonic lines on the chart, or from a current magnetic model; it changes slowly from year to year. For picking a runway with a true METAR wind, the <a href="../runway-selection/">runway selection calculator</a> also applies variation.</p>
+      
+      <h2>True, magnetic, and compass</h2>
+      <p>The conversions are the usual ones: magnetic = true − east variation + west variation, and compass = magnetic − east deviation + west deviation. Use a variation from a current chart or a reliable model; this page does not look up variation from latitude and longitude. Deviation comes from that airplane’s compass card. Mixing east and west signs, or applying variation to a true course and then calling it a compass heading, is the common error.</p>
+      <h2>Worked example</h2>
+      <p>A true heading of 000° with 15° east variation, and no deviation, is a magnetic heading of <strong>345°</strong> (and a compass heading of 345° as well). East variation is subtracted from true to get magnetic — “east is least.” If the heading were 000° magnetic instead, the true heading would be 015°. Crossing 360/000 is handled by wrapping; the page flags that the result is still a northerly heading.</p>
       <h2>Sources</h2>
-      <p>FAA Pilot's Handbook of Aeronautical Knowledge (magnetic variation, compass deviation, “east is least, west is best”); FAA Aeronautical Information Manual (isogonic lines; runway numbering is magnetic).</p>
+      <p>FAA <a href="https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/phak" rel="noopener noreferrer">Pilot's Handbook of Aeronautical Knowledge</a> (magnetic variation, compass deviation, “east is least, west is best”); FAA <a href="https://www.faa.gov/air_traffic/publications/atpubs/aim_html/" rel="noopener noreferrer">Aeronautical Information Manual</a> (isogonic lines; runway numbering is magnetic).</p>
       <h2>Frequently asked questions</h2>
       <h3>What magnetic heading is 360° true with 15° east variation?</h3>
       <p>345°. East is least: subtract 15° from 360°, which wraps to 345° magnetic.</p>
@@ -182,7 +187,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

@@ -35,6 +35,12 @@ nearly(c3.minSinkKt, 0.04 / (2 * 0.0025), 1e-12, "V_ms = −b/(2c) = 8 kt");
 console.log("\nCase 4  Invalid");
 isTrue(C.compute({ mode: "coefficients", a: 1, c: 0, maccready: 0 }) === null, "c = 0 → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ mode: "coefficients", a: 1, b: 0, c: 0.0025, maccready: 3, mcUnit: "kt" });
+nearly(we.speedToFlyKt, 40, 1e-12, "worked example: Mc = 3 kt → speed to fly 40 kt");
+nearly(we.bestGlideKt, 20, 1e-12, "still-air best glide 20 kt");
+nearly(we.glideRatioAtStf, 8, 1e-12, "L/D = 8 at the speed to fly");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

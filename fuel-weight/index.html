@@ -175,8 +175,13 @@
       <p>So 50 US gal of 100LL is 300 lb, and 50 US gal of Jet-A is 335 lb. Those figures are for planning, not a fueler's measured density.</p>
       <h2>Temperature</h2>
       <p>When you opt in, the page starts from a typical 15 °C specific gravity (about 0.72 for avgas, 0.80 for Jet-A) and applies a linear expansion correction ρ(T) = ρ<sub>15</sub> (1 − α (T − 15 °C)). Warm fuel is lighter for the same volume; cold fuel is heavier. Use a measured density when the weight matters to the kilogram.</p>
+      
+      <h2>Planning density versus measured density</h2>
+      <p>Use the standard planning figures (6.0 lb/US gal for 100LL, 6.7 for Jet-A, and the other listed fuels) when you are doing a weight-and-balance estimate and do not have a measured specific gravity. Warm fuel is lighter and cold fuel is heavier for the same volume; the optional temperature correction starts from a typical 15 °C specific gravity and a linear expansion term. A common mistake is to mix US and imperial gallons, or to treat 6.0 lb/gal as a laboratory density for a hot summer tank.</p>
+      <h2>Worked example</h2>
+      <p>U.S. planning density for 100LL is 6.0 lb per US gallon. Fifty gallons are therefore <strong>300 lb</strong>, or about 136.1 kg, which is also 189.3 liters or 41.6 imperial gallons. The page will apply a temperature correction only if you opt in; this example uses the standard planning figure, not a hydrometer reading for the lot you just pumped.</p>
       <h2>Sources</h2>
-      <p>FAA Pilot’s Handbook of Aeronautical Knowledge (fuel-weight planning figures); ASTM D910 / D1655 typical specific gravities. For trip fuel, reserves, and endurance, use the <a href="../fuel-planning/">fuel planner</a>, which uses the same 6.0 / 6.7 planning densities.</p>
+      <p>FAA <a href="https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/phak" rel="noopener noreferrer">Pilot’s Handbook of Aeronautical Knowledge</a> (fuel-weight planning figures); ASTM D910 / D1655 typical specific gravities. For trip fuel, reserves, and endurance, use the <a href="../fuel-planning/">fuel planner</a>, which uses the same 6.0 / 6.7 planning densities.</p>
       <h2>Frequently asked questions</h2>
       <h3>Why is 100LL planned at 6.0 lb/gal when the specific gravity is about 0.72?</h3>
       <p>0.72 times the density of water is about 6.0 lb/US gal, which is why the planning figure and the typical SG agree at 15 °C. The book figure is rounded and is used year-round unless you apply a temperature correction or a measured density.</p>
@@ -194,7 +199,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

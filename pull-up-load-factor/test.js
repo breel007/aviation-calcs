@@ -44,6 +44,12 @@ console.log("\nCase 5  Invalid");
 isTrue(C.compute({ speed: 0, radius: 1000 }) === null, "zero speed → null");
 isTrue(C.compute({ mode: "vn", speed: 100, n: 1 }) === null, "n ≤ 1 cannot invert for a pull-up radius");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ speed: 100, radius: 1000, speedUnit: "kt", radiusUnit: "ft" });
+nearly(we.nBottom, 1.8854, 0.005, "worked example: 100 kt, 1,000 ft radius → n ≈ 1.89 at the bottom");
+nearly(we.centripetalG, 0.8854, 0.005, "centripetal ≈ 0.885 g");
+isTrue(we.topPossible === false, "top of a loop is not possible at this V and r");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

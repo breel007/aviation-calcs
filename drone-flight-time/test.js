@@ -35,6 +35,11 @@ nearly(c.energyWh, 5 * 22.2, 1e-12, "Wh = (mAh/1000) × V");
 console.log("\nCase 4  Invalid");
 isTrue(C.compute({ mass: 2, rotors: 3.5, diameter: 0.25 }) === null, "non-integer rotor count → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ mass: 2, rotors: 4, diameter: 0.25, fm: 0.6, energyWh: 100, usableFrac: 0.8 });
+nearly(we.hoverPowerW, 208.73, 1, "hover power ≈ 209 W");
+nearly(we.enduranceMin, 23.00, 0.1, "worked example: 80 Wh / 209 W ≈ 23 minutes");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

@@ -36,6 +36,12 @@ nearly(u.oilPerHour, 4, 1e-12, "oil $4 / h");
 nearly(u.totalTrip, 110.5 + 8, 1e-12, "fuel + oil for 2 hours = $118.50");
 isTrue(C.compute({ price: -1, flow: 8 }) === null, "negative price → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ price: 6.5, flow: 8.5, flowUnit: "gph", time: 2, timeUnit: "h", fuelType: "100ll" });
+nearly(we.costPerHour, 55.25, 1e-12, "worked example: $6.50 × 8.5 gph = $55.25/h");
+nearly(we.tripFuelCost, 110.5, 1e-12, "2 hours → $110.50");
+nearly(we.gallons, 17, 1e-12, "17 gallons");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

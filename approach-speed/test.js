@@ -42,6 +42,13 @@ console.log("\nCase 5  Invalid");
 isTrue(C.compute({ vso: 0 }) === null, "zero Vso → null");
 isTrue(C.compute({ vso: 40, factor: 1 }) === null, "factor must be > 1");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ vso: 40 });
+nearly(we.vrefKt, 52, 1e-12, "worked example: 1.3 × 40 kt Vso = 52 kt Vref");
+nearly(we.vappKt, 52, 1e-12, "no gust → Vapp = Vref");
+var weG = C.compute({ vso: 40, wind: 15, gust: 25 });
+nearly(weG.vappKt, 57, 1e-12, "15 G 25 → Vapp = 57 kt");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

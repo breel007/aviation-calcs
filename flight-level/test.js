@@ -34,6 +34,12 @@ console.log("\nCase 4  Invalid");
 isTrue(C.compute({ pressureAltitude: 10000, transitionAltitude: 18000, transitionLevel: 150 }) === null,
   "TL below TA is rejected");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ pressureAltitude: 18000 });
+nearly(we.flightLevel, 180, 1e-12, "worked example: 18,000 ft PA → FL180");
+isTrue(we.flightLevelLabel === "FL180", "label is FL180");
+isTrue(we.atOrAboveTransitionLevel === true, "at the U.S. transition level");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

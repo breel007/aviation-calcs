@@ -48,6 +48,13 @@ var down = C.compute({
 });
 nearly(down.deltaV, r.deltaV, 1e-4, "inward Hohmann has the same |Δv| total");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ earthRadius: "equatorial", r1: 300, r1Unit: "altitude-km", r2: 0, r2Unit: "geo" });
+nearly(we.deltaV1, 2425.73, 1, "worked example: LEO 300 km → GEO, Δv1 ≈ 2,426 m/s");
+nearly(we.deltaV2, 1466.82, 1, "Δv2 ≈ 1,467 m/s");
+nearly(we.deltaV, 3892.56, 1, "total ≈ 3,893 m/s");
+nearly(we.timeOfFlight, 18990.23, 5, "TOF ≈ 18,990 s");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

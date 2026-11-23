@@ -45,6 +45,12 @@ console.log("\nCase 5  Invalid");
 isTrue(C.compute({ temperature: 90, rh: 101 }) === null, "RH > 100 → null");
 isTrue(C.compute({ temperature: 200, rh: 50, tempUnit: "F" }) === null, "out-of-range T → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ temperature: 90, rh: 60, tempUnit: "F" });
+nearly(we.heatIndexF, 99.68, 0.05, "worked example: 90 °F, 60% RH → heat index ≈ 99.7 °F");
+isTrue(we.category === "extreme-caution", "Extreme Caution category");
+isTrue(we.usedRothfusz === true, "Rothfusz regression is used");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

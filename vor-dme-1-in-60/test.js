@@ -38,6 +38,12 @@ var l = C.compute({ mode: "lead", distanceNm: 10, tasKt: 120, standardRate: true
 isTrue(l.leadDeg > 0 && l.turnRadiusNm > 0, "lead angle and radius are positive");
 nearly(l.leadDeg, Math.atan(l.turnRadiusNm / 10) * 180 / Math.PI, 1e-10, "lead = atan(r/d)");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ mode: "offset", distanceNm: 30, degrees: 5 });
+nearly(we.offsetNm, 2.6147, 0.001, "worked example: 30 NM, 5° → 2.61 NM exact offset");
+nearly(we.offsetRuleNm, 2.5, 1e-12, "1-in-60 rule = 2.5 NM");
+nearly(we.headingChangeToParallel, 5, 1e-12, "5° heading change to parallel");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

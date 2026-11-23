@@ -169,8 +169,13 @@
       <p>The ideal one-dimensional thrust coefficient (Sutton / NASA) is</p>
       <p><code>Cf = √{(2γ²/(γ−1)) (2/(γ+1))^{(γ+1)/(γ−1)} [1 − (pe/p0)^{(γ−1)/γ}]} + ((pe − pa)/p0) (Ae/At)</code></p>
       <p>The first term is the momentum contribution at the isentropic exit (and equals Cf when the nozzle is perfectly expanded). The second term is the pressure thrust. Then F = Cf p0 At. Vacuum Cf uses pa = 0. Compared with the back pressure: pe &gt; pa is underexpanded, pe = pa is perfectly expanded, and pe &lt; pa is overexpanded. A strongly overexpanded nozzle can have shocks or separation in the diverging section that this ideal model does not include.</p>
+      
+      <h2>Design Mach versus the atmosphere you actually have</h2>
+      <p>Use this to size a simple C-D area ratio or to see whether a given chamber and exit pressure will over- or under-expand. It is a one-dimensional, isentropic, perfect-gas nozzle with an optional back-pressure check. It does not design the wall contour, account for divergence or skin-friction losses, or replace an engine deck. Entering a subsonic “design Mach” is rejected: a C-D nozzle’s design exit Mach is at least 1.</p>
+      <h2>Worked example</h2>
+      <p>A convergent-divergent nozzle designed for exit Mach 2 in a γ = 1.4 gas needs an exit-to-throat area ratio <strong>Aₑ/A* = 1.6875</strong> — the isentropic A/A* at Mach 2. The design exit pressure ratio is <strong>pₑ/p₀ ≈ 0.1278</strong> and Tₑ/T₀ = 0.5556. If the back pressure equals that design pₑ, the nozzle is ideally expanded. A higher back pressure over-expands (and may force a shock in the plume or in the bell); a lower one under-expands. The momentum thrust coefficient at the design point is about 1.208; the vacuum coefficient is higher, about 1.423, because there is no back pressure to subtract.</p>
       <h2>Sources</h2>
-      <p>NACA Report 1135 (isentropic-flow tables); NASA Glenn Beginner's Guide (nozzles, area–Mach relation); Sutton and Biblarz, Rocket Propulsion Elements (thrust coefficient); Anderson, Modern Compressible Flow. For Isp and exhaust velocity, see <a href="../specific-impulse/">specific impulse</a>; for Δv from Isp, see the <a href="../rocket-equation/">rocket equation</a>.</p>
+      <p>NACA Report 1135 (isentropic-flow tables); NASA Glenn <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/wing-geometry/" rel="noopener noreferrer">Beginner's Guide</a> (nozzles, area–Mach relation); Sutton and Biblarz, Rocket Propulsion Elements (thrust coefficient); Anderson, Modern Compressible Flow. For Isp and exhaust velocity, see <a href="../specific-impulse/">specific impulse</a>; for Δv from Isp, see the <a href="../rocket-equation/">rocket equation</a>.</p>
       <h2>Frequently asked questions</h2>
       <h3>What exit Mach does Ae/At = 1.6875 give for air?</h3>
       <p>Mach 2, for γ = 1.4, on the supersonic branch. The isentropic exit pressure ratio is pe/p0 ≈ 0.12780.</p>
@@ -188,7 +193,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

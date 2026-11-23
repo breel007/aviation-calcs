@@ -39,6 +39,12 @@ var nw = C.compute({ leader: "b757", follower: "small", scenario: "intersection-
 isTrue(nw.waivable === false && nw.minutes === 3, "Small behind B757 intersection is 3 min, not waivable");
 nearly(C.compute({ leader: "super", follower: "heavy", scenario: "intersection-departure" }).minutes, 4, 0, "4 minutes behind Super at an intersection");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ leader: "heavy", follower: "small", scenario: "same-threshold-departure" });
+nearly(we.minutes, 2, 1e-12, "worked example: heavy then small, same-threshold departure → 2 minutes");
+isTrue(we.waivable === false, "not waivable");
+isTrue(we.nm == null, "this pairing is a time, not an NM, separation");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

@@ -45,6 +45,14 @@ console.log("\nCase 4  Invalid: a 80 kt wind on a 70 kt TAS makes a non-positive
 isTrue(C.compute({ mode: "pnr", speedMode: "tas-wind", tas: 70, windComponent: 80, enduranceHours: 3 }) === null,
   "negative homebound GS → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ mode: "pnr", speedMode: "tas-wind", tas: 150, windComponent: -30, enduranceHours: 5 });
+nearly(we.distance, 360, 1e-12, "worked example: PNR = 360 NM");
+nearly(we.timeOutHours, 3, 1e-12, "3 hours out");
+nearly(we.timeBackHours, 2, 1e-12, "2 hours back");
+var etp = C.compute({ mode: "etp", outboundGs: 120, homeboundGs: 180, totalDistance: 600 });
+nearly(etp.distanceFromA, 360, 1e-12, "ETP is also 360 NM from A on a 600 NM trip");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

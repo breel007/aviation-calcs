@@ -38,6 +38,12 @@ console.log("\nCase 4  Invalid");
 isTrue(C.compute({ groundspeed: 120, angle: 0 }) === null, "zero angle → null");
 isTrue(C.compute({ mode: "rate", groundspeed: 0, fpm: 600 }) === null, "rate mode needs speed");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ mode: "angle", groundspeed: 120, angle: 3 });
+nearly(we.fpm, 636.87, 0.5, "worked example: 120 kt, 3° → ≈ 637 fpm");
+nearly(we.ruleTimes5Fpm, 600, 1e-12, "GS × 5 = 600 fpm");
+nearly(we.ftPerNm, 318.44, 0.05, "318 ft/NM");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

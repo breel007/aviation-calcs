@@ -156,6 +156,11 @@
       <h2>The θ–β–M relation</h2>
       <p><code>tan θ = 2 cot β (M<sub>1</sub>² sin²β − 1) / (M<sub>1</sub>² (γ + cos 2β) + 2)</code></p>
       <p>The wave angle β lies between the Mach angle μ = arcsin(1/M<sub>1</sub>) and 90°. For a turning angle below the maximum deflection there are two solutions: a <strong>weak</strong> shock (smaller β, usually still supersonic behind the wave) and a <strong>strong</strong> shock (β closer to 90°, usually subsonic behind). At M<sub>1</sub> = 2, θ = 10°, γ = 1.4, the weak wave is at β ≈ 39.31° and the strong wave at β ≈ 83.70°. Downstream conditions come from a normal shock at M<sub>n1</sub> = M<sub>1</sub> sin β, then M<sub>2</sub> = M<sub>n2</sub> / sin(β − θ), using the same identities as the <a href="../normal-shock/">normal shock calculator</a>.</p>
+      
+      <h2>Weak, strong, and detached</h2>
+      <p>Use the θ–β–M relation for a two-dimensional wedge or a ramp inlet. The weak shock is the one you expect on a slender body; the strong shock is a mathematical second solution that appears in some confined flows. Past θ_max the shock detaches and the simple oblique-shock relations no longer close. This is not a cone (Taylor–Maccoll is weaker for the same angle) and not a normal shock unless the wave is perpendicular. Do not use a deflection larger than θ_max and then read the attached ratios.</p>
+      <h2>Worked example</h2>
+      <p>A Mach 2 flow of a γ = 1.4 gas meets a 10° wedge. The weak-shock (attached) solution has a wave angle <strong>β ≈ 39.31°</strong>, a downstream Mach number <strong>M₂ ≈ 1.641</strong>, and a static-pressure ratio <strong>P₂/P₁ ≈ 1.707</strong>, with only a small stagnation-pressure loss (P₀₂/P₀₁ ≈ 0.985). The strong solution at the same deflection is much closer to a normal shock (β ≈ 83.7°, M₂ ≈ 0.604, P₂/P₁ ≈ 4.44). This page reports the weak branch as the usual attached-shock choice. At Mach 2 the maximum attached deflection is about 23.0°; a 30° wedge would detach.</p>
       <h2>Sources</h2>
       <p>NACA Report 1135 (oblique-shock charts and the θ–β–M equation); NASA Glenn compressible-flow notes; Anderson, Modern Compressible Flow. For a centered expansion, see the <a href="../prandtl-meyer/">Prandtl–Meyer calculator</a>. For isentropic stagnation relations, see <a href="../isentropic-flow/">isentropic flow</a>.</p>
       <h2>Frequently asked questions</h2>
@@ -175,7 +180,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

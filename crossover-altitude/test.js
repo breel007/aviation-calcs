@@ -33,6 +33,11 @@ console.log("\nCase 3  Invalid");
 isTrue(C.compute({ vmo: 350, mmo: 1.2 }) === null, "supersonic Mmo is outside the subsonic pitot formula");
 isTrue(C.compute({ vmo: 0, mmo: 0.8 }) === null, "zero Vmo → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ vmo: 350, vmoUnit: "kt", mmo: 0.8 });
+nearly(we.crossoverFt, 23230.65, 5, "worked example: 350 kt / M 0.80 → ≈ 23,231 ft");
+nearly(we.crossoverFL, 232.31, 0.05, "≈ FL232");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

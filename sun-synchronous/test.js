@@ -30,6 +30,12 @@ nearly(rate * 180 / Math.PI * 86400, C.DEG_PER_DAY, 1e-10, "Ω̇(i) recovers the
 console.log("\nCase 3  Invalid");
 isTrue(C.compute({ altitude: -10, altUnit: "km" }) === null, "negative altitude → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ altitude: 800, altUnit: "km", eccentricity: 0 });
+nearly(we.inclinationDeg, 98.6031, 0.02, "worked example: 800 km circular SSO, i ≈ 98.60°");
+nearly(we.periodSec, 6052.41, 1, "period ≈ 6,052 s");
+nearly(we.precessionDegPerDay, 0.985647, 0.0001, "target precession ≈ 0.9856°/day");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

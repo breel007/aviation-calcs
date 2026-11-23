@@ -48,6 +48,14 @@ console.log("\nCase 5  Invalid");
 isTrue(C.compute({ mode: "M1", value: 0.8 }) === null, "subsonic M1 → null");
 isTrue(C.compute({ mode: "P2_P1", value: 0.5 }) === null, "P2/P1 < 1 → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ mode: "M1", value: 2, gamma: 1.4 });
+nearly(we.M2, 0.57735, 0.001, "worked example: M1 = 2 → M2 ≈ 0.577");
+nearly(we.P2_P1, 4.5, 1e-12, "P2/P1 = 4.5 exactly at M = 2, γ = 1.4");
+nearly(we.T2_T1, 1.6875, 1e-12, "T2/T1 = 1.6875");
+nearly(we.P02_P01, 0.720874, 0.001, "P02/P01 ≈ 0.721");
+nearly(we.T02_T01, 1, 1e-12, "total temperature unchanged");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

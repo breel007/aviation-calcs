@@ -45,6 +45,10 @@ console.log("\nCase 5  Invalid");
 isTrue(C.compute({ source: "nu", nu: 0, velocity: 50, length: 1 }) === null, "ν = 0 → null");
 isTrue(C.compute({ source: "isa", altitudeM: 200000, velocity: 50, length: 1 }).error != null, "too high → error");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ source: "isa", altitudeM: 0, velocity: 50, velocityUnit: "m/s", length: 1, lengthUnit: "m" });
+nearly(we.reynolds, 3.4234e6, 2e3, "worked example: SL ISA, 50 m/s, 1 m → Re ≈ 3.42×10⁶");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

@@ -45,6 +45,14 @@ nearly(f.liftToDrag, 0.5 / 0.03, 1e-12, "L/D = 16.667");
 console.log("\nCase 4  Invalid");
 isTrue(C.compute({ area: 0, velocity: 50, rho: 1.225, CL: 0.5 }) === null, "zero area → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ weight: 1000, weightUnit: "kg", area: 10, areaUnit: "m2", velocity: 50, velocityUnit: "m/s", rho: 1.225, loadFactor: 1 });
+nearly(we.dynamicPressurePa, 1531.25, 1e-9, "worked example: q = 1,531.25 Pa");
+nearly(we.CL, 0.64044, 2e-5, "level-flight CL ≈ 0.640");
+var weD = C.compute({ lift: 9806.65, liftUnit: "N", drag: 9806.65 / 12, dragUnit: "N", area: 10, velocity: 50, rho: 1.225 });
+nearly(weD.liftToDrag, 12, 1e-9, "if D = W/12, L/D = 12");
+nearly(weD.CD, weD.CL / 12, 1e-12, "CD = CL / 12 ≈ 0.0534");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

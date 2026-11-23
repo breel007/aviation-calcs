@@ -176,7 +176,14 @@
 <h2>One over S is the difference of the two mean motions</h2>
 <p>If two bodies go around the same primary in coplanar circular orbits with sidereal periods T1 and T2, the time between successive similar alignments is 1/S = |1/T1 − 1/T2|. Earth (365.256 days) and Mars (686.980 days) therefore have S ≈ 779.9 days, a little over 26 months — the familiar spacing of Mars launch windows in this idealized model. Two custom periods of 10 and 15 days meet every 30 days, the same identity in a tighter orbit pair.</p>
 <p>Eccentricity, inclination, and phasing all move a real window off this mean interval. For the Earth–Mars Hohmann time of flight and heliocentric Δv, see the <a href="/planetary-transfer/">planetary transfer</a> calculator; for a Hohmann transfer around a single body, see <a href="/hohmann-transfer/">Hohmann transfer</a>.</p>
-<h2>Sources</h2>
+
+      <h2>Mean motions, not a porkchop plot</h2>
+      <p>Use this to estimate how often two planets (or two satellites around the same primary) return to the same relative geometry. It assumes constant, coplanar, Keplerian periods. It does not include eccentricity, inclination, or phasing burns; a real transfer window comes from an ephemeris. Do not use a sidereal year for one body and a synodic month for the other, and do not treat 780 days as the only day you can leave for Mars.</p>
+      <h2>Worked example</h2>
+      <p>Earth’s sidereal year is 365.256 days and Mars’s is 686.98 days. The synodic period is</p>
+      <p><code>1/S = |1/P₁ − 1/P₂|</code> → <strong>S ≈ 779.9 days</strong>, or about <strong>2.14 years</strong></p>
+      <p>That is the mean interval between successive oppositions, and the textbook spacing of Earth–Mars Hohmann launch windows — an average, not a promise that every opportunity is equally cheap in Δv. If the two periods were equal, S would not be defined (or would be infinite): the bodies would not lap each other.</p>
+      <h2>Sources</h2>
 <ul>
 <li>The synodic-period identity 1/S = |1/T1 − 1/T2| (Danby, <cite>Fundamentals of Celestial Mechanics</cite>; Vallado, <cite>Fundamentals of Astrodynamics and Applications</cite>).</li>
 <li>Mean sidereal periods from standard astronomical constants (approximate).</li>
@@ -198,7 +205,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

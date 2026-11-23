@@ -37,6 +37,13 @@ isTrue(C.compute({ latitude: 0, heading: 0 }).rollout.action.indexOf("on heading
 console.log("\nCase 4  Invalid");
 isTrue(C.compute({ latitude: 91 }) === null, "latitude 91 → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ latitude: 40, heading: 0 });
+isTrue(we.turnRule === "UNOS", "worked example: 40°N, heading 000° → UNOS");
+isTrue(we.hemisphere === "north", "northern hemisphere");
+isTrue(we.rollout.action.indexOf("roll out early") >= 0, "roll out early through north");
+isTrue(we.acceleration.effect.indexOf("none") >= 0, "no acceleration error on north");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

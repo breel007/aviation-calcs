@@ -156,6 +156,11 @@
       <p>ν(1) = 0. An isentropic expansion through a turning angle θ raises Mach so that ν(M<sub>2</sub>) = ν(M<sub>1</sub>) + θ. For γ = 1.4, ν(2) is 26.380°, and a further 10° of expansion takes the flow to about M<sub>2</sub> = 2.385. The maximum turning from Mach 1 all the way to M → ∞ is</p>
       <p><code>ν<sub>max</sub> = 90° (√((γ+1)/(γ−1)) − 1) = 130.45° for γ = 1.4</code></p>
       <p>Static ratios follow from the isentropic identities on this site’s <a href="../isentropic-flow/">isentropic flow calculator</a>, with P<sub>0</sub> and T<sub>0</sub> constant across the fan, so P<sub>2</sub>/P<sub>1</sub> = (P<sub>0</sub>/P<sub>1</sub>) / (P<sub>0</sub>/P<sub>2</sub>).</p>
+      
+      <h2>What an expansion fan can and cannot do</h2>
+      <p>This is a two-dimensional, inviscid, steady expansion of a perfect gas — the same NACA 1135 / textbook Prandtl–Meyer problem. It is the right first check for a corner expansion or a design-exit Mach after a turn, not a substitute for a method-of-characteristics nozzle design or a viscous CFD run. A common mistake is to apply the function to a concave (compressing) corner; that is an oblique shock, not an expansion. Another is to exceed ν_max and assume a real pressure rather than the vacuum limit the page flags.</p>
+      <h2>Worked example</h2>
+      <p>A Mach 2 flow of a γ = 1.4 gas expands around a 10° convex corner. The Prandtl–Meyer function at Mach 2 is ν(2) ≈ 26.38°. After the turn, ν₂ = 26.38° + 10° = 36.38°, which inverts to <strong>M₂ ≈ 2.385</strong>. Because the expansion is isentropic, stagnation pressure and temperature are unchanged (P₀₂/P₀₁ = 1). The static ratios from the isentropic relations are about <strong>P₂/P₁ = 0.548</strong>, T₂/T₁ = 0.842, and ρ₂/ρ₁ = 0.651. You still have about 94° of turning left before the vacuum (maximum) deflection of 130.45° at this γ.</p>
       <h2>Sources</h2>
       <p>NACA Report 1135 (Prandtl–Meyer function); NASA Glenn; Anderson, Modern Compressible Flow. For a concave (compressive) turn, use the <a href="../oblique-shock/">oblique shock calculator</a>.</p>
       <h2>Frequently asked questions</h2>
@@ -175,7 +180,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

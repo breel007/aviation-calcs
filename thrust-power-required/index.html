@@ -175,8 +175,13 @@
       <p>If you enter a propeller efficiency η, shaft power is P<sub>required</sub> / η. Density ρ comes from the <a href="../standard-atmosphere/">standard atmosphere</a> at the density altitude you type (geopotential altitude in the 1976 U.S. Standard Atmosphere).</p>
       <h2>Speeds from the polar</h2>
       <p>Minimum thrust required is at (L/D)max, where C<sub>L</sub>* = √(C<sub>D0</sub>/k). Minimum power required is at C<sub>L</sub> = √(3 C<sub>D0</sub>/k), a slower speed — the same points identified on the <a href="../drag-polar/">drag polar</a> calculator. Feed L/D and speed into the <a href="../breguet-range-endurance/">Breguet</a> page for a range or endurance estimate.</p>
+      
+      <h2>A polar, not a POH cruise table</h2>
+      <p>Thrust and power required come from a simple drag polar CD = CD0 + k CL², with k = 1/(π e AR), at the density and TAS you enter. It is the right way to see how speed, weight, and density altitude move the required-thrust and required-power curves. It is not an engine chart and not a cruise performance table. Shaft power, if shown, divides by a propeller efficiency you type; leaving η out reports only the aerodynamic power. Do not enter indicated airspeed as if it were TAS.</p>
+      <h2>Worked example</h2>
+      <p>A 2,400 lbf airplane with 174 ft² of wing, CD0 = 0.02, e = 0.8, and AR = 8, flying at 100 kt TAS in sea-level ISA, has CL ≈ 0.407 and CD ≈ 0.0283, so L/D ≈ 14.42. Drag — and therefore thrust required — is about <strong>166 lbf</strong>, and the power required is about <strong>51.1 hp</strong> (38.1 kW). For this polar, L/D is a maximum of 15.85 at about 80 kt, and minimum power is near 61 kt. A 100 kt cruise is therefore a little faster (and a little more expensive in thrust) than best L/D.</p>
       <h2>Sources</h2>
-      <p>Anderson, Aircraft Performance and Design and Introduction to Flight; FAA PHAK (thrust and power required, L/D); U.S. Standard Atmosphere 1976; the induced-drag factor k = 1/(π e AR) as used on this site’s drag-polar page.</p>
+      <p>Anderson, Aircraft Performance and Design and Introduction to Flight; FAA PHAK (thrust and power required, L/D); <a href="https://ntrs.nasa.gov/citations/19770009539" rel="noopener noreferrer">U.S. Standard Atmosphere 1976</a>; the induced-drag factor k = 1/(π e AR) as used on this site’s drag-polar page.</p>
       <h2>Frequently asked questions</h2>
       <h3>Is thrust required just weight divided by L/D?</h3>
       <p>Yes, in level unaccelerated flight: T = W / (L/D) = D. This page computes L/D from the polar at your speed and density, then T and P from that drag.</p>
@@ -194,7 +199,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

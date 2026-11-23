@@ -153,7 +153,12 @@
 <h2>Prandtl and Helmbold</h2>
 <p>Prandtl lifting-line theory gives a = a0 / (1 + a0 / (π e AR)). Helmbold’s formula, often the better first estimate at low aspect ratio, is a = a0 / (√(1 + (a0 / (π AR))²) + a0 / (π AR)). With a0 = 2π and AR = 6, e = 1, the Prandtl slope is exactly 3π/2 ≈ 4.712 per radian (about 0.0822 per degree), and Helmbold sits a little below that. At very large AR both formulas recover a0; at very small AR, Helmbold is the more conservative reduction.</p>
 <p>These are incompressible, inviscid corrections. They are not a stall model and they are not a transonic lift slope. For the section slope itself see <a href="/thin-airfoil-lift/">thin-airfoil lift</a>; for AR from a span and area, see <a href="/wing-loading-aspect-ratio/">wing loading and aspect ratio</a>; for induced drag from e and AR, see the <a href="/drag-polar/">drag polar</a>.</p>
-<h2>Sources</h2>
+
+      <h2>Section slope versus wing slope</h2>
+      <p>Use this when you have a section slope (from thin-airfoil theory, a catalog, or a 2-D CFD point) and need the wing’s lift-curve slope at a modest angle of attack. Prandtl’s formula is the classical high-AR result; Helmbold is the usual correction as aspect ratio falls. Neither includes stall, compressibility, or a flap. A common error is to leave e at 1 when the planform is far from an elliptic lift distribution, or to compare a per-radian coefficient with a per-degree wind-tunnel slope without converting.</p>
+      <h2>Worked example</h2>
+      <p>A wing of aspect ratio 6 with the thin-airfoil section slope a₀ = 2π per radian and Oswald factor 1 (no additional induced-efficiency penalty) has a finite-wing lift-curve slope, from Prandtl’s lifting-line formula a = a₀ / (1 + a₀/(π e AR)), of <strong>4.712 per radian</strong>, or about <strong>0.0822 per degree</strong>. Helmbold’s form, often a slightly better mid-AR fit, gives <strong>4.529 per radian</strong> (0.0790 per degree), about 3.9% below Prandtl on this wing. Both are well below the two-dimensional 0.110 per degree.</p>
+      <h2>Sources</h2>
 <ul>
 <li>Prandtl lifting-line theory, finite-wing lift-curve slope.</li>
 <li>Helmbold’s finite-wing lift-slope formula (low aspect ratio).</li>
@@ -176,7 +181,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

@@ -44,6 +44,12 @@ isTrue(two.stageCount === 2, "two stages");
 console.log("\nCase 5  Invalid");
 isTrue(C.compute({ Isp: 300, m0: 1, mf: 2 }) === null, "mf > m0 → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ mode: "delta-v", ve: 3000, m0: Math.E, mf: 1 });
+nearly(we.deltaV, 3000, 0.05, "worked example: ve = 3,000 m/s, mass ratio e → Δv = 3,000 m/s");
+nearly(we.Isp, 305.915, 0.02, "Isp ≈ 305.9 s");
+nearly(we.propellantFraction, 1 - 1 / Math.E, 1e-8, "propellant fraction = 1 − 1/e");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

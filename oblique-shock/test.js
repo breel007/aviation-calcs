@@ -48,6 +48,14 @@ var d = C.compute({ M1: 2, theta: 30, gamma: 1.4 });
 isTrue(d.detached === true, "30° at M=2 is detached");
 isTrue(C.compute({ M1: 0.9, theta: 5 }) === null, "subsonic M1 → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ M1: 2, theta: 10, gamma: 1.4 });
+nearly(we.weak.betaDeg, 39.3139, 0.02, "worked example: weak β ≈ 39.31° at M1 = 2, θ = 10°");
+nearly(we.weak.M2, 1.6405, 0.001, "M2 ≈ 1.641");
+nearly(we.weak.P2_P1, 1.7066, 0.002, "P2/P1 ≈ 1.707");
+nearly(we.thetaMaxDeg, 22.9735, 0.02, "θ_max ≈ 23.0° at M = 2");
+isTrue(C.compute({ M1: 2, theta: 30, gamma: 1.4 }).detached === true, "30° at M = 2 is detached");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

@@ -153,5 +153,12 @@ main().catch(function (err) {
   console.log("  FAIL  lookup tests threw: " + (err && err.stack || err));
   console.log("\n----------------------------------------");
   console.log("Passed: " + passed + "   Failed: " + failed);
-  process.exit(1);
+  
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ lat1: 0, lon1: 0, lat2: 90, lon2: 0 });
+nearly(we.distanceNm, 5403.641, 0.01, "worked example: equator to pole ≈ 5,403.6 NM");
+nearly(we.distanceKm, 10007.543, 0.01, "10,007.5 km");
+nearly(we.centralAngleDeg, 90, 1e-12, "central angle 90°");
+nearly(we.initialCourse, 0, 1e-12, "initial course 000°");
+process.exit(1);
 });

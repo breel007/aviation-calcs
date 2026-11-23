@@ -157,7 +157,12 @@
 <h2>Inclination from the J2 nodal rate</h2>
 <p>The first-order nodal precession of an Earth orbit is Ω̇ = −(3/2) n J2 (R_eq / a)² cos i / (1−e²)², with n = √(μ / a³). Setting Ω̇ to the mean apparent solar rate, 360° / 365.24219 days ≈ 0.985647 °/day, and solving for i gives a retrograde inclination (cos i is negative). At 800 km, circular, with J2 = 1.08263×10⁻³ and R_eq = 6,378.137 km, that inclination is about 98.60°, and the period is about 101 minutes. Higher altitudes need a slightly shallower (closer to 90°) inclination because n and (R/a)² both fall off.</p>
 <p>Higher-order gravity, drag, and lunisolar perturbations all move a real SSO off this first-order i. Use an official ephemeris or a mission-design tool for a frozen or repeating ground-track orbit. Geostationary radius, circular speed, and vis-viva are on the <a href="/orbital-velocity-period/">orbital velocity and period</a> page; a nadir footprint is on <a href="/satellite-fov/">satellite FOV</a>.</p>
-<h2>Sources</h2>
+
+      <h2>J₂ precession, not a station-keeping plan</h2>
+      <p>The calculation sets the J₂-induced nodal precession equal to the mean sun’s motion. It is the standard first estimate of sun-synchronous inclination versus altitude. It does not model higher zonal harmonics, atmospheric drag, or the small inclination trims a real spacecraft flies. A common error is to enter a mean Earth radius inconsistently with the SMA, or to expect a prograde inclination — sun-synchronous LEO is always a little retrograde.</p>
+      <h2>Worked example</h2>
+      <p>A circular 800 km sun-synchronous orbit about the Earth (SMA = 6,378.137 + 800 = 7,178.137 km) needs a nodal precession of one revolution per tropical year, about 0.9856° per day. With the page’s J₂ model that inclination is <strong>i ≈ 98.60°</strong> (retrograde, as all sun-synchronous LEO inclinations are). The Keplerian period at that radius is about <strong>6,052 seconds</strong> (101 minutes). Eccentricity of zero is the usual first estimate; a frozen-orbit eccentricity changes the required i only slightly at this altitude.</p>
+      <h2>Sources</h2>
 <ul>
 <li>Vallado, <cite>Fundamentals of Astrodynamics and Applications</cite> (J2 nodal precession and sun-synchronous inclination).</li>
 <li>Wertz and Larson, <cite>Space Mission Analysis and Design</cite>.</li>
@@ -180,7 +185,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

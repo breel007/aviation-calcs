@@ -33,6 +33,12 @@ console.log("\nCase 4  Invalid");
 isTrue(C.compute({ pressure: 0 }) === null, "zero pressure → null");
 isTrue(C.compute({ pressure: -10, pressureUnit: "psi" }) === null, "negative → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ pressure: 100, pressureUnit: "psi" });
+nearly(we.rotatingKt, 90, 1e-12, "worked example: 9√100 = 90 kt rotating");
+nearly(we.lockedKt, 77, 1e-12, "7.7√100 = 77 kt locked-wheel");
+nearly(we.deltaKt, 13, 1e-12, "13 kt difference");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

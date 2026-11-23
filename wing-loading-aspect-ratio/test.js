@@ -42,6 +42,12 @@ nearly(s.wingLoadingPa, 8000 / 18, 1e-12, "W/S in Pa");
 console.log("\nCase 4  Invalid");
 isTrue(C.compute({ area: 10 }) == null || C.compute({ area: 10 }).aspectRatio == null, "one dimension is not enough for AR");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ weight: 2550, weightUnit: "lb", area: 174, areaUnit: "ft2", span: 36.1, spanUnit: "ft", CLmax: 1.6 });
+nearly(we.wingLoadingPsf, 2550 / 174, 1e-9, "W/S ≈ 14.66 psf");
+nearly(we.aspectRatio, 36.1 * 36.1 / 174, 1e-9, "AR ≈ 7.49");
+nearly(we.stallSpeedKt, 52.014, 0.05, "worked example: Vs ≈ 52.0 kt at CLmax 1.6");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

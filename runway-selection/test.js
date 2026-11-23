@@ -45,6 +45,12 @@ var p = C.parseRunways("09/27, 13, 31");
 isTrue(p.join(",") === "9,27,13,31", "parses runway list");
 isTrue(C.reciprocal(27) === 9 && C.reciprocal(9) === 27, "reciprocals 09/27");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ windDir: 270, windSpeed: 20, runways: "27", crosswindLimit: 15 });
+isTrue(we.recommended && we.recommended.runway === 27, "worked example: 270/20, runway 09/27 → recommend 27");
+nearly(we.recommended.headwind, 20, 1e-9, "20 kt headwind on 27");
+nearly(we.recommended.crosswindAbs, 0, 1e-9, "zero crosswind");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

@@ -158,7 +158,14 @@
 <h2>Efficiency is fixed by the pressure ratio</h2>
 <p>For constant specific heats and isentropic compression and expansion, the Brayton thermal efficiency is η = 1 − 1 / r_p^{(γ−1)/γ}. At r_p = 10 and γ = 1.4 that is about 48.2%. If you enter a compressor-inlet temperature T1, the isentropic compressor exit is T2 = T1 r_p^{(γ−1)/γ}; an optional turbine-inlet T3 then gives T4 = T3 / r_p^{(γ−1)/γ}, a heat input c_p(T3−T2), and a net work c_p((T3−T4) − (T2−T1)). The efficiency implied by those temperatures matches the pressure-ratio formula on the ideal cycle. This page uses c_p = 1,004.5 J/(kg·K) for the optional work numbers only.</p>
 <p>A real engine has burner pressure loss, cooling bleed, and component efficiencies that all cut η. For a control-volume thrust from mass flow and velocity, see <a href="/jet-engine-thrust/">jet engine thrust</a>; for a rocket, see <a href="/specific-impulse/">specific impulse</a>.</p>
-<h2>Sources</h2>
+
+      <h2>A ceiling, not a measured SFC</h2>
+      <p>The cold-air Brayton efficiency depends only on pressure ratio and γ in the ideal model. It is useful as an upper bound when you are comparing cycle pressure ratios, not as a specific-fuel-consumption prediction. Raising rₚ raises ideal η, but a real compressor eventually costs more than it returns. Do not treat a combustor inlet temperature as optional decoration: once you leave the ideal cycle, T₃ and component efficiencies set the work and the SFC, and this page’s ideal η will be optimistic.</p>
+      <h2>Worked example</h2>
+      <p>An ideal Brayton cycle with a compressor pressure ratio of 10 and γ = 1.4 has thermal efficiency</p>
+      <p><code>η = 1 − 1 / rₚ^{(γ−1)/γ} = 1 − 1 / 10<sup>0.2857</sup> ≈ 48.21%</code></p>
+      <p>If you also enter temperatures, the same ideal efficiency is recovered from the four station temperatures when the compression and expansion are isentropic. Real engines are well below this number because of compressor and turbine efficiency, pressure loss, and cooling.</p>
+      <h2>Sources</h2>
 <ul>
 <li>Cengel and Boles, <cite>Thermodynamics: An Engineering Approach</cite>, air-standard Brayton cycle.</li>
 <li>Hill and Peterson, <cite>Mechanics and Thermodynamics of Propulsion</cite>.</li>
@@ -181,7 +188,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

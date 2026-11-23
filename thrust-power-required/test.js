@@ -40,6 +40,13 @@ console.log("\nCase 3  Invalid");
 isTrue(C.compute({ weight: 2400, area: 174, speed: 100, CD0: 0 }) === null, "zero CD0 → null");
 isTrue(C.compute({ weight: 0, area: 174, speed: 100, CD0: 0.02, k: 0.05 }) === null, "zero weight → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ weight: 2400, weightUnit: "lbf", area: 174, areaUnit: "ft2", speed: 100, speedUnit: "kt", CD0: 0.02, e: 0.8, AR: 8, densityAltitude: 0 });
+nearly(we.thrustRequiredLbf, 166.45, 0.1, "worked example: thrust required ≈ 166 lbf at 100 kt");
+nearly(we.powerRequiredHp, 51.08, 0.05, "power required ≈ 51.1 hp");
+nearly(we.LD, 14.419, 0.01, "L/D ≈ 14.42");
+nearly(we.speedLDmaxKt, 80.15, 0.1, "best L/D near 80 kt");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

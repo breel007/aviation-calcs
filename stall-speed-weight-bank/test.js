@@ -37,6 +37,12 @@ nearly(a.bankDeg, 60, 1e-10, "implied bank for n = 2 in a level turn is 60°");
 console.log("\nCase 4  Invalid");
 isTrue(C.compute({ vsRef: 50, weight: 2000, bankDeg: 90 }) === null, "90° bank → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ vsRef: 48, weightRef: 2550, weight: 2200, bankDeg: 0 });
+nearly(we.vs, 44.584, 0.05, "worked example: 48 kt at 2,550 lb → 44.6 kt at 2,200 lb, wings level");
+var we45 = C.compute({ vsRef: 48, weightRef: 2550, weight: 2200, bankDeg: 45 });
+nearly(we45.vs, 53.020, 0.05, "at 45° bank, ≈ 53.0 kt");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

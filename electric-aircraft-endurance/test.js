@@ -30,6 +30,12 @@ nearly(b.enduranceHours, 18000 / b.electricPowerW, 1e-12, "endurance from derive
 console.log("\nCase 3  Invalid");
 isTrue(C.compute({ energyWh: 20000, powerW: 0 }) === null, "zero power → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ energyWh: 20000, usableFrac: 0.9, powerW: 40000, speed: 100, speedUnit: "kt" });
+nearly(we.enduranceHours, 0.45, 1e-12, "18 kWh / 40 kW = 0.45 h");
+nearly(we.enduranceMin, 27, 1e-12, "worked example: 27 minutes");
+nearly(we.rangeNm, 45, 1e-12, "0.45 h × 100 kt = 45 NM");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

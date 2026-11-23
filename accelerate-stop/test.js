@@ -36,6 +36,13 @@ nearly(b.totalFt, a.totalFt, 1e-6, "entering s_accel as a distance reproduces th
 console.log("\nCase 3  Invalid");
 isTrue(C.compute({ v1: 0, accelKtsPerSec: 4, decelKtsPerSec: 8 }) === null, "zero V1 → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ v1: 80, accelKind: "kts-per-s", accelKtsPerSec: 4, decelKind: "kts-per-s", decelKtsPerSec: 8, reactionSec: 1 });
+nearly(we.totalFt, 2160.4, 0.5, "worked example: 80 kt, 4 kt/s, 1 s, 8 kt/s → ≈ 2,160 ft");
+nearly(we.accelFt, 1350.25, 0.5, "s_accel ≈ 1,350 ft");
+nearly(we.reactionFt, 135.025, 0.1, "s_react ≈ 135 ft");
+nearly(we.stopFt, 675.12, 0.5, "s_stop ≈ 675 ft");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

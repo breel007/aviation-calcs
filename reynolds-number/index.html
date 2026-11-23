@@ -170,8 +170,13 @@
       <h2>Air properties</h2>
       <p>For atmospheric flight the density ρ and the dynamic viscosity μ come from the ambient air. This page can take them from the <a href="../standard-atmosphere/">U.S. Standard Atmosphere 1976</a> at a geopotential altitude (Sutherland’s law for μ), or from a pressure and temperature, or from values you type. At sea-level ISA, ρ = 1.225 kg/m³ and μ ≈ 1.7894×10<sup>−5</sup> Pa·s, so a 1 m chord at 50 m/s has Re ≈ 3.42×10<sup>6</sup>.</p>
       <p>A rough sea-level rule of thumb is Re ≈ 10,735 × V<sub>kt</sub> × L<sub>ft</sub>. Use the calculator, not the thumb rule, when altitude or temperature matters.</p>
+      
+      <h2>The ratio that sets the flow regime</h2>
+      <p>Reynolds number ρVL/μ (or VL/ν) is the usual way to compare a wind-tunnel model with a full-size wing or to judge whether a boundary layer is likely laminar or turbulent. The ISA path uses the U.S. Standard Atmosphere 1976 and Sutherland’s viscosity law. You can also enter ν, or pressure and temperature, directly. Use consistent units and a true length (chord, diameter, or body length). Do not compare two Reynolds numbers computed at different reference lengths and then treat them as the same condition.</p>
+      <h2>Worked example</h2>
+      <p>At sea-level ISA, a 1 m chord in a 50 m/s flow has Re = ρVL/μ. With ρ = 1.225 kg/m³ and Sutherland viscosity μ ≈ 1.789 × 10⁻⁵ Pa·s, the Reynolds number is about <strong>3.42 × 10⁶</strong>. That is a typical model- or section-scale number; the same chord at 100 kt (and a 5 ft chord) is a different Re, which the page will also compute if you change the units. Re falls with density as you climb, even at the same TAS.</p>
       <h2>Sources</h2>
-      <p>NASA Glenn Beginner’s Guide to Aeronautics (Reynolds number); U.S. Standard Atmosphere 1976 (Sutherland constants); Anderson, <em>Fundamentals of Aerodynamics</em>.</p>
+      <p>NASA Glenn <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/wing-geometry/" rel="noopener noreferrer">Beginner’s Guide</a> to Aeronautics (Reynolds number); <a href="https://ntrs.nasa.gov/citations/19770009539" rel="noopener noreferrer">U.S. Standard Atmosphere 1976</a> (Sutherland constants); Anderson, <em>Fundamentals of Aerodynamics</em>.</p>
       <h2>Frequently asked questions</h2>
       <h3>What length should I use for a wing Reynolds number?</h3>
       <p>The reference chord — typically the mean aerodynamic chord for a whole wing, or the local chord at a span station. For a fuselage or a boom, use a length; for a circular cylinder or a landing-gear leg, use the diameter.</p>
@@ -189,7 +194,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

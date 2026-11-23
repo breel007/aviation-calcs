@@ -154,8 +154,13 @@
       <p>in a level, coordinated turn. At 0° bank, n = 1. At 45°, n = √2 ≈ 1.41 and stall speed is about 19% higher. At 60°, n = 2 and stall speed rises by a factor of √2 ≈ 1.41. A worked example: 48 kt at 2,550 lb, flown at 2,200 lb in a 45° bank, is about 53 kt.</p>
       <h2>Related tools</h2>
       <p>The <a href="../turn-radius/">turn radius calculator</a> uses the same load-factor and stall-in-bank identities, and adds rate of turn and turn radius. The <a href="../maneuvering-speed-weight/">maneuvering speed calculator</a> scales Va with weight and relates it to Vs × √n<sub>lim</sub>. Use the POH figures first in every case.</p>
+      
+      <h2>Square-root scaling, not a new stall test</h2>
+      <p>Stall speed scales with the square root of weight and with the square root of load factor n = 1/cos(bank) in a coordinated, level turn. Use a published Vs or Vs1 from the POH/AFM as the reference, at the weight at which it was determined. The page does not change the configuration, the CG, or the altitude, and it does not predict stick-shaker or buffet speeds. Do not scale an already-banked number a second time, and do not treat a 60°-bank result as a maneuvering speed.</p>
+      <h2>Worked example</h2>
+      <p>A published 1-g stall of 48 kt at 2,550 lb, flown at 2,200 lb, scales by √(2,200/2,550) ≈ 0.929, so the wings-level stall is about <strong>44.6 kt</strong>. In a 45° bank the load factor is √2 ≈ 1.41, and the stall at that weight rises to about <strong>53.0 kt</strong>. At 60° of bank it is about 63 kt. Those speeds are in the same units as the published Vs you entered; they are not a substitute for the POH stall chart in that configuration.</p>
       <h2>Sources</h2>
-      <p>FAA Pilot’s Handbook of Aeronautical Knowledge, Chapter 5 (load factor, stall speed in a turn); FAA Airplane Flying Handbook; NASA Glenn Beginner’s Guide (lift, load factor).</p>
+      <p>FAA <a href="https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/phak" rel="noopener noreferrer">Pilot’s Handbook of Aeronautical Knowledge</a>, Chapter 5 (load factor, stall speed in a turn); FAA <a href="https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/airplane_handbook" rel="noopener noreferrer">Airplane Flying Handbook</a>; NASA Glenn <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/wing-geometry/" rel="noopener noreferrer">Beginner’s Guide</a> (lift, load factor).</p>
       <h2>Frequently asked questions</h2>
       <h3>Does flap setting change the formula?</h3>
       <p>The identity is the same; the reference stall speed changes. Enter the Vs that belongs to the configuration (Vs0 with landing flaps, Vs1 clean, or a POH figure for takeoff flaps).</p>
@@ -173,7 +178,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

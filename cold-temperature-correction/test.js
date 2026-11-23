@@ -43,6 +43,12 @@ nearly(t.formulaFt, 0, 1e-12, "15 °C at sea level, formula is 0");
 nearly(t.addFt, 0, 0, "nothing to add");
 isTrue(C.compute({ temperature: -10, publishedAltitude: 500, elevation: 1000 }) === null, "published below field → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ temperature: -25, elevation: 1000, publishedAltitude: 3000 });
+nearly(we.formulaFt, 307.84, 0.1, "worked example: formula correction ≈ 308 ft");
+nearly(we.indicatedToFlyRound10, 3310, 1e-12, "indicated to fly, rounded to 10 ft, is 3,310");
+nearly(we.trueIfUncorrectedFt, 2692.16, 0.5, "uncorrected true altitude ≈ 2,692 ft");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

@@ -50,6 +50,12 @@ nearly(p.rangeNm, 120 * p.enduranceH, 1e-6, "prop range = V × endurance at cons
 console.log("\nCase 3  Invalid");
 isTrue(C.compute({ kind: "jet", Wi: 100, Wf: 120, liftToDrag: 16, velocity: 400, tsfc: 0.5 }) === null, "Wf > Wi → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ kind: "jet", Wi: 120000, Wf: 100000, liftToDrag: 16, velocity: 450, velocityUnit: "kt", tsfc: 0.5, tsfcUnit: "per-h" });
+nearly(we.rangeNm, 2625.43, 0.1, "worked example: jet Breguet range ≈ 2,625 NM");
+nearly(we.enduranceH, 5.834, 0.01, "endurance ≈ 5.83 h");
+nearly(we.weightRatio, 1.2, 1e-12, "Wi/Wf = 1.2");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

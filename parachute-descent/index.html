@@ -175,11 +175,14 @@
 <h2>Time is height over descent rate — plus a from-rest correction</h2>
 <p>If the parachute is already at terminal speed <i>v</i><sub>t</sub>, the time to descend a height <i>h</i> is simply <i>t</i> = <i>h</i>/<i>v</i><sub>t</sub>, and the horizontal drift in a steady wind is wind × <i>t</i>. A 1,000-foot drop at 1,000 ft/min in a 10-knot wind is therefore 60 seconds and one-sixth of a nautical mile. Terminal speed itself, when you do not type it, is <i>v</i><sub>t</sub> = √(2<i>m g</i> / (ρ Cd <i>A</i>)), the same identity used on the <a href="/terminal-velocity/">terminal velocity</a> page.</p>
 <p>Starting from rest under quadratic drag, speed is <i>v</i><sub>t</sub> tanh(<i>g t</i>/<i>v</i><sub>t</sub>) and the distance fallen is (<i>v</i><sub>t</sub>²/<i>g</i>) ln cosh(<i>g t</i>/<i>v</i><sub>t</sub>), so the time is <i>t</i> = (<i>v</i><sub>t</sub>/<i>g</i>) acosh(exp(<i>g h</i>/<i>v</i><sub>t</sub>²)). From a typical opening height that time is already within a second of <i>h</i>/<i>v</i><sub>t</sub>, because the canopy reaches terminal speed in a few <i>v</i><sub>t</sub>/<i>g</i> time constants. A real ram-air canopy also glides, and a real opening is not a step to Cd <i>A</i>; use the canopy manual for a landing pattern. This page is the vertical-descent and drift estimate those manuals start from.</p>
-<h2>Sources</h2>
+
+      <h2>Worked example</h2>
+      <p>From 1,000 ft AGL at a 1,000 fpm vertical speed, the constant-rate time of descent is <strong>60 seconds</strong>. With a 10-knot wind, the constant-rate drift is about <strong>0.17 NM</strong> (roughly 1,013 ft). A start-from-rest model, which includes a short acceleration, is only a fraction of a second longer here. The page does not know canopy performance, a flare, or a wind that changes with height; those dominate a real landing pattern.</p>
+      <h2>Sources</h2>
 <ul>
 <li>Quadratic-drag terminal velocity; see also this site’s <a href="/terminal-velocity/">terminal-velocity</a> calculator.</li>
 <li>Integration of <i>m</i> dv/dt = <i>m g</i> − ½ ρ Cd <i>A v</i>² (standard ballistic descent).</li>
-<li>FAA <cite>Parachute Rigger Handbook</cite> and <cite>Airplane Flying Handbook</cite> (descent rate and drift — conceptual).</li>
+<li>FAA <cite>Parachute Rigger Handbook</cite> and <cite><a href="https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/airplane_handbook" rel="noopener noreferrer">Airplane Flying Handbook</a></cite> (descent rate and drift — conceptual).</li>
 </ul>
       <h2>Frequently asked questions</h2>
       <h3>How is this different from the terminal-velocity calculator?</h3>
@@ -198,7 +201,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

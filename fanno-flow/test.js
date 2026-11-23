@@ -28,6 +28,12 @@ nearly(a.P_Pstar, (1 / 0.5) * Math.sqrt(2.4 / 2.1), 1e-12, "P/P* formula");
 console.log("\nCase 3  Invalid");
 isTrue(C.compute({ mach: 0 }) === null, "M = 0 → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ mach: 0.5, gamma: 1.4 });
+nearly(we.T_Tstar, 1.142857, 0.001, "worked example: Fanno M=0.5, T/T* ≈ 1.143");
+nearly(we.P_Pstar, 2.138090, 0.001, "P/P* ≈ 2.138");
+nearly(we.fourFLStarOverD, 1.069060, 0.001, "4fL*/D ≈ 1.069 remaining to sonic");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

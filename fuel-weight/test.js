@@ -40,6 +40,11 @@ isTrue(Math.abs(warm.usedLbPerUsGal - 6.7) > 0.05, "temp-corrected density is no
 console.log("\nCase 5  Invalid");
 isTrue(C.compute({ fuelType: "custom", customLbGal: 0, volume: 10 }) === null, "zero custom density → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ fuelType: "100LL", direction: "volume-to-mass", volume: 50, volumeUnit: "us-gal" });
+nearly(we.pounds, 300, 1e-12, "worked example: 50 US gal of 100LL = 300 lb");
+nearly(we.kilograms, 136.078, 0.02, "≈ 136.1 kg");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

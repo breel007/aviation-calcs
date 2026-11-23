@@ -46,6 +46,13 @@ console.log("\nCase 5  Invalid");
 isTrue(C.compute({ areaRatio: 0.8 }) === null, "Ae/At < 1 → null");
 isTrue(C.compute({ mode: "mach", mach: 0.8 }) === null, "C-D design Mach must be ≥ 1");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ mode: "mach", mach: 2, gamma: 1.4 });
+nearly(we.areaRatio, 1.6875, 1e-12, "worked example: design M = 2 → Ae/A* = 1.6875");
+nearly(we.pe_p0, 0.1278045, 0.0001, "design pe/p0 ≈ 0.1278");
+nearly(we.Te_T0, 1 / 1.8, 1e-12, "Te/T0 = 0.5556");
+nearly(we.CfMomentum, 1.20775, 0.001, "momentum Cf ≈ 1.208");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

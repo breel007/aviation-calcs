@@ -89,6 +89,13 @@ isTrue(/id="calcBtn"/.test(html) && /class="btn btn-primary" id="calcBtn"/.test(
 var app = fs.readFileSync(path.join(__dirname, "app.js"), "utf8");
 isTrue(!/\$\((['"])out\1\)/.test(app) && !/\brender\(/.test(app), "app.js has no dead #out / render() references");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ distance: 60, groundspeed: 120, fuelFlow: 10, onboard: 15, reserveKind: "vfr-day" });
+nearly(we.eteMin, 30, 1e-12, "worked example: 60 NM at 120 kt → 30 min ETE");
+nearly(we.burn, 5, 1e-12, "5 gal burned");
+nearly(we.atDestination, 10, 1e-12, "10 gal at the destination");
+isTrue(we.meetsReserve === true, "meets the 30-minute day-VFR reserve");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

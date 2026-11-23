@@ -38,6 +38,13 @@ nearly(t.pressureAltitudeM, 11000, 2, "226.321 hPa → 11 km PA");
 console.log("\nCase 5  Invalid");
 isTrue(C.compute({ mode: "qnh-elevation", altimeter: 0, elevation: 0 }) === null, "zero QNH → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ mode: "qnh-elevation", altimeter: 28.92, altimeterUnit: "inhg", elevation: 0, elevationUnit: "ft" });
+nearly(we.pressureAltitudeFt, 938.80, 0.5, "worked example: 28.92 inHg at sea level → PA ≈ 939 ft");
+nearly(we.ruleOfThumbFt, 1000, 1e-12, "rule of thumb is 1,000 ft");
+var weStd = C.compute({ mode: "qnh-elevation", altimeter: 29.92, altimeterUnit: "inhg", elevation: 5000, elevationUnit: "ft" });
+nearly(weStd.pressureAltitudeFt, 5000, 0.5, "29.92 inHg at a 5,000 ft field → PA ≈ 5,000 ft");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

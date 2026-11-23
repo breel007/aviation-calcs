@@ -165,10 +165,15 @@
 <h2>Power law and linear shear</h2>
 <p>The wind-profile power law is V(<i>h</i>) = V<sub>ref</sub> (<i>h</i>/<i>h</i><sub>ref</sub>)<sup>α</sup>. With the common 1/7 exponent, a 20-knot wind at 30 feet becomes about 33 knots at 1,000 feet. The linear alternative, used when a pilot or a forecast quotes a shear in knots per 100 feet, is simply V = V<sub>ref</sub> + (dV/dh)(<i>h</i> − <i>h</i><sub>ref</sub>). A negative shear (wind decreasing with height) is allowed; the page will not report a negative wind speed.</p>
 <p>Neither profile is a microburst. Low-level wind shear in the AIM and in AC 00-54 can be a sudden, localized change associated with a thunderstorm, a front, or a land/sea breeze — not a smooth 1/7 curve. Use this page to turn a surface wind into a rough wind at pattern altitude, or to apply a quoted gradient, and treat convective shear as a weather-avoidance problem. Related tools: the <a href="/e6b-wind/">wind triangle</a>, the <a href="/crosswind/">crosswind</a> component, and the <a href="/thunderstorm-distance/">flash-to-bang</a> range estimate.</p>
-<h2>Sources</h2>
+
+      <h2>A profile, not a wind-shear alert</h2>
+      <p>The power-law and linear models turn a reference wind into a wind at another height. Use them to rough out a wind at pattern altitude from a surface report, or to expand a quoted shear. They do not detect a convective downburst or a frontal wind shift. A negative shear (wind decreasing with height) is allowed, but the page will not report a negative wind speed.</p>
+      <h2>Worked example</h2>
+      <p>A 20-knot wind at 30 ft, extended to 1,000 ft with the 1/7 power law, becomes 20 × (1,000/30)<sup>1/7</sup> ≈ <strong>33.0 kt</strong> — about 13 kt of shear over that depth, or roughly 1.3 kt per 100 ft on average. That is a smooth profile, not a microburst. The linear option is for when a forecast already quotes a shear in knots per 100 feet.</p>
+      <h2>Sources</h2>
 <ul>
 <li>Wind-profile power law, including the 1/7-power law; IEC 61400-1 and standard meteorological / engineering references.</li>
-<li>FAA Aeronautical Information Manual 7-1-24, Wind Shear.</li>
+<li>FAA <a href="https://www.faa.gov/air_traffic/publications/atpubs/aim_html/" rel="noopener noreferrer">Aeronautical Information Manual</a> 7-1-24, Wind Shear.</li>
 <li>FAA Advisory Circular 00-54, Pilot Windshear Guide (conceptual; this page does not model a microburst).</li>
 </ul>
       <h2>Frequently asked questions</h2>
@@ -188,7 +193,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

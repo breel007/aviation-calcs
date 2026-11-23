@@ -166,6 +166,11 @@
       <p>Earth’s μ is 3.986004418×10¹⁴ m³/s² (IERS / Vallado). At 400 km above the mean radius 6,371 km, v ≈ 7.669 km/s and the period is about 92.6 minutes. Geosynchronous radius is the circular radius whose period is one sidereal day (86,164.0905 s), about 42,164 km from Earth’s center, at about 3.075 km/s.</p>
       <h2>Vis-viva on an ellipse</h2>
       <p>The speed at radius r on an ellipse of semi-major axis a is <code>v = √( μ (2/r − 1/a) )</code>. Periapsis is the faster end. A 400 × 800 km Earth ellipse (mean radius) is a simple check of that identity on this page.</p>
+      
+      <h2>Spherical two-body orbits</h2>
+      <p>The calculator is Keplerian: vis-viva, circular speed √(μ/r), period 2π√(r³/μ), and escape √(2μ/r). It is the right first number for a circular LEO or a Hohmann starting orbit. It does not include J₂, drag, or third-body perturbations, and “altitude” is only as good as the body radius you chose (mean versus equatorial). Do not treat circular speed at r as the Δv from the surface; you still have to climb out of the well and pay gravity and drag losses.</p>
+      <h2>Worked example</h2>
+      <p>A circular orbit 400 km above a spherical Earth of mean radius 6,371 km (orbital radius 6,771 km) has a circular speed of about <strong>7,673 m/s</strong> and a period of about <strong>5,545 seconds</strong> (92.4 minutes). Escape speed from that radius is √2 times the circular speed, about <strong>10,851 m/s</strong>. These use the page’s Earth μ = 3.986004418 × 10¹⁴ m³/s². A 400 km “space station” altitude is a teaching round number, not a particular catalog orbit.</p>
       <h2>Sources</h2>
       <p>Vallado, <em>Fundamentals of Astrodynamics and Applications</em>; Curtis, <em>Orbital Mechanics for Engineering Students</em>; Bate, Mueller and White, <em>Fundamentals of Astrodynamics</em>. For the two-impulse transfer between circular orbits, see the <a href="../hohmann-transfer/">Hohmann transfer calculator</a>.</p>
       <h2>Frequently asked questions</h2>
@@ -185,7 +190,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

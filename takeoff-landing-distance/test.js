@@ -54,6 +54,12 @@ nearly(all.correctedFt, 1500 * 1.21 * 0.81, 1e-9, "weight and wind multiply: 1,5
 isTrue(C.compute({ kind: "takeoff", distance: 1000, surface: "soft" }).error === "surface", "soft surface is refused");
 isTrue(C.compute({ kind: "takeoff", distance: 1000, speed: 50, headwind: 50 }).error === "wind", "Vw ≥ V refused");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ kind: "takeoff", distance: 1000, speed: 60, headwind: 6 });
+nearly(we.correctedFt, 810, 1e-12, "worked example: 1,000 ft, 60 kt, 6 kt HW → 810 ft");
+nearly(we.deltaPct, -19, 1e-12, "−19%");
+nearly(we.fWind, 0.81, 1e-12, "wind factor 0.81");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

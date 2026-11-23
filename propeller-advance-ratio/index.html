@@ -162,8 +162,13 @@
       <p>V is true airspeed, n is revolutions per second, and D is diameter, in consistent units. J is the standard independent variable on a propeller map (thrust and power coefficients versus J). The rotational tip speed is π n D. The helical tip speed — the resultant of forward speed and rotational tip speed — is</p>
       <p><code>V<sub>tip,helical</sub> = √(V² + (π n D)²)</code></p>
       <p>Tip Mach is that speed divided by the local speed of sound, taken from the <a href="../standard-atmosphere/">standard atmosphere</a> at the geometric altitude you enter (U.S. Standard Atmosphere 1976), then scaled by √(T / T<sub>ISA</sub>) if you type a non-standard OAT. At 100 kt, 2,400 rpm, and a 6.5 ft propeller at sea level, J is about 0.65 and helical tip Mach is about 0.75.</p>
+      
+      <h2>J and tip Mach, not a propeller map</h2>
+      <p>Advance ratio and tip Mach are the two numbers you usually want before you open a C_T–J chart. The page computes them from TAS, RPM, diameter, and an optional altitude for the speed of sound. It does not output thrust or efficiency. Use TAS, not indicated airspeed, and a true diameter; a 6.5 ft prop at 2,400 rpm is already a high tip Mach at sea level, and it rises as you climb only if you also account for the colder, slower speed of sound.</p>
+      <h2>Worked example</h2>
+      <p>At 100 kt TAS, 2,400 rpm, and a 6.5 ft diameter, the advance ratio is J = V/(nD) ≈ <strong>0.649</strong>. Rotational tip speed is about 484 kt (Mach 0.732 at sea-level ISA), and the helical tip speed — rotation plus forward speed — is about 494 kt (Mach 0.747). Those Mach numbers are a first check for compressibility at the tip, not a thrust or efficiency reading; J is the usual x-axis of a propeller chart, which this page does not contain.</p>
       <h2>Sources</h2>
-      <p>NACA / NASA propeller theory (advance ratio J); FAA PHAK (propeller, tip speed); U.S. Standard Atmosphere 1976 (speed of sound); standard helical tip-speed geometry. For Mach and dynamic pressure of the airplane, see the <a href="../mach-dynamic-pressure/">Mach and dynamic pressure calculator</a>.</p>
+      <p>NACA / NASA propeller theory (advance ratio J); FAA PHAK (propeller, tip speed); <a href="https://ntrs.nasa.gov/citations/19770009539" rel="noopener noreferrer">U.S. Standard Atmosphere 1976</a> (speed of sound); standard helical tip-speed geometry. For Mach and dynamic pressure of the airplane, see the <a href="../mach-dynamic-pressure/">Mach and dynamic pressure calculator</a>.</p>
       <h2>Frequently asked questions</h2>
       <h3>Should I use indicated airspeed or true airspeed?</h3>
       <p>True airspeed. J is a ratio of the actual forward speed through the air to the rotational tip speed. Using IAS would understate J as altitude increases.</p>
@@ -181,7 +186,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

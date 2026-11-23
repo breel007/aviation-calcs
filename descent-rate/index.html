@@ -161,8 +161,13 @@
       <p>A 3° path is 318.4 ft per nautical mile, so the exact rate is about <strong>5.31 × groundspeed</strong>. At 120 kt that is 637 fpm. The memory item “GS × 5” gives 600 fpm — a convenient, slightly shallow target that will not quite hold a 3° slope. This page shows both, and the same identity used on the <a href="../top-of-descent/">top of descent</a> calculator.</p>
       <h2>Other gradients</h2>
       <p>Some charts and training material use 300 ft/NM (the HAT/300 cousin of a 3° VDP) as a round number; that is a 2.83° path, shallower than a 3° ILS. You can enter a published angle, a chosen vertical speed, or a gradient in ft/NM and convert among them.</p>
+      
+      <h2>Geometry of a constant path angle</h2>
+      <p>Descent rate is groundspeed times the tangent of the flight-path angle, converted to feet per minute. A 3° ILS is the usual reference; the GS × 5 rule is a slightly shallow stand-in for that angle. The page can also start from a chosen rate and back out the angle. It does not know wind, a level-off restriction, or a step-down fix — those belong in the procedure and in the <a href="../top-of-descent/">top-of-descent</a> plan.</p>
+      <h2>Worked example</h2>
+      <p>At 120 kt on a 3° path the exact gradient is 318.4 ft/NM, so the rate is 120 × 318.4 / 60 ≈ <strong>637 fpm</strong>. The GS × 5 rule gives 600 fpm, about 37 fpm shallow. The same 3° path is 3.14 NM per 1,000 ft, or about 1.57 minutes per 1,000 ft at 120 kt. Use groundspeed in the descent, not indicated airspeed.</p>
       <h2>Sources</h2>
-      <p>FAA Instrument Flying Handbook (ILS glideslope, descent planning); FAA Instrument Procedures Handbook; AIM instrument approach procedures; standard 3° glide-path geometry (1 NM = 1,852 m). For starting the descent from cruise, use the <a href="../top-of-descent/">top of descent calculator</a>. For a non-precision VDP, use the <a href="../visual-descent-point/">visual descent point calculator</a>.</p>
+      <p>FAA Instrument Flying Handbook (ILS glideslope, descent planning); FAA <a href="https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/instrument_procedures_handbook" rel="noopener noreferrer">Instrument Procedures Handbook</a>; AIM instrument approach procedures; standard 3° glide-path geometry (1 NM = 1,852 m). For starting the descent from cruise, use the <a href="../top-of-descent/">top of descent calculator</a>. For a non-precision VDP, use the <a href="../visual-descent-point/">visual descent point calculator</a>.</p>
       <h2>Frequently asked questions</h2>
       <h3>What descent rate do I need for a 3° glideslope at 120 kt?</h3>
       <p>About 637 feet per minute. The GS × 5 rule gives 600 fpm, which is about 37 fpm shallow of a true 3° path. Use 5.3 times groundspeed if you want a closer mental check.</p>
@@ -180,7 +185,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

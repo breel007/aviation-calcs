@@ -164,10 +164,15 @@
 <h2>Three distances: accelerate, recognize, stop</h2>
 <p>Under constant acceleration <i>a</i> to a speed <i>V</i>, the ground roll to that speed is <i>s</i><sub>accel</sub> = <i>V</i>² / (2<i>a</i>) and the time is <i>V</i>/<i>a</i>. During a recognition delay <i>t</i><sub>r</sub> the airplane is assumed to keep rolling at <i>V</i>, covering <i>V t</i><sub>r</sub>. A constant deceleration <i>d</i> then stops it in <i>V</i>² / (2<i>d</i>). The educational accelerate-stop distance is the sum of those three pieces. An 80-knot decision speed at 4 knots per second, a 1-second delay, and an 8-knot-per-second stop uses about 2,160 feet — a useful order-of-magnitude check, not a dispatch number.</p>
 <p>A published V1 and a Part 23 or Part 25 accelerate-stop distance are a different model: configuration changes, engine-out thrust, runway slope, wind, and braking condition all enter the AFM/POH chart. This page has none of that. Use the <a href="/takeoff-landing-distance/">takeoff and landing distance</a> calculator when you are correcting a POH baseline, and defer to the book for a reject decision.</p>
-<h2>Sources</h2>
+
+      <h2>Three segments, constant accel and decel</h2>
+      <p>The educational model is constant acceleration to V, a delay at constant V, and constant deceleration to a stop. It is useful for seeing how decision speed, reaction time, and stopping capability add up in feet. It is not a dispatch number and not a substitute for the accelerate-stop or accelerate-go data in the AFM. Do not treat a 4 kt/s demonstration as a wet-runway or engine-out acceleration, and do not omit the recognition delay.</p>
+      <h2>Worked example</h2>
+      <p>An 80-knot decision speed, accelerating at 4 kt/s, a 1-second recognition delay, and decelerating at 8 kt/s gives three pieces: s_accel = V²/(2a) ≈ <strong>1,350 ft</strong> (20 seconds to 80 kt), s_react = V × 1 s ≈ <strong>135 ft</strong>, and s_stop = V²/(2d) ≈ <strong>675 ft</strong>. The educational accelerate-stop total is about <strong>2,160 ft</strong>. That is an order-of-magnitude check, not a Part 23 or Part 25 accelerate-stop distance: those published numbers include configuration changes and engine-out models this page does not.</p>
+      <h2>Sources</h2>
 <ul>
 <li>Constant-acceleration kinematics, <i>s</i> = <i>v</i>² / (2<i>a</i>).</li>
-<li>FAA <cite>Airplane Flying Handbook</cite> and <cite>Pilot’s Handbook of Aeronautical Knowledge</cite> (rejected takeoff and V1 as a decision speed — conceptual only).</li>
+<li>FAA <cite><a href="https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/airplane_handbook" rel="noopener noreferrer">Airplane Flying Handbook</a></cite> and <cite><a href="https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/phak" rel="noopener noreferrer">Pilot’s Handbook of Aeronautical Knowledge</a></cite> (rejected takeoff and V1 as a decision speed — conceptual only).</li>
 <li>14 CFR 25.109 and 23.55 describe certified accelerate-stop distance; those models are not implemented here.</li>
 </ul>
       <h2>Frequently asked questions</h2>
@@ -187,7 +192,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

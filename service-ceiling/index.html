@@ -173,9 +173,16 @@
 <h2>A straight line from sea-level climb to the absolute ceiling</h2>
 <p>The linear model is ROC(<i>h</i>) = ROC<sub>0</sub> (1 − <i>h</i>/<i>h</i><sub>abs</sub>). Set ROC equal to the service residual ROC<sub>svc</sub> (100 ft/min unless you change it) and the service ceiling is <i>h</i><sub>svc</sub> = <i>h</i><sub>abs</sub> (1 − ROC<sub>svc</sub>/ROC<sub>0</sub>). A sea-level 1,200 ft/min and a 12,000-foot absolute ceiling therefore have an 11,000-foot service ceiling, and 600 ft/min left at 6,000 feet. If you have climb rates at two density altitudes instead, the page fits the same straight line.</p>
 <p>Real climb performance is not exactly linear, and it depends on weight, configuration, and temperature in ways a two-point fit cannot see. A POH climb chart always wins. For the density altitude you are actually departing from, use the <a href="/density-altitude/">density-altitude</a> calculator; for a gradient in feet per nautical mile, use <a href="/climb-gradient/">climb gradient</a>.</p>
-<h2>Sources</h2>
+
+      <h2>A linear model of climb versus altitude</h2>
+      <p>This page assumes rate of climb falls in a straight line from a sea-level value to zero at the absolute ceiling. That is a common first estimate and a way to interpolate a service ceiling (often 100 fpm for piston airplanes, 500 fpm for jets). It is not a climb-performance chart: temperature, weight, and configuration all move the real curve, and only the POH/AFM gives a dispatch number. Do not treat a 100 fpm intercept as a regulatory definition, and do not extrapolate above the absolute ceiling you entered.</p>
+      <h2>Worked example</h2>
+      <p>Suppose the sea-level rate of climb is 1,200 fpm and the absolute ceiling (where ROC reaches zero) is 12,000 ft, and you define the service ceiling as the altitude where climb has fallen to 100 fpm. With a linear ROC-versus-altitude model the slope is −1,200/12,000 = −0.1 fpm per foot, so the service ceiling is</p>
+      <p><code>(1,200 − 100) / 0.1 = 11,000 ft</code></p>
+      <p>That is 1,000 ft below the absolute ceiling, as the 100 fpm intercept requires. A real airplane’s climb schedule is not perfectly linear, and the POH service ceiling is the published figure.</p>
+      <h2>Sources</h2>
 <ul>
-<li>FAA <cite>Pilot’s Handbook of Aeronautical Knowledge</cite>, service, absolute, and cruise ceilings; rate of climb versus altitude.</li>
+<li>FAA <cite><a href="https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/phak" rel="noopener noreferrer">Pilot’s Handbook of Aeronautical Knowledge</a></cite>, service, absolute, and cruise ceilings; rate of climb versus altitude.</li>
 <li>Linear ROC-versus-altitude model as used in performance textbooks (e.g. Anderson, <cite>Introduction to Flight</cite>; Phillips, <cite>Mechanics of Flight</cite>).</li>
 </ul>
       <h2>Frequently asked questions</h2>
@@ -195,7 +202,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

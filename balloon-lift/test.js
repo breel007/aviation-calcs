@@ -29,6 +29,10 @@ nearly(b.usefulKg, b.liftKg - 400, 1e-12, "useful = gross − empty");
 console.log("\nCase 3  Invalid");
 isTrue(C.compute({ volume: 2800, tAir: 15, tHot: 15, tempUnit: "C" }) === null, "T_hot ≤ T_air → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ volume: 2800, volUnit: "m3", tAir: 15, tHot: 100, tempUnit: "C", pressure: 101325, pressureUnit: "pa" });
+nearly(we.liftKg, 781.32, 0.5, "worked example: 2,800 m³, 15/100 °C → ≈ 781 kg gross lift");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

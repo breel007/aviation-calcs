@@ -42,6 +42,12 @@ console.log("\nCase 5  Invalid");
 isTrue(C.compute({ change: 0 }) === null, "zero change → null");
 isTrue(C.compute({ mode: "headings", fromHeading: 90, toHeading: 400 }) === null, "heading 400 → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ change: 90 });
+nearly(we.timeSec, 30, 1e-12, "worked example: 90° at standard rate = 30 s");
+nearly(we.rateDps, 3, 1e-12, "3°/s");
+nearly(we.longWaySec, 90, 1e-12, "the long way is 90 s");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

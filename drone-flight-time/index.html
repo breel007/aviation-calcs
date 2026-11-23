@@ -174,7 +174,12 @@
 <h2>Hover endurance is usable energy over hover power</h2>
 <p>Each rotor carries T/<i>n</i> of the weight. Actuator-disk theory gives an induced velocity v<sub>i</sub> = √(T<sub>i</sub> / (2 ρ A)) and an ideal hover power P<sub>ideal</sub> = <i>n</i> T<sub>i</sub> v<sub>i</sub> = T √(T / (2 ρ n A)). The shaft (or electrical, at the motors) power is that ideal power divided by a figure of merit FM, plus any avionics load you enter. Endurance is usable battery watt-hours times 3,600, divided by that power. A 2 kg quad on four 0.25 m rotors, FM = 0.60, and 80 Wh usable typically hovers for on the order of tens of minutes at a few hundred watts — a sanity check, not a sales-sheet number.</p>
 <p>Forward flight, a climbing profile, wind, battery sag, and motor or ESC efficiency away from the hover point all change the real time. If you care about rotor disk power or a hover ceiling rather than a battery, see the <a href="/hover-power/">hover power</a> calculator; for a larger electric airplane, see <a href="/electric-aircraft-endurance/">electric aircraft endurance</a>.</p>
-<h2>Sources</h2>
+
+      <h2>Hover power and a battery budget</h2>
+      <p>The page uses actuator-disk momentum theory for each rotor, scales by a figure of merit, and divides usable watt-hours by that hover power (plus any avionics load you enter). It is a first endurance estimate for a multirotor in a hover or a very slow loiter. Forward-flight translational lift, battery sag, and a reserve landing SOC are not modeled unless you put them in the usable fraction or the power. Do not use a single-rotor diameter for a quad without counting four disks.</p>
+      <h2>Worked example</h2>
+      <p>A 2 kg quadcopter with 0.25 m rotors, figure of merit 0.6, and 100 Wh of battery of which 80% is usable, needs about 209 W to hover in sea-level ISA (ideal induced power is about 125 W). Usable energy is 80 Wh, so hover endurance is 80 / 0.209 ≈ <strong>23 minutes</strong>. Climb, wind, and avionics load shorten that; this is a hover bound at the density you enter, not a mission plan.</p>
+      <h2>Sources</h2>
 <ul>
 <li>Momentum / actuator-disk theory (Gessow and Myers; Leishman, <cite>Principles of Helicopter Aerodynamics</cite>).</li>
 <li>Hover figure of merit, FM = P<sub>ideal</sub> / P<sub>actual</sub>.</li>
@@ -197,7 +202,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

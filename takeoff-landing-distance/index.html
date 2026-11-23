@@ -178,8 +178,11 @@
       <p>A widely used planning factor (UK CAA Safety Sense and many training syllabi) is a 5% distance change per 1% of runway slope: takeoff lengthens on an upslope, landing lengthens on a downslope. Typical firm-dry-grass factors are about ×1.20 on takeoff and ×1.15 on landing; wet grass is about ×1.30 and ×1.35; wet pavement is often taken as ×1.15 on landing and unchanged on takeoff. Soft, snow, or otherwise contaminated surfaces do not have a single reliable multiplier, so this page will not invent one.</p>
       <p>The factors multiply:</p>
       <p><code>D = D<sub>ref</sub> × f<sub>weight</sub> × f<sub>wind</sub> × f<sub>density</sub> × f<sub>slope</sub> × f<sub>surface</sub></code></p>
+      
+      <h2>Worked example</h2>
+      <p>A 1,000 ft baseline takeoff distance at 60 kt, with a 6-knot headwind, scales by ((V − HW)/V)² = (54/60)² = 0.81, so the wind-corrected distance is <strong>810 ft</strong> — 19% shorter. That is the usual small-increment wind factor, not a POH takeoff chart, and it does not include density altitude, weight, slope, or a wet surface unless you enter those factors too. A tailwind uses the same formula with a negative headwind; do not treat a 10% chart note as this 19% result.</p>
       <h2>Sources</h2>
-      <p>FAA-H-8083-25 Pilot’s Handbook of Aeronautical Knowledge, Chapter 11, Aircraft Performance (wind and weight); FAA Airplane Flying Handbook (takeoff, landing, density altitude); UK CAA Safety Sense / aeroplane performance planning factors (slope and grass); U.S. Standard Atmosphere 1976 for σ. For density altitude itself, use the <a href="../density-altitude/">density altitude calculator</a>. For a wet-runway speed check, see <a href="../hydroplaning-speed/">hydroplaning speed</a>.</p>
+      <p>FAA-H-8083-25 <a href="https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/phak" rel="noopener noreferrer">Pilot’s Handbook of Aeronautical Knowledge</a>, Chapter 11, Aircraft Performance (wind and weight); FAA <a href="https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/airplane_handbook" rel="noopener noreferrer">Airplane Flying Handbook</a> (takeoff, landing, density altitude); UK CAA Safety Sense / aeroplane performance planning factors (slope and grass); <a href="https://ntrs.nasa.gov/citations/19770009539" rel="noopener noreferrer">U.S. Standard Atmosphere 1976</a> for σ. For density altitude itself, use the <a href="../density-altitude/">density altitude calculator</a>. For a wet-runway speed check, see <a href="../hydroplaning-speed/">hydroplaning speed</a>.</p>
       <h2>Frequently asked questions</h2>
       <h3>Why does a 10% headwind only save 19%, not 10%?</h3>
       <p>Ground roll scales with the square of groundspeed. Cutting the groundspeed at liftoff by 10% cuts distance by 1 − 0.9² = 19%. A 10% tailwind works the other way: 1.1² = 1.21, a 21% increase. Those are the PHAK memory items.</p>
@@ -197,7 +200,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

@@ -133,6 +133,17 @@ var empty = WB.totals([], "100LL");
 nearly(empty.weight, 0, 0, "no stations → 0 lb");
 isTrue(empty.cg === null, "CG is null when weight is zero");
 
+console.log("\nWorked example (as published on the page)");
+var we = WB.compute({ fuelType: "100LL", taxiGallons: 1.3, tripGallons: 10, stations: [
+  { name: "Empty", kind: "mass", weight: 1663, arm: 40 },
+  { name: "Fuel", kind: "fuel", gallons: 40, arm: 48 }
+] });
+nearly(we.ramp.weight, 1903, 1e-12, "worked example: ramp 1,903 lb");
+nearly(we.ramp.cg, 41.0089, 0.001, "ramp CG ≈ 41.01 in");
+nearly(we.takeoff.weight, 1895.2, 0.05, "takeoff 1,895.2 lb");
+nearly(we.landing.weight, 1835.2, 0.05, "landing 1,835.2 lb");
+nearly(we.landing.cg, 40.7507, 0.001, "landing CG ≈ 40.75 in");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

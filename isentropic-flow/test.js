@@ -57,6 +57,12 @@ console.log("\nCase 6  Invalid");
 isTrue(C.compute({ mode: "T_T0", value: 1.2 }) === null, "T/T0 > 1 is impossible");
 isTrue(C.compute({ mode: "A_Astar", value: 0.5 }) === null, "A/A* < 1 is impossible");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ mode: "mach", value: 2, gamma: 1.4 });
+nearly(we.T_T0, 1 / 1.8, 1e-12, "worked example: T/T0 = 1/1.8 at M = 2");
+nearly(we.P_P0, 0.12780453, 0.0001, "P/P0 ≈ 0.1278");
+nearly(we.A_Astar, 1.6875, 1e-12, "A/A* = 1.6875 on the supersonic branch");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

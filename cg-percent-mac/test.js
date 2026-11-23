@@ -35,6 +35,12 @@ nearly(t.percentMac, 8.333333, 1e-5, "CG 75 is 8.33% MAC");
 isTrue(t.withinLimits === false, "8.33% is forward of 16%");
 isTrue(C.compute({ lemac: 70, mac: 0, cg: 85 }) === null, "zero MAC → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ mode: "from-cg", lemac: 70, mac: 60, cg: 85, fwdLimit: 16, aftLimit: 31 });
+nearly(we.percentMac, 25, 1e-12, "worked example: LEMAC 70, MAC 60, CG 85 → 25% MAC");
+isTrue(we.withinLimits === true, "25% is inside 16–31%");
+nearly(we.temac, 130, 1e-12, "TEMAC = 130 in");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

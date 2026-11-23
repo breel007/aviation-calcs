@@ -152,7 +152,12 @@
 <h2>Starred ratios and the length to sonic</h2>
 <p>For a perfect gas, T/T* = (γ+1) / (2 + (γ−1) M²), P/P* = (1/M) √((γ+1) / (2 + (γ−1) M²)), and the stagnation-pressure ratio P0/P0* follows the usual isentropic factor on those static values. The friction length from Mach M to the sonic state is 4fL* / D = (1−M²)/(γ M²) + (γ+1)/(2γ) ln{ (γ+1) M² / (2+(γ−1)M²) }. At Mach 1 every starred ratio is 1 and the remaining length is zero. Friction drives a subsonic Fanno flow toward Mach 1 and a supersonic Fanno flow toward Mach 1; a long enough duct chokes.</p>
 <p>This is the closed-form table, not a numerical march of f along a pipe with a varying Reynolds number. For isentropic area change see <a href="/isentropic-flow/">isentropic flow</a>; for heat addition in a constant-area duct, see <a href="/rayleigh-flow/">Rayleigh flow</a>; for shocks, see <a href="/normal-shock/">normal shock</a>.</p>
-<h2>Sources</h2>
+
+      <h2>Friction in a constant-area duct</h2>
+      <p>Fanno flow is adiabatic, constant-area flow with wall friction and no heat addition (contrast <a href="../rayleigh-flow/">Rayleigh flow</a>). It is the usual first estimate for how much duct you can have before a compressible line chokes. It does not include area change, heat transfer, or fittings. A frequent mistake is to treat 4fL*/D as a length you already have rather than the length still available to sonic conditions, or to use a subsonic row of the table on a supersonic inlet Mach.</p>
+      <h2>Worked example</h2>
+      <p>A Fanno flow at Mach 0.5 with γ = 1.4, again referenced to the sonic state, has <strong>T/T* ≈ 1.143</strong>, <strong>P/P* ≈ 2.138</strong>, ρ/ρ* ≈ 1.871, P₀/P₀* ≈ 1.340, and a remaining friction parameter <strong>4fL*/D ≈ 1.069</strong>. That last number is the additional 4fL/D you can still have before the duct chokes at Mach 1. A longer duct, or a higher friction factor, shrinks 4fL*/D toward zero.</p>
+      <h2>Sources</h2>
 <ul>
 <li>John and Keith, <cite>Gas Dynamics</cite>; Zucker and Biblarz, <cite>Fundamentals of Gas Dynamics</cite>.</li>
 <li>Anderson, <cite>Modern Compressible Flow</cite>.</li>
@@ -175,7 +180,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

@@ -26,6 +26,11 @@ isTrue(b.T3 > b.T2 && b.T4 > b.T1, "T3 > T2 and T4 > T1 on an ideal cycle");
 console.log("\nCase 3  Invalid");
 isTrue(C.compute({ pressureRatio: 1 }) === null, "r_p = 1 → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ pressureRatio: 10, gamma: 1.4 });
+nearly(we.efficiency, 1 - 1 / Math.pow(10, 0.4 / 1.4), 1e-12, "η = 1 − 1/r_p^{(γ−1)/γ}");
+nearly(we.efficiency, 0.48205, 0.0001, "worked example: r_p = 10, γ = 1.4 → η ≈ 48.21%");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

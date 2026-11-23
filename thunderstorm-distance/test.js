@@ -30,6 +30,12 @@ nearly(b.distanceM, a.distanceM, 1e-12, "default T is 15 °C");
 console.log("\nCase 3  Invalid");
 isTrue(C.compute({ seconds: -1 }) === null, "negative time → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ seconds: 5, temperature: 15, tempUnit: "C" });
+nearly(we.distanceSm, 1.057, 0.005, "worked example: 5 s at 15 °C → ≈ 1.06 SM");
+nearly(we.rule5SecPerSm, 1, 1e-12, "5-seconds-per-mile rule = 1 SM");
+nearly(we.speedOfSoundMps, 340.29, 0.05, "a ≈ 340.3 m/s");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

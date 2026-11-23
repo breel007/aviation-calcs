@@ -152,7 +152,12 @@
 <h2>Starred ratios on the Rayleigh line</h2>
 <p>For a perfect gas, P/P* = (1+γ) / (1 + γ M²) and T/T* = [M (1+γ) / (1 + γ M²)]². The stagnation-temperature ratio T0/T0* = 2(γ+1) M² (1 + (γ−1)M²/2) / (1 + γ M²)² reaches 1 at Mach 1: you cannot add more heat without choking the duct or changing the mass flow. At every starred station the ratios are 1, as they are on the Fanno line, but the path between stations is heat, not friction.</p>
 <p>For friction without heat, use the <a href="/fanno-flow/">Fanno flow</a> calculator. Area change without heat or friction is <a href="/isentropic-flow/">isentropic flow</a>. A normal shock can connect the subsonic and supersonic branches of a Rayleigh or Fanno line; that jump is on the <a href="/normal-shock/">normal-shock</a> page.</p>
-<h2>Sources</h2>
+
+      <h2>Heat addition, not wall friction</h2>
+      <p>Rayleigh flow is steady, one-dimensional, constant-area flow of a perfect gas with heat addition or rejection and no wall friction (the frictional cousin is <a href="../fanno-flow/">Fanno flow</a>). Use it to see how heating moves Mach number toward 1 and how the stagnation-pressure ratio behaves. It is not a combustor design tool: a real burner has area change, mass addition, and losses this model omits. Do not mix Rayleigh and Fanno starred states, and do not assume a supersonic branch when you entered a subsonic Mach number.</p>
+      <h2>Worked example</h2>
+      <p>Take a subsonic Rayleigh flow at Mach 0.5 with γ = 1.4, referenced to the sonic (* ) state in the same duct. The tables give <strong>P/P* ≈ 1.778</strong>, T/T* ≈ 0.790, ρ/ρ* ≈ 2.250, P₀/P₀* ≈ 1.114, and T₀/T₀* ≈ 0.691. Heating a subsonic Rayleigh flow drives Mach number up toward 1 and raises the stagnation temperature toward T₀*; the page’s sonic state is the thermal-choke reference, not a statement that the duct is already sonic.</p>
+      <h2>Sources</h2>
 <ul>
 <li>John and Keith, <cite>Gas Dynamics</cite>; Zucker and Biblarz, <cite>Fundamentals of Gas Dynamics</cite>.</li>
 <li>Anderson, <cite>Modern Compressible Flow</cite>.</li>
@@ -174,7 +179,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

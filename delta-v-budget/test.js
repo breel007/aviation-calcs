@@ -51,6 +51,16 @@ console.log("\nCase 4  Invalid");
 isTrue(C.compute({ items: [{ value: -1 }] }) === null, "negative Δv → null");
 isTrue(C.compute({ items: [] }) === null, "empty list → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ items: [
+  { name: "Gravity losses", value: 100, unit: "m/s", tag: "losses" },
+  { name: "Drag losses", value: 200, unit: "m/s", tag: "losses" },
+  { name: "Reserve", value: 50, unit: "m/s", tag: "reserve" }
+] });
+nearly(we.deltaVMps, 350, 1e-12, "worked example: 100 + 200 + 50 = 350 m/s");
+nearly(we.byTag.losses, 300, 1e-12, "losses tag sums to 300 m/s");
+nearly(we.byTag.reserve, 50, 1e-12, "reserve tag is 50 m/s");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

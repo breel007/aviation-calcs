@@ -31,6 +31,11 @@ nearly(b.vtMps, vt, 1e-12, "v_t = √(2mg/(ρ Cd A))");
 console.log("\nCase 3  Invalid");
 isTrue(C.compute({ height: 1000, altUnit: "ft", vt: 0 }) === null, "zero v_t → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ height: 1000, altUnit: "ft", vt: 1000, vtUnit: "fpm", wind: 10, windUnit: "kt" });
+nearly(we.timeConstSec, 60, 1e-12, "worked example: 1,000 ft at 1,000 fpm → 60 s");
+nearly(we.driftConstNm, 0.1667, 0.001, "10 kt wind → ≈ 0.17 NM drift");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

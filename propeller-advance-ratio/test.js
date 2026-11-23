@@ -39,6 +39,12 @@ nearly(s.tipMachHel, s.tipMachRot, 1e-12, "static: helical = rotational tip Mach
 console.log("\nCase 3  Invalid");
 isTrue(C.compute({ tas: 100, rpm: 0, diameter: 6 }) === null, "zero rpm → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ tas: 100, tasUnit: "kt", rpm: 2400, diameter: 6.5, diameterUnit: "ft", altitude: 0 });
+nearly(we.J, 0.64916, 0.001, "worked example: J ≈ 0.649 at 100 kt, 2,400 rpm, 6.5 ft");
+nearly(we.tipMachRot, 0.73162, 0.001, "rotational tip Mach ≈ 0.732");
+nearly(we.tipMachHel, 0.74707, 0.001, "helical tip Mach ≈ 0.747");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

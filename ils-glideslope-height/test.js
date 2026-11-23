@@ -35,6 +35,11 @@ nearly(d.descentFpm, 477.6, 0.5, "about 478 fpm, near the GS × 5 rule of 450");
 console.log("\nCase 4  Invalid");
 isTrue(C.compute({ distance: 1, angle: 0 }) === null, "zero angle → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ distance: 1, distUnit: "nm", angle: 3, tch: 50 });
+nearly(we.heightFt, 368.44, 0.05, "worked example: 1 NM, 3°, 50 ft TCH → ≈ 368 ft");
+nearly(we.ftPerNm, 318.44, 0.05, "318 ft/NM");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

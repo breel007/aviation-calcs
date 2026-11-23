@@ -40,6 +40,12 @@ nearly(f.trueAltitudeFt, 0, 1e-9, "SL ISA → TA = 0");
 console.log("\nCase 5  Invalid");
 isTrue(C.compute({ pressureAltitudeFt: 10000 }) === null, "missing temperature → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ pressureAltitudeFt: 10000, oat: -25, tempUnit: "C" });
+nearly(we.trueAltitudeFt, 9247.67, 1, "worked example: 10,000 ft PA, −25 °C → true ≈ 9,248 ft");
+nearly(we.correctionFt, -752.33, 1, "about 752 ft low");
+isTrue(we.colderThanIsa === true, "colder than ISA");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

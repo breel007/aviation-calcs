@@ -374,4 +374,11 @@ isTrue(g3.g.wheel({ ctrlKey: true, deltaY: -50, x: 200, y: 200 }) === true && g3
   "ctrl+wheel (trackpad pinch) zooms in");
 
 console.log("\n" + passed + " passed, " + failed + " failed");
+
+console.log("\nWorked example (as published on the page)");
+var we = E6B.solveFuel({ rate: 8.5, timeHours: 2, timeMinutes: 30, solveFor: "fuel" });
+nearly(we.fuel, 21.25, 1e-12, "worked example: 8.5 gph × 2 h 30 min = 21.25 gal");
+nearly(we.timeHours, 2.5, 1e-12, "2 h 30 min = 2.5 h");
+var weTsd = E6B.solveTsd({ speed: 120, timeHours: 0, timeMinutes: 45, solveFor: "distance" });
+nearly(weTsd.distance, 90, 1e-12, "120 kt × 45 min = 90 NM");
 process.exit(failed ? 1 : 0);

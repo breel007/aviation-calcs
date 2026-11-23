@@ -170,8 +170,13 @@
       <p>Transport-category and many complex airplanes publish the CG envelope in percent of mean aerodynamic chord rather than as a fuselage station. LEMAC is the station of the leading edge of the MAC, measured in the same units and from the same datum as the CG. A CG 15 inches aft of a 60-inch MAC that starts at station 70 is at 25% MAC (station 85).</p>
       <h2>Tapered-wing MAC</h2>
       <p>For a linearly tapered wing, <code>MAC = (2/3) c<sub>root</sub> (1 + τ + τ²) / (1 + τ)</code>, where τ is the taper ratio c<sub>tip</sub>/c<sub>root</sub>. The spanwise location of that chord, measured from the root, is <code>y<sub>MAC</sub> = (b/6) (1 + 2τ) / (1 + τ)</code>. Sweep still has to be applied to find LEMAC from the root leading-edge station. The same MAC formula is used on the <a href="../wing-loading-aspect-ratio/">wing loading and aspect ratio</a> calculator.</p>
+      
+      <h2>Station to percent MAC, and back</h2>
+      <p>Percent MAC is (CG − LEMAC)/MAC, expressed as a percentage. It is the usual way a transport or a larger GA airplane states a CG limit. The page will also check optional forward and aft percent-MAC limits. It does not compute the CG from a loading — use the <a href="../weight-balance/">weight and balance</a> calculator for that — and it does not invent a MAC for an airplane that publishes only inches-aft-of-datum limits.</p>
+      <h2>Worked example</h2>
+      <p>A wing with LEMAC at 70 in and a MAC of 60 in has TEMAC at 130 in. A CG at 85 in is (85 − 70)/60 = <strong>25% MAC</strong>. If the envelope is 16–31% MAC, 25% is inside the limits. The same arithmetic in the other direction turns a percent MAC back into a fuselage station. The limits and the MAC itself must come from the official weight and balance data, not from a sketch.</p>
       <h2>Sources</h2>
-      <p>FAA Pilot’s Handbook of Aeronautical Knowledge, Chapter 10, Weight and Balance (CG as a percent of MAC); FAA-H-8083-1 Weight and Balance Handbook; standard tapered-wing MAC. For a full station table and envelope plot, use the <a href="../weight-balance/">weight and balance calculator</a>.</p>
+      <p>FAA <a href="https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/phak" rel="noopener noreferrer">Pilot’s Handbook of Aeronautical Knowledge</a>, Chapter 10, Weight and Balance (CG as a percent of MAC); FAA-H-8083-1 Weight and Balance Handbook; standard tapered-wing MAC. For a full station table and envelope plot, use the <a href="../weight-balance/">weight and balance calculator</a>.</p>
       <h2>Frequently asked questions</h2>
       <h3>What is LEMAC?</h3>
       <p>The leading-edge station of the mean aerodynamic chord, measured from the same datum as the CG. It is published in the weight-and-balance data or the type design, not something you pick as a round number.</p>
@@ -189,7 +194,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

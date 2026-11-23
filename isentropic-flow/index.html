@@ -164,8 +164,13 @@
       <p>The isentropic area–Mach relation is</p>
       <p><code>A/A* = (1/M) [ (2/(γ+1)) (1 + ((γ−1)/2) M²) ]<sup>(γ+1)/(2(γ−1))</sup></code></p>
       <p>A* is the throat area at which M = 1. For any A/A* &gt; 1 there are two Mach numbers, one subsonic and one supersonic. At M = 2, γ = 1.4, A/A* = 1.6875 exactly, P/P0 = 0.12780, T/T0 = 0.55556, and ρ/ρ0 = 0.23005 — the NACA 1135 table values this page is tested against.</p>
+      
+      <h2>Isentropic means reversible and adiabatic</h2>
+      <p>These relations convert Mach number, temperature, pressure, density, and area for a perfect gas with no shocks and no total-pressure loss. They are the right first step for a nozzle, an isentropic inlet, or a wind-tunnel settling chamber. A real duct has a boundary layer and, if it is started incorrectly, a shock — then you want the <a href="../normal-shock/">normal-shock</a> or <a href="../oblique-shock/">oblique-shock</a> relations instead. A common mix-up is to use the subsonic A/A* branch when the flow is already supersonic, or to treat P₀ as static pressure.</p>
+      <h2>Worked example</h2>
+      <p>For isentropic flow of a γ = 1.4 gas at Mach 2, the stagnation ratios are <strong>T/T₀ = 0.5556</strong> (so T₀/T = 1.8), <strong>P/P₀ ≈ 0.1278</strong> (P₀/P ≈ 7.824), and ρ/ρ₀ ≈ 0.2300. The area ratio relative to the sonic throat is <strong>A/A* = 1.6875</strong> on the supersonic branch. Those are the same numbers a C-D nozzle uses at a design Mach of 2 — see the <a href="../cd-nozzle/">convergent-divergent nozzle</a> page.</p>
       <h2>Sources</h2>
-      <p>NACA Report 1135, isentropic-flow tables (γ = 1.4); NASA Glenn Beginner’s Guide; Anderson, <em>Modern Compressible Flow</em>. For a normal shock, which is not isentropic, see the <a href="../normal-shock/">normal-shock calculator</a>.</p>
+      <p>NACA Report 1135, isentropic-flow tables (γ = 1.4); NASA Glenn <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/wing-geometry/" rel="noopener noreferrer">Beginner’s Guide</a>; Anderson, <em>Modern Compressible Flow</em>. For a normal shock, which is not isentropic, see the <a href="../normal-shock/">normal-shock calculator</a>.</p>
       <h2>Frequently asked questions</h2>
       <h3>What is stagnation temperature?</h3>
       <p>It is the total temperature T0 = T (1 + ((γ−1)/2) M²). For air at M = 2 and a static temperature of 216.65 K, T0 = 389.97 K. Recovery on a real probe is slightly less than ideal.</p>
@@ -183,7 +188,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

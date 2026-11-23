@@ -666,6 +666,13 @@ nearly(prbRow.absCrossNm, 0, 1e-6, "KPRB sits on the KSBA–PRB–KSJC polyline 
 var prbLabel = C.formatRouteSummary(sba, sjc, [Object.assign({ ident: "PRB" }, prb)]);
 eq(prbLabel.label, "KSBA → PRB → KSJC, 203 NM", "resolved-route label for the California example");
 
+console.log("\nWorked example (as published on the page)");
+eq(C.MATCH_WINDOW_MIN, 30, "worked example: matching window is ±30 minutes");
+eq(C.ROUTE_COVERAGE_MIN, 0.8, "stations under 80% coverage leave the combined route score");
+var u = [{ t: 0, ev: { go: true, reasons: [] } }, { t: 60, ev: { go: false, reasons: ["ceiling"] } }];
+isTrue(C.matchReport(u, 30) === u[1], "a tie at ±30 min uses the more conservative (no-go) report");
+isTrue(C.matchReport(u, 95) === null, "nothing within ±30 min is not a match");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

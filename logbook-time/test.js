@@ -61,6 +61,17 @@ isTrue(C.compute({ entries: [{ hhmm: "1:75" }] }) === null, "1:75 is not a valid
 isTrue(C.compute({ entries: [{ hhmm: "1:00", date: "2026-13-01" }] }) === null, "bad date → null");
 isTrue(C.durationHours({ hhmm: "abc" }) === null, "junk duration → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ asOf: "2026-11-10", entries: [
+  { hhmm: "1:20", date: "2026-11-01", pic: true, xc: true, dayLandings: 2 },
+  { hhmm: "2:45", date: "2026-11-08", pic: true, night: true, nightLandings: 3 }
+] });
+nearly(we.all.timeHours, 4 + 5/60, 1e-12, "worked example: 1:20 + 2:45 = 4:05");
+isTrue(we.all.timeHm === "4:05", "formatted total is 4:05");
+nearly(we.all.timeTenths, 4.1, 1e-12, "4.1 hours in tenths");
+nearly(we.all.landings, 5, 1e-12, "five landings");
+nearly(we.all.nightHours, 2.75, 1e-12, "2:45 of night");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

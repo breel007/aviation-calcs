@@ -31,6 +31,12 @@ nearly(b.dvTotalMps, a.dvTotalMps, 1e-9, "total heliocentric Δv is the same");
 console.log("\nCase 3  Invalid");
 isTrue(C.compute({ body1: "earth", body2: "earth" }) === null, "same orbit → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ body1: "earth", body2: "mars" });
+nearly(we.timeOfFlightDays, 258.866, 0.01, "worked example: Earth–Mars Hohmann TOF ≈ 258.9 days");
+nearly(we.dvTotalMps, 5593.58, 1, "total Δv ≈ 5,594 m/s");
+nearly(we.synodicDays, 779.95, 0.1, "synodic period ≈ 780 days");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

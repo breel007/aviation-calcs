@@ -174,10 +174,13 @@
 <p>At 3.00°, tan θ is 318.4 feet per nautical mile (using 1 NM = 1,852 / 0.3048 ft), so one mile from the threshold on a 50-foot TCH you are about 368 feet above the runway. The same identity inverted is the distance for a given height. A DME located past the threshold reads a slightly larger range than <i>x</i>; entering that offset subtracts it before the tangent is applied. Descent rate on a constant path is groundspeed times feet per nautical mile, divided by 60 — the same identity used on this site’s <a href="/descent-rate/">descent-rate</a> calculator. A visual descent point, by contrast, is a plan-view fix, covered separately on the <a href="/visual-descent-point/">VDP</a> page.</p>
 <h2>What the geometry does not capture</h2>
 <p>The real beam is a hyperbolic locus of a constant-difference signal, approximated as a straight line only near the runway. Terrain, a displaced threshold, and a non-standard TCH all change the number you should fly. Use the published glide path, TCH, and minima; this page does not replace a DA, an RA, or a PAPI. A 3° path at 90 knots is about 478 fpm, a little steeper than the familiar “groundspeed × 5” rule of 450 fpm, which assumes a slightly shallower angle.</p>
-<h2>Sources</h2>
+
+      <h2>Worked example</h2>
+      <p>On a 3° path, one nautical mile from the threshold, with a 50 ft threshold crossing height, the geometric height is tan(3°) × 6,076 ft + 50 ≈ <strong>368 ft</strong> (318 ft/NM plus TCH). If a DME is at the threshold, that is also a 1.0 DME point. The page is path geometry, not a glideslope raw-data decoder, and it does not know a displaced threshold or a non-colocated DME unless you enter the offset.</p>
+      <h2>Sources</h2>
 <ul>
 <li>ICAO Annex 10 and Doc 8168 (PANS-OPS), ILS glide-path angle and threshold crossing height.</li>
-<li>FAA <cite>Instrument Flying Handbook</cite> and Aeronautical Information Manual (ILS, TCH, and descent rates).</li>
+<li>FAA <cite>Instrument Flying Handbook</cite> and <a href="https://www.faa.gov/air_traffic/publications/atpubs/aim_html/" rel="noopener noreferrer">Aeronautical Information Manual</a> (ILS, TCH, and descent rates).</li>
 <li>FAA Order 8260.3 (United States Standard for Terminal Instrument Procedures, TERPS), straight-in approach geometry.</li>
 </ul>
       <h2>Frequently asked questions</h2>
@@ -197,7 +200,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

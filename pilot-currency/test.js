@@ -139,4 +139,15 @@ eq(PC.ymd(PC.endOfCalendarMonths(PC.parseISODate("2025-08-31"), 6)), "2026-02-28
 eq(PC.ymd(PC.addDays(PC.parseISODate("2024-02-29"), 90)), "2024-05-29", "29 Feb 2024 + 90 days = 29 May 2024");
 
 console.log("\n" + passed + " passed, " + failed + " failed");
+
+console.log("\nWorked example (as published on the page)");
+var we = PC.compute({ asOf: "2026-01-31", flightReviewDate: "2024-01-15" });
+eq(we.flightReview.status, "current", "worked example: 15 Jan 2024 review still current on 31 Jan 2026");
+eq(PC.ymd(we.flightReview.expiresOn), "2026-01-31", "expires at the end of 31 Jan 2026");
+var we2 = PC.compute({ asOf: "2026-02-01", flightReviewDate: "2024-01-15" });
+eq(we2.flightReview.status, "expired", "expired on 1 Feb 2026");
+var weL = PC.compute({ asOf: "2025-11-10", dayLandingDate: "2025-08-12" });
+eq(weL.dayPassenger.status, "current", "12 Aug landings still current on the 90th day, 10 Nov");
+var weL2 = PC.compute({ asOf: "2025-11-11", dayLandingDate: "2025-08-12" });
+eq(weL2.dayPassenger.status, "expired", "expired the day after the 90th day");
 process.exit(failed ? 1 : 0);

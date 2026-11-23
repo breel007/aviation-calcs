@@ -37,6 +37,11 @@ isTrue(C.compute({ heading: -1 }) === null, "negative heading → null");
 isTrue(C.compute({ heading: 361 }) === null, "361° → null");
 nearly(C.wrap360(-15), 345, 1e-12, "wrap −15 → 345");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ from: "true", heading: 0, variation: 15, variationDir: "E" });
+nearly(we.magneticHeading, 345, 1e-12, "worked example: 000° true, 15°E → 345° magnetic");
+nearly(we.compassHeading, 345, 1e-12, "no deviation → compass = magnetic");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

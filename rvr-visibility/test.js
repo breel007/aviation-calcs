@@ -47,6 +47,13 @@ isTrue(h.belowTable === true && h.nextHigher.rvrFt === 1600, "1,000 ft is below 
 isTrue(C.compute({ rvr: 7000 }).aboveTable === true, "7,000 ft is above the 6,000 ft row");
 isTrue(C.compute({ rvr: 0 }) === null, "zero → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ mode: "rvr", rvr: 1600, rvrUnit: "ft" });
+nearly(we.rvrFt, 1600, 1e-12, "1,600 ft RVR");
+nearly(we.exact.sm, 0.25, 1e-12, "worked example: 1,600 ft RVR = 1/4 SM");
+isTrue(we.exact.smLabel === "1/4", "label is 1/4");
+isTrue(we.betweenRows === false, "exact table row");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

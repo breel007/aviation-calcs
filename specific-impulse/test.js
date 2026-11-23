@@ -34,6 +34,11 @@ nearly(u.Isp, 1, 1e-9, "Isp (s) = F(lbf) / ẇ(lbf/s)");
 isTrue(C.compute({ Isp: 0 }) === null, "zero Isp → null");
 isTrue(C.compute({ Isp: 300, ve: 1000 }) === null, "inconsistent ve and Isp → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ ve: 9.80665 * 300, veUnit: "m/s" });
+nearly(we.Isp, 300, 1e-9, "worked example: ve = 2941.995 m/s → Isp = 300 s");
+nearly(we.veMps, 2941.995, 0.01, "ve stored in m/s");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

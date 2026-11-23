@@ -155,6 +155,9 @@
       <p>with T in °F and RH in percent, then averages that result with the air temperature. If the average is below 80 °F, that simple value is the heat index. Otherwise the Rothfusz (NWS Technical Attachment SR 90-23, 1990) multiple-regression equation is used, with two published adjustments: a subtraction when RH is under 13% and T is between 80 and 112 °F, and an addition when RH is over 85% and T is between 80 and 87 °F. A temperature of 90 °F and 60% humidity gives about 99.7 °F, which the NWS chart rounds to 100 °F.</p>
       <h2>Categories and limits</h2>
       <p>The NWS heat-index chart groups apparent temperature as Caution (80–90 °F), Extreme Caution (90–103 °F), Danger (103–125 °F), and Extreme Danger (125 °F and above). The regression is for shade and a light wind; full sun can raise the apparent temperature by about 15 °F, which this page does not add. It is a weather index, not a runway, hangar, or medical tool. For dewpoint and humidity from a METAR-style pair, use the <a href="../carburetor-icing/">dewpoint / carburetor-icing calculator</a>.</p>
+      
+      <h2>Worked example</h2>
+      <p>At 90 °F and 60% relative humidity, the NWS Rothfusz heat index is about <strong>99.7 °F</strong> (37.6 °C), in the <strong>Extreme Caution</strong> category. The simpler Steadman first estimate is only 91.5 °F, which is why the official chart uses the Rothfusz regression in this region. The formula is for shade and a light wind; it is not a cockpit or ramp “feels like” for full sun, and it is not defined for every cold, dry pairing.</p>
       <h2>Sources</h2>
       <p>National Weather Service, The Heat Index Equation; Rothfusz, NWS Technical Attachment SR 90-23 (1990); Steadman, Journal of Applied Meteorology (1979). Category breakpoints follow the NWS heat-index chart.</p>
       <h2>Frequently asked questions</h2>
@@ -174,7 +177,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

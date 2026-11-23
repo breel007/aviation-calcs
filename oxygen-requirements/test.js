@@ -51,6 +51,11 @@ isTrue(f.part135.crewMustUse === true, "Part 135 does, after 30 min above 10,000
 console.log("\nCase 7  Invalid");
 isTrue(C.compute({ cabinAltitudeFt: -1 }) === null, "negative altitude → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ cabinAltitudeFt: 13000, durationMin: 45 });
+isTrue(we.part91.crewMustUse === true, "worked example: 13,000 ft for 45 min → crew must use oxygen under 91.211(a)(1)");
+isTrue(we.part91.occupantsProvided === false, "occupant-provided oxygen is not yet required");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

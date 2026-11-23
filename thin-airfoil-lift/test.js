@@ -29,6 +29,13 @@ nearly(c.liftN, 0, 1e-12, "zero speed → zero lift");
 console.log("\nCase 4  Invalid");
 isTrue(C.compute({ alpha: 5, a0: 0 }) === null, "zero slope → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ alpha: 5, alphaL0: 0, angleUnit: "deg" });
+nearly(we.cl, 0.548311, 5e-4, "worked example: 5° flat plate cl ≈ 0.548");
+var weCamber = C.compute({ alpha: 5, alphaL0: -2, angleUnit: "deg" });
+nearly(weCamber.cl, 2 * Math.PI * 7 * Math.PI / 180, 1e-12, "cambered check: (5−(−2))°");
+nearly(weCamber.cl, 0.7676, 5e-4, "worked example: 5° with α_L0 = −2° → cl ≈ 0.768");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

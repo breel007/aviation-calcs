@@ -34,6 +34,12 @@ console.log("\nCase 3  Invalid");
 isTrue(C.compute({ hatFt: -10 }) === null, "negative HAT → null");
 isTrue(C.compute({ hatFt: 400, angleDeg: 90 }) === null, "90° path → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ hatFt: 300, angleDeg: 3, groundspeedKt: 90 });
+nearly(we.vdpNm, 0.9421, 0.005, "worked example: 300 ft HAT, 3° → VDP ≈ 0.94 NM");
+nearly(we.rule300Nm, 1, 1e-12, "HAT/300 = 1.0 NM");
+nearly(we.descentRateFpm, 477.65, 0.5, "≈ 478 fpm at 90 kt");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

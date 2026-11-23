@@ -168,11 +168,16 @@
 <h2>Tip speed is ΩR; advance ratio is V / ΩR</h2>
 <p>With rotor speed n in revolutions per second, Ω = 2π n and the tip speed is ΩR. The advance ratio is μ = V / (ΩR). Tip Mach is ΩR / a, and a simple helical (advancing) tip Mach is √((ΩR)² + V²) / a — it does not add cyclic flapping or a local blade angle. A 400 rpm rotor of 5.5 m radius has ΩR ≈ 230 m/s, or about Mach 0.68 in 15 °C air; at 120 knots, μ is about 0.27. Typical cruise advance ratios are often in the 0.3–0.4 range, and advancing-tip Mach is a compressibility limit.</p>
 <p>For a propeller in forward flight the usual parameter is the advance ratio J = V / (n D) = π μ. That form, plus rotational and helical tip Mach for a prop, lives on the <a href="/propeller-advance-ratio/">propeller advance ratio</a> page. Hover power and disk loading are on <a href="/hover-power/">hover power</a>.</p>
-<h2>Sources</h2>
+
+      <h2>Tip Mach, not a performance map</h2>
+      <p>Use this to see whether a rotor or propeller tip is approaching a Mach number you want to stay below. Rotational tip speed is ωr; helical tip speed adds the forward component in the usual root-sum-square. The page does not compute thrust, noise, or retreating-blade stall. A common slip is to use indicated airspeed instead of TAS, or to ignore that a colder static temperature lowers the speed of sound and raises tip Mach for the same RPM.</p>
+      <h2>Worked example</h2>
+      <p>A 5.5 m rotor at 400 rpm has a tip speed of ωr = 2π × (400/60) × 5.5 ≈ <strong>230.4 m/s</strong>, or about <strong>448 kt</strong>. In 15 °C air the speed of sound is 340.3 m/s, so the rotational tip Mach number is <strong>0.677</strong>. With 120 kt of forward speed the helical tip Mach number — combining rotation and advance — is about <strong>0.701</strong>. Those are sea-level-temperature numbers; tip Mach also depends on the speed of sound you use, which falls on a cold day.</p>
+      <h2>Sources</h2>
 <ul>
 <li>Leishman, <cite>Principles of Helicopter Aerodynamics</cite> (tip speed, advance ratio μ, advancing-tip Mach).</li>
 <li>FAA <cite>Helicopter Flying Handbook</cite> (rotor-system limits, retreating-blade stall, and advancing-tip Mach — conceptual).</li>
-<li>U.S. Standard Atmosphere, 1976, speed of sound a = √(γ R T), with the same constants as this site’s atmosphere pages.</li>
+<li><a href="https://ntrs.nasa.gov/citations/19770009539" rel="noopener noreferrer">U.S. Standard Atmosphere, 1976</a>, speed of sound a = √(γ R T), with the same constants as this site’s atmosphere pages.</li>
 </ul>
       <h2>Frequently asked questions</h2>
       <h3>Is helical tip Mach the advancing-blade Mach number?</h3>
@@ -191,7 +196,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

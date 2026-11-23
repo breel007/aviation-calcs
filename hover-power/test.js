@@ -34,6 +34,12 @@ isTrue(more.hoverCeilingFt > 1000, "50% more power gives a positive hover ceilin
 console.log("\nCase 3  Invalid");
 isTrue(C.compute({ thrust: 0, diameter: 20 }) === null, "zero thrust → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ thrust: 20000, diameter: 20, fm: 0.7, altitude: 0, altUnit: "m" });
+nearly(we.idealPowerW, 101949.95, 10, "ideal hover power ≈ 102 kW");
+nearly(we.shaftPowerW, 145642.78, 20, "worked example: FM 0.7 → ≈ 146 kW shaft");
+nearly(we.shaftPowerHp, 195.31, 0.1, "≈ 195 hp");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

@@ -163,8 +163,13 @@
       <p>g<sub>0</sub> is the standard gravity 9.80665 m/s² used to define specific impulse, even for a vacuum burn — the same convention as the <a href="../rocket-equation/">rocket equation</a> page. Isp is reported in seconds. In US customary units the same number of seconds is F (lbf) / ẇ (lbf/s). A 10,000 N engine at 300 s therefore consumes about 3.399 kg/s of propellant, with v<sub>e</sub> = 2,942 m/s.</p>
       <h2>Ideal Δv</h2>
       <p>If you enter a mass ratio, the page also reports the ideal Tsiolkovsky increment Δv = v<sub>e</sub> ln(m<sub>0</sub>/m<sub>f</sub>). Multi-stage problems, mixed units of mass, and a payload breakdown belong on the rocket-equation calculator.</p>
+      
+      <h2>A definition, with a stated g₀</h2>
+      <p>Specific impulse is exhaust velocity divided by a standard gravity. This page uses 9.80665 m/s². That is the right conversion between I_sp in seconds and vₑ in m/s or ft/s. It does not know whether your I_sp is sea-level or vacuum, and it does not replace an engine data sheet. Mixing lbf·s/lbm with a non-standard g₀ is a classic unit trap — if a source already reports vₑ, prefer that and convert once.</p>
+      <h2>Worked example</h2>
+      <p>An effective exhaust velocity of 2,941.995 m/s is a specific impulse of exactly <strong>300 s</strong> when g₀ = 9.80665 m/s², because I_sp = vₑ / g₀. In other units that vₑ is 9,652 ft/s or 2.942 km/s. If you also enter thrust or mass flow, the page will complete ṁ = F / vₑ; this example is the unit conversion alone, which is the definition, not a measured engine point.</p>
       <h2>Sources</h2>
-      <p>Sutton &amp; Biblarz, Rocket Propulsion Elements; NASA Glenn Beginner’s Guide to Propulsion (specific impulse); Tsiolkovsky rocket equation.</p>
+      <p>Sutton &amp; Biblarz, Rocket Propulsion Elements; NASA Glenn <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/wing-geometry/" rel="noopener noreferrer">Beginner’s Guide</a> to Propulsion (specific impulse); Tsiolkovsky rocket equation.</p>
       <h2>Frequently asked questions</h2>
       <h3>Why is Isp in seconds, not meters per second?</h3>
       <p>The modern definition divides exhaust velocity by standard gravity, leaving a time. The useful physical quantity is still ve = Isp × g0. Some SI texts call ve itself a specific impulse in N·s/kg (which is m/s); this page keeps the seconds convention used in the rocket-equation calculator.</p>
@@ -182,7 +187,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

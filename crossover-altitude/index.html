@@ -154,10 +154,15 @@
 <h2>One pressure where Vmo and Mmo are the same point</h2>
 <p>The subsonic compressible pitot relation connects CAS, Mach, and ambient pressure, independent of temperature. From Vmo as a CAS you get an impact pressure q<sub>c</sub>; from Mmo you get the ratio q<sub>c</sub>/p; the ambient pressure that satisfies both is p = q<sub>c</sub> / ((1 + 0.2 Mmo²)<sup>3.5</sup> − 1). Inverting the U.S. Standard Atmosphere 1976 pressure profile then gives the pressure altitude of crossover. For 350 KCAS and M 0.80 that altitude is about 23,230 feet. The published AFM/POH marks, not this educational solve, are the limits you fly.</p>
 <p>Temperature changes TAS at that altitude but not the CAS–Mach–PA relationship, so the crossover is quoted as a pressure altitude (or a flight level). For the underlying pitot identities and a TAS at a chosen altitude, use the <a href="/true-airspeed/">true airspeed</a> calculator; to express the result as a flight level, see <a href="/flight-level/">flight level and transition</a>.</p>
-<h2>Sources</h2>
+
+      <h2>Where the CAS limit meets the Mach limit</h2>
+      <p>Crossover altitude is the standard-atmosphere pressure altitude at which VMO (or VNE in CAS) and MMO represent the same true speed. It is a planning aid for seeing which limiter you will hit as you climb, not an AFM limitation itself — those speeds and the actual crossover come from the airplane. The calculation assumes ISA and a calibrated-airspeed / Mach pair; it does not include compressibility position error or a non-standard temperature except as it affects the atmosphere you select, if the page offers one.</p>
+      <h2>Worked example</h2>
+      <p>A VMO of 350 kt and an MMO of 0.80 cross where 350 kt CAS is Mach 0.80 in the standard atmosphere. That pressure altitude is about <strong>23,231 ft</strong>, or roughly <strong>FL232</strong>. Below the crossover, the limiting speed is the CAS limit; above it, the Mach limit is the more restrictive number. At sea level the same 350 kt CAS is only Mach 0.53, so MMO is not the binding limit down low.</p>
+      <h2>Sources</h2>
 <ul>
 <li>Subsonic pitot-static formula as used on this site’s <a href="/true-airspeed/">true-airspeed</a> page (γ = 1.4, a<sub>0</sub> = 340.294 m/s, p<sub>0</sub> = 101,325 Pa).</li>
-<li>U.S. Standard Atmosphere, 1976, pressure–altitude inversion.</li>
+<li><a href="https://ntrs.nasa.gov/citations/19770009539" rel="noopener noreferrer">U.S. Standard Atmosphere, 1976</a>, pressure–altitude inversion.</li>
 <li>AFM / FAA concept of Vmo and Mmo (the published mark always wins).</li>
 </ul>
       <h2>Frequently asked questions</h2>
@@ -177,7 +182,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

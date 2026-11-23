@@ -30,6 +30,13 @@ nearly(b.helmboldPerRad / a0, 1, 2e-4, "Helmbold / a0 → 1 at AR = 10⁵");
 console.log("\nCase 3  Invalid");
 isTrue(C.compute({ aspectRatio: 0 }) === null, "AR 0 → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ aspectRatio: 6, a0: 2 * Math.PI, oswald: 1 });
+nearly(we.prandtlPerRad, 4.712389, 0.001, "worked example: Prandtl a ≈ 4.712 /rad at AR = 6");
+nearly(we.prandtlPerDeg, 0.082247, 0.0002, "≈ 0.0822 per degree");
+nearly(we.helmboldPerRad, 4.528664, 0.001, "Helmbold a ≈ 4.529 /rad");
+nearly(we.ratioHelmboldToPrandtl, 0.961012, 0.001, "Helmbold is about 3.9% below Prandtl");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

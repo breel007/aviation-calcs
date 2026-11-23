@@ -196,13 +196,16 @@
 <p>Each point can be typed as an identifier instead of raw coordinates. The page looks up airport ICAO codes and FAA location identifiers (KSBA or SBA), navaids (a VOR, VORTAC, or NDB ident such as LAX), and five-letter fixes and intersections (SADDE). U.S. and NASR-listed positions come from the public-domain <a href="https://www.faa.gov/air_traffic/flight_info/aeronav/aero_data/NASR_Subscription/">FAA NASR 28-day subscription</a> files APT_BASE, NAV_BASE, and FIX_BASE, currently the cycle effective 29 October 2026. Non-U.S. ICAO airports are merged from the public-domain OurAirports database so examples such as EGLL and YSSY resolve. When the same ident belongs to more than one place — a city airport and a nearby VORTAC, or two NDBs that share a Morse ident — a picker lists type, name, and state so you can choose. The resolved name and coordinates are shown under the field. Data files are split by type and first letter and loaded only as needed; nothing you type is uploaded.</p>
 <h2>What this does and does not include</h2>
 <p>A great-circle is the shortest path on the sphere. Real airways, winds, ETOPS, and preferred routes usually make the flown distance longer. Antipodal points have a well-defined distance (half the circumference) but no unique initial course, which the calculator reports rather than inventing a heading. The page does not apply magnetic variation — pair the true course with the <a href="/true-magnetic-heading/">true/magnetic heading</a> calculator — and it does not compute wind-corrected heading; use the <a href="/e6b-wind/">wind triangle</a> for that. For time en route at a given groundspeed, see <a href="/time-speed-distance/">time, speed, and distance</a>.</p>
-<h2>Sources</h2>
+
+      <h2>Worked example</h2>
+      <p>From the equator (0°, 0°) to the North Pole (90°, 0°) the central angle is 90°. On a spherical Earth of radius 6,371 km that arc is <strong>10,007.5 km</strong>, or about <strong>5,403.6 NM</strong> (6,218.4 statute miles), with an initial and final course of 000°. The page uses a spherical model, not WGS-84 ellipsoidal distance, so a transoceanic route can differ by a few miles from a GNSS great-ellipse. Coincident and antipodal points are flagged rather than given an arbitrary course.</p>
+      <h2>Sources</h2>
 <ul>
 <li>FAA, <cite>NASR 28-day subscription</cite>, cycle effective 29 October 2026, files APT_BASE, NAV_BASE, and FIX_BASE (public domain). <a href="https://www.faa.gov/air_traffic/flight_info/aeronav/aero_data/NASR_Subscription/">NASR Subscription</a>.</li>
 <li>OurAirports, <cite>airports.csv</cite> (public domain), used only to add non-U.S. ICAO airports that are not already in NASR.</li>
 <li>W. M. Smart, <cite>Textbook on Spherical Astronomy</cite> (haversine / spherical cosine rule).</li>
 <li>NIMA / NGA, <cite>Department of Defense World Geodetic System 1984</cite> (ellipsoid vs. spherical approximation).</li>
-<li>FAA, <cite>Pilot’s Handbook of Aeronautical Knowledge</cite>, navigation and dead-reckoning chapters (true course, magnetic variation).</li>
+<li>FAA, <cite><a href="https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/phak" rel="noopener noreferrer">Pilot’s Handbook of Aeronautical Knowledge</a></cite>, navigation and dead-reckoning chapters (true course, magnetic variation).</li>
 </ul>
       <h2>Frequently asked questions</h2>
       <h3>Can I enter an airport, navaid, or fix instead of latitude and longitude?</h3>
@@ -223,7 +226,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

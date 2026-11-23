@@ -40,6 +40,12 @@ console.log("\nCase 4  Invalid / edge");
 isTrue(C.compute({ mass: 0, cd: 1, area: 1 }) === null, "zero mass → null");
 isTrue(C.compute({ mass: 80, cd: 1, area: 0.5, entrySpeed: 7.8, gamma: 0 }) === null, "γ = 0 → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ mass: 80, cd: 1, area: 0.5 });
+nearly(we.terminalMps, 50.614, 0.02, "worked example: 80 kg, CD 1, 0.5 m² → ≈ 50.6 m/s");
+nearly(we.terminalKt, 98.385, 0.05, "≈ 98 kt");
+nearly(we.ballisticCoefficient, 160, 1e-12, "β = 160 kg/m²");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

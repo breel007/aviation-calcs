@@ -164,8 +164,15 @@
       <p>For a linearly tapered wing with taper ratio τ = c<sub>t</sub>/c<sub>r</sub>,</p>
       <p><code>c<sub>r</sub> = 2S / (b (1+τ))</code>, &nbsp; <code>MAC = (2/3) c<sub>r</sub> (1+τ+τ²)/(1+τ)</code>.</p>
       <p>A rectangular wing is the special case τ = 1, where MAC equals the geometric chord S/b.</p>
+      
+      <h2>Geometry first, then a stall estimate</h2>
+      <p>Wing loading and aspect ratio are planform identities: W/S and b²/S (or b/c̄). The optional stall-speed estimate assumes a 1-g, sea-level, wings-level stall at the CLmax you type. It does not include ground effect, flap setting, or bank. Use the <a href="../stall-speed-weight-bank/">stall speed versus weight and bank</a> page to scale a published Vs, and treat a POH stall speed as the authority over this estimate.</p>
+      <h2>Worked example</h2>
+      <p>A 2,550 lb airplane with 174 ft² of wing area and a 36.1 ft span has a wing loading of 2,550/174 ≈ <strong>14.66 psf</strong> and an aspect ratio of 36.1²/174 ≈ <strong>7.49</strong>. With CLmax = 1.6 and sea-level ISA density, the 1-g stall speed is</p>
+      <p><code>Vs = √(2 (W/S) / (ρ CLmax)) ≈ 52.0 kt</code></p>
+      <p>Those planform numbers are typical of a light four-seat trainer; the stall speed is only as good as the CLmax you enter, which must come from the airplane, not from a generic 1.6.</p>
       <h2>Sources</h2>
-      <p>NASA Glenn Beginner’s Guide (wing geometry, wing loading); Anderson, <em>Introduction to Flight</em>; FAA Pilot’s Handbook of Aeronautical Knowledge, Chapters 5 and 11. For stall speed versus weight and bank, see the <a href="../stall-speed-weight-bank/">stall speed calculator</a>.</p>
+      <p>NASA Glenn <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/wing-geometry/" rel="noopener noreferrer">Beginner’s Guide</a> (wing geometry, wing loading); Anderson, <em>Introduction to Flight</em>; FAA <a href="https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/phak" rel="noopener noreferrer">Pilot’s Handbook of Aeronautical Knowledge</a>, Chapters 5 and 11. For stall speed versus weight and bank, see the <a href="../stall-speed-weight-bank/">stall speed calculator</a>.</p>
       <h2>Frequently asked questions</h2>
       <h3>What is a typical light-airplane wing loading?</h3>
       <p>A Cessna 172S-class airplane at 2,550 lb with about 174 ft² of wing has W/S ≈ 14.7 psf. Trainers are often in the mid-teens of psf; high-performance singles and twins are higher.</p>
@@ -183,7 +190,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

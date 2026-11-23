@@ -44,6 +44,12 @@ console.log("\nCase 4  Invalid");
 isTrue(C.compute({ atmosphere: "isa", altitudeM: -1, speedMode: "mach", mach: 0.5 }).error != null ||
        C.compute({ atmosphere: "isa", altitudeM: -1, speedMode: "mach", mach: 0.5 }) == null, "negative altitude rejected");
 
+console.log("\nWorked example (as published on the page)");
+require("../standard-atmosphere/calc.js");
+var we = C.compute({ atmosphere: "isa", altitudeM: 0, speedMode: "velocity", velocity: 100, velocityUnit: "kt" });
+nearly(we.dynamicPressurePsf, 33.87, 0.05, "worked example: 100 kt SL → q ≈ 33.87 psf");
+nearly(we.easKt, 100, 0.05, "EAS ≈ TAS at sea-level density");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

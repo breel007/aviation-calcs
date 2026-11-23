@@ -163,8 +163,11 @@
       <p>Solving for the coefficients, <code>C<sub>L</sub> = L / (q S)</code> and <code>C<sub>D</sub> = D / (q S)</code>. The ratio L/D = C<sub>L</sub>/C<sub>D</sub> is the aerodynamic efficiency of the condition you entered. In steady level flight L = W, or more generally L = n W, so the required coefficient is C<sub>L</sub> = n W / (q S).</p>
       <h2>Worked example</h2>
       <p>A 1,000 kg vehicle at 50 m/s, S = 10 m², sea-level density 1.225 kg/m³: q = 1,531.25 Pa, W = 9,806.65 N, and the level-flight C<sub>L</sub> is 0.640. If the measured drag is W/12, then C<sub>D</sub> = 0.0534 and L/D = 12.</p>
+      
+      <h2>When these identities apply</h2>
+      <p>Use this page when you already have a weight (or a measured lift and drag), a reference area, and a speed and density, and you want C<sub>L</sub>, C<sub>D</sub>, dynamic pressure, and L/D. The equations are identities once those quantities are defined — they do not, by themselves, predict a stall speed, a drag polar, or a cruise setting. Density must be the actual air density at the condition, not a sea-level ISA value unless you really are at sea-level density. A common slip is to enter indicated airspeed as if it were true airspeed (q uses true velocity), or to use a wings-level C<sub>L</sub> in a turn without raising the load factor n. The reference area has to be the same area that was used to define the coefficients, usually the wing planform. A published (L/D)max is a property of a polar at a particular CL; the L/D on this page is only for the one condition you entered, not a cruise recommendation. In level flight the same arithmetic is also wing loading: W/S = q CL.</p>
       <h2>Sources</h2>
-      <p>NASA Glenn Beginner’s Guide to Aeronautics (lift and drag equations); Anderson, <em>Introduction to Flight</em>; FAA Pilot’s Handbook of Aeronautical Knowledge, Chapter 5.</p>
+      <p>NASA Glenn <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/wing-geometry/" rel="noopener noreferrer">Beginner’s Guide</a> to Aeronautics (lift and drag equations); Anderson, <em>Introduction to Flight</em>; FAA <a href="https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/phak" rel="noopener noreferrer">Pilot’s Handbook of Aeronautical Knowledge</a>, Chapter 5.</p>
       <h2>Frequently asked questions</h2>
       <h3>What is q in the lift equation?</h3>
       <p>q is dynamic pressure, ½ρV². It has the units of pressure. CL and CD are dimensionless.</p>
@@ -182,7 +185,9 @@
       <nav class="footer-nav" aria-label="Footer">
         <a href="../">Home</a>
         <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
       </nav>
     </div>
   </footer>

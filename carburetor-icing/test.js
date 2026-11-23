@@ -42,6 +42,12 @@ nearly(d.spreadC, 5, 1e-12, "spread 5 °C");
 console.log("\nCase 5  Invalid (dewpoint above temperature)");
 isTrue(C.compute({ temperature: 10, dewpoint: 12 }) === null, "Td > T → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ temperature: 18, dewpoint: 15, tempUnit: "C" });
+isTrue(we.phakZone === "high", "worked example: 18 °C / 15 °C dew point → high carburetor-icing potential");
+nearly(we.spreadC, 3, 1e-12, "3 °C temperature–dew-point spread");
+isTrue(we.ac20_113Spread === true, "spread is in the AC 20-113 caution region");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

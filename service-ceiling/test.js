@@ -30,6 +30,11 @@ console.log("\nCase 3  Invalid");
 isTrue(C.compute({ mode: "ceiling", roc0: 1000, absoluteCeiling: 10000, serviceRoc: 1200 }) === null,
   "service ROC above ROC0 → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ mode: "ceiling", roc0: 1200, absoluteCeiling: 12000, serviceRoc: 100 });
+nearly(we.serviceCeilingFt, 11000, 1e-9, "worked example: 1,200 fpm to 12,000 ft abs → 11,000 ft service");
+nearly(we.slopeFpmPerFt, -0.1, 1e-12, "slope = −0.1 fpm/ft");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

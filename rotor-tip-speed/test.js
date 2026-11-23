@@ -29,6 +29,12 @@ nearly(a.tipMach, 0.677, 0.002, "hand check M_t ≈ 0.677");
 console.log("\nCase 2  Invalid");
 isTrue(C.compute({ rpm: 0, radius: 5.5 }) === null, "zero rpm → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ rpm: 400, radius: 5.5, speed: 120, speedUnit: "kt", oat: 15, tempUnit: "C" });
+nearly(we.tipKt, 447.83, 0.1, "worked example: 400 rpm, 5.5 m → tip ≈ 448 kt");
+nearly(we.tipMach, 0.67701, 0.001, "rotational tip Mach ≈ 0.677");
+nearly(we.helicalTipMach, 0.70090, 0.001, "helical tip Mach ≈ 0.701 at 120 kt");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

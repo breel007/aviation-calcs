@@ -29,6 +29,12 @@ console.log("\nCase 3  Zero height and invalid");
 nearly(C.compute({ height1: 0, altUnit: "ft" }).radioNm, 0, 0, "zero height → zero range");
 isTrue(C.compute({ height1: -1 }) === null, "negative height → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ height1: 1000, altUnit: "ft" });
+nearly(we.radioNm, 38.856, 0.02, "worked example: 1,000 ft antenna, 4/3 Earth → radio horizon ≈ 38.9 NM");
+nearly(we.geometricNm, 33.650, 0.02, "geometric horizon ≈ 33.7 NM");
+nearly(we.rule123Nm, 38.896, 0.05, "1.23√h ≈ 38.9 NM");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

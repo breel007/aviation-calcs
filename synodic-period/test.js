@@ -25,6 +25,11 @@ nearly(b.synodicDays, 30, 1e-12, "10 d and 15 d meet every 30 d");
 console.log("\nCase 3  Invalid");
 isTrue(C.compute({ period1: 10, period2: 10 }) === null, "equal periods → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ body1: "earth", body2: "mars" });
+nearly(we.synodicDays, 779.936, 0.05, "worked example: Earth–Mars synodic period ≈ 779.9 days");
+nearly(we.synodicYears, 2.13535, 0.001, "≈ 2.14 years");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

@@ -47,6 +47,12 @@ nearly(a.subsatelliteSpeedMps, a.orbitalSpeedMps * R / r, 1e-9, "ground speed = 
 console.log("\nCase 5  Invalid");
 isTrue(C.compute({ altitude: -10 }) === null, "negative altitude → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ altitude: 400, altUnit: "km" });
+nearly(we.lambdaHorizonDeg, 19.793, 0.01, "worked example: 400 km altitude → horizon Earth angle ≈ 19.79°");
+nearly(we.horizonSwathM / 1000, 4401.67, 1, "horizon swath ≈ 4,402 km");
+nearly(we.periodMin, 92.414, 0.02, "period ≈ 92.4 min");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

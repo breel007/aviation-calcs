@@ -35,6 +35,12 @@ nearly(s.point.CD, 0.025 + 0.05 * 0.25, 1e-12, "CD = 0.025 + 0.05×0.25 = 0.0375
 nearly(s.point.LD, 0.5 / 0.0375, 1e-12, "L/D = 13.333");
 isTrue(C.compute({ CD0: 0, e: 0.8, AR: 8 }) === null, "zero CD0 → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ CD0: 0.02, e: 0.8, AR: 8, CL: 0.63413237 });
+nearly(we.LDmax, 15.8533, 0.01, "worked example: L/Dmax ≈ 15.85");
+nearly(we.CL_LDmax, 0.63413, 0.001, "at CL ≈ 0.634");
+nearly(we.k, 0.049736, 0.0001, "k ≈ 0.0497");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

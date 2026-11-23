@@ -30,6 +30,11 @@ nearly(b.thrustN, T * Math.pow(0.7, 2/3), 1e-6, "T scales as η^{2/3}");
 console.log("\nCase 3  Invalid");
 isTrue(C.compute({ power: 100, diameter: 0 }) === null, "zero diameter → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ power: 100, powerUnit: "kw", diameter: 2, diaUnit: "m", eta: 1 });
+nearly(we.thrustN, 4253.75, 1, "worked example: 100 kW, 2 m, η = 1 → ≈ 4,254 N");
+nearly(we.thrustLbf, 956.28, 0.5, "≈ 956 lbf");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

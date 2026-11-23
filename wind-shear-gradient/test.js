@@ -29,6 +29,10 @@ nearly(c.shearKtPer100ft, 3, 1e-12, "reports the entered shear");
 console.log("\nCase 4  Invalid");
 isTrue(C.compute({ vref: 20, href: 0, height: 1000 }) === null, "zero reference height → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ mode: "power", vref: 20, href: 30, height: 1000, alpha: 1/7 });
+nearly(we.windKt, 33.01, 0.05, "worked example: 20 kt at 30 ft → ≈ 33 kt at 1,000 ft with α = 1/7");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);

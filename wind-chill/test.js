@@ -33,6 +33,11 @@ nearly(c.windChillF, a.windChillF, 0.05, "10 mph = 16.09 km/h, same WCT");
 console.log("\nCase 4  Invalid");
 isTrue(C.compute({ temperature: 200, wind: 10, tempUnit: "F" }) === null, "out-of-range T → null");
 
+console.log("\nWorked example (as published on the page)");
+var we = C.compute({ temperature: 0, wind: 10, tempUnit: "F", windUnit: "mph" });
+nearly(we.windChillF, -15.93, 0.05, "worked example: 0 °F, 10 mph → WCT ≈ −16 °F");
+isTrue(we.applicable === true, "inside the official NWS domain");
+
 console.log("\n----------------------------------------");
 console.log("Passed: " + passed + "   Failed: " + failed);
 process.exit(failed ? 1 : 0);
