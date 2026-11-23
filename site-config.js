@@ -1,5 +1,5 @@
 /**
- * Aviation Calcs — site configuration.
+ * Aviator Calcs — site configuration.
  *
  * This is the single place to change the public site URL.
  * When moving to a custom domain (for example https://aviatorcalcs.com):
@@ -12,7 +12,7 @@
   "use strict";
 
   var SITE = {
-    name: "Aviation Calcs",
+    name: "Aviator Calcs",
     baseUrl: "https://aviatorcalcs.com",
     pages: [
       { path: "/", title: "Home", changefreq: "weekly", priority: "1.0" },

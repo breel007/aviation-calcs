@@ -760,7 +760,7 @@ function checkNoUndefinedText(file, html) {
 }
 
 async function main() {
-  console.log("Aviation Calcs site check  (base " + SITE.origin() + ")\n");
+  console.log("Aviator Calcs site check  (base " + SITE.origin() + ")\n");
 
   var htmlFiles = listHtmlFiles();
   var externals = [];

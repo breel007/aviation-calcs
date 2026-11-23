@@ -1,4 +1,4 @@
-# Aviation Calcs
+# Aviator Calcs
 
 Free, static aviation and aerospace calculators — an online E6B and related math, in the browser. No build step and no backend: just HTML, CSS, and JavaScript.
 
